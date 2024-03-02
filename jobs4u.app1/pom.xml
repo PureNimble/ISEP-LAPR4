@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>lapr4</groupId>
+        <artifactId>jobs4u</artifactId>
+        <version>0.1.0</version>
+    </parent>
+
+    <groupId>lapr4</groupId>
+    <artifactId>jobs4u.app1</artifactId>
+    <packaging>jar</packaging>
+
+    <name>jobs4u.app1</name>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+    </properties>
+
+    <dependencies>
+    </dependencies>
+</project>

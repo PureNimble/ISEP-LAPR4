@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>lapr4</groupId>
+	<artifactId>jobs4u</artifactId>
+	<packaging>pom</packaging>
+	<modules>
+		<module>jobs4u.app1</module>
+		<module>jobs4u.app2</module>
+		<module>jobs4u.util.ci</module>
+	</modules>
+	<version>0.1.0</version>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<maven.compiler.source>11</maven.compiler.source>
+		<maven.compiler.target>11</maven.compiler.target>
+	</properties>
+
+	<dependencies>
+		<dependency>
+			<groupId>javax.xml.bind</groupId>
+			<artifactId>jaxb-api</artifactId>
+			<version>2.3.1</version>
+		</dependency>
+
+		<!-- keep junit4 engine for now -->
+		<dependency>
+			<groupId>org.junit.vintage</groupId>
+			<artifactId>junit-vintage-engine</artifactId>
+			<version>5.10.1</version>
+			<scope>test</scope>
+		</dependency>
+		<!-- support junit5 -->
+		<dependency>
+			<groupId>org.junit.jupiter</groupId>
+			<artifactId>junit-jupiter-api</artifactId>
+			<version>5.10.1</version>
+			<scope>test</scope>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter-params -->
+		<dependency>
+			<groupId>org.junit.jupiter</groupId>
+			<artifactId>junit-jupiter-params</artifactId>
+			<version>5.10.1</version>
+			<scope>test</scope>
+		</dependency>
+		<!-- drivers for H2 -->
+		<dependency>
+			<groupId>com.h2database</groupId>
+			<artifactId>h2</artifactId>
+			<version>2.2.224</version>
+			<scope>runtime</scope>
+		</dependency>
+
+		<!-- Project Lombok -->
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<version>1.18.30</version>
+			<scope>provided</scope>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<plugins>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-report-plugin</artifactId>
+				<version>3.0.0</version>
+				<configuration>
+					<testFailureIgnore>true</testFailureIgnore>
+					<aggregate>true</aggregate>
+				</configuration>
+				<executions>
+					<execution>
+						<phase>install</phase>
+						<goals>
+							<goal>report</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		
+			<plugin>
+				<groupId>org.jacoco</groupId>
+				<artifactId>jacoco-maven-plugin</artifactId>
+				<version>0.8.6</version>
+				<executions>
+					<execution>
+						<id>prepare-agent</id>
+						<goals>
+							<goal>prepare-agent</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+
+			<!-- lombok -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.8.1</version>
+				<configuration>
+					<release>11</release>
+					<annotationProcessorPaths>
+						<path>
+							<groupId>org.projectlombok</groupId>
+							<artifactId>lombok</artifactId>
+							<version>1.18.24</version>
+						</path>
+					</annotationProcessorPaths>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.projectlombok</groupId>
+				<artifactId>lombok-maven-plugin</artifactId>
+				<version>1.18.20.0</version>
+				<executions>
+					<execution>
+						<id>delombok</id>
+						<phase>generate-sources</phase>
+						<goals>
+							<goal>delombok</goal>
+						</goals>
+						<configuration>
+							<sourceDirectory>${project.basedir}/src/main/java</sourceDirectory>
+							<outputDirectory>${project.build.directory}/delombok</outputDirectory>
+							<addOutputDirectory>false</addOutputDirectory>
+							<formatPreferences>
+								<javaLangAsFQN>skip</javaLangAsFQN>
+							</formatPreferences>
+							<verbose>false</verbose>
+						</configuration>
+					</execution>
+					<!-- This is for delomboking also your tests sources. <execution> <id>test-delombok</id>
+						<phase>generate-test-sources</phase> <goals> <goal>testDelombok</goal> </goals>
+						<configuration> <verbose>false</verbose> </configuration> </execution> -->
+				</executions>
+			</plugin>
+
+			<!-- dependency version -->
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>versions-maven-plugin</artifactId>
+				<version>2.5</version>
+				<configuration>
+					<generateBackupPoms>false</generateBackupPoms>
+				</configuration>
+			</plugin>
+			
+			<!-- javadoc -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<version>3.2.0</version>
+				<configuration>
+					<!-- UML Taglet JDK 8 -->
+					<!-- <source>1.8</source> <javadocVersion>1.8.0</javadocVersion> <taglet>org.jdrupes.taglets.plantUml.Taglet</taglet> 
+						<tagletArtifact> <groupId>org.jdrupes.taglets</groupId> <artifactId>plantuml-taglet</artifactId> 
+						<version>1.0.5</version> </tagletArtifact> -->
+
+					<!-- UML DocLet JDK 9+ -->
+					<doclet>nl.talsmasoftware.umldoclet.UMLDoclet</doclet>
+					<docletArtifact>
+						<groupId>nl.talsmasoftware</groupId>
+						<artifactId>umldoclet</artifactId>
+						<version>2.0.12</version>
+					</docletArtifact>
+
+					<!-- params -->
+					<show>private</show>
+					<doclint>none</doclint>
+					<additionalOptions>
+						<additionalOption>-Xdoclint:none</additionalOption>
+						<!-- Specify each diagram option here as an additionOption tag. -->
+					</additionalOptions>
+					<additionalJOption>-Xdoclint:none</additionalJOption>
+				</configuration>
+				<executions>
+					<execution>
+						<id>attach-javadocs</id>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>			
+		</plugins>
+	</build>
+
+
+</project>

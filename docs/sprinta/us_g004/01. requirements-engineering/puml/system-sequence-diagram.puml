@@ -1,0 +1,64 @@
+@startuml
+
+left to right direction
+
+actor "Project Manager" as PM #white;line:black;line.bold;text:black
+
+rectangle System {
+    usecase "Follow the technical constraints and concerns of the project" as G001
+    usecase "Use the defined project repository and setup a tool for project management" as G002
+    usecase "Configure the project structure" as G003
+    usecase "Setup a continuous integration server" as G004
+    usecase "Add the necessary scripts to the project" as G005
+    usecase "Elaborate a Domain Model using DDD" as G006
+}
+
+PM --> G001
+PM --> G002
+PM --> G003
+PM --> G004
+PM --> G005
+PM --> G006
+
+actor "Admin" as AD #white;line:red;line.bold;text:black
+actor "Operator" as OP #white;line:blue;line.bold;text:black
+actor "Customer Manager" as CM #white;line:green;line.bold;text:black
+actor "Language Engineer" as LE #white;line:purple;line.bold;text:black
+
+rectangle Backoffice {
+    usecase "Manage Customers and its Managers" as UC1
+    usecase "Deploy and Configure Plugin" as UC2
+    usecase "Register Application" as UC3
+    usecase "Manage Job Openings" as UC4
+}
+
+AD --> UC1
+LE --> UC2
+OP --> UC3
+CM --> UC4
+
+actor "Candidate" as CA #white;line:orange;line.bold;text:black
+
+rectangle "Candidate App" {
+    usecase "Follow Applications" as UC5
+}
+
+CA --> UC5
+
+actor "Applications Email Bot" as EB #white;line:brown;line.bold;text:black
+
+rectangle "Applications File Bot" {
+    usecase "Import Applications Files" as UC6
+}
+
+EB --> UC6
+
+actor "Customer" as CU #white;line:yellowgreen;line.bold;text:black
+
+rectangle "Customer App" {
+    usecase "Follow Job Openings" as UC7
+}
+
+CU --> UC7
+
+@enduml

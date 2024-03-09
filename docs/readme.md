@@ -8,10 +8,11 @@ The members of the group:
 
 | Student Nr.           | Name              | Github Profile                          |
 |:---------------------:|:-----------------:|:---------------------------------------:|
-| **[1221694](team-members/1221694/readme.md)** | João Pinto    | [<img src="https://avatars.githubusercontent.com/u/86107009?v=4" height="40" alt="João profile"/>](https://github.com/joaopinto15) |
-| **[1220612](team-members/1220612/readme.md)** | José Sá       | [<img src="https://avatars.githubusercontent.com/u/78977314?v=4" height="40" alt="José profile"/>](https://github.com/zepic3)      |
-| **[1201804](team-members/1201804/readme.md)** | Rafael Araújo | [<img src="https://avatars.githubusercontent.com/u/107275079?v=4" height="40" alt="Rafael profile"/>](https://github.com/ReyFow)   | 
-| **[1220777](team-members/1220777/readme.md)** | Rui Lima      | [<img src="https://avatars.githubusercontent.com/u/160787449?v=4" height="40" alt="Rui profile"/>](https://github.com/1220777)     |
+| **[1211503](team-members/1211503/readme.md)** | João Pereira  | [<img src="https://avatars.githubusercontent.com/u/102246605?v=4" height="40" alt="João Pe profile"/>](https://github.com/joaohcpereira) |
+| **[1221694](team-members/1221694/readme.md)** | João Pinto    | [<img src="https://avatars.githubusercontent.com/u/86107009?v=4" height="40" alt="João Pi profile"/>](https://github.com/joaopinto15) |
+| **[1220612](team-members/1220612/readme.md)** | José Sá       | [<img src="https://avatars.githubusercontent.com/u/78977314?v=4" height="40" alt="José profile"/>](https://github.com/zepic3) |
+| **[1201804](team-members/1201804/readme.md)** | Rafael Araújo | [<img src="https://avatars.githubusercontent.com/u/107275079?v=4" height="40" alt="Rafael profile"/>](https://github.com/ReyFow) | 
+| **[1220777](team-members/1220777/readme.md)** | Rui Lima      | [<img src="https://avatars.githubusercontent.com/u/160787449?v=4" height="40" alt="Rui profile"/>](https://github.com/1220777) |
 | **[1221700](team-members/1221700/readme.md)** | Vasco Sousa   | [<img src="https://avatars.githubusercontent.com/u/107275037?v=4" height="40" alt="Vasco profile"/>](https://github.com/vscosousa) |
 
 ## 2. Sprint Planning
@@ -28,6 +29,7 @@ The assignment of tasks (requirements/user stories/use cases) during the project
 
 | Student Nr.	| Name | Sprint A | Sprint B   | Sprint C |
 |---------------|------|----------|------------|----------|
+| [1211503](team-members/1211503/readme.md) | João Pereira  | [US G002](sprinta/us_g002/readme.md) |  |  |
 | [1221694](team-members/1221694/readme.md) | João Pinto    | [US G002](sprinta/us_g002/readme.md) |  |  |
 | [1220612](team-members/1220612/readme.md) | José Sá       | [US G002](sprinta/us_g002/readme.md) |  |  |
 | [1201804](team-members/1201804/readme.md) | Rafael Araújo | [US G002](sprinta/us_g002/readme.md) |  |  |

@@ -38,7 +38,7 @@
 
 ### 4.2. Class Diagram
 
-![a class diagram](03.%20design/svg/class-diagram.svg "A Class Diagram")
+![a class diagram](03.design/svg/class-diagram.svg "A Class Diagram")
 
 ### 4.3. Applied Patterns
 

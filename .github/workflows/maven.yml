@@ -28,7 +28,7 @@ jobs:
 
     # Give execute permissions to the build scripts
     - name: Set execute permissions on build scripts
-      run: chmod +x bin/build-all.sh bin/quickbuild.sh bin/generate-plantuml-diagrams.sh || true
+      run: chmod +x bin/build-all.sh bin/quickbuild.sh bin/generate-plantuml-diagrams.sh bin/mvnw || true
 
     - name: Full build with Maven
       run: ./bin/build-all.sh 2> error-logs/build-all.log || true

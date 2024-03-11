@@ -32,9 +32,34 @@ jobs:
 
     - name: Full build with Maven
       run: ./bin/build-all.sh 2> error-logs/build-all.log || true
+
     - name: Quick build with Maven
       run: ./bin/quickbuild.sh 2> error-logs/quickbuild.log || true
     
+    - name: Upload coverage report for jobs4u.app1
+      uses: actions/upload-artifact@v2
+      with:
+        name: coverage-report-jobs4u.app1
+        path: '**/jobs4u.app1/target/site/jacoco/*'
+
+    - name: Upload coverage report for jobs4u.app2
+      uses: actions/upload-artifact@v2
+      with:
+        name: coverage-report-jobs4u.app2
+        path: '**/jobs4u.app2/target/site/jacoco/*'
+
+    - name: Upload test report for jobs4u.app1
+      uses: actions/upload-artifact@v2
+      with:
+        name: test-report-jobs4u.app1
+        path: '**/jobs4u.app1/target/surefire-reports/*'
+
+    - name: Upload test report for jobs4u.app2
+      uses: actions/upload-artifact@v2
+      with:
+        name: test-report-jobs4u.app2
+        path: '**/jobs4u.app2/target/surefire-reports/*'
+
     - name: Upload error logs
       uses: actions/upload-artifact@v2
       if: always() # This ensures that logs are uploaded even if previous step fails

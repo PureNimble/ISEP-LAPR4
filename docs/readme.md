@@ -28,16 +28,19 @@ The members of the group:
 The assignment of tasks (requirements/user stories/use cases) during the project.
 
 | Student Nr.	| Name | Sprint A | Sprint B   | Sprint C |
-|---------------|------|----------|------------|----------|
-| [1211503](team-members/1211503/readme.md) | João Pereira  | [US G002](sprinta/us_g002/readme.md) |  |  |
-| [1221694](team-members/1221694/readme.md) | João Pinto    | [US G002](sprinta/us_g002/readme.md) |  |  |
-| [1220612](team-members/1220612/readme.md) | José Sá       | [US G002](sprinta/us_g002/readme.md) |  |  |
-| [1201804](team-members/1201804/readme.md) | Rafael Araújo | [US G002](sprinta/us_g002/readme.md) |  |  |
-| [1220777](team-members/1220777/readme.md) | Rui Lima      | [US G002](sprinta/us_g002/readme.md) |  |  |
-| [1221700](team-members/1221700/readme.md) | Vasco Sousa   | [US G002](sprinta/us_g002/readme.md) |  |  |
+|---------------|------|:--------:|:----------:|:--------:|
+| [1211503](team-members/1211503/readme.md) | João Pereira  | <div align="center">**---**</div> |  |  |
+| [1221694](team-members/1221694/readme.md) | João Pinto    | [US G001](sprinta/us_g001/readme.md) [US G002](sprinta/us_g002/readme.md) [US G003](sprinta/us_g003/readme.md) [US G004](sprinta/us_g004/readme.md) [US G005](sprinta/us_g005/readme.md) [US G006](sprinta/us_g006/readme.md) |  |  |
+| [1220612](team-members/1220612/readme.md) | José Sá       | [US G001](sprinta/us_g001/readme.md) [US G002](sprinta/us_g002/readme.md) [US G003](sprinta/us_g003/readme.md) [US G004](sprinta/us_g004/readme.md) [US G005](sprinta/us_g005/readme.md) [US G006](sprinta/us_g006/readme.md) |  |  |
+| [1201804](team-members/1201804/readme.md) | Rafael Araújo | [US G001](sprinta/us_g001/readme.md) [US G002](sprinta/us_g002/readme.md) [US G003](sprinta/us_g003/readme.md) [US G004](sprinta/us_g004/readme.md) [US G005](sprinta/us_g005/readme.md) [US G006](sprinta/us_g006/readme.md) |  |  |
+| [1220777](team-members/1220777/readme.md) | Rui Lima      | [US G001](sprinta/us_g001/readme.md) [US G002](sprinta/us_g002/readme.md) [US G003](sprinta/us_g003/readme.md) [US G004](sprinta/us_g004/readme.md) [US G005](sprinta/us_g005/readme.md) [US G006](sprinta/us_g006/readme.md) |  |  |
+| [1221700](team-members/1221700/readme.md) | Vasco Sousa   | [US G001](sprinta/us_g001/readme.md) [US G002](sprinta/us_g002/readme.md) [US G003](sprinta/us_g003/readme.md) [US G004](sprinta/us_g004/readme.md) [US G005](sprinta/us_g005/readme.md) [US G006](sprinta/us_g006/readme.md) |  |  |
 
+## 4. Global Artifacts
 
-## 4. LAPR4 Self Assessment
+[Global Artifacts](global-artifacts/readme.md)
+
+## 5. LAPR4 Self Assessment
 
 **This section is mandatory for students of LAPR4**
 ### Sprint A

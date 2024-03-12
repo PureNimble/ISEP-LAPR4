@@ -14,8 +14,7 @@
 | **Applications Email Bot** | An external system that processes applications submitted via email, generating text files and attachments in a predefined folder. |
 | **Applications File Bot** | A bot that monitors the folder with applications processed by the Applications Email Bot, organizes them into a shared folder by job reference, and generates a report of processed applications. |
 | **Candidate** | A person who applies for a job opening through the recruitment system. |
-|**Clients**| Other companies or entities that need to recruit human resources.|
-| **Company** | The name of the organization looking to fill the job opening. |
+|**Client**| Companies or entities that need to recruit human resources.<br><br>**synonyms:** Company|
 | **Contract Type** | Specifies the nature of the employment contract (full-time, part-time). |
 | **Customer** | An individual or organization that uses the recruitment system to fill job openings within their company. |
 | **Customer Manager** | The person responsible for setting up the recruitment process, including defining the dates for each phase and deciding whether the process includes interviews. |

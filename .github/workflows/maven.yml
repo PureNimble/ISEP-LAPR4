@@ -69,7 +69,6 @@ jobs:
 
     - name: Install Graphviz
       run: sudo apt-get install -y graphviz
-      cache: apt
 
     - name: Set up Git user
       run: |

@@ -1,0 +1,6 @@
+docs/
+.github/
+.gitignore
+*.md
+.git
+libs/

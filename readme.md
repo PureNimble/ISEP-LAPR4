@@ -45,9 +45,16 @@ mvn test
 *To Do*
 
 ## 6. How to Install/Deploy into Another Machine (or Virtual Machine)
+ > ⚠️ To run this script is necessary to have the docker installed, since we are creating a docker image and then a docker container.
 
-*To Do*
-
+### For linux/unix/macos
+```
+./bin/dockerRun.sh
+```
+### For windows
+```
+.\bin\dockerRun.bat
+```
 
 ## 7. How to execute (.JAR)
 

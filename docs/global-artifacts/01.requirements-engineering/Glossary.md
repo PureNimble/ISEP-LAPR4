@@ -4,8 +4,8 @@
 
 **Terms, Expressions and Acronyms (TEA) are sorted alphabetically**
 
-| <code style="color : gold">_TEA(EN)_</code> | <code style="color : gold">_Description(EN)_</code> |
-| ------------- | --------------------- |
+| _`TEA(EN)`_ | _`Description(EN)`_ |
+| ------------|-------------------- |
 | **Address** | Provides the physical location of the job (for hybrid and onsite roles). |
 | **Admin** | A system administrator responsible for the overall management of the recruitment system. This includes user management, system configuration, and ensuring the system's integrity and security. |
 | **Analysis Phase** | The stage where applications and interview results are analyzed to rank candidates based on all available information, including CVs and interview performance. |
@@ -23,7 +23,7 @@
 | **Job Opening** | A vacancy created in the system by a customer manager, including details like job reference, title, contract type, mode, address, company name, number of vacancies, description, and requirements. |
 | **Job Reference** | A unique identifier used within the system for tracking and managing job openings, facilitating easier application, screening, and organization of job-related communications and data management. |
 | **Job Requirement Specification** | A document that outlines the qualifications and skills candidates must have for a particular job opening, such as educational background and experience. |
-|**Jobs4U**| company specialized in talent acquisition that provides recruitment services for job positions on behalf of its clients. The company's main activities involve selecting a set of candidates for job offers from its clients and delivering an ordered list of candidates to the client at the end of the process.  |
+|**Jobs4U**| A company specialized in talent acquisition that provides recruitment services for job positions on behalf of its clients. The company's main activities involve selecting a set of candidates for job offers from its clients and delivering an ordered list of candidates to the client at the end of the process.  |
 | **Mode** | Indicates whether the job is remote, hybrid, or onsite. |
 | **Module** | A dynamically added component to the system, designed and implemented based on customer manager instructions, to efficiently process job requirements or conduct interviews. |
 | **Operator** | The person responsible for importing files produced by the Applications File Bot into the system and registering applications, creating records for new candidates. |

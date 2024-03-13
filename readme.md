@@ -8,7 +8,7 @@ As part of the [LEI](https://www.isep.ipp.pt/Course/Course/26) degree's integrat
 
 ## 2. Planning and Technical Documentation
 
-[Planning and Technical Documentation](docs/readme.md)
+[_`Planning and Technical Documentation`_](docs/readme.md)
 
 ## 3. How to Build
 
@@ -45,7 +45,20 @@ mvn test
 *To Do*
 
 ## 6. How to Install/Deploy into Another Machine (or Virtual Machine)
- > ⚠️ To run this script is necessary to have the docker installed, since we are creating a docker image and then a docker container.
+
+<table>
+<tr>
+
+<td>
+<img width=50px height=35px src="https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExN3kzdDBieGd6eDc4czJuaHgxeGZ2aWwxN3BtazdmanNnNDNkYjZybCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/Ve5vfhwsox2G3bJ44O/giphy.gif"/>
+</td>
+<td>
+
+_`To run this script is necessary to have the docker installed, since we are creating a docker image and a docker container.`_
+</td>
+
+</tr>
+</table>
 
 ### For linux/unix/macos
 ```

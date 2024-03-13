@@ -106,7 +106,7 @@ An association is a relationship between instances of objects that indicates a r
 
 
 
-![Domain Model](svg/conceptual-model.svg)
+![Domain Model](svg/domain-model.svg)
 
 
 

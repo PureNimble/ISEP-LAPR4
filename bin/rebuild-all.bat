@@ -1,0 +1,1 @@
+call bin\build-all.bat clean

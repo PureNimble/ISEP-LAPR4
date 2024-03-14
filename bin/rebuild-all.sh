@@ -1,0 +1,1 @@
+./bin/build-all.sh clean

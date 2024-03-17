@@ -4,62 +4,40 @@
 
 ## 1. Requirements Engineering
 
-* 
+* As Project Manager, I want the team to configure the project structure to facilitate/accelerate the development of upcoming user stories.
 
 ### 1.1. User Story Description
 
-
-* 
-
+_N/A_
 
 ### 1.2. Customer Specifications and Clarifications
 
 
 **From the specifications document:**
 
->
-
-
+_N/A_
 
 **From the client clarifications:**
 
-> **Question:** 
->
-> **Answer:** 
-
-
-> **Question:**
->
-> **Answer:**
-
+_N/A_
 
 
 ### 1.3. Acceptance Criteria
 
 
-* **AC1:**
+* **AC1:**: Define the structure of the project to support the envisioned architecture.
 
 
 ### 1.4. Found out Dependencies
 
-
-* 
-
+_N/A_
 
 ### 1.5 Input and Output Data
 
-
-**Input Data:**
-
-* 
-
-
-**Output Data:**
-
-* 
+_N/A_
 
 ### 1.6. System Sequence Diagram (SSD)
 
-![System Sequence Diagram](svg/system-sequence-diagram.svg)
+_N/A_
 
 <img width=100% src="https://capsule-render.vercel.app/api?type=waving&height=120&color=4E1764&section=footer"/>

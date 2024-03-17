@@ -5,7 +5,6 @@
 
 | Student Nr.           | Name              | Github Profile                          |
 |:---------------------:|:-----------------:|:---------------------------------------:|
-| **[1211503](1211503/readme.md)** | João Pereira  | [<img src="https://avatars.githubusercontent.com/u/102246605?v=4" height="40" alt="João Pe profile"/>](https://github.com/joaohcpereira) |
 | **[1221694](1221694/readme.md)** | João Pinto    | [<img src="https://avatars.githubusercontent.com/u/86107009?v=4" height="40" alt="João Pi profile"/>](https://github.com/joaopinto15) |
 | **[1220612](1220612/readme.md)** | José Sá       | [<img src="https://avatars.githubusercontent.com/u/78977314?v=4" height="40" alt="José profile"/>](https://github.com/zepic3) |
 | **[1201804](1201804/readme.md)** | Rafael Araújo | [<img src="https://avatars.githubusercontent.com/u/107275079?v=4" height="40" alt="Rafael profile"/>](https://github.com/ReyFow) | 

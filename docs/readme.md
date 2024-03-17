@@ -8,7 +8,6 @@ The members of the group:
 
 | Student Nr.           | Name              | Github Profile                          |
 |:---------------------:|:-----------------:|:---------------------------------------:|
-| **[1211503](team-members/1211503/readme.md)** | João Pereira  | [<img src="https://avatars.githubusercontent.com/u/102246605?v=4" height="40" alt="João Pe profile"/>](https://github.com/joaohcpereira) |
 | **[1221694](team-members/1221694/readme.md)** | João Pinto    | [<img src="https://avatars.githubusercontent.com/u/86107009?v=4" height="40" alt="João Pi profile"/>](https://github.com/joaopinto15) |
 | **[1220612](team-members/1220612/readme.md)** | José Sá       | [<img src="https://avatars.githubusercontent.com/u/78977314?v=4" height="40" alt="José profile"/>](https://github.com/zepic3) |
 | **[1201804](team-members/1201804/readme.md)** | Rafael Araújo | [<img src="https://avatars.githubusercontent.com/u/107275079?v=4" height="40" alt="Rafael profile"/>](https://github.com/ReyFow) | 
@@ -29,7 +28,6 @@ The assignment of tasks (requirements/user stories/use cases) during the project
 
 | Student Nr.	| Name | Sprint A | Sprint B   | Sprint C |
 |---------------|------|:--------:|:----------:|:--------:|
-| [1211503](team-members/1211503/readme.md) | João Pereira  | <div align="center">**---**</div> |  |  |
 | [1221694](team-members/1221694/readme.md) | João Pinto    | [`US G001`](sprinta/us_g001/readme.md) [`US G002`](sprinta/us_g002/readme.md) [`US G003`](sprinta/us_g003/readme.md) [`US G004`](sprinta/us_g004/readme.md) [`US G005`](sprinta/us_g005/readme.md) [`US G006`](sprinta/us_g006/readme.md) |  |  |
 | [1220612](team-members/1220612/readme.md) | José Sá       | [`US G001`](sprinta/us_g001/readme.md) [`US G002`](sprinta/us_g002/readme.md) [`US G003`](sprinta/us_g003/readme.md) [`US G004`](sprinta/us_g004/readme.md) [`US G005`](sprinta/us_g005/readme.md) [`US G006`](sprinta/us_g006/readme.md) |  |  |
 | [1201804](team-members/1201804/readme.md) | Rafael Araújo | [`US G001`](sprinta/us_g001/readme.md) [`US G002`](sprinta/us_g002/readme.md) [`US G003`](sprinta/us_g003/readme.md) [`US G004`](sprinta/us_g004/readme.md) [`US G005`](sprinta/us_g005/readme.md) [`US G006`](sprinta/us_g006/readme.md) |  |  |

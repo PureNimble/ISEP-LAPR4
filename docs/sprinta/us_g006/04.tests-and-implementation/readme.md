@@ -8,13 +8,6 @@ _N/A_
 
 # 5. Construction (Implementation)
 
-
-## Class ...
-
-_N/A_
-
-## Class Organization
-
 _N/A_
 
 # 6. Integration and Demo 

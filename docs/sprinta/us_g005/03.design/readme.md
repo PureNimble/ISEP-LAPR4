@@ -1,46 +1,23 @@
 <img width=100% src="https://capsule-render.vercel.app/api?type=waving&height=120&color=4E1764"/>
 
-# US G001 - Follow the technical constraints and concerns of the project
+# US G005 - Add to the project the necessary scripts, so that build/executions/deployments/... can be executed effortlessly
 
 ## 3. Design - User Story Realization
 
 ### 3.1. Rationale
 
-**SSD - Alternative 1 is adopted.**
-
-| Interaction ID | Question: Which class is responsible for... | Answer | Justification (with patterns) |
-| :------------- | :------------------------------------------ | :----- | :---------------------------- |
-| Step 1  		 |                                             |        |                               |
+_N/A_
 
 ### Systematization ##
 
-According to the taken rationale, the conceptual classes promoted to software classes are: 
-
- * 
-
-Other software classes (i.e. Pure Fabrication) identified: 
-
- * 
-
+_N/A_
 
 ## 3.2. Sequence Diagram (SD)
 
-### Alternative 1 - Full Diagram
-
-This diagram shows the full sequence of interactions between the classes involved in the realization of this user story.
-
-![Sequence Diagram - Full](svg/sequence-diagram.svg)
-
-### Alternative 2 - Split Diagram
-
-This diagram shows the same sequence of interactions between the classes involved in the realization of this user story, but it is split in partial diagrams to better illustrate the interactions between the classes.
-
-It uses interaction ocurrence.
-
-![Sequence Diagram - split](svg/sequence-diagram-split.svg)
+_N/A_
 
 ## 3.3. Class Diagram (CD)
 
-![Class Diagram](svg/class-diagram.svg)
+_N/A_
 
 <img width=100% src="https://capsule-render.vercel.app/api?type=waving&height=120&color=4E1764&section=footer"/>

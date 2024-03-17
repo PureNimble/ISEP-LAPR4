@@ -2,80 +2,36 @@
 
 # US G005 - Add to the project the necessary scripts, so that build/executions/deployments/... can be executed effortlessly
 
-*This is an example template*
-
 ## 1. Context
 
-*Explain the context for this task. It is the first time the task is assigned to be developed or this tasks was incomplete in a previous sprint and is to be completed in this sprint? Are we fixing some bug?*
+- `Description:` As Project Manager, I want the team to add to the project the necessary scripts, so that build/executions/deployments/... can be executed effortlessly.
+
+- `Sprint:` This US makes part of the first stage of development of the integrative project of this semester, Sprint A.
+
+- `Objectives:` The team must Include scripts for all the major tasks and execution of applications, such as to build and deploy the solution in a variety of systems (at least Linux and Windows). It should also include a readme.md in the root folder explaining how to build, deploy and execute the solution.
 
 ## 2. Requirements
 
-*In this section you should present the functionality that is being developed, how do you understand it, as well as possible correlations to other requirements (i.e., dependencies). You should also add acceptance criteria.*
-
-*Example*
-
-**US G005** As {Ator} I Want...
-
-**Acceptance Criteria:**
-
-- G005.1. The system should...Blá Blá Blá ...
-
-- G005.2. Blá Blá Blá ...
-
-**Dependencies/References:**
-
-*Regarding this requirement we understand that it relates to...*
+[_`Requirements Engineering`_](01.requirements-engineering/readme.md)
 
 ## 3. Analysis
 
-*In this section, the team should report the study/analysis/comparison that was done in order to take the best design decisions for the requirement. This section should also include supporting diagrams/artifacts (such as domain model; use case diagrams, etc.),*
+[_`Analysis`_](02.analysis/readme.md)
 
 ## 4. Design
 
-*In this sections, the team should present the solution design that was adopted to solve the requirement. This should include, at least, a diagram of the realization of the functionality (e.g., sequence diagram), a class diagram (presenting the classes that support the functionality), the identification and rational behind the applied design patterns and the specification of the main tests used to validade the functionality.*
+[_`Design`_](03.design/readme.md)
 
-### 4.1. Realization
+## 5. Tests & Implementation
 
-### 4.2. Class Diagram
-
-![a class diagram](03.design/svg/class-diagram.svg "A Class Diagram")
-
-### 4.3. Applied Patterns
-
-### 4.4. Tests
-
-Include here the main tests used to validate the functionality. Focus on how they relate to the acceptance criteria.
-
-**Test 1:** *Verifies that it is not possible to ...*
-
-**Refers to Acceptance Criteria:** G005.1
-
-
-```
-@Test(expected = IllegalArgumentException.class)
-public void ensureXxxxYyyy() {
-	...
-}
-```
-
-## 5. Implementation
-
-*In this section the team should present, if necessary, some evidencies that the implementation is according to the design. It should also describe and explain other important artifacts necessary to fully understand the implementation like, for instance, configuration files.*
-
-*It is also a best practice to include a listing (with a brief summary) of the major commits regarding this requirement.*
+[_`Tests & Implementation`_](04.tests-and-implementation/readme.md)
 
 ## 6. Integration/Demonstration
 
-*In this section the team should describe the efforts realized in order to integrate this functionality with the other parts/components of the system*
-
-*It is also important to explain any scripts or instructions required to execute an demonstrate this functionality*
+_N/A_
 
 ## 7. Observations
 
-*This section should be used to include any content that does not fit any of the previous sections.*
-
-*The team should present here, for instance, a critical prespective on the developed work including the analysis of alternative solutioons or related works*
-
-*The team should include in this section statements/references regarding third party works that were used in the development this work.*
+_N/A_
 
 <img width=100% src="https://capsule-render.vercel.app/api?type=waving&height=120&color=4E1764&section=footer"/>

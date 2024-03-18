@@ -1,4 +1,4 @@
-@startuml
+@startuml domain-model
 
 skinparam classAttributeIconSize 0
 hide empty attributes
@@ -14,12 +14,13 @@ package "<<aggregate>> User" {
     class FullName <<(V,#FF8B40) value object>> {}
     class Password <<(V,#FF8B40) value object>> {}
     class TaxPayerNumber <<(V,#FF8B40) value object>> {}
+    class PhoneNumber <<(V,#FF8B40) value object>> {}
     class BirthDate <<(V,#FF8B40) value object>> {}
     class CreatedOn <<(V,#FF8B40) value object>> {}
     class Active <<(V,#FF8B40) value object>> {}
 }
 
-package "<<aggregate>> System Administrator" {
+package "<<aggregate>> Admin" {
     entity Admin <<entity>> <<root>> {}
 }
 
@@ -27,20 +28,89 @@ package "<<aggregate>> Customer Manager" {
     entity CustomerManager <<entity>> <<root>> {}
 }
 
-package "<<aggregate>> Operator" {
-    entity Operator <<entity>> <<root>> {}
+package "<<aggregate>> Backoffice Operator" {
+    entity BackofficeOperator <<entity>> <<root>> {}
 }
 
+package "<<aggregate>> Language Engineer"{
+    entity LanguageEngineer <<entity>> <<root>> {}
+}
+
+package "<<aggregate>> Candidate" {
+    entity Candidate <<entity>> <<root>> {}
+}
+
+package "<<aggregate>> Customer" {
+    entity Customer <<entity>> <<root>> {}
+}
+
+package "<<aggregate>> Recruitment Process" {
+    entity RecruitmentProcess <<entity>> <<root>> {}
+    entity Screening <<entity>> {}
+    entity Interview <<entity>> {}
+    entity Analysis <<entity>> {}
+    entity Result <<entity>> {}
+}
+
+package "<<aggregate>> Application" {
+    entity Application <<entity>> <<root>> {}
+}
+
+package "<<aggregate>> Applications Email Bot" {
+    entity ApplicationsEmailBot <<entity>> <<root>> {}
+}
+
+
+package "<<aggregate>> Applications File Bot" {
+    entity ApplicationsFileBot <<entity>> <<root>> {}
+}
+
+package "<<aggregate>> Job Opening" {
+    entity JobReference <<entity>> <<root>> {}
+    class TitleOrFunction <<(V,#FF8B40) value object>> {}
+    class ContractType <<(V,#FF8B40) value object>> {}
+    class Mode <<(V,#FF8B40) value object>> {}
+    class Address <<(V,#FF8B40) value object>> {}
+    class Company <<(V,#FF8B40) value object>> {}
+    class NumberOfVacancies <<(V,#FF8B40) value object>> {}
+    class Description <<(V,#FF8B40) value object>> {}
+    class Requirements <<(V,#FF8B40) value object>> {}  
+}
+
+' User value objects
 User --> "1" Email : characterized by
 User --> "1" FullName : characterized by
 User --> "1" Password : characterized by
 User --> "1" TaxPayerNumber : characterized by
+User --> "1" PhoneNumber : characterized by
 User --> "1" BirthDate : characterized by
 User --> "1" CreatedOn : characterized by
 User --> "1" Active : characterized by
+Admin --* User
+CustomerManager --* User
+BackofficeOperator --* User
+Customer --* User
+LanguageEngineer --* User
+Candidate --* User
 
-Admin --> User
-CustomerManager --> User
-Operator --> User
+' BackofficeOperator
+BackofficeOperator --> Application
+BackofficeOperator --> ApplicationsFileBot
+
+' Recruitment Process
+RecruitmentProcess --> Application
+
+' Applications Email Bot
+ApplicationsEmailBot --> ApplicationsFileBot
+
+' JobOpening value objects
+JobReference --> "1" TitleOrFunction : characterized by
+JobReference --> "1" ContractType : characterized by
+JobReference --> "1" Mode : characterized by
+JobReference --> "1" Address : characterized by
+JobReference --> "1" Company : characterized by
+JobReference --> "1" NumberOfVacancies : characterized by
+JobReference --> "1" Description : characterized by
+JobReference --> "1" Requirements : characterized by
 
 @enduml

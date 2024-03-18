@@ -88,12 +88,12 @@ To generate plantuml diagrams for documentation execute the script:
 
 #### For linux/unix/macos
 ```
-    ./bin/generate-plantuml-diagrams.sh
+./bin/generate-plantuml-diagrams.sh
 ```
 
 #### For windows
 ```
-    .\bin\generate-plantuml-diagrams.bat
+.\bin\generate-plantuml-diagrams.bat
 ```
 
 <img width=100% src="https://capsule-render.vercel.app/api?type=waving&height=120&color=4E1764&section=footer"/>

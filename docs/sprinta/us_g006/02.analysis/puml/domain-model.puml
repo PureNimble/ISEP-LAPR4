@@ -6,76 +6,102 @@ hide empty methods
 skinparam classBackgroundColor beige
 skinparam ArrowColor #222222
 
-package "<<aggregate>> User" {
+'package "<<aggregate>> User" {
+
+    'How does authentication work?
 
     entity User <<entity>> <<root>> {}
+    class Email <<(V, #FF8B40) value object>> {}
+    class FullName <<(V, #FF8B40) value object>> {}
+    class Password <<(V, #FF8B40) value object>> {}
+    class TaxPayerNumber <<(V, #FF8B40) value object>> {}
+    class PhoneNumber <<(V, #FF8B40) value object>> {}
+    class BirthDate <<(V, #FF8B40) value object>> {}
+'}
 
-    class Email <<(V,#FF8B40) value object>> {}
-    class FullName <<(V,#FF8B40) value object>> {}
-    class Password <<(V,#FF8B40) value object>> {}
-    class TaxPayerNumber <<(V,#FF8B40) value object>> {}
-    class PhoneNumber <<(V,#FF8B40) value object>> {}
-    class BirthDate <<(V,#FF8B40) value object>> {}
-    class CreatedOn <<(V,#FF8B40) value object>> {}
-    class Active <<(V,#FF8B40) value object>> {}
-}
-
-package "<<aggregate>> Admin" {
+'package "<<aggregate>> Admin" {
     entity Admin <<entity>> <<root>> {}
-}
+'}
 
-package "<<aggregate>> Customer Manager" {
+'package "<<aggregate>> Customer Manager" {
     entity CustomerManager <<entity>> <<root>> {}
-}
+'}
 
-package "<<aggregate>> Backoffice Operator" {
+'package "<<aggregate>> Backoffice Operator" {
     entity BackofficeOperator <<entity>> <<root>> {}
-}
+'}
 
-package "<<aggregate>> Language Engineer"{
+'package "<<aggregate>> Language Engineer"{
     entity LanguageEngineer <<entity>> <<root>> {}
-}
+'}
 
-package "<<aggregate>> Candidate" {
+'package "<<aggregate>> Candidate" {
     entity Candidate <<entity>> <<root>> {}
-}
+'}
 
-package "<<aggregate>> Customer" {
+'package "<<aggregate>> Customer" {
     entity Customer <<entity>> <<root>> {}
-}
+'}
 
-package "<<aggregate>> Recruitment Process" {
-    entity RecruitmentProcess <<entity>> <<root>> {}
-    entity Screening <<entity>> {}
-    entity Interview <<entity>> {}
-    entity Analysis <<entity>> {}
-    entity Result <<entity>> {}
-}
+entity RecruitmentProcess <<entity>> <<root>> {}
+entity Screening <<entity>> {}
+entity Interview <<entity>> {}
+entity Analysis <<entity>> {}
+entity Result <<entity>> {}
 
-package "<<aggregate>> Application" {
-    entity Application <<entity>> <<root>> {}
-}
 
-package "<<aggregate>> Applications Email Bot" {
+entity Application <<entity>> <<root>> {}
+class Applied <<(E, #FF5733) event>> {}
+class Watchdog <<(S, #3366CC) service>> {}
+
+'package "<<aggregate>> Job Opening" {
+
+    entity JobOpening <<entity>> <<root>> {}
+    class JobReference <<(V, #FF8B40) value object>> {}
+    class TitleOrFunction <<(V, #FF8B40) value object>> {}
+    class ContractType <<(V, #FF8B40) value object>> {}
+    class Mode <<(V, #FF8B40) value object>> {}
+    class Address <<(V, #FF8B40) value object>> {}
+    class Company <<(V, #FF8B40) value object>> {}
+    class NumberOfVacancies <<(V, #FF8B40) value object>> {}
+    class Description <<(V, #FF8B40) value object>> {}
+'}
+
+'package "<<aggregate>> Job Requirements Specification" {
+    entity JobRequirementSpecification <<entity>> <<root>> {}
+'}
+
+'Question
+entity ANTLR {}
+entity Authentication {}
+
+'package "<<aggregate>> Interview Model" {
+
+    entity InterviewModel <<entity>> <<root>> {}
+    entity Question <<entity>> <<root>> {}
+    
+    'Class or Entity?
+    class TrueOrFalse <<(V, #FF8B40) value object>> {}
+    class ShortTextAnswer <<(V, #FF8B40) value object>> {}
+    class SingleChoiceAnswer <<(V, #FF8B40) value object>> {}
+    class MultipleChoiceAnswer <<(V, #FF8B40) value object>> {}
+    class IntegerNumber <<(V, #FF8B40) value object>> {}
+    class DecimalNumber <<(V, #FF8B40) value object>> {}
+    class Date <<(V, #FF8B40) value object>> {}
+    class Time <<(V, #FF8B40) value object>> {}
+    class NumericScale <<(V, #FF8B40) value object>> {}
+    class QuestionBody <<(V, #FF8B40) value object>> {}
+    class Grade <<(V, #FF8B40) value object>> {}
+'}
+
+'package "<<aggregate>> Applications Email Bot" {
     entity ApplicationsEmailBot <<entity>> <<root>> {}
-}
+'}
 
 
-package "<<aggregate>> Applications File Bot" {
+'package "<<aggregate>> Applications File Bot" {
     entity ApplicationsFileBot <<entity>> <<root>> {}
-}
-
-package "<<aggregate>> Job Opening" {
-    entity JobReference <<entity>> <<root>> {}
-    class TitleOrFunction <<(V,#FF8B40) value object>> {}
-    class ContractType <<(V,#FF8B40) value object>> {}
-    class Mode <<(V,#FF8B40) value object>> {}
-    class Address <<(V,#FF8B40) value object>> {}
-    class Company <<(V,#FF8B40) value object>> {}
-    class NumberOfVacancies <<(V,#FF8B40) value object>> {}
-    class Description <<(V,#FF8B40) value object>> {}
-    class Requirements <<(V,#FF8B40) value object>> {}  
-}
+'}
 
 ' User value objects
 User --> "1" Email : characterized by
@@ -84,14 +110,18 @@ User --> "1" Password : characterized by
 User --> "1" TaxPayerNumber : characterized by
 User --> "1" PhoneNumber : characterized by
 User --> "1" BirthDate : characterized by
-User --> "1" CreatedOn : characterized by
-User --> "1" Active : characterized by
 Admin --* User
 CustomerManager --* User
 BackofficeOperator --* User
 Customer --* User
 LanguageEngineer --* User
 Candidate --* User
+User -- Authentication : authenticated by
+
+'Authentication
+'Same Value Object?
+Authentication --> Email : characterized by
+Authentication --> Password : characterized by
 
 ' BackofficeOperator
 BackofficeOperator --> Application
@@ -99,18 +129,38 @@ BackofficeOperator --> ApplicationsFileBot
 
 ' Recruitment Process
 RecruitmentProcess --> Application
+Application ..> Applied : consumes
 
-' Applications Email Bot
-ApplicationsEmailBot --> ApplicationsFileBot
+ApplicationsFileBot ..> Applied : consumes
+ApplicationsEmailBot ..> Applied : publishes
 
-' JobOpening value objects
-JobReference --> "1" TitleOrFunction : characterized by
-JobReference --> "1" ContractType : characterized by
-JobReference --> "1" Mode : characterized by
-JobReference --> "1" Address : characterized by
-JobReference --> "1" Company : characterized by
-JobReference --> "1" NumberOfVacancies : characterized by
-JobReference --> "1" Description : characterized by
-JobReference --> "1" Requirements : characterized by
+' Watchdog
+ApplicationsEmailBot ..> Watchdog
+ApplicationsFileBot ..> Watchdog : observes
+Watchdog ..> Applied : consumes
+
+' Job Opening
+JobOpening --> "1" JobReference : characterized by
+JobOpening --> "1" TitleOrFunction : characterized by
+JobOpening --> "1" ContractType : characterized by
+JobOpening --> "1" Mode : characterized by
+JobOpening --> "1" Address : characterized by
+JobOpening --> "1" Company : characterized by
+JobOpening --> "1" NumberOfVacancies : characterized by
+JobOpening --> "1" Description : characterized by
+JobOpening --* JobRequirementSpecification
+
+' Interview Models
+Question --> "1" TrueOrFalse : characterized by
+Question --> "1" ShortTextAnswer : characterized by
+Question --> "1" SingleChoiceAnswer : characterized by
+Question --> "1" MultipleChoiceAnswer : characterized by
+Question --> "1" IntegerNumber : characterized by
+Question --> "1" DecimalNumber : characterized by
+Question --> "1" Date : characterized by
+Question --> "1" Time : characterized by
+Question --> "1" NumericScale : characterized by
+Question --> "1" QuestionBody : characterized by
+Question --> "1" Grade : characterized by
 
 @enduml

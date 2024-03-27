@@ -1,2 +1,2 @@
 @ECHO OFF
-mvn.cmd test
+.\bin\mvnw.cmd test

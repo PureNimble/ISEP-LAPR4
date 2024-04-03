@@ -7,9 +7,6 @@ skinparam classBackgroundColor beige
 skinparam ArrowColor #222222
 
 'package "<<aggregate>> User" {
-
-    'How does authentication work?
-
     entity User <<entity>> <<root>> {}
     class Email <<(V, #FF8B40) value object>> {}
     class FullName <<(V, #FF8B40) value object>> {}
@@ -27,8 +24,8 @@ skinparam ArrowColor #222222
     entity CustomerManager <<entity>> <<root>> {}
 '}
 
-'package "<<aggregate>> Backoffice Operator" {
-    entity BackofficeOperator <<entity>> <<root>> {}
+'package "<<aggregate>> Operator" {
+    entity Operator <<entity>> <<root>> {}
 '}
 
 'package "<<aggregate>> Language Engineer"{
@@ -43,16 +40,21 @@ skinparam ArrowColor #222222
     entity Customer <<entity>> <<root>> {}
 '}
 
+'package "<<aggregate>>  Applications Email Bot" {
+    entity  ApplicationsEmailBot <<entity>> <<root>> {}
+'}
+
+'package "<<aggregate>>  Applications File Bot" {
+    entity  ApplicationsFileBot <<entity>> <<root>> {}
+'}
+
 entity RecruitmentProcess <<entity>> <<root>> {}
-entity Screening <<entity>> {}
-entity Interview <<entity>> {}
-entity Analysis <<entity>> {}
-entity Result <<entity>> {}
+entity ScreeningPhase <<entity>> {}
+entity InterviewPhase <<entity>> {}
+entity AnalysisPhase <<entity>> {}
+entity ResultPhase <<entity>> {}
 
-
-entity Application <<entity>> <<root>> {}
-class Applied <<(E, #FF5733) event>> {}
-class Watchdog <<(S, #3366CC) service>> {}
+entity ApplicationPhase <<entity>> <<root>> {}
 
 'package "<<aggregate>> Job Opening" {
 
@@ -71,16 +73,10 @@ class Watchdog <<(S, #3366CC) service>> {}
     entity JobRequirementSpecification <<entity>> <<root>> {}
 '}
 
-'Question
-entity ANTLR {}
-entity Authentication {}
-
-'package "<<aggregate>> Interview Model" {
+'package "<<aggregate>> InterviewPhase Model" {
 
     entity InterviewModel <<entity>> <<root>> {}
     entity Question <<entity>> <<root>> {}
-    
-    'Class or Entity?
     class TrueOrFalse <<(V, #FF8B40) value object>> {}
     class ShortTextAnswer <<(V, #FF8B40) value object>> {}
     class SingleChoiceAnswer <<(V, #FF8B40) value object>> {}
@@ -94,73 +90,99 @@ entity Authentication {}
     class Grade <<(V, #FF8B40) value object>> {}
 '}
 
-'package "<<aggregate>> Applications Email Bot" {
-    entity ApplicationsEmailBot <<entity>> <<root>> {}
-'}
-
-
-'package "<<aggregate>> Applications File Bot" {
-    entity ApplicationsFileBot <<entity>> <<root>> {}
-'}
+class InitialDate <<(V, #FF8B40) value object>> {}
+class FinalDate <<(V, #FF8B40) value object>> {}
 
 ' User value objects
-User --> "1" Email : characterized by
-User --> "1" FullName : characterized by
-User --> "1" Password : characterized by
-User --> "1" TaxPayerNumber : characterized by
-User --> "1" PhoneNumber : characterized by
-User --> "1" BirthDate : characterized by
+User --> "1" Email: characterized by
+User --> "1" FullName: characterized by
+User --> "1" Password: characterized by
+User --> "1" TaxPayerNumber: characterized by
+User --> "1" PhoneNumber: characterized by
+User --> "1" BirthDate: characterized by
 Admin --* User
 CustomerManager --* User
-BackofficeOperator --* User
+Operator --* User
 Customer --* User
 LanguageEngineer --* User
 Candidate --* User
-User -- Authentication : authenticated by
 
-'Authentication
-'Same Value Object?
-Authentication --> Email : characterized by
-Authentication --> Password : characterized by
+' Admin
+Admin --> Customer: registers and manages
+Admin --> CustomerManager: manages
+Admin --> Operator: defines
 
-' BackofficeOperator
-BackofficeOperator --> Application
-BackofficeOperator --> ApplicationsFileBot
+' Operator
+Operator --> Candidate: may register
+Operator --> ApplicationPhase: registers applications
+Operator --> Report: imports
+
+' Customer Manager
+CustomerManager --> Customer: manages
+CustomerManager --> JobOpening: registers and manages
+CustomerManager --> RecruitmentProcess: setup
 
 ' Recruitment Process
-RecruitmentProcess --> Application
-Application ..> Applied : consumes
-
-ApplicationsFileBot ..> Applied : consumes
-ApplicationsEmailBot ..> Applied : publishes
-
-' Watchdog
-ApplicationsEmailBot ..> Watchdog
-ApplicationsFileBot ..> Watchdog : observes
-Watchdog ..> Applied : consumes
+RecruitmentProcess --> ApplicationPhase: has
+RecruitmentProcess --> ScreeningPhase: has
+RecruitmentProcess --> InterviewPhase: can have
+RecruitmentProcess --> AnalysisPhase: has
+RecruitmentProcess --> ResultPhase: has
 
 ' Job Opening
-JobOpening --> "1" JobReference : characterized by
-JobOpening --> "1" TitleOrFunction : characterized by
-JobOpening --> "1" ContractType : characterized by
-JobOpening --> "1" Mode : characterized by
-JobOpening --> "1" Address : characterized by
-JobOpening --> "1" Company : characterized by
-JobOpening --> "1" NumberOfVacancies : characterized by
-JobOpening --> "1" Description : characterized by
+JobOpening --> RecruitmentProcess: has
+JobOpening --> "1" JobReference: characterized by
+JobOpening --> "1" TitleOrFunction: characterized by
+JobOpening --> "1" ContractType: characterized by
+JobOpening --> "1" Mode: characterized by
+JobOpening --> "1" Address: characterized by
+JobOpening --> "1" Company: characterized by
+JobOpening --> "1" NumberOfVacancies: characterized by
+JobOpening --> "1" Description: characterized by
 JobOpening --* JobRequirementSpecification
 
-' Interview Models
-Question --> "1" TrueOrFalse : characterized by
-Question --> "1" ShortTextAnswer : characterized by
-Question --> "1" SingleChoiceAnswer : characterized by
-Question --> "1" MultipleChoiceAnswer : characterized by
-Question --> "1" IntegerNumber : characterized by
-Question --> "1" DecimalNumber : characterized by
-Question --> "1" Date : characterized by
-Question --> "1" Time : characterized by
-Question --> "1" NumericScale : characterized by
-Question --> "1" QuestionBody : characterized by
-Question --> "1" Grade : characterized by
+' InterviewPhase Models
+InterviewModel --> Question: has
+
+' Question
+Question --> "1" TrueOrFalse: characterized by
+Question --> "1" ShortTextAnswer: characterized by
+Question --> "1" SingleChoiceAnswer: characterized by
+Question --> "1" MultipleChoiceAnswer: characterized by
+Question --> "1" IntegerNumber: characterized by
+Question --> "1" DecimalNumber: characterized by
+Question --> "1" Date: characterized by
+Question --> "1" Time: characterized by
+Question --> "1" NumericScale: characterized by
+Question --> "1" QuestionBody: characterized by
+Question --> "1" Grade: characterized by
+
+'Interview Phase
+InterviewPhase --> InterviewModel: has
+InterviewModel --> "1" InitialDate: has
+InterviewModel --> "1" FinalDate: has
+
+' Applications Email Bot
+ApplicationsEmailBot --> File: generates
+
+' Applications File Bot
+ApplicationsFileBot --> File: imports
+ApplicationsFileBot --> Report: generates
+
+' Application Phase
+ApplicationPhase --> "1" InitialDate: has
+ApplicationPhase --> "1" FinalDate: has
+
+' Screening Phase
+ScreeningPhase --> "1" InitialDate: has
+ScreeningPhase --> "1" FinalDate: has
+
+' Analysis Phase
+AnalysisPhase --> "1" InitialDate: has
+AnalysisPhase --> "1" FinalDate: has
+
+' Result Phase
+ResultPhase --> "1" InitialDate: has
+ResultPhase --> "1" FinalDate: has
 
 @enduml

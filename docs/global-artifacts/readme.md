@@ -12,4 +12,6 @@ This folder contains all the global artifacts for your project, split by each im
 
 [_`Design`_](./03.design/readme.md)
 
+[_`System Specifications`_](./01.requirements-engineering/projeto-integrado-sys-spec-v8.pdf)
+
 <img width=100% src="https://capsule-render.vercel.app/api?type=waving&height=120&color=4E1764&section=footer"/>

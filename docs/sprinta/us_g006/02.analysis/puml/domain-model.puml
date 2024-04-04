@@ -64,11 +64,26 @@ package "<<aggregate>> Recruitment Process" {
         + InitialDate initialDate
         + FinalDate finalDate
     }
-    entity ApplicationPhase <<entity>> <<root>> {}
-    entity ScreeningPhase <<entity>> {}
-    entity InterviewPhase <<entity>> {}
-    entity AnalysisPhase <<entity>> {}
-    entity ResultPhase <<entity>> {}
+    entity ApplicationPhase <<entity>> {
+        + InitialDate initialDate
+        + FinalDate finalDate
+    }
+    entity ScreeningPhase <<entity>> {
+        + InitialDate initialDate
+        + FinalDate finalDate
+    }
+    entity InterviewPhase <<entity>> {
+        + InitialDate initialDate
+        + FinalDate finalDate
+    }
+    entity AnalysisPhase <<entity>> {
+        + InitialDate initialDate
+        + FinalDate finalDate
+    }
+    entity ResultPhase <<entity>> {
+        + InitialDate initialDate
+        + FinalDate finalDate
+    }
 }
 
 ' Job Opening Aggregate
@@ -91,7 +106,7 @@ package "<<aggregate>> Job Requirements Specification" {
 }
 
 ' Interview Phase Model Aggregate
-package "<<aggregate>> InterviewPhase Model" {
+package "<<aggregate>> Interview Model" {
     entity InterviewModel <<entity>> <<root>> {}
 }
 
@@ -109,8 +124,36 @@ package "<<aggregate>> Question" {
         + NumericScale numericScale
         + QuestionBody questionBody
         + Grade grade
+        + Answer answer
     }
     note right of Question: Questions can have multiple answers \nand each answer has a value
+}
+
+' Plugins Aggregate
+package "<<aggregate>> Requirements Model" {
+    entity RequirementModel <<entity>> <<root>> {}
+}
+
+' Requirement Aggregate
+package "<<aggregate>> Requirement" {
+    entity Requirement <<entity>> <<root>> {
+        + TrueOrFalse trueOrFalse
+        + ShortTextAnswer shortTextAnswer
+        + SingleChoiceAnswer singleChoiceAnswer
+        + MultipleChoiceAnswer multipleChoiceAnswer
+        + IntegerNumber integerNumber
+        + DecimalNumber decimalNumber
+        + Date date
+        + Time time
+        + NumericScale numericScale
+        + RequirementBody requirementBody
+        + Answer answer
+    }
+}
+package "<<aggregate>> Ranking" {
+    entity Ranking <<entity>> <<root>> {
+        + Position position
+    }
 }
 
 ' Value Objects
@@ -153,6 +196,12 @@ JobOpening --* JobRequirementSpecification
 ' InterviewPhase Models relationships
 InterviewModel --> Question: has
 
+' Job Requirement Specification relationships
+RequirementModel --> Requirement : has
+
+' ScreeningPhase relationships
+ScreeningPhase --> RequirementModel : has
+
 'Interview Phase relationships
 InterviewPhase --> InterviewModel: has
 
@@ -162,5 +211,15 @@ ApplicationsEmailBot --> File: generates
 ' Applications File Bot relationships
 ApplicationsFileBot --> File: imports
 ApplicationsFileBot --> Report: generates
+
+' AnalysisPhase relationships
+AnalysisPhase --> Ranking: has
+
+' Ranking relationships
+Ranking --> Candidate: has
+
+' Language Engineer relationships
+LanguageEngineer --> InterviewModel: deploys and configure
+LanguageEngineer --> RequirementModel: deploys and configure
 
 @enduml

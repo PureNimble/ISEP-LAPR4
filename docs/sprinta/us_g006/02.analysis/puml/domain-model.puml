@@ -6,100 +6,118 @@ hide empty methods
 skinparam classBackgroundColor beige
 skinparam ArrowColor #222222
 
-'package "<<aggregate>> User" {
-    entity User <<entity>> <<root>> {}
-    class Email <<(V, #FF8B40) value object>> {}
-    class FullName <<(V, #FF8B40) value object>> {}
-    class Password <<(V, #FF8B40) value object>> {}
-    class TaxPayerNumber <<(V, #FF8B40) value object>> {}
-    class PhoneNumber <<(V, #FF8B40) value object>> {}
-    class BirthDate <<(V, #FF8B40) value object>> {}
-'}
+' User Aggregate
+package "<<aggregate>> User" {
+    entity User <<entity>> <<root>> {
+        + Email email
+        + FullName fullName
+        + Password password
+        + TaxPayerNumber taxPayerNumber
+        + PhoneNumber phoneNumber
+        + BirthDate birthDate
+    }
+}
 
-'package "<<aggregate>> Admin" {
+' Admin Aggregate
+package "<<aggregate>> Admin" {
     entity Admin <<entity>> <<root>> {}
-'}
+}
 
-'package "<<aggregate>> Customer Manager" {
+' Customer Manager Aggregate
+package "<<aggregate>> Customer Manager" {
     entity CustomerManager <<entity>> <<root>> {}
-'}
+}
 
-'package "<<aggregate>> Operator" {
+' Operator Aggregate
+package "<<aggregate>> Operator" {
     entity Operator <<entity>> <<root>> {}
-'}
+}
 
-'package "<<aggregate>> Language Engineer"{
+' Language Engineer Aggregate
+package "<<aggregate>> Language Engineer"{
     entity LanguageEngineer <<entity>> <<root>> {}
-'}
+}
 
-'package "<<aggregate>> Candidate" {
+' Candidate Aggregate
+package "<<aggregate>> Candidate" {
     entity Candidate <<entity>> <<root>> {}
-'}
+}
 
-'package "<<aggregate>> Customer" {
+' Customer Aggregate
+package "<<aggregate>> Customer" {
     entity Customer <<entity>> <<root>> {}
-'}
+}
 
-'package "<<aggregate>>  Applications Email Bot" {
+' Applications Email Bot Aggregate
+package "<<aggregate>>  Applications Email Bot" {
     entity  ApplicationsEmailBot <<entity>> <<root>> {}
-'}
+}
 
-'package "<<aggregate>>  Applications File Bot" {
+' Applications File Bot Aggregate
+package "<<aggregate>>  Applications File Bot" {
     entity  ApplicationsFileBot <<entity>> <<root>> {}
-'}
+}
 
-entity RecruitmentProcess <<entity>> <<root>> {}
-entity ScreeningPhase <<entity>> {}
-entity InterviewPhase <<entity>> {}
-entity AnalysisPhase <<entity>> {}
-entity ResultPhase <<entity>> {}
+' Recruitment Process Aggregate
+package "<<aggregate>> Recruitment Process" {
+    entity RecruitmentProcess <<entity>> <<root>> {
+        + InitialDate initialDate
+        + FinalDate finalDate
+    }
+    entity ApplicationPhase <<entity>> <<root>> {}
+    entity ScreeningPhase <<entity>> {}
+    entity InterviewPhase <<entity>> {}
+    entity AnalysisPhase <<entity>> {}
+    entity ResultPhase <<entity>> {}
+}
 
-entity ApplicationPhase <<entity>> <<root>> {}
+' Job Opening Aggregate
+package "<<aggregate>> Job Opening" {
+    entity JobOpening <<entity>> <<root>> {
+        + JobReference jobReference
+        + TitleOrFunction titleOrFunction
+        + ContractType contractType
+        + Mode mode
+        + Address address
+        + Company company
+        + NumberOfVacancies numberOfVacancies
+        + Description description
+    }
+}
 
-'package "<<aggregate>> Job Opening" {
-
-    entity JobOpening <<entity>> <<root>> {}
-    class JobReference <<(V, #FF8B40) value object>> {}
-    class TitleOrFunction <<(V, #FF8B40) value object>> {}
-    class ContractType <<(V, #FF8B40) value object>> {}
-    class Mode <<(V, #FF8B40) value object>> {}
-    class Address <<(V, #FF8B40) value object>> {}
-    class Company <<(V, #FF8B40) value object>> {}
-    class NumberOfVacancies <<(V, #FF8B40) value object>> {}
-    class Description <<(V, #FF8B40) value object>> {}
-'}
-
-'package "<<aggregate>> Job Requirements Specification" {
+' Job Requirements Specification Aggregate
+package "<<aggregate>> Job Requirements Specification" {
     entity JobRequirementSpecification <<entity>> <<root>> {}
-'}
+}
 
-'package "<<aggregate>> InterviewPhase Model" {
-
+' Interview Phase Model Aggregate
+package "<<aggregate>> InterviewPhase Model" {
     entity InterviewModel <<entity>> <<root>> {}
-    entity Question <<entity>> <<root>> {}
-    class TrueOrFalse <<(V, #FF8B40) value object>> {}
-    class ShortTextAnswer <<(V, #FF8B40) value object>> {}
-    class SingleChoiceAnswer <<(V, #FF8B40) value object>> {}
-    class MultipleChoiceAnswer <<(V, #FF8B40) value object>> {}
-    class IntegerNumber <<(V, #FF8B40) value object>> {}
-    class DecimalNumber <<(V, #FF8B40) value object>> {}
-    class Date <<(V, #FF8B40) value object>> {}
-    class Time <<(V, #FF8B40) value object>> {}
-    class NumericScale <<(V, #FF8B40) value object>> {}
-    class QuestionBody <<(V, #FF8B40) value object>> {}
-    class Grade <<(V, #FF8B40) value object>> {}
-'}
+}
 
-class InitialDate <<(V, #FF8B40) value object>> {}
-class FinalDate <<(V, #FF8B40) value object>> {}
+' Question Aggregate
+package "<<aggregate>> Question" {  
+    entity Question <<entity>> <<root>> {
+        + TrueOrFalse trueOrFalse
+        + ShortTextAnswer shortTextAnswer
+        + SingleChoiceAnswer singleChoiceAnswer
+        + MultipleChoiceAnswer multipleChoiceAnswer
+        + IntegerNumber integerNumber
+        + DecimalNumber decimalNumber
+        + Date date
+        + Time time
+        + NumericScale numericScale
+        + QuestionBody questionBody
+        + Grade grade
+    }
+    note right of Question: Questions can have multiple answers \nand each answer has a value
+}
 
-' User value objects
-User --> "1" Email: characterized by
-User --> "1" FullName: characterized by
-User --> "1" Password: characterized by
-User --> "1" TaxPayerNumber: characterized by
-User --> "1" PhoneNumber: characterized by
-User --> "1" BirthDate: characterized by
+' Value Objects
+class File <<(V, #D3D3D3) value object>> {}
+class Report <<(V, #D3D3D3) value object>> {}
+
+' User value objects relationships
 Admin --* User
 CustomerManager --* User
 Operator --* User
@@ -107,82 +125,42 @@ Customer --* User
 LanguageEngineer --* User
 Candidate --* User
 
-' Admin
+' Admin relationships
 Admin --> Customer: registers and manages
 Admin --> CustomerManager: manages
 Admin --> Operator: defines
 
-' Operator
+' Operator relationships
 Operator --> Candidate: may register
 Operator --> ApplicationPhase: registers applications
 Operator --> Report: imports
 
-' Customer Manager
+' Customer Manager relationships
 CustomerManager --> Customer: manages
 CustomerManager --> JobOpening: registers and manages
 CustomerManager --> RecruitmentProcess: setup
 
-' Recruitment Process
+' Recruitment Process relationships
 RecruitmentProcess --> ApplicationPhase: has
 RecruitmentProcess --> ScreeningPhase: has
 RecruitmentProcess --> InterviewPhase: can have
 RecruitmentProcess --> AnalysisPhase: has
 RecruitmentProcess --> ResultPhase: has
 
-' Job Opening
-JobOpening --> RecruitmentProcess: has
-JobOpening --> "1" JobReference: characterized by
-JobOpening --> "1" TitleOrFunction: characterized by
-JobOpening --> "1" ContractType: characterized by
-JobOpening --> "1" Mode: characterized by
-JobOpening --> "1" Address: characterized by
-JobOpening --> "1" Company: characterized by
-JobOpening --> "1" NumberOfVacancies: characterized by
-JobOpening --> "1" Description: characterized by
+' Job Opening relationships
 JobOpening --* JobRequirementSpecification
 
-' InterviewPhase Models
+' InterviewPhase Models relationships
 InterviewModel --> Question: has
 
-' Question
-Question --> "1" TrueOrFalse: characterized by
-Question --> "1" ShortTextAnswer: characterized by
-Question --> "1" SingleChoiceAnswer: characterized by
-Question --> "1" MultipleChoiceAnswer: characterized by
-Question --> "1" IntegerNumber: characterized by
-Question --> "1" DecimalNumber: characterized by
-Question --> "1" Date: characterized by
-Question --> "1" Time: characterized by
-Question --> "1" NumericScale: characterized by
-Question --> "1" QuestionBody: characterized by
-Question --> "1" Grade: characterized by
-
-'Interview Phase
+'Interview Phase relationships
 InterviewPhase --> InterviewModel: has
-InterviewModel --> "1" InitialDate: has
-InterviewModel --> "1" FinalDate: has
 
-' Applications Email Bot
+' Applications Email Bot relationships
 ApplicationsEmailBot --> File: generates
 
-' Applications File Bot
+' Applications File Bot relationships
 ApplicationsFileBot --> File: imports
 ApplicationsFileBot --> Report: generates
-
-' Application Phase
-ApplicationPhase --> "1" InitialDate: has
-ApplicationPhase --> "1" FinalDate: has
-
-' Screening Phase
-ScreeningPhase --> "1" InitialDate: has
-ScreeningPhase --> "1" FinalDate: has
-
-' Analysis Phase
-AnalysisPhase --> "1" InitialDate: has
-AnalysisPhase --> "1" FinalDate: has
-
-' Result Phase
-ResultPhase --> "1" InitialDate: has
-ResultPhase --> "1" FinalDate: has
 
 @enduml

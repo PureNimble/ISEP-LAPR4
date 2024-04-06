@@ -48,11 +48,6 @@ package "<<aggregate>> Customer" {
     entity Customer <<entity>> <<root>> {}
 }
 
-' Applications Email Bot Aggregate
-package "<<aggregate>>  Applications Email Bot" {
-    entity  ApplicationsEmailBot <<entity>> <<root>> {}
-}
-
 ' Applications File Bot Aggregate
 package "<<aggregate>>  Applications File Bot" {
     entity  ApplicationsFileBot <<entity>> <<root>> {}
@@ -65,22 +60,29 @@ package "<<aggregate>> Recruitment Process" {
         + FinalDate finalDate
     }
     entity ApplicationPhase <<entity>> {
+        + State state
         + InitialDate initialDate
         + FinalDate finalDate
     }
+    note right of ApplicationPhase: State can be Opened or Closed
+
     entity ScreeningPhase <<entity>> {
+        + State state
         + InitialDate initialDate
         + FinalDate finalDate
     }
     entity InterviewPhase <<entity>> {
+        + State state
         + InitialDate initialDate
         + FinalDate finalDate
     }
     entity AnalysisPhase <<entity>> {
+        + State state
         + InitialDate initialDate
         + FinalDate finalDate
     }
     entity ResultPhase <<entity>> {
+        + State state
         + InitialDate initialDate
         + FinalDate finalDate
     }
@@ -100,33 +102,36 @@ package "<<aggregate>> Job Opening" {
     }
 }
 
-' Job Requirements Specification Aggregate
-package "<<aggregate>> Job Requirements Specification" {
-    entity JobRequirementSpecification <<entity>> <<root>> {}
+' RequirementSpecification
+package "<<aggregate>> Requirement Specification" {
+    entity RequirementSpecification <<entity>> <<root>> {}
 }
 
 ' Interview Phase Model Aggregate
 package "<<aggregate>> Interview Model" {
-    entity InterviewModel <<entity>> <<root>> {}
+    entity InterviewModel <<entity>>  {}
 }
 
-' Question Aggregate
-package "<<aggregate>> Question" {  
-    entity Question <<entity>> <<root>> {
-        + TrueOrFalse trueOrFalse
-        + ShortTextAnswer shortTextAnswer
-        + SingleChoiceAnswer singleChoiceAnswer
-        + MultipleChoiceAnswer multipleChoiceAnswer
-        + IntegerNumber integerNumber
-        + DecimalNumber decimalNumber
-        + Date date
-        + Time time
-        + NumericScale numericScale
-        + QuestionBody questionBody
+' Interview Aggregate
+package "<<aggregate>> Interview" {
+    entity Interview <<entity>> <<root>> {}
+}
+
+' Candidate Answer Aggregate
+package "<<aggregate>> Candidate Answer" {
+    entity CandidateAnswer <<entity>> <<root>> {}
+}
+
+' Interview Question Aggregate
+package "<<aggregate>> Interview Question" {  
+    entity InterviewQuestion <<entity>> <<root>> {
         + Grade grade
-        + Answer answer
     }
-    note right of Question: Questions can have multiple answers \nand each answer has a value
+}
+
+' Specification Question Aggregate
+package "<<aggregate>> Specification Question" {  
+    entity SpecificationQuestion <<entity>> <<root>> {}
 }
 
 ' Plugins Aggregate
@@ -134,31 +139,45 @@ package "<<aggregate>> Requirements Model" {
     entity RequirementModel <<entity>> <<root>> {}
 }
 
-' Requirement Aggregate
-package "<<aggregate>> Requirement" {
-    entity Requirement <<entity>> <<root>> {
-        + TrueOrFalse trueOrFalse
-        + ShortTextAnswer shortTextAnswer
-        + SingleChoiceAnswer singleChoiceAnswer
-        + MultipleChoiceAnswer multipleChoiceAnswer
-        + IntegerNumber integerNumber
-        + DecimalNumber decimalNumber
-        + Date date
-        + Time time
-        + NumericScale numericScale
-        + RequirementBody requirementBody
-        + Answer answer
-    }
-}
+' Ranking Aggregate
 package "<<aggregate>> Ranking" {
     entity Ranking <<entity>> <<root>> {
         + Position position
     }
 }
 
-' Value Objects
-class File <<(V, #D3D3D3) value object>> {}
-class Report <<(V, #D3D3D3) value object>> {}
+' Question Model Aggregate
+package "<<aggregate>> Question Model" {
+    entity QuestionModel <<entity>> <<root>> {
+        + QuestionText questionText
+        + Answer answer
+    }
+    entity TrueOrFalse <<entity>> {}
+    entity ShortTextAnswer <<entity>> {}
+    entity SingleChoiceAnswer <<entity>> {}
+    entity MultipleChoiceAnswer <<entity>> {}
+    entity IntegerNumber <<entity>> {}
+    entity DecimalNumber <<entity>> {}
+    entity Date <<entity>> {}
+    entity Time <<entity>> {}
+    entity NumericScale <<entity>> {}
+    entity QuestionBody <<entity>> {}
+}
+
+' File Aggregate
+package "<<aggregate>> File" {
+    entity File <<entity>> <<root>> {}
+}
+
+' Result Aggregate
+package "<<aggregate>> Result" {
+    entity Result <<entity>> <<root>> {
+        + Outcome outcome
+        + Justification justification
+    }
+    note left of Result: Outcome can be Approved or Rejected
+    note right of Result: Rejected outcomes must have a justification
+}
 
 ' User value objects relationships
 Admin --* User
@@ -176,7 +195,7 @@ Admin --> Operator: defines
 ' Operator relationships
 Operator --> Candidate: may register
 Operator --> ApplicationPhase: registers applications
-Operator --> Report: imports
+Operator --> File: imports
 
 ' Customer Manager relationships
 CustomerManager --> Customer: manages
@@ -191,35 +210,69 @@ RecruitmentProcess --> AnalysisPhase: has
 RecruitmentProcess --> ResultPhase: has
 
 ' Job Opening relationships
-JobOpening --* JobRequirementSpecification
+JobOpening ---> RecruitmentProcess: has
+JobOpening --> RequirementSpecification: has
+RequirementSpecification --> RequirementModel: uses
 
 ' InterviewPhase Models relationships
-InterviewModel --> Question: has
+InterviewModel --> InterviewQuestion: has
 
-' Job Requirement Specification relationships
-RequirementModel --> Requirement : has
+' Job Requirement Model relationships
+RequirementModel --> SpecificationQuestion : has
 
 ' ScreeningPhase relationships
 ScreeningPhase --> RequirementModel : has
 
 'Interview Phase relationships
-InterviewPhase --> InterviewModel: has
+InterviewPhase --> Interview: has
 
-' Applications Email Bot relationships
-ApplicationsEmailBot --> File: generates
-
-' Applications File Bot relationships
-ApplicationsFileBot --> File: imports
-ApplicationsFileBot --> Report: generates
+' Interview relationships
+Interview --> InterviewModel: uses
 
 ' AnalysisPhase relationships
 AnalysisPhase --> Ranking: has
 
 ' Ranking relationships
-Ranking --> Candidate: has
+Ranking --> Candidate: refers to a
+
+' Interview Answers relationships
+CandidateAnswer --> InterviewQuestion: for an
+
+' Requirement relationships
+CandidateAnswer --> SpecificationQuestion: for a
+
+' Applications File Bot relationships
+ApplicationsFileBot --> File: exports
 
 ' Language Engineer relationships
 LanguageEngineer --> InterviewModel: deploys and configure
 LanguageEngineer --> RequirementModel: deploys and configure
+
+' Result Phase relationships
+ResultPhase --> Result: has
+
+' Result relationships
+Result --> Candidate: refers to a
+
+' Candidate relationships
+Candidate --> CandidateAnswer: provides
+
+' Interview Question relationships
+InterviewQuestion --> QuestionModel: has
+
+' Specification Question relationships
+SpecificationQuestion --> QuestionModel: has
+
+' Question Model relationships
+TrueOrFalse --|> QuestionModel: is a
+ShortTextAnswer --|> QuestionModel: is a
+SingleChoiceAnswer --|> QuestionModel: is a
+MultipleChoiceAnswer --|> QuestionModel: is a
+IntegerNumber --|> QuestionModel: is a
+DecimalNumber --|> QuestionModel: is a
+Date --|> QuestionModel: is a
+Time --|> QuestionModel: is a
+NumericScale --|> QuestionModel: is a
+QuestionBody --|> QuestionModel: is a
 
 @enduml

@@ -73,7 +73,7 @@ package "<<aggregate>> Customer" {
     entity Customer <<entity>> <<root>> {}
 
     class CustomerCode <<valueObject>> <<(V, #FF8B40)>> {}
-    class CustomerAdress <<valueObject>> <<(V, #FF8B40)>> {}
+    class CustomerAddress <<valueObject>> <<(V, #FF8B40)>> {}
 }
 
 ' Applications File Bot Aggregate
@@ -84,17 +84,9 @@ package "<<aggregate>>  Applications File Bot" {
 ' Recruitment Process Aggregate
 package "<<aggregate>> Recruitment Process" {
     entity RecruitmentProcess <<entity>> <<root>> {}
-    entity ApplicationPhase <<entity>> {}
-    entity ScreeningPhase <<entity>> {}
-    entity InterviewPhase <<entity>> {}
-    entity AnalysisPhase <<entity>> {}
-    entity ResultPhase <<entity>> {}
 
-    class State <<valueObject>> <<(V, #FF8B40)>> {}
     class InitialDate <<valueObject>> <<(V, #FF8B40)>> {}
     class FinalDate <<valueObject>> <<(V, #FF8B40)>> {}
-    
-    note right of State: State can be Opened or Closed
 }
 
 ' Job Opening Aggregate
@@ -116,7 +108,7 @@ package "<<aggregate>> Requirement Specification" {
     entity RequirementSpecification <<entity>> <<root>> {}
 }
 
-' Interview Phase Model Aggregate
+' Interview Model Aggregate
 package "<<aggregate>> Interview Model" {
     entity InterviewModel <<entity>> <<root>>  {}
 
@@ -157,9 +149,25 @@ package "<<aggregate>> Requirement Model" {
     class RequirementDescription <<valueObject>> <<(V, #FF8B40)>> {}
 }
 
-' Position Aggregate
-package "<<aggregate>> Position" {
-    entity Position <<entity>> <<root>> {}
+' Phase Aggregate
+package "<<aggregate>> Phase" {
+    entity Phase <<entity>> <<root>> {}
+    entity ApplicationPhase <<entity>> {}
+    entity ScreeningPhase <<entity>> {}
+    entity InterviewPhase <<entity>> {}
+    entity AnalysisPhase <<entity>> {}
+    entity ResultPhase <<entity>> {}
+    
+    class State <<valueObject>> <<(V, #FF8B40)>> {}
+    class InitialPhaseDate <<valueObject>> <<(V, #FF8B40)>> {}
+    class FinalPhaseDate <<valueObject>> <<(V, #FF8B40)>> {}
+
+    note right of State: State can be Opened or Closed
+}
+
+' Rank Aggregate
+package "<<aggregate>> Rank" {
+    entity Rank <<entity>> <<root>> {}
 
     class PositionNumber <<valueObject>> <<(V, #FF8B40)>> {}
 }
@@ -207,12 +215,12 @@ User "1" --> "1" BirthDate : has
 User "1" --> "1" IsActive : can be
 User "1" --> "1" Authentication : authenticated by
 
-Admin --* User
-CustomerManager --* User
-Operator --* User
-Customer --* User
-LanguageEngineer --* User
-Candidate --* User
+Admin ---* User
+CustomerManager ---* User
+Operator ---* User
+Customer ---* User
+LanguageEngineer ---* User
+Candidate ---* User
 
 ' Authentication relationships
 Authentication "1" --> "1" Email : authenticated by
@@ -234,16 +242,12 @@ Operator "*" --> "*" File: imports
 CustomerManager "*" --> "*" Customer: manages
 CustomerManager "*" --> "*" JobOpening: registers and manages
 CustomerManager "*" --> "*" RecruitmentProcess: setup
-CustomerManager "*" --> "*" Position: defines
+CustomerManager "*" --> "*" Rank: defines
 
 ' Recruitment Process relationships
 RecruitmentProcess "1" --> "1" InitialDate: has
 RecruitmentProcess "1" --> "1" FinalDate: has
-RecruitmentProcess "1" --> "1" ApplicationPhase: has
-RecruitmentProcess "1" --> "1" ScreeningPhase: has
-RecruitmentProcess "1" --> "1" InterviewPhase: can have
-RecruitmentProcess "1" --> "1" AnalysisPhase: has
-RecruitmentProcess "1" --> "1" ResultPhase: has
+RecruitmentProcess "1" ---> "*" Phase: has
 
 ' Job Opening relationships
 JobOpening "1" --> "1" JobReference : has
@@ -267,15 +271,9 @@ RequirementModel "1" --> "1" RequirementDescription : has
 RequirementModel "1" --> "*" SpecificationQuestion : has
 
 ' ScreeningPhase relationships
-ScreeningPhase "1" --> "1" State: has
-ScreeningPhase "1" --> "1" InitialDate: has
-ScreeningPhase "1" --> "1" FinalDate: has
 ScreeningPhase "1" --> "1" RequirementSpecification : has
 
 'Interview Phase relationships
-InterviewPhase "1" --> "1" State: has
-InterviewPhase "1" --> "1" InitialDate: has
-InterviewPhase "1" --> "1" FinalDate: has
 InterviewPhase "1" --> "1" Interview: has
 
 ' Interview relationships
@@ -283,10 +281,7 @@ Interview "1" --> "1" InterviewDate: has
 Interview "1" --> "1" InterviewModel: uses
 
 ' AnalysisPhase relationships
-AnalysisPhase "1" --> "*" Position: has
-
-' Position relationships
-Position "1" --> "1" Application: refers to an
+AnalysisPhase "1" --> "*" Rank: has
 
 ' Interview Answers relationships
 CandidateAnswer "1" --> "1" AnswerBody : has
@@ -303,15 +298,11 @@ LanguageEngineer "*" --> "*" InterviewModel: deploys and configure
 LanguageEngineer "*" --> "*" RequirementModel: deploys and configure
 
 ' Result Phase relationships
-ResultPhase "1" --> "1" State: has
-ResultPhase "1" --> "1" InitialDate: has
-ResultPhase "1" --> "1" FinalDate: has
 ResultPhase "1" --> "*" Result: has
 
 ' Result relationships
 Result "1" --> "1" Outcome: has
 Result "1" --> "1" Justification: can have
-Result "1" --> "1" Application: refers to an
 
 ' Candidate relationships
 Candidate "1" --> "*" CandidateAnswer: provides
@@ -320,47 +311,52 @@ Candidate "1" --> "*" Application: has
 ' Interview Question relationships
 InterviewQuestion "1" --> "1" Grade : has
 InterviewQuestion "1" --> "1" Quotation : has
-InterviewQuestion "*" --> "1" QuestionModel: uses
+InterviewQuestion "*" ---> "1" QuestionModel: uses
 
 ' Specification Question relationships
-SpecificationQuestion "*" --> "1" QuestionModel: uses
+SpecificationQuestion "*" ---> "1" QuestionModel: uses
 
 ' Question Model relationships
-TrueOrFalse --|> QuestionModel: is a
-ShortTextAnswer --|> QuestionModel: is a
-SingleChoiceAnswer --|> QuestionModel: is a
-MultipleChoiceAnswer --|> QuestionModel: is a
-IntegerNumber --|> QuestionModel: is a
-DecimalNumber --|> QuestionModel: is a
-Date --|> QuestionModel: is a
-Time --|> QuestionModel: is a
-NumericScale --|> QuestionModel: is a
+TrueOrFalse -up-|> QuestionModel: is a
+ShortTextAnswer -up-|> QuestionModel: is a
+SingleChoiceAnswer -up-|> QuestionModel: is a
+MultipleChoiceAnswer -up-|> QuestionModel: is a
+IntegerNumber -up-|> QuestionModel: is a
+DecimalNumber -up-|> QuestionModel: is a
+Date -up-|> QuestionModel: is a
+Time -up-|> QuestionModel: is a
+NumericScale -up-|> QuestionModel: is a
 
 ' Application Phase relationships
-ApplicationPhase "1" --> "1" State: has
-ApplicationPhase "1" --> "1" InitialDate: has
-ApplicationPhase "1" --> "1" FinalDate: has
-ApplicationPhase --> Application: has
+ApplicationPhase "1" --> "*" Application: has
 
 ' Application relationships
 Application "1" --> "1" ApplicationDate : has
 Application "1" --> "1" ApplicationNumber : has
+Application "1" --> "1" Result : has
+Application "1" --> "1" Rank : has
 
 ' Customer relationships
 Customer "1" --> "1" CustomerCode : has
-Customer "1" --> "1" CustomerAdress : has
+Customer "1" --> "1" CustomerAddress : has
 Customer "1" --> "*" JobOpening: has
 
-' Analysis Phase relationships
-AnalysisPhase "1" --> "1" State: has
-AnalysisPhase "1" --> "1" InitialDate: has
-AnalysisPhase "1" --> "1" FinalDate: has
-
-' Position relationships
-Position "1" --> "1" PositionNumber: has
+' Rank relationships
+Rank "1" --> "1" PositionNumber: has
 
 ' Question Model relationships
 QuestionModel "1" --> "1" QuestionBody : has
 QuestionModel "1" --> "1" ExpectedAnswer : has
+
+' Phase relationships
+Phase "1" --> "1" State: has
+Phase "1" --> "1" InitialPhaseDate: has
+Phase "1" --> "1" FinalPhaseDate: has
+
+ApplicationPhase -up-|> Phase: is a
+ScreeningPhase -up-|> Phase: is a
+InterviewPhase -up-|> Phase: is a
+AnalysisPhase -up-|> Phase: is a
+ResultPhase -up-|> Phase: is a
 
 @enduml

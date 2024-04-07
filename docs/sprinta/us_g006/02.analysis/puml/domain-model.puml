@@ -19,30 +19,28 @@ skinparam package {
 
 ' User Aggregate
 package "<<aggregate>> User" {
-    entity User <<entity>> <<root>> {
-        + Email email <<valueObject>>
-        + FullName fullName <<valueObject>>
-        + Password password <<valueObject>>
-        + TaxPayerNumber taxPayerNumber <<valueObject>>
-        + PhoneNumber phoneNumber <<valueObject>>
-        + BirthDate birthDate <<valueObject>>
-        + IsActive isActive <<valueObject>>
-    }
+    entity User <<entity>> <<root>> {}
 
-    class Authentication <<service>> <<(S, #85C1E9)>> {
-        + email : Email <<valueObject>>
-        + password : Password <<valueObject>>
-        + token : Token <<valueObject>>
-        + createdOn : Calendar <<valueObject>>
-    }
+    class Email <<valueObject>> <<(V, #FF8B40)>> {}
+    class FullName <<valueObject>> <<(V, #FF8B40)>> {}
+    class Password <<valueObject>> <<(V, #FF8B40)>> {}
+    class TaxPayerNumber <<valueObject>> <<(V, #FF8B40)>> {}
+    class PhoneNumber <<valueObject>> <<(V, #FF8B40)>> {}
+    class BirthDate <<valueObject>> <<(V, #FF8B40)>> {}
+    class IsActive <<valueObject>> <<(V, #FF8B40)>> {}
+
+    class Authentication <<service>> <<(S, #85C1E9)>> {}
+
+    class Token <<valueObject>> <<(V, #FF8B40)>> {}
+    class createdOn <<valueObject>> <<(V, #FF8B40)>> {}
 }
 
 ' Application Aggregate
 package "<<aggregate>> Application" {
-    entity Application <<entity>> <<root>> {
-        + ApplicationDate applicationDate <<valueObject>>
-        + ApplicationNumber applicationNumber <<valueObject>>
-    }
+    entity Application <<entity>> <<root>> {}
+
+    class ApplicationDate <<valueObject>> <<(V, #FF8B40)>> {}
+    class ApplicationNumber <<valueObject>> <<(V, #FF8B40)>> {}
 }
 
 ' Admin Aggregate
@@ -72,10 +70,10 @@ package "<<aggregate>> Candidate" {
 
 ' Customer Aggregate
 package "<<aggregate>> Customer" {
-    entity Customer <<entity>> <<root>> {
-        + CustomerCode customerCode <<valueObject>>
-        + Adress address <<valueObject>>
-    }
+    entity Customer <<entity>> <<root>> {}
+
+    class CustomerCode <<valueObject>> <<(V, #FF8B40)>> {}
+    class CustomerAddress <<valueObject>> <<(V, #FF8B40)>> {}
 }
 
 ' Applications File Bot Aggregate
@@ -85,53 +83,24 @@ package "<<aggregate>>  Applications File Bot" {
 
 ' Recruitment Process Aggregate
 package "<<aggregate>> Recruitment Process" {
-    entity RecruitmentProcess <<entity>> <<root>> {
-        + InitialDate initialDate <<valueObject>>
-        + FinalDate finalDate <<valueObject>>
-    }
-    entity ApplicationPhase <<entity>> {
-        + State state <<valueObject>>
-        + InitialDate initialDate <<valueObject>>
-        + FinalDate finalDate <<valueObject>>
-    }
+    entity RecruitmentProcess <<entity>> <<root>> {}
 
-    entity ScreeningPhase <<entity>> {
-        + State state <<valueObject>>
-        + InitialDate initialDate <<valueObject>>
-        + FinalDate finalDate <<valueObject>>
-    }
-
-    note right of ApplicationPhase: State can be Opened or Closed
-    entity InterviewPhase <<entity>> {
-        + State state <<valueObject>>
-        + InitialDate initialDate <<valueObject>>
-        + FinalDate finalDate <<valueObject>>
-    }
-
-    entity AnalysisPhase <<entity>> {
-        + State state <<valueObject>>
-        + InitialDate initialDate <<valueObject>>
-        + FinalDate finalDate <<valueObject>>
-    }
-    entity ResultPhase <<entity>> {
-        + State state <<valueObject>>
-        + InitialDate initialDate <<valueObject>>
-        + FinalDate finalDate <<valueObject>>
-    }
+    class InitialDate <<valueObject>> <<(V, #FF8B40)>> {}
+    class FinalDate <<valueObject>> <<(V, #FF8B40)>> {}
 }
 
 ' Job Opening Aggregate
 package "<<aggregate>> Job Opening" {
-    entity JobOpening <<entity>> <<root>> {
-        + JobReference jobReference <<valueObject>>
-        + TitleOrFunction titleOrFunction <<valueObject>>
-        + ContractType contractType <<valueObject>>
-        + Mode mode <<valueObject>>
-        + Address address <<valueObject>>
-        + Company company <<valueObject>>
-        + NumberOfVacancies numberOfVacancies <<valueObject>>
-        + Description description <<valueObject>>
-    }
+    entity JobOpening <<entity>> <<root>> {}
+
+    class JobReference <<valueObject>> <<(V, #FF8B40)>> {}
+    class TitleOrFunction <<valueObject>> <<(V, #FF8B40)>> {}
+    class ContractType <<valueObject>> <<(V, #FF8B40)>> {}
+    class Mode <<valueObject>> <<(V, #FF8B40)>> {}
+    class Address <<valueObject>> <<(V, #FF8B40)>> {}
+    class Company <<valueObject>> <<(V, #FF8B40)>> {}
+    class NumberOfVacancies <<valueObject>> <<(V, #FF8B40)>> {}
+    class JobDescription <<valueObject>> <<(V, #FF8B40)>> {}
 }
 
 ' RequirementSpecification
@@ -139,33 +108,33 @@ package "<<aggregate>> Requirement Specification" {
     entity RequirementSpecification <<entity>> <<root>> {}
 }
 
-' Interview Phase Model Aggregate
+' Interview Model Aggregate
 package "<<aggregate>> Interview Model" {
-    entity InterviewModel <<entity>> <<root>>  {
-        + Description description <<valueObject>>
-    }
+    entity InterviewModel <<entity>> <<root>>  {}
+
+    class InterviewDescription <<valueObject>> <<(V, #FF8B40)>> {}
 }
 
 ' Interview Aggregate
 package "<<aggregate>> Interview" {
-    entity Interview <<entity>> <<root>> {
-        + InterviewDate interviewDate <<valueObject>>
-    }
+    entity Interview <<entity>> <<root>> {}
+
+    class InterviewDate <<valueObject>> <<(V, #FF8B40)>> {}
 }
 
 ' Candidate Answer Aggregate
 package "<<aggregate>> Candidate Answer" {
-    entity CandidateAnswer <<entity>> <<root>> {
-        + AnswerBody answerBody <<valueObject>>
-    }
+    entity CandidateAnswer <<entity>> <<root>> {}
+
+    class AnswerBody <<valueObject>> <<(V, #FF8B40)>> {}
 }
 
 ' Interview Question Aggregate
 package "<<aggregate>> Interview Question" {  
-    entity InterviewQuestion <<entity>> <<root>> {
-        + Grade grade <<valueObject>>
-        + Quotation quotation <<valueObject>>
-    }
+    entity InterviewQuestion <<entity>> <<root>> {}
+
+    class Grade <<valueObject>> <<(V, #FF8B40)>> {}
+    class Quotation <<valueObject>> <<(V, #FF8B40)>> {}
 }
 
 ' Specification Question Aggregate
@@ -175,24 +144,37 @@ package "<<aggregate>> Specification Question" {
 
 ' Plugins Aggregate
 package "<<aggregate>> Requirement Model" {
-    entity RequirementModel <<entity>> <<root>> {
-        + Description description <<valueObject>>
-    }
+    entity RequirementModel <<entity>> <<root>> {}
+
+    class RequirementDescription <<valueObject>> <<(V, #FF8B40)>> {}
 }
 
-' Position Aggregate
-package "<<aggregate>> Position" {
-    entity Position <<entity>> <<root>> {
-        + PositionNumber positionNumber <<valueObject>>
-    }
+' Phase Aggregate
+package "<<aggregate>> Phase" {
+    entity Phase <<entity>> <<root>> {}
+    entity ApplicationPhase <<entity>> {}
+    entity ScreeningPhase <<entity>> {}
+    entity InterviewPhase <<entity>> {}
+    entity AnalysisPhase <<entity>> {}
+    entity ResultPhase <<entity>> {}
+    
+    class State <<valueObject>> <<(V, #FF8B40)>> {}
+    class InitialPhaseDate <<valueObject>> <<(V, #FF8B40)>> {}
+    class FinalPhaseDate <<valueObject>> <<(V, #FF8B40)>> {}
+
+    note right of State: State can be Opened or Closed
+}
+
+' Rank Aggregate
+package "<<aggregate>> Rank" {
+    entity Rank <<entity>> <<root>> {}
+
+    class PositionNumber <<valueObject>> <<(V, #FF8B40)>> {}
 }
 
 ' Question Model Aggregate
 package "<<aggregate>> Question Model" {
-    entity QuestionModel <<entity>> <<root>> {
-        + QuestionBody questionBody <<valueObject>>
-        + ExpectedAnswer expectedAnswer <<valueObject>>
-    }
+    entity QuestionModel <<entity>> <<root>> {}
     entity TrueOrFalse <<entity>> {}
     entity ShortTextAnswer <<entity>> {}
     entity SingleChoiceAnswer <<entity>> {}
@@ -202,6 +184,9 @@ package "<<aggregate>> Question Model" {
     entity Date <<entity>> {}
     entity Time <<entity>> {}
     entity NumericScale <<entity>> {}
+
+    class QuestionBody <<valueObject>> <<(V, #FF8B40)>> {}
+    class ExpectedAnswer <<valueObject>> <<(V, #FF8B40)>> {}
 }
 
 ' File Aggregate
@@ -211,22 +196,37 @@ package "<<aggregate>> File" {
 
 ' Result Aggregate
 package "<<aggregate>> Result" {
-    entity Result <<entity>> <<root>> {
-        + Outcome outcome <<valueObject>>
-        + Justification justification <<valueObject>>
-    }
-    note left of Result: Outcome can be Approved or Rejected
-    note right of Result: Rejected outcomes must have a justification
+    entity Result <<entity>> <<root>> {}
+
+    class Outcome <<valueObject>> <<(V, #FF8B40)>> {}
+    class Justification <<valueObject>> <<(V, #FF8B40)>> {}
+
+    note left of Outcome: Outcome can be Approved or Rejected
+    note right of Justification: Rejected outcomes must have a justification
 }
 
 ' User value objects relationships
-Admin --* User
-CustomerManager --* User
-Operator --* User
-Customer --* User
-LanguageEngineer --* User
-Candidate --* User
+User "1" --> "1" Email : has
+User "1" --> "1" FullName : has
+User "1" --> "1" Password : has
+User "1" --> "1" TaxPayerNumber : has
+User "1" --> "1" PhoneNumber : has
+User "1" --> "1" BirthDate : has
+User "1" --> "1" IsActive : can be
 User "1" --> "1" Authentication : authenticated by
+
+Admin ---* User
+CustomerManager ---* User
+Operator ---* User
+Customer ---* User
+LanguageEngineer ---* User
+Candidate ---* User
+
+' Authentication relationships
+Authentication "1" --> "1" Email : authenticated by
+Authentication "1" --> "1" Password : authenticated by
+Authentication "1" --> "1" Token : generates
+Authentication "1" --> "1" createdOn : generates
 
 ' Admin relationships
 Admin "*" --> "*" Customer: registers and manages
@@ -242,24 +242,32 @@ Operator "*" --> "*" File: imports
 CustomerManager "*" --> "*" Customer: manages
 CustomerManager "*" --> "*" JobOpening: registers and manages
 CustomerManager "*" --> "*" RecruitmentProcess: setup
-CustomerManager "*" --> "*" Position: defines
+CustomerManager "*" --> "*" Rank: defines
 
 ' Recruitment Process relationships
-RecruitmentProcess "1" --> "1" ApplicationPhase: has
-RecruitmentProcess "1" --> "1" ScreeningPhase: has
-RecruitmentProcess "1" --> "1" InterviewPhase: can have
-RecruitmentProcess "1" --> "1" AnalysisPhase: has
-RecruitmentProcess "1" --> "1" ResultPhase: has
+RecruitmentProcess "1" --> "1" InitialDate: has
+RecruitmentProcess "1" --> "1" FinalDate: has
+RecruitmentProcess "1" ---> "*" Phase: has
 
 ' Job Opening relationships
+JobOpening "1" --> "1" JobReference : has
+JobOpening "1" --> "1" TitleOrFunction : has
+JobOpening "1" --> "1" ContractType : has
+JobOpening "1" --> "1" Mode : has
+JobOpening "1" --> "1" Address : has
+JobOpening "1" --> "1" Company : has
+JobOpening "1" --> "1" NumberOfVacancies : has
+JobOpening "1" --> "1" JobDescription : has
 JobOpening "1" ---> "1" RecruitmentProcess: has
 JobOpening "1" --> "1" RequirementSpecification: has
 RequirementSpecification "1" --> "1" RequirementModel: uses
 
 ' InterviewPhase Models relationships
+InterviewModel "1" --> "1" InterviewDescription: has
 InterviewModel "1" --> "*" InterviewQuestion: has
 
 ' Job Requirement Model relationships
+RequirementModel "1" --> "1" RequirementDescription : has
 RequirementModel "1" --> "*" SpecificationQuestion : has
 
 ' ScreeningPhase relationships
@@ -269,15 +277,14 @@ ScreeningPhase "1" --> "1" RequirementSpecification : has
 InterviewPhase "1" --> "1" Interview: has
 
 ' Interview relationships
+Interview "1" --> "1" InterviewDate: has
 Interview "1" --> "1" InterviewModel: uses
 
 ' AnalysisPhase relationships
-AnalysisPhase "1" --> "*" Position: has
-
-' Position relationships
-Position "1" --> "1" Application: refers to an
+AnalysisPhase "1" --> "*" Rank: has
 
 ' Interview Answers relationships
+CandidateAnswer "1" --> "1" AnswerBody : has
 CandidateAnswer "1" --> "1" InterviewQuestion: for an
 
 ' Requirement relationships
@@ -294,30 +301,62 @@ LanguageEngineer "*" --> "*" RequirementModel: deploys and configure
 ResultPhase "1" --> "*" Result: has
 
 ' Result relationships
-Result "1" --> "1" Application: refers to an
+Result "1" --> "1" Outcome: has
+Result "1" --> "1" Justification: can have
 
 ' Candidate relationships
 Candidate "1" --> "*" CandidateAnswer: provides
 Candidate "1" --> "*" Application: has
 
 ' Interview Question relationships
+InterviewQuestion "1" --> "1" Grade : has
+InterviewQuestion "1" --> "1" Quotation : has
 InterviewQuestion "*" --> "1" QuestionModel: uses
 
 ' Specification Question relationships
 SpecificationQuestion "*" --> "1" QuestionModel: uses
 
 ' Question Model relationships
-TrueOrFalse --|> QuestionModel: is a
-ShortTextAnswer --|> QuestionModel: is a
-SingleChoiceAnswer --|> QuestionModel: is a
-MultipleChoiceAnswer --|> QuestionModel: is a
-IntegerNumber --|> QuestionModel: is a
-DecimalNumber --|> QuestionModel: is a
-Date --|> QuestionModel: is a
-Time --|> QuestionModel: is a
-NumericScale --|> QuestionModel: is a
+TrueOrFalse -up-|> QuestionModel: is a
+ShortTextAnswer -up-|> QuestionModel: is a
+SingleChoiceAnswer -up-|> QuestionModel: is a
+MultipleChoiceAnswer -up-|> QuestionModel: is a
+IntegerNumber -up-|> QuestionModel: is a
+DecimalNumber -up-|> QuestionModel: is a
+Date -up-|> QuestionModel: is a
+Time -up-|> QuestionModel: is a
+NumericScale -up-|> QuestionModel: is a
 
 ' Application Phase relationships
-ApplicationPhase --> Application: has
+ApplicationPhase "1" --> "*" Application: has
+
+' Application relationships
+Application "1" --> "1" ApplicationDate : has
+Application "1" --> "1" ApplicationNumber : has
+Application "1" --> "1" Result : has
+Application "1" --> "1" Rank : has
+
+' Customer relationships
+Customer "1" --> "1" CustomerCode : has
+Customer "1" --> "1" CustomerAddress : has
+Customer "1" --> "*" JobOpening: has
+
+' Rank relationships
+Rank "1" --> "1" PositionNumber: has
+
+' Question Model relationships
+QuestionModel "1" --> "1" QuestionBody : has
+QuestionModel "1" --> "1" ExpectedAnswer : has
+
+' Phase relationships
+Phase "1" --> "1" State: has
+Phase "1" --> "1" InitialPhaseDate: has
+Phase "1" --> "1" FinalPhaseDate: has
+
+ApplicationPhase -up-|> Phase: is a
+ScreeningPhase -up-|> Phase: is a
+InterviewPhase -up-|> Phase: is a
+AnalysisPhase -up-|> Phase: is a
+ResultPhase -up-|> Phase: is a
 
 @enduml

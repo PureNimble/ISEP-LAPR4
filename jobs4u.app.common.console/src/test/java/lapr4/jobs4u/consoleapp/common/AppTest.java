@@ -1,4 +1,4 @@
-package eapli.base.bootstrapapp;
+package lapr4.jobs4u.consoleapp.common;
 
 import junit.framework.Test;
 import junit.framework.TestCase;

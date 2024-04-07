@@ -1,0 +1,16 @@
+#####################################################
+##
+## eCafeteria
+##
+#####################################################
+
+persistence.persistenceUnit=eapli.eCafeteriaPU
+
+#persistence.repositoryFactory=eapli.ecafeteria.persistence.jpa.JpaRepositoryFactory
+persistence.repositoryFactory=eapli.ecafeteria.persistence.inmemory.InMemoryRepositoryFactory
+
+ui.menu.layout=horizontal
+
+HighCaloriesDishLimit=300
+
+UseEventfulControllers=true

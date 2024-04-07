@@ -31,7 +31,7 @@
 | 4 – Correct	| Frequent use of the repository: messages that are mostly significant but sometimes fail to connect to issues/tasks. Use task/issue management boards correctly. |
 | 5 - Exceptional |	Frequent use of the repository: mostly significant messages and (virtually) no failures in connection to issues/tasks. They use task/issue management boards in an exemplary way. |
 
-**Selected Level:** ?
+**Selected Level:** 3
 
 **Justification and Evidences:**
 
@@ -46,7 +46,7 @@
 | 4 – Correct	| There is evidence of a team decision-making process in which students actively participate and which results in the assignment of tasks in a clear and timely manner. |
 | 5 - Exceptional |	There is evidence of a team decision-making process in which students actively participate and which results in the assignment of tasks in a clear and timely manner. There is evidence of group tasks such as integration and deployment activities. |
 
-**Selected Level:** ?
+**Selected Level:** 4
 
 **Justification and Evidences:**
 
@@ -61,7 +61,7 @@
 | 4 – Correct	| The system runs outside the IDE, distributed across two or more local virtual environments (machines or containers). The group was able to demonstrate the system without any execution failures during the demonstration. The correct version was used. |
 | 5 - Exceptional |	The system runs outside the IDE, distributed across two or more remote virtual environments (machines or containers) (e.g. in the cloud). The group was able to demonstrate the system without any execution failures during the demonstration. The correct version was used. |
 
-**Selected Level:** ?
+**Selected Level:** 3
 
 **Justification and Evidences:**
 
@@ -76,7 +76,7 @@
 | 4 – Correct	| There is integration between most components/functionalities without any type of incoherence and/or unnecessary coupling. |
 | 5 - Exceptional	| The previous item is true and this integration is perfectly documented. |
 
-**Selected Level:** ?
+**Selected Level:** 3
 
 **Justification and Evidences:**
 
@@ -91,7 +91,7 @@
 | 4 – Correct	| All requirements have been met in full, and any options related to the interpretation/analysis of the problem are correctly justified and are evidence of your understanding of the problem domain. Very complete definition of acceptance criteria. Most criteria are reflected in tests. |
 | 5 - Exceptional	| The above is true and alternatives are also discussed that are supported by a rich understanding of the problem domain. These alternatives may be related to the problem domain or the high-level architecture of the solution. Exemplary acceptance criteria and excellent connection to testing. |
 
-**Selected Level:** ?
+**Selected Level:** 3
 
 **Justification and Evidences:**
 

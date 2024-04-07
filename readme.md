@@ -53,7 +53,49 @@ You can also execute the tests using the following commands:
 
 ## 5. How to Run
 
-*To Do*
+### To run Backoffice
+
+#### For linux/unix/macos
+```
+./bin/run-backoffice.sh
+```
+#### For windows
+```
+.\bin\run-backoffice.bat
+```
+
+### To run User
+
+#### For linux/unix/macos
+```
+./bin/run-user.sh 
+```
+#### For windows
+```
+.\bin\run-user.bat
+```
+
+### To run Other
+
+#### For linux/unix/macos
+```
+./bin/run-other.sh 
+```
+#### For windows
+```
+.\bin\run-other.bat
+```
+
+### To run Bootstrap
+
+#### For linux/unix/macos
+```
+./bin/run-bootstrap.sh 
+```
+#### For windows
+```
+.\bin\run-bootstrap.bat
+```
 
 ## 6. How to Install/Deploy into Another Machine (or Virtual Machine)
 
@@ -67,22 +109,7 @@ You can also execute the tests using the following commands:
 ```
 .\bin\deploy-docker.bat
 ```
-
-## 7. How to execute (.JAR)
-
-### Execute jobs4u.app1
-
-```
-java -jar jobs4u.app1-0.1.0.jar
-```
-
-### Execute jobs4u.app2
-
-```
-java -jar jobs4u.app2-0.1.0.jar
-```
-
-## 8. How to Generate PlantUML Diagrams
+## 7. How to Generate PlantUML Diagrams
 
 To generate plantuml diagrams for documentation execute the script:
 

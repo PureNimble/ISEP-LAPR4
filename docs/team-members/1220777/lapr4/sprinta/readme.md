@@ -16,7 +16,7 @@
 | 4 – Correct |	The engineering process is correct. Code and design are completely aligned. Failures in the application of good practices and techniques are almost meaningless. |
 | 5 - Exceptional |	The engineering process is correct (order of activities). Code and design are completely aligned. Very good justification of the process followed/applied. Application of good practices and techniques is exemplary. |
 
-**Selected Level:** ?
+**Selected Level:** 4
 
 **Justification and Evidences:**
 
@@ -93,6 +93,6 @@
 
 **Selected Level:** 3
 
-**Justification and Evidences:**
+**Justification and Evidences:** Despite attempts to disponibilize myself to further contribute in the project ,I was the element that least contributed to the overall project
 
 <img width=100% src="https://capsule-render.vercel.app/api?type=waving&height=120&color=4E1764&section=footer"/>

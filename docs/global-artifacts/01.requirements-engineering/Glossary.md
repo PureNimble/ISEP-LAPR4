@@ -24,11 +24,15 @@
 | **Job Reference** | A unique identifier used within the system for tracking and managing job openings, facilitating easier application, screening, and organization of job-related communications and data management. |
 | **Job Requirement Specification** | A document that outlines the qualifications and skills candidates must have for a particular job opening, such as educational background and experience. |
 |**Jobs4U**| A company specialized in talent acquisition that provides recruitment services for job positions on behalf of its clients. The company's main activities involve selecting a set of candidates for job offers from its clients and delivering an ordered list of candidates to the client at the end of the process.  |
+|**LanguageEngineer**| A person who is responsible for configuring and deploying plugins. |
 | **Mode** | Indicates whether the job is remote, hybrid, or onsite. |
 | **Module** | A dynamically added component to the system, designed and implemented based on customer manager instructions, to efficiently process job requirements or conduct interviews. |
 | **Operator** | The person responsible for importing files produced by the Applications File Bot into the system and registering applications, creating records for new candidates. |
+| **Plugin** | A software component that adds specific features to an existing computer program, automating the processing of job interviews and application requirements by applying language processing, that maybe speciffc for each job opening. |
+| **Rank** | This is the placement of candidates based on their applications and interview results. |
 | **Result Phase** | The final phase where candidates and customers are notified of the outcome of the recruitment process. |
 | **Screening Phase** | The process of verifying applications against a set of mandatory requirements. Applications that fail to meet these requirements are rejected. |
 | **Title** | The specific designation of the job role, providing potential applicants with an understanding of the position and its responsibilities.<br><br>**synonyms:** Function |
+| **User** | An individual who is registered in the system. Users interact with the system to perform various tasks based on their roles and permissions. |
 
 <img width=100% src="https://capsule-render.vercel.app/api?type=waving&height=120&color=4E1764&section=footer"/>

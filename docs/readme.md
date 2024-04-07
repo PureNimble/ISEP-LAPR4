@@ -44,12 +44,12 @@ The assignment of tasks (requirements/user stories/use cases) during the project
 ### Sprint A
 
 | Student Nr.	| Name | Justification | Engineering Process | Issues and Version Control | Team Work | Deployment | Integration | Req. Satisfaction | 
-|------------|--------|-------|----------|----------|----------|--------|----------|----------|
-| [1221694](team-members/1221694/readme.md) | João Pinto    | [1221694 - Justification](team-members/1221694/lapr4/sprinta/readme.md) | 5 | 5 | 3 | 4 | 5 | 4 |
-| [1220612](team-members/1220612/readme.md) | José Sá       | [1220612 - Justification](team-members/1220612/lapr4/sprinta/readme.md) |  |  |  |  |  |  |
-| [1201804](team-members/1201804/readme.md) | Rafael Araújo | [1201804 - Justification](team-members/1201804/lapr4/sprinta/readme.md) | 5 | 5 | 4 | 4 | 5 | 4 |
-| [1220777](team-members/1220777/readme.md) | Rui Lima      | [1220777 - Justification](team-members/1220777/lapr4/sprinta/readme.md) |  |  |  |  |  |  |
-| [1221700](team-members/1221700/readme.md) | Vasco Sousa   | [1221700 - Justification](team-members/1221700/lapr4/sprinta/readme.md) | 5 | 5 | 3 | 4 | 5 | 4 |
+|------------|--------|-------|---------------------|----------------------------|-----------|------------|-------------|-------------------|
+| [1221694](team-members/1221694/readme.md) | João Pinto    | [1221694 - Justification](team-members/1221694/lapr4/sprinta/readme.md) |                    5 |                           5 |          3 |           4 |            5 |                  4 |
+| [1220612](team-members/1220612/readme.md) | José Sá       | [1220612 - Justification](team-members/1220612/lapr4/sprinta/readme.md) | 4                   | 4                          | 3         | 4          | 4           | 3                 |
+| [1201804](team-members/1201804/readme.md) | Rafael Araújo | [1201804 - Justification](team-members/1201804/lapr4/sprinta/readme.md) |                    5 |                           5 |          4 |           4 |            5 |                  4 |
+| [1220777](team-members/1220777/readme.md) | Rui Lima      | [1220777 - Justification](team-members/1220777/lapr4/sprinta/readme.md) | 4                   | 3                          | 4         | 3          | 3           | 3                 |
+| [1221700](team-members/1221700/readme.md) | Vasco Sousa   | [1221700 - Justification](team-members/1221700/lapr4/sprinta/readme.md) |                    5 |                           5 |          3 |           4 |            5 |                  4 |
 
 ### Sprint B
 

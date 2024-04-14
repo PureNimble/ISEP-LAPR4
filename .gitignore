@@ -28,9 +28,14 @@ effective-pom.xml
 *.ipr
 *.iws
 *.idea
+*.vscode
 
 # Error Logs
 
 error-logs/
 
 README.html
+
+# SCOMP project files
+obj/
+bin/

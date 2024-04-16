@@ -11,6 +11,8 @@ rectangle System {
     usecase "Setup a continuous integration server" as G004
     usecase "Add the necessary scripts to the project" as G005
     usecase "Elaborate a Domain Model using DDD" as G006
+    usecase "Support and apply authentication and authorization for all its users and functionalities." as G007
+    usecase "Process the files produced by the Applications Email Bot, so that they can be imported into the system by initiative of the Operator" as 2001
 }
 
 PM --> G001
@@ -19,6 +21,8 @@ PM --> G003
 PM --> G004
 PM --> G005
 PM --> G006
+PM --> G007
+PM --> 2001
 
 actor "Admin" as AD #white;line:red;line.bold;text:black
 actor "Operator" as OP #white;line:blue;line.bold;text:black
@@ -30,12 +34,44 @@ rectangle Backoffice {
     usecase "Deploy and Configure Plugin" as UC2
     usecase "Register Application" as UC3
     usecase "Manage Job Openings" as UC4
+    usecase "Register, disable/enable, and list users of the backoffice" as US1000
+    usecase "Register a customer and that the system automatically creates a user for that customer" as US1001
+    usecase "Register a job opening" as US1002
+    usecase "List job openings" as US1003
+    usecase "Register a candidate and create a corresponding user" as US2000a
+    usecase "List all candidates" as US2000c
+    usecase "Register an application of a candidate for a job opening and import all files received" as US2002
+    usecase "List all applications for a job opening" as US1005
+    usecase "Display all the personal data of a candidate" as US1006
+    usecase "Display all the personal data of a candidate, including his/her applications" as US1006b
+    usecase "Setup the phases of the process for a job opening" as US1007
+    usecase "Deploy and configure a plugin (i.e., Job Requirement Specification or Interview Model) to be used by the system" as US1008
+    usecase "Select the requirements specification to be used for a job opening" as US1009
+    usecase "Select the interview model to use for the interviews of a job opening (for their evaluation/grading)" as US1011
+    usecase "Generate and export a template text file to help collect the candidate answers during the interviews" as US1012
+    usecase "Generate and export a template text file to help collect data fields for candidates of a job opening (so the data is used to verify the requirements of the job opening)" as US2003
 }
 
 AD --> UC1
+AD --> US1000
 LE --> UC2
+LE --> US1008
 OP --> UC3
+OP --> US2000a
+OP --> US2000c
+OP --> US2002
+OP --> US2003
 CM --> UC4
+CM --> US1001
+CM --> US1002
+CM --> US1003
+CM --> US1005
+CM --> US1006
+CM --> US1006b
+CM --> US1007
+CM --> US1009
+CM --> US1011
+CM --> US1012
 
 actor "Candidate" as CA #white;line:orange;line.bold;text:black
 

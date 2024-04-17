@@ -80,7 +80,13 @@
     * dígitos;
     * pelo menos um caracter não alfanumérico.
 
-* **AC2:** 
+* **AC2:** A palavra-passe deve ser gerada automaticamente pelo sistema.
+
+* **AC3:** A autenticação dos utilizadores deve ser feita através do email e da palavra-passe.
+
+* **AC4:** Para cada entidade Customer, apenas existe um representante que acede à conta.
+
+* **AC5:** O candidato é identificado no sistema pelo email.
 
 
 ### 1.4. Found out Dependencies
@@ -89,7 +95,15 @@ _N/A_
 
 ### 1.5 Input and Output Data
 
-_N/A_
+**Input Data:**
+
+* Typed data:
+	* e-mail
+    * password
+
+**Output Data:**
+
+* (In)Success of the operation
 
 ### 1.6. System Sequence Diagram (SSD)
 

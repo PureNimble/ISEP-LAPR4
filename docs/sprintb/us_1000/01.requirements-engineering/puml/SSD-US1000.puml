@@ -1,0 +1,21 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+title System Sequence Diagram (SSD)
+
+autonumber
+
+actor "Admin" as Admin
+participant ":System" as System
+
+activate Admin
+
+    Admin -> System : test
+    activate System
+
+        System --> Admin : test successful
+    deactivate System
+
+@enduml

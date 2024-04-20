@@ -42,7 +42,7 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: coverage-report
-        path: '**/target/site/*'
+        path: './target/site/*'
 
     - name: Upload error logs
       uses: actions/upload-artifact@v4

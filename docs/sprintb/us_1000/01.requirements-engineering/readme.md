@@ -44,12 +44,33 @@
 >
 > **Answer:** O enable/disable dos users é apenas para controlar os acessos ao sistema. O estado, no processo de candidatura, é o estado da candidatura de um candidato a um job opening, não está diretamente relacionado com o enable/disable dos users.
 
+> **Date:** 2024-04-16
+>
+> **Question 72:** Multiple enable/disable (US1000) – Can a user (from the backoffice, for example) be enabled/disabled multiple times?
+>
+> **Answer:** Yes.
 
+> **Date:** 2024-04-17
+>
+> **Question 80:** US1000 – Information about the users - Based on the user story description: "As Administrator, I want to be able to register, disable/enable, and list users of the backoffice.", I have the following questions: 1 - Can there be more than one admnistrator of the backoffice? 2 - What information about the backoffice users need to be registered?
+>
+> **Answer:** Regarding question 1, one admin is enough. Regarding question 2, see Q11.
 
+> **Date:** 2024-04-18
+>
+> **Question 81:** US1000 – When we register a customer... are we registering the data of the customer without the data of the user of the company who manage the app or both at the same time? Should we consider the posibility that the Customer User who manage the app changes and we should save the data of the old user too?
+>
+> **Answer:** For registering a customer see US1001.
+>
+> **Question 86:** US1000 – Na US menciona "Como administrador do sistema (Admin), quero ser capaz de registar, ativar/desativar, e listar utilizadores do backoffice.", gostava que clarificasse a funcionalidade "ativar/desativar" o quê que pretende e a sua finalidade, se possível com um exemplo.
+>
+> **Answer:** Resposta já dada em Q23, Q30 (pergunta relacionada com a US2000b) e Q72.
 
 ### 1.3. Acceptance Criteria
 
-_N/A_
+**AC 1:** There must be only one admin of the backoffice.
+
+**AC 2:** The admin must be able to enable/disable an user multiple times.
 
 ### 1.4. Found out Dependencies
 

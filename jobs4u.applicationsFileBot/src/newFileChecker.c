@@ -15,80 +15,76 @@
 /**
  * @brief Check if there are new files in the directory( send a signal to the
  *  parent process if there are new files)
- * @param lastFiletime The last time a file was created in the directory.
- * @param father_fd The file descriptor of the father process.
  */
-void newFileChecker(unsigned int lastFiletime, int *father_fd)
+void newFileChecker()
 {
-    // pipe responsible to send the output of the command "stat"
-    int exec_fd[2];
+    int exec_fd[2], lastFileTime = 0;
+    pid_t pid;
     createPipe(exec_fd);
 
-    pid_t pid = createChildProcess();
-
-    if (pid == 0) // Child process
+    while (1)
     {
-        // close(exec_fd[0]); // Close unused read end
-        //   Redirect stdout to the write end of the pipe
+        pid = createChildProcess();
 
-        if (dup2(exec_fd[1], STDOUT_FILENO) == -1)
+        if (pid == 0)
         {
-            perror("dup2");
-            exit(EXIT_FAILURE);
+            close(exec_fd[0]); // Close the read end of the pipe
+            if (dup2(exec_fd[1], STDOUT_FILENO) == -1)
+            {
+                perror("dup2");
+                kill(getppid(), SIGINT);
+            }
+            close(exec_fd[1]); // Close the write end of the pipe
+            char command[100];
+            // command to get the birth time of the files in the directory
+            int ret = snprintf(command, sizeof(command), "stat -c '%%W' %s/* 2>&1 | sort -n", INPUT_PATH);
+            if (ret < 0 || ret >= sizeof(command))
+            {
+                fprintf(stderr, "snprintf");
+                kill(getppid(), SIGINT);
+            }
+            execlp("/bin/sh", "sh", "-c", command, NULL);
+            perror("execlp");
+            kill(getppid(), SIGINT);
         }
-        close(exec_fd[1]);
-
-        char command[256];
-        // command to get the birth time of the files in the directory
-        int ret = snprintf(command, sizeof(command), "stat -c '%%W' %s/* 2>&1 | sort -n", INPUT_PATH);
-        if (ret < 0 || ret >= sizeof(command))
-        {
-            fprintf(stderr, "snprintf");
-            exit(EXIT_FAILURE);
-        }
-        execlp("/bin/sh", "sh", "-c", command, NULL);
-        perror("execlp");
-        exit(EXIT_FAILURE);
-    }
-    else // Parent process
-    {
+        // Parent process
         char buffer[1024];
         ssize_t numRead;
-        close(exec_fd[1]); // Close unused write end
-        //   Read from the pipe and print to stdout
-        while ((numRead = read(exec_fd[0], buffer, sizeof(buffer) - 1)) > 0)
+        unsigned int counter = 0;
+        int* files_birth;
+        // read from the pipe the birth time of the files
+        numRead = read(exec_fd[0], buffer, sizeof(buffer) - 1);
+        buffer[numRead] = '\0';
+        char* token = strtok(buffer, "\n");
+
+        if (token[0] == 's')
         {
-            buffer[numRead] = '\0';
-            char *token = strtok(buffer, "\n");
-            int counter = 0;
-            int *files_birth;
-
-            if (token[0] == 's')
-            {
-                perror("stat error -> Invalid input path");
-                exit(EXIT_FAILURE);
-            }
-
-            if ((files_birth = malloc(0)) == NULL)
-            {
-                perror("malloc error -> files_birth");
-                exit(EXIT_FAILURE);
-            }
-            while (token != NULL)
-            {
-                counter++;
-                files_birth = realloc(files_birth, (counter) * sizeof(int));
-                files_birth[counter - 1] = atoi(token);
-                token = strtok(NULL, "\n");
-            }
-            write(father_fd[1], &files_birth[counter - 1], sizeof(int));
-
-            if (files_birth[counter - 1] > lastFiletime)
-                kill(getppid(), SIGUSR1);
-
-            free(files_birth);
+            perror("stat error -> Invalid input path");
+            kill(getppid(), SIGINT);
         }
+        if ((files_birth = malloc(0)) == NULL)
+        {
+            perror("malloc error -> files_birth");
+            kill(getppid(), SIGINT);
+        }
+        while (token != NULL)
+        {
+            counter++;
+            if ((files_birth = realloc(files_birth, (counter) * sizeof(files_birth))) == NULL) {
+                perror("realloc error -> files_birth");
+                kill(getppid(), SIGINT);
+            }
+            files_birth[counter - 1] = atoi(token);
+            token = strtok(NULL, "\n");
+        }
+        if (files_birth[counter - 1] > lastFileTime) {
+            kill(getppid(), SIGUSR1);
+        }
+        lastFileTime = files_birth[counter - 1];
 
-        // close(exec_fd[0]); // Close read end of the pipe
+        free(files_birth);
+
+        sleep(VERIFY_NEW_FILES_FREQUENCY);
+
     }
 }

@@ -30,13 +30,10 @@ jobs:
 
     # Give execute permissions to the build scripts
     - name: Set execute permissions on build scripts
-      run: chmod +x bin/build-all.sh bin/quickbuild.sh bin/generate-plantuml-diagrams.sh bin/mvnw || true
+      run: chmod +x bin/build-all.sh bin/generate-plantuml-diagrams.sh bin/mvnw || true
 
     - name: Full build with Maven
       run: ./bin/build-all.sh 2> error-logs/build-all.log || true
-
-    - name: Quick build with Maven
-      run: ./bin/quickbuild.sh 2> error-logs/quickbuild.log || true
     
     - name: Upload coverage report
       uses: actions/upload-artifact@v4

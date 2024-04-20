@@ -1,5 +1,5 @@
 CC=gcc
-CFLAGS=-g -Wall
+CFLAGS=-g -Wall # -Wextra -fanalyzer
 SRC_DIR=src
 OBJ_DIR=obj
 BIN_DIR=bin

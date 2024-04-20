@@ -23,15 +23,15 @@
  */
 package lapr4.jobs4u.clientusermanagement.application.eventhandlers;
 
-import lapr4.jobs4u.clientusermanagement.domain.events.NewUserRegisteredFromSignupEvent;
+/* import lapr4.jobs4u.clientusermanagement.domain.events.NewUserRegisteredFromSignupEvent;
 import eapli.framework.domain.events.DomainEvent;
-import eapli.framework.infrastructure.pubsub.EventHandler;
+import eapli.framework.infrastructure.pubsub.EventHandler; */
 
 /**
  * @author Paulo Gandra de Sousa
  *
  */
-public class NewUserRegisteredFromSignupWatchDog implements EventHandler {
+//public class NewUserRegisteredFromSignupWatchDog implements EventHandler {
 
     /*
      * (non-Javadoc)
@@ -39,7 +39,7 @@ public class NewUserRegisteredFromSignupWatchDog implements EventHandler {
      * @see eapli.framework.domain.events.EventHandler#onEvent(eapli.framework.
      * domain. events.DomainEvent)
      */
-    @Override
+    /*@Override
     public void onEvent(final DomainEvent domainevent) {
         assert domainevent instanceof NewUserRegisteredFromSignupEvent;
 
@@ -48,4 +48,4 @@ public class NewUserRegisteredFromSignupWatchDog implements EventHandler {
         final AddClientUserOnSignupAcceptedController controller = new AddClientUserOnSignupAcceptedController();
         controller.addClientUser(event);
     }
-}
+} */

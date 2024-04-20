@@ -20,7 +20,7 @@
  */
 package lapr4.jobs4u.usermanagement.application.eventhandlers;
 
-import org.slf4j.Logger;
+/* import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import lapr4.jobs4u.clientusermanagement.domain.events.SignupAcceptedEvent;
@@ -45,4 +45,4 @@ public class SignupAcceptedWatchDog implements EventHandler {
             LOGGER.error("Unable to register new user on signup event", e);
         }
     }
-}
+} */

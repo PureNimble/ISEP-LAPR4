@@ -35,8 +35,8 @@ import eapli.framework.domain.repositories.IntegrityViolationException;
 import eapli.framework.infrastructure.authz.domain.model.SystemUser;
 import eapli.framework.infrastructure.authz.domain.model.SystemUserBuilder;
 import eapli.framework.infrastructure.authz.domain.repositories.UserRepository;
-import eapli.framework.infrastructure.pubsub.EventPublisher;
-import eapli.framework.infrastructure.pubsub.impl.inprocess.service.InProcessPubSub;
+/* import eapli.framework.infrastructure.pubsub.EventPublisher;
+import eapli.framework.infrastructure.pubsub.impl.inprocess.service.InProcessPubSub; */
 
 /**
  *
@@ -45,7 +45,7 @@ import eapli.framework.infrastructure.pubsub.impl.inprocess.service.InProcessPub
 @UseCaseController
 /* package */ class AddUserOnSignupAcceptedController {
     private final UserRepository userRepository = PersistenceContext.repositories().users();
-    private final EventPublisher dispatcher = InProcessPubSub.publisher();
+    //private final EventPublisher dispatcher = InProcessPubSub.publisher();
 
     /**
      *
@@ -63,9 +63,9 @@ import eapli.framework.infrastructure.pubsub.impl.inprocess.service.InProcessPub
         final SystemUser newUser = userRepository.save(userBuilder.build());
 
         // notify interested parties
-        final DomainEvent event = new NewUserRegisteredFromSignupEvent(
+        /* final DomainEvent event = new NewUserRegisteredFromSignupEvent(
                 theSignupRequest.mecanographicNumber(), newUser.username());
-        dispatcher.publish(event);
+        dispatcher.publish(event); */
 
         return newUser;
     }

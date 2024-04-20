@@ -24,8 +24,8 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import lapr4.jobs4u.Application;
-import eapli.framework.infrastructure.pubsub.EventDispatcher;
-import eapli.framework.infrastructure.pubsub.impl.inprocess.service.InProcessPubSub;
+/* import eapli.framework.infrastructure.pubsub.EventDispatcher;
+import eapli.framework.infrastructure.pubsub.impl.inprocess.service.InProcessPubSub; */
 
 /**
  *
@@ -37,7 +37,7 @@ public abstract class BaseApplication {
     // we are assuming we will always use the in process event
     // dispatcher. check the Spring version of the Base project
     // for an alternative
-    final EventDispatcher dispatcher = InProcessPubSub.dispatcher();
+    //final EventDispatcher dispatcher = InProcessPubSub.dispatcher();
 
     protected static final String SEPARATOR_HR = "=====================================";
     private static final Logger LOGGER = LogManager.getLogger(BaseApplication.class);
@@ -50,7 +50,7 @@ public abstract class BaseApplication {
         printHeader();
 
         try {
-            setupEventHandlers();
+            //setupEventHandlers();
 
             doMain(args);
 
@@ -60,7 +60,7 @@ public abstract class BaseApplication {
                     "Something unexpected has happened and the application will terminate. Please check the logs.\n");
             LOGGER.error(e);
         } finally {
-            clearEventHandlers();
+            //clearEventHandlers();
         }
 
         // exiting the application, closing all threads
@@ -81,7 +81,7 @@ public abstract class BaseApplication {
         System.out.println(SEPARATOR_HR);
     }
 
-    private final void clearEventHandlers() {
+    /* private final void clearEventHandlers() {
         try {
             doClearEventHandlers(dispatcher);
 
@@ -89,11 +89,11 @@ public abstract class BaseApplication {
         } catch (final Exception e) {
             LOGGER.error("Unable to cleanup event handlers", e);
         }
-    }
+    } */
 
-    private final void setupEventHandlers() {
+    /* private final void setupEventHandlers() {
         doSetupEventHandlers(dispatcher);
-    }
+    } */
 
     protected abstract void doMain(final String[] args);
 
@@ -101,9 +101,9 @@ public abstract class BaseApplication {
 
     protected abstract String appGoodbye();
 
-    protected void doClearEventHandlers(final EventDispatcher dispatcher) {
+    /* protected void doClearEventHandlers(final EventDispatcher dispatcher) {
         // nothing to do
-    }
+    } */
 
-    protected abstract void doSetupEventHandlers(EventDispatcher dispatcher);
+    //protected abstract void doSetupEventHandlers(EventDispatcher dispatcher);
 }

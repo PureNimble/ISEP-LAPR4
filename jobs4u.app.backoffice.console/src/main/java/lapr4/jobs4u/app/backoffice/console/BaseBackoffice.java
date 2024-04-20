@@ -26,16 +26,16 @@ package lapr4.jobs4u.app.backoffice.console;
 import lapr4.jobs4u.app.backoffice.console.presentation.MainMenu;
 import lapr4.jobs4u.app.common.console.BaseApplication;
 import lapr4.jobs4u.app.common.console.presentation.authz.LoginUI;
-import lapr4.jobs4u.clientusermanagement.application.eventhandlers.NewUserRegisteredFromSignupWatchDog;
+/* import lapr4.jobs4u.clientusermanagement.application.eventhandlers.NewUserRegisteredFromSignupWatchDog;
 import lapr4.jobs4u.clientusermanagement.domain.events.NewUserRegisteredFromSignupEvent;
-import lapr4.jobs4u.clientusermanagement.domain.events.SignupAcceptedEvent;
+import lapr4.jobs4u.clientusermanagement.domain.events.SignupAcceptedEvent; */
 import lapr4.jobs4u.infrastructure.authz.AuthenticationCredentialHandler;
 import lapr4.jobs4u.infrastructure.persistence.PersistenceContext;
-import lapr4.jobs4u.usermanagement.application.eventhandlers.SignupAcceptedWatchDog;
+//import lapr4.jobs4u.usermanagement.application.eventhandlers.SignupAcceptedWatchDog;
 import lapr4.jobs4u.usermanagement.domain.BasePasswordPolicy;
 import eapli.framework.infrastructure.authz.application.AuthzRegistry;
 import eapli.framework.infrastructure.authz.domain.model.PlainTextEncoder;
-import eapli.framework.infrastructure.pubsub.EventDispatcher;
+//import eapli.framework.infrastructure.pubsub.EventDispatcher;
 
 /**
  *
@@ -65,11 +65,11 @@ public final class BaseBackoffice extends BaseApplication {
     @Override
     protected void doMain(final String[] args) {
         // login and go to main menu
-        if (new LoginUI(new AuthenticationCredentialHandler()).show()) {
+        /* if (new LoginUI(new AuthenticationCredentialHandler()).show()) {
             // go to main menu
             final MainMenu menu = new MainMenu();
             menu.mainLoop();
-        }
+        } */
     }
 
     @Override
@@ -82,11 +82,11 @@ public final class BaseBackoffice extends BaseApplication {
         return "Base Back Office";
     }
 
-    @SuppressWarnings("unchecked")
+    /* @SuppressWarnings("unchecked")
     @Override
     protected void doSetupEventHandlers(final EventDispatcher dispatcher) {
         dispatcher.subscribe(new NewUserRegisteredFromSignupWatchDog(),
                 NewUserRegisteredFromSignupEvent.class);
         dispatcher.subscribe(new SignupAcceptedWatchDog(), SignupAcceptedEvent.class);
-    }
+    } */
 }

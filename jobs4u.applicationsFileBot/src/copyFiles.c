@@ -16,7 +16,7 @@
  * @brief Check if there are new files in the directory( send a signal to the
  *  parent process if there are new files)
  */
-void copyFiles(int* fd)
+void copyFiles(int* fd, Config* config)
 {
     close(fd[1]); // close the write end of the pipe
     int candidateID;
@@ -28,18 +28,18 @@ void copyFiles(int* fd)
         printf("Candidate ID: %d PID:%d\n", candidateID,getpid());
         pid_t pid;
         char buffer[300];
-        sprintf(buffer, "%s%d-candidate-data.txt",INPUT_PATH, candidateID);
+        sprintf(buffer, "%s%d-candidate-data.txt",config->inputPath, candidateID);
         char * job = read_first_line(buffer);
         job[strlen(job) - 1] = '\0';
         pid = createChildProcess();
-            if (pid == 0){
-                // create new directory and copy the files  
-                sprintf(buffer, "%s%s/%d", OUTPUT_PATH, job, candidateID);
-                char command[1024];
-                snprintf(command, sizeof(command), "mkdir -p %s && /bin/cp %s%d* %s", buffer, INPUT_PATH, candidateID, buffer);                execlp("/bin/sh", "sh", "-c", command, NULL);
-                exit(EXIT_FAILURE);   
-            }
-        
+        if (pid == 0){
+            // create new directory and copy the files  
+            sprintf(buffer, "%s%s/%d", config->outputPath, job, candidateID);
+            char command[1024];
+            snprintf(command, sizeof(command), "mkdir -p %s && /bin/cp %s%d* %s", buffer, config->inputPath, candidateID, buffer);                
+            execlp("/bin/sh", "sh", "-c", command, NULL);
+            exit(EXIT_FAILURE);   
+        }
         kill(getppid(), SIGUSR2); // send signal to parent
     }
 }

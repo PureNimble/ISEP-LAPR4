@@ -14,34 +14,39 @@
  * handle the parent process.
  */
 
- volatile sig_atomic_t received_signals = 0;
-
+volatile sig_atomic_t received_signals = 0;
 
 int main() {
+    Config config;
+    readConfigFile(&config); // read the config file
+    printConfig(&config); // print the config file to the user
+
     int fd[2],i, numberOfCandidates;
-    pid_t pid[NUMBER_OF_CHILDREN];
+    pid_t pid[config.numberOfChildren];
     memset(pid, 0, sizeof(pid));
-    setUpSignal();
-
+    setUpSignal(); // set up the signal handler
+    
     if (createChildProcess() == 0)
-        newFileChecker();  // first child process
+        newFileChecker(&config);  // first child process
 
-    createPipe(fd);
-    for (i = 0; i < NUMBER_OF_CHILDREN; i++) {
+    createPipe(fd); // create the pipe
+    for (i = 0; i < config.numberOfChildren; i++) {
         pid[i] = createChildProcess();
-        if (pid[i] == 0) copyFiles(fd);  // create children processes
+        if (pid[i] == 0) copyFiles(fd,&config);  // set the children to copy files
     }
 
     //close(fd[0]); // close the read end of the pipe
     
     while (1){  // Parent Code
         pause(); // wait for new files
-        numberOfCandidates = listCandidatesID(fd); // list new Candidates
+        numberOfCandidates = listCandidatesID(fd,&config); // list new Candidates
+        printf("Number of Candidates: %d\n", numberOfCandidates);
         while(numberOfCandidates != received_signals); // wait for all children to finish
         received_signals = 0; // reset the number of signals
         printf("All files have been copied\n");
-        //reportFile(numberOfCandidates, received_signals); // generate the report file
+        reportFile(&config); // generate the report file
+        printf("Report file has been generated\n");
     }
 
     return 0;
-}
+}  

@@ -10,13 +10,13 @@
 // info about this project
 #include "info.h"
 #include "utils.h"
-#include <ctype.h>
+#include "hashSet.h"
 #include <sys/types.h>
 
-int listCandidatesID(int* fd) {
+int listCandidatesID(int* fd, Config* config) {
     DIR* d;
     struct dirent* dir;
-    d = opendir(INPUT_PATH);
+    d = opendir(config->inputPath);
     int* files = NULL;
     if (d == NULL) {
         printf("Error opening directory\n");
@@ -51,20 +51,4 @@ int listCandidatesID(int* fd) {
 
     return b;
 
-}
-
-bool isInteger(char* str)
-{
-    if (*str == '-' || *str == '+') {
-        ++str;
-    }
-
-    while (*str) {
-        if (!isdigit(*str)) {
-            return false;
-        }
-        ++str;
-    }
-
-    return true;
 }

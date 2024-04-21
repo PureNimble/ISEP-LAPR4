@@ -1,21 +1,24 @@
 #ifndef INFO_H
-#define INPUT_PATH "./resources/input/"
-#define OUTPUT_PATH "./resources/output/"
-#define NUMBER_OF_CHILDREN 5
-#define VERIFY_NEW_FILES_FREQUENCY 5
+#define INFO_H
 #define MAX_CHILDREN 100
-#include <stdbool.h>
-
-void handle_signal(int signal);
-void newFileChecker();
-void setUpSignal();
-int listCandidatesID();
-bool isInteger(char* str);
-void copyFiles(int* fd);
-void reportFile();
+#include "config.h"
+// Singal counter
 extern volatile sig_atomic_t received_signals;
 
+// Singal setup (setupSignal.c)
+void handle_signal(int signal);
+void setUpSignal();
+
+// Child Code (newFileChecker.c)
+void newFileChecker(Config *config);
+
+// Parent Code (listCandidatesID.c and reportFile.c)
+int listCandidatesID(int *fd, Config *config);
+void reportFile(Config *config);
 char* read_first_line(char* file_path);
+
+// Children Code (copyFiles.c)
+void copyFiles(int* fd, Config* config);
 
 
 #endif // INFO_H

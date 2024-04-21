@@ -16,7 +16,7 @@
  * @brief Check if there are new files in the directory( send a signal to the
  *  parent process if there are new files)
  */
-void newFileChecker()
+void newFileChecker(Config *config)
 {
     int exec_fd[2], lastFileTime = 0;
     pid_t pid;
@@ -37,7 +37,7 @@ void newFileChecker()
             close(exec_fd[1]); // Close the write end of the pipe
             char command[100];
             // command to get the birth time of the files in the directory
-            int ret = snprintf(command, sizeof(command), "stat -c '%%W' %s/* 2>&1 | sort -n", INPUT_PATH);
+            int ret = snprintf(command, sizeof(command), "stat -c '%%W' %s/* 2>&1 | sort -n", config->inputPath);
             if (ret < 0 || ret >= sizeof(command))
             {
                 fprintf(stderr, "snprintf");
@@ -84,7 +84,7 @@ void newFileChecker()
 
         free(files_birth);
 
-        sleep(VERIFY_NEW_FILES_FREQUENCY);
+        sleep(config->verifyNewFilesFrequency);
 
     }
 }

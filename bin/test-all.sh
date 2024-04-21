@@ -1,2 +1,2 @@
 #!/bin/bash
-./bin/mvnw test
+./bin/mvnw test checkstyle:checkstyle-aggregate surefire-report:report

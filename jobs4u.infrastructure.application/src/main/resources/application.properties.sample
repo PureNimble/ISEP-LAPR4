@@ -1,16 +1,14 @@
 #####################################################
 ##
-## eCafeteria
+## jobs4u
 ##
 #####################################################
 
-persistence.persistenceUnit=eapli.eCafeteriaPU
+persistence.persistenceUnit=lapr4.jobs4u
 
-#persistence.repositoryFactory=eapli.ecafeteria.persistence.jpa.JpaRepositoryFactory
-persistence.repositoryFactory=eapli.ecafeteria.persistence.inmemory.InMemoryRepositoryFactory
+#persistence.repositoryFactory=lapr4.jobs4u.persistence.jpa.JpaRepositoryFactory
+persistence.repositoryFactory=lapr4.jobs4u.persistence.inmemory.InMemoryRepositoryFactory
 
 ui.menu.layout=horizontal
-
-HighCaloriesDishLimit=300
 
 UseEventfulControllers=true

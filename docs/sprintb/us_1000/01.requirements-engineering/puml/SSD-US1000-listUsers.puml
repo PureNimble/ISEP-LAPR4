@@ -3,7 +3,7 @@ skinparam monochrome true
 skinparam packageStyle rectangle
 skinparam shadowing false
 
-title System Sequence Diagram (SSD)
+title System Sequence Diagram (SSD) - List Users
 
 autonumber
 
@@ -12,10 +12,11 @@ participant ":System" as System
 
 activate Admin
 
-    Admin -> System : test
+    Admin -> System : Asks to list Users of the Backoffice
     activate System
 
-        System --> Admin : test successful
+        System -> Admin : Shows list of users
+
     deactivate System
 
 @enduml

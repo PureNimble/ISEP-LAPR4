@@ -1,0 +1,36 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+title System Sequence Diagram (SSD) - Register Job Openings
+
+autonumber
+
+actor "Costumer Manager" as Manager
+participant ":System" as System
+
+activate Manager
+
+    Manager -> System : Asks to register job opening
+    activate System
+        
+        System --> Manager : Asks for information (Title or function, Contract Type, Mode, Address, Company, Number of vacancies, Description)
+            note left System : The Costumer Manager has to provide the\nall the information required
+
+    deactivate System
+
+    Manager -> System : Provides information
+    activate System
+
+        System --> Manager : Asks to select one of the requirements
+            note left System : The Costumer Manager has to pick one of the\nrequirements from the ones available in the system \n(US 1009)
+
+    deactivate System
+
+    Manager -> System : Selects one of the requirements
+    activate System
+
+        System --> Manager : Informs success or failure
+
+@enduml

@@ -38,6 +38,6 @@ README.html
 
 # SCOMP project files
 obj/
-bin/
+jobs4u.applicationsFileBot/bin/
 output/*
 doubts.txt

@@ -12,13 +12,13 @@
 		compilation -->
 		<m2e.apt.activation>jdt_apt</m2e.apt.activation>
 
-		<eapli.framework.core.version>v24.0.1_RELEASE</eapli.framework.core.version>
-		<eapli.framework.authz.version>v24.0.1_RELEASE</eapli.framework.authz.version>
-		<eapli.framework.pubsub.version>v24.0.1_RELEASE</eapli.framework.pubsub.version>
+		<eapli.framework.core.version>v24.2.0_RELEASE</eapli.framework.core.version>
+		<eapli.framework.authz.version>v24.2.0_RELEASE</eapli.framework.authz.version>
+		<eapli.framework.pubsub.version>v24.2.0_RELEASE</eapli.framework.pubsub.version>
 
-		<eapli.framework.core.version-snapshot>25.0.0</eapli.framework.core.version-snapshot>
-		<eapli.framework.authz.version-snapshot>21.0.0</eapli.framework.authz.version-snapshot>
-		<eapli.framework.pubsub.version-snapshot>22.0.0</eapli.framework.pubsub.version-snapshot>
+		<eapli.framework.core.version-snapshot>25.0.1</eapli.framework.core.version-snapshot>
+		<eapli.framework.authz.version-snapshot>21.2.0</eapli.framework.authz.version-snapshot>
+		<eapli.framework.pubsub.version-snapshot>22.1.0</eapli.framework.pubsub.version-snapshot>
 
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
@@ -52,10 +52,10 @@
 			<version>${eapli.framework.authz.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>org.bitbucket.pag_isep.eapliframework</groupId>
-			<artifactId>eapli.framework.infrastructure.pubsub</artifactId>
-			<version>${eapli.framework.pubsub.version}</version>
-		</dependency>
+            <groupId>org.bitbucket.pag_isep.eapliframework</groupId>
+            <artifactId>eapli.framework.infrastructure.pubsub</artifactId>
+            <version>${eapli.framework.pubsub.version}</version>
+        </dependency>
 
 		<!--
 		https://mvnrepository.com/artifact/jakarta.xml.bind/jakarta.xml.bind-api -->

@@ -65,6 +65,16 @@
 > **Question 86:** US1000 – Na US menciona "Como administrador do sistema (Admin), quero ser capaz de registar, ativar/desativar, e listar utilizadores do backoffice.", gostava que clarificasse a funcionalidade "ativar/desativar" o quê que pretende e a sua finalidade, se possível com um exemplo.
 >
 > **Answer:** Resposta já dada em Q23, Q30 (pergunta relacionada com a US2000b) e Q72.
+>
+> **Question 89:** US1000 - Editar dados de utilizador – É possível alterar os dados de qualquer utilizador (Customer manager, Customer, Candidate), depois de este ter sido criado? Se sim, que dados são passiveis de ser alterados? Cada utilizador que é criado, tem como estado "activo" por defeito?
+>
+> **Answer:** Não irei responder diretamente à questão. O product owner considera que devem usar as melhores práticas quando a esse assunto.
+
+> **Date:** 2024-04-19
+>
+> **Question 97:** [1000] – Em relação ao registro de utilizadores, todos estes devem ser considerados por padrão "enable" ou deve haver a opção de "enable/disable" os utilizadores durante o processo de registro?
+>
+> **Answer:** No contexto da US1000 deve ser possível ativar e desativar utilizadores. Suponho que por omissão devem estar ativos.
 
 ### 1.3. Acceptance Criteria
 
@@ -78,17 +88,64 @@ _N/A_
 
 ### 1.5 Input and Output Data
 
+#### 1.5.1. Register Users
+
 **Input Data:**
 
 * Typed data:
-	* User data (name, email, role)
+	* Name
+	* Email
+
+* Selected data:
+	* Role (Customer Manager, Operator)
 
 **Output Data:**
 
 * (In)Success of the operation
 
+---
+
+#### 1.5.2. Enable/Disable Users
+
+**Input Data:**
+
+* Typed data:
+	* User data (email)
+
+* Selected data:
+	* Action (enable, disable)
+
+**Output Data:**
+
+* (In)Success of the operation
+
+---
+
+#### 1.5.3. List Users
+
+**Input Data:**
+
+* No input data required
+
+**Output Data:**
+
+* List of users
+
+
 ### 1.6. System Sequence Diagram (SSD)
 
-_N/A_
+#### 1.6.1. Register Users
+![SSD -> Register Users](svg/SSD-US1000-registerUsers.svg)
+
+---
+
+#### 1.6.2. Enable/Disable Users
+![SSD -> Enable/Disable Users](svg/SSD-US1000-enableOrDisableUsers.svg)
+
+---
+
+#### 1.6.3. List Users
+![SSD -> List Users](svg/SSD-US1000-listUsers.svg)
+
 
 <img width=100% src="https://capsule-render.vercel.app/api?type=waving&height=120&color=4E1764&section=footer"/>

@@ -1,0 +1,30 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+title System Sequence Diagram (SSD) - Register Users
+
+autonumber
+
+actor "Admin" as Admin
+participant ":System" as System
+
+activate Admin
+
+    Admin -> System : Asks to register an User of the Backoffice
+    activate System
+
+        System --> Admin : Asks for information (name, email, role)
+        note left System : The Admin has to provide \nthe name and email and \nmust pick a role from the \nlist of available roles \n(Customer Manager and Operator)
+
+    deactivate System
+
+    Admin -> System : Provides information
+    activate System
+
+        System --> Admin : Informs success or failure
+
+    deactivate System
+
+@enduml

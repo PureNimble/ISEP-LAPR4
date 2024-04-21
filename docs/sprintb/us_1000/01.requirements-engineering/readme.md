@@ -88,6 +88,8 @@ _N/A_
 
 ### 1.5 Input and Output Data
 
+#### 1.5.1. Register Users
+
 **Input Data:**
 
 * Typed data:
@@ -96,6 +98,32 @@ _N/A_
 **Output Data:**
 
 * (In)Success of the operation
+
+---
+
+#### 1.5.2. Enable/Disable Users
+
+**Input Data:**
+
+* Typed data:
+	* User data (email, action)
+
+**Output Data:**
+
+* (In)Success of the operation
+
+---
+
+#### 1.5.3. List Users
+
+**Input Data:**
+
+* No input data required
+
+**Output Data:**
+
+* List of users
+
 
 ### 1.6. System Sequence Diagram (SSD)
 

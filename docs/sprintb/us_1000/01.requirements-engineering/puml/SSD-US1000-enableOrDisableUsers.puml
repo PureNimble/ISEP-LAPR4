@@ -1,0 +1,30 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+title System Sequence Diagram (SSD) - Enable Or Disable Users
+
+autonumber
+
+actor "Admin" as Admin
+participant ":System" as System
+
+activate Admin
+
+    Admin -> System : Asks to disable or enable an User of the Backoffice
+    activate System
+
+        System --> Admin : Asks for information (User email, action)
+        note left System : The Admin has to choose\nbetween enable/disable\nand provide the User email
+
+    deactivate System
+
+    Admin -> System : Provides information
+    activate System
+
+        System --> Admin : Informs success or failure
+
+    deactivate System
+
+@enduml

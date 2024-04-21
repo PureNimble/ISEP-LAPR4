@@ -1,20 +1,15 @@
 <img width=100% src="https://capsule-render.vercel.app/api?type=waving&height=120&color=4E1764"/>
 
-# US 1002 - Register a job opening.
+# US 1005 - List all applications for a job opening.
 
-# 4. Tests 
+## 2. Analysis
 
-_N/A_
+### 2.1. Relevant Domain Model Excerpt
 
-# 5. Construction (Implementation)
+![Domain Model](svg/domain-model.svg)
 
-_N/A_
 
-# 6. Integration and Demo 
-
-_N/A_
-
-# 7. Observations
+### 2.2. Other Remarks
 
 _N/A_
 

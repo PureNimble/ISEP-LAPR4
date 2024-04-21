@@ -1,20 +1,22 @@
 <img width=100% src="https://capsule-render.vercel.app/api?type=waving&height=120&color=4E1764"/>
 
-# US 1002 - Register a job opening.
+# US 1005 - List all applications for a job opening.
 
-# 4. Tests 
+## 3. Design - User Story Realization
 
-_N/A_
-
-# 5. Construction (Implementation)
+### 3.1. Rationale
 
 _N/A_
 
-# 6. Integration and Demo 
+### Systematization ##
 
 _N/A_
 
-# 7. Observations
+## 3.2. Sequence Diagram (SD)
+
+_N/A_
+
+## 3.3. Class Diagram (CD)
 
 _N/A_
 

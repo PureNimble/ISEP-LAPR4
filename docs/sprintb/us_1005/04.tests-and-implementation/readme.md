@@ -1,6 +1,6 @@
 <img width=100% src="https://capsule-render.vercel.app/api?type=waving&height=120&color=4E1764"/>
 
-# US 1002 - Register a job opening.
+# US 1005 - List all applications for a job opening.
 
 # 4. Tests 
 

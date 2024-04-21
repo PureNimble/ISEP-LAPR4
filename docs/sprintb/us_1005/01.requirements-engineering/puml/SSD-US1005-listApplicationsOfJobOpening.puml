@@ -1,0 +1,30 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+title System Sequence Diagram (SSD) - List all applications for a Job Opening
+
+autonumber
+
+actor "Costumer Manager" as Manager
+participant ":System" as System
+
+activate Manager
+
+    Manager -> System : Asks for list of job openings
+    activate System
+
+        note left of System : The system will show a list of job openings\n(US 1003)
+        System -> Manager : Shows list of job openings and asks to select one
+
+    deactivate System
+
+    Manager -> System : Selects a job opening
+    activate System
+
+        System -> Manager : Shows list of applications for the selected job opening
+
+    deactivate System
+    
+@enduml

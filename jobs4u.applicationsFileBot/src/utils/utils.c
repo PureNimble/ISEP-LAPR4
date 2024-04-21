@@ -4,8 +4,12 @@
 #include <unistd.h>
 // process libraries
 #include <sys/wait.h>
+#include <sys/stat.h>
 #include <string.h>
 #include "utils.h"
+#include "hashSet.h"
+#include "config.h"
+#include <stdbool.h>
 /**
  * @brief Function to reduce the code duplication of creating a pipe and children
  */
@@ -26,7 +30,7 @@ pid_t createChildProcess()
     if (pid == -1)
     {
         perror("fork");
-        exit(EXIT_FAILURE);
+        kill(0, SIGTERM);
     }
     return pid;
 }
@@ -125,4 +129,37 @@ int getArray(HashSet *set,int *array){
         }
     }
     return counter;
+}
+
+int checkIfDirectoryExists(char *path)
+{
+    struct stat st = {0};
+    // check if last character is a '/'
+    if (path[strlen(path) - 1] != '/') {
+        strcat(path, "/");
+    }
+    if (stat(path, &st) == -1) {
+        fprintf(stderr, "Directory %s does not exist.\n", path);
+        return 1;
+    } else if (S_ISDIR(st.st_mode)) return 0;
+    else {
+        fprintf(stderr, "%s is not a directory.\n", path);
+        return 1;
+    }
+}
+
+int isInteger(char* str)
+{
+    if (*str == '-' || *str == '+') {
+        ++str;
+    }
+
+    while (*str) {
+        if (!isdigit(*str)) {
+            return 0;
+        }
+        ++str;
+    }
+
+    return 1;
 }

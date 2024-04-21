@@ -21,19 +21,19 @@
 package lapr4.jobs4u.app.bootstrap;
 
 import lapr4.jobs4u.app.common.console.BaseApplication;
-/* import lapr4.jobs4u.clientusermanagement.application.eventhandlers.NewUserRegisteredFromSignupWatchDog;
+import lapr4.jobs4u.clientusermanagement.application.eventhandlers.NewUserRegisteredFromSignupWatchDog;
 import lapr4.jobs4u.clientusermanagement.domain.events.NewUserRegisteredFromSignupEvent;
-import lapr4.jobs4u.clientusermanagement.domain.events.SignupAcceptedEvent; */
+import lapr4.jobs4u.clientusermanagement.domain.events.SignupAcceptedEvent;
 import lapr4.jobs4u.infrastructure.bootstrapers.BaseBootstrapper;
 import lapr4.jobs4u.infrastructure.bootstrapers.demo.BaseDemoBootstrapper;
 import lapr4.jobs4u.infrastructure.persistence.PersistenceContext;
 import lapr4.jobs4u.infrastructure.smoketests.BaseDemoSmokeTester;
-//import lapr4.jobs4u.usermanagement.application.eventhandlers.SignupAcceptedWatchDog;
+import lapr4.jobs4u.usermanagement.application.eventhandlers.SignupAcceptedWatchDog;
 import lapr4.jobs4u.usermanagement.domain.BasePasswordPolicy;
 import eapli.framework.collections.util.ArrayPredicates;
 import eapli.framework.infrastructure.authz.application.AuthzRegistry;
 import eapli.framework.infrastructure.authz.domain.model.PlainTextEncoder;
-//import eapli.framework.infrastructure.pubsub.EventDispatcher;
+import eapli.framework.infrastructure.pubsub.EventDispatcher;
 
 /**
  * Base Bootstrapping data app
@@ -93,10 +93,10 @@ public final class BaseBootstrap extends BaseApplication {
         return "Bootstrap data done.";
     }
 
-    /* @SuppressWarnings("unchecked")
+    @SuppressWarnings("unchecked")
     @Override
     protected void doSetupEventHandlers(final EventDispatcher dispatcher) {
         dispatcher.subscribe(new NewUserRegisteredFromSignupWatchDog(), NewUserRegisteredFromSignupEvent.class);
         dispatcher.subscribe(new SignupAcceptedWatchDog(), SignupAcceptedEvent.class);
-    } */
+    }
 }

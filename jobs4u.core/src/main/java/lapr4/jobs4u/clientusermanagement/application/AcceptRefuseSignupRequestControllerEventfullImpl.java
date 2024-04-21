@@ -26,18 +26,18 @@ package lapr4.jobs4u.clientusermanagement.application;
 import org.springframework.transaction.annotation.Transactional;
 
 import lapr4.jobs4u.clientusermanagement.domain.SignupRequest;
-//import lapr4.jobs4u.clientusermanagement.domain.events.SignupAcceptedEvent;
+import lapr4.jobs4u.clientusermanagement.domain.events.SignupAcceptedEvent;
 import lapr4.jobs4u.clientusermanagement.repositories.SignupRequestRepository;
 import lapr4.jobs4u.infrastructure.persistence.PersistenceContext;
 import lapr4.jobs4u.usermanagement.domain.BaseRoles;
 import eapli.framework.application.UseCaseController;
-//import eapli.framework.domain.events.DomainEvent;
+import eapli.framework.domain.events.DomainEvent;
 import eapli.framework.domain.repositories.ConcurrencyException;
 import eapli.framework.domain.repositories.IntegrityViolationException;
 import eapli.framework.infrastructure.authz.application.AuthorizationService;
 import eapli.framework.infrastructure.authz.application.AuthzRegistry;
-/* import eapli.framework.infrastructure.pubsub.EventPublisher;
-import eapli.framework.infrastructure.pubsub.impl.inprocess.service.InProcessPubSub; */
+import eapli.framework.infrastructure.pubsub.EventPublisher;
+import eapli.framework.infrastructure.pubsub.impl.inprocess.service.InProcessPubSub;
 import eapli.framework.validations.Preconditions;
 
 /**
@@ -57,7 +57,7 @@ public class AcceptRefuseSignupRequestControllerEventfullImpl
     private final SignupRequestRepository signupRequestsRepository = PersistenceContext
             .repositories().signupRequests();
     private final AuthorizationService authorizationService = AuthzRegistry.authorizationService();
-    //private final EventPublisher dispatcher = InProcessPubSub.publisher();
+    private final EventPublisher dispatcher = InProcessPubSub.publisher();
 
     @Override
     @SuppressWarnings("squid:S1226")
@@ -86,8 +86,8 @@ public class AcceptRefuseSignupRequestControllerEventfullImpl
         theSignupRequest = signupRequestsRepository.save(theSignupRequest);
 
         // notify interested parties (if any)
-        /* final DomainEvent event = new SignupAcceptedEvent(theSignupRequest);
-        dispatcher.publish(event); */
+        final DomainEvent event = new SignupAcceptedEvent(theSignupRequest);
+        dispatcher.publish(event);
 
         return theSignupRequest;
     }

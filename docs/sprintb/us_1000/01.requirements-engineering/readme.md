@@ -93,7 +93,11 @@ _N/A_
 **Input Data:**
 
 * Typed data:
-	* User data (name, email, role)
+	* Name
+	* Email
+
+* Selected data:
+	* Role (Customer Manager, Operator)
 
 **Output Data:**
 
@@ -106,7 +110,10 @@ _N/A_
 **Input Data:**
 
 * Typed data:
-	* User data (email, action)
+	* User data (email)
+
+* Selected data:
+	* Action (enable, disable)
 
 **Output Data:**
 

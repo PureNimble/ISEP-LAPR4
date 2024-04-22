@@ -38,11 +38,11 @@ _N/A_
 
 ### 1.4. Found out Dependencies
 
-* **US 1002 - Register Job Openings: ** To list all applications for a job opening, it is necessary to have a job opening registered.
+* **US 1002 - Register Job Openings:** To list all applications for a job opening, it is necessary to have a job opening registered.
 
-* **US 1003 - List Applications: ** The Customer Manager must have the possibility to list all applications for a job opening.
+* **US 1003 - List Applications:** The Customer Manager must have the possibility to list all applications for a job opening.
 
-* **US 2002 - Register Applications: ** The applications must be registered in the system before they can be listed.
+* **US 2002 - Register Applications:** The applications must be registered in the system before they can be listed.
 
 ### 1.5 Input and Output Data
 

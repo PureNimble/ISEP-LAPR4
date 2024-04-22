@@ -1,0 +1,27 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+title System Sequence Diagram (SSD) - Support and apply authentication and authorization
+
+autonumber
+
+actor "User" as User
+participant ":System" as System
+
+activate User
+
+    User -> System : Asks to sign in
+    activate System
+        System --> User : Asks for information (email and password)
+    deactivate System
+
+    User -> System : Provides information
+    activate System
+
+        System --> User : Informs success or failure
+
+    deactivate System
+
+@enduml

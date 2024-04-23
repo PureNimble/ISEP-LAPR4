@@ -84,6 +84,11 @@ post, telephone), but the automation of this reception is outside the scope of t
 >
 > **Answer:** O product owner não é especialista do dominio da solução (apenas têm conhecimentos do problema) mas, quanto à primeira questão, sugere que talvez user stories não sejam (podem não ser) opções de menu “distintas”. Quanto à segunda questão (recruitment process) julgo que também está mais ligada à solução que ao problema, pelo que não vou sugerir nada que possa até complicar mais do que esclarecer.
 
+> **Date:** 2024-04-21
+>
+> **Question 109:** [US1002] Modo de Trabalho e Tipo de Contrato- Numa job opening, o tipo de contrato e o modo de trabalho são elementos fixos, na medida em que os tipos apresentados na documentação são estáticos e não mudam, ou poderão haver mais tipos deste dois elementos?
+>
+> **Answer:** Os mais “normais” serão os que aparecem na documentação. Mas penso que faz sentido o sistema aceitar outros diferentes caso o Customer Manager assim o entender.
 
 ### 1.3. Acceptance Criteria
 

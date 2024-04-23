@@ -64,7 +64,12 @@
 > **Question 81:** When we register a customer... are we registering the data of the customer without the data of the user of the company who manage the app or both at the same time? Should we consider the posibility that the Customer User who manage the app changes and we should save the data of the old user too?
 >
 > **Answer:** For registerinr a customer see US1001.
+
+> **Date:** 2024-04-20
 >
+> **Question 104:** A criação de uma conta para o customer é feita ao inserir manualmente o email e nome do customer ou é expectavel ter uma lista de customers não registados no sistema para usar?
+>
+> **Answer:** Não percebi bem o conceito de customers não registados. Penso que esse conceito não existe. A US 1001 indica que se pretende registar um customer. Ao registar-se o customer deve-se também criar um utilizador para que o customer possa aceder à App de customers.
 
 ### 1.3. Acceptance Criteria
 

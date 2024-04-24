@@ -13,8 +13,7 @@
 ### 1.2. Customer Specifications and Clarifications
 
 **From the specifications document:**
-
-_N/A_
+* The system should display just the candidate details.
 
 **From the client clarifications:**
 

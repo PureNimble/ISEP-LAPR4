@@ -76,11 +76,17 @@
 >
 > **Answer:** No contexto da US1000 deve ser possível ativar e desativar utilizadores. Suponho que por omissão devem estar ativos.
 
+> **Date:** 2024-04-21
+>
+> **Question 107:** US1000- Um admin deve ser capaz de desativar/reativar outros admins?
+>
+> **Answer:** Ver pergunta Q80.
+
 ### 1.3. Acceptance Criteria
 
-**AC 1:** There must be only one admin of the backoffice.
+* **AC 1:** There must be only one admin of the backoffice.
 
-**AC 2:** The admin must be able to enable/disable an user multiple times.
+* **AC 2:** The admin must be able to enable/disable an user multiple times.
 
 ### 1.4. Found out Dependencies
 

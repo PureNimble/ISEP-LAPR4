@@ -11,6 +11,9 @@ OBJECTS=$(patsubst $(SRC_DIR)/%.c,$(OBJ_DIR)/%.o,$(SOURCES))
 .PHONY: all
 all: setup clean $(TARGET) run
 
+.PHONY: build
+build: setup $(TARGET)
+
 $(TARGET): $(OBJECTS)
 	$(CC) $(CFLAGS) $^ -o $@
 

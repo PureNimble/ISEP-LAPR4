@@ -13,12 +13,13 @@ participant ":System" as System
 activate Manager
 
     Manager -> System : Asks for list of job openings
-    activate System
-
-        note left of System : The system will show a list of job openings\n(US 1003)
-        System -> Manager : Shows list of job openings and asks to select one
-
-    deactivate System
+        activate System
+    
+        ref over System, Manager : US1003 ➡️ List Job Openings
+    
+        System --> Manager : Shows list of job openings and asks to select one
+    
+        deactivate System
 
     Manager -> System : Selects a job opening
     activate System

@@ -6,16 +6,13 @@
 
 ### 1.1. User Story Description
 
-
 * As a Project Manager, I want the system to support and apply authentication and authorization for all its users and functionalities.
-
 
 ### 1.2. Customer Specifications and Clarifications
 
 **From the specifications document:**
 
 - The system must support and apply authentication and authorization for all its users and functionalities.
-
 
 **From the client clarifications:**
 
@@ -91,14 +88,19 @@
 
 ### 1.4. Found out Dependencies
 
-_N/A_
+**US 1000 - Register, disable/enable, and list users of the backoffice** - To support and apply authentication and authorization, it is necessary to have users registered in the system.
+
+**US 1001 - Register a customer and that the system automatically creates a user for that customer** -  To support and apply authentication and authorization, it is necessary to have customers registered in the system.
+
+**US 2000a - Register a candidate and create a corresponding user** - To support and apply authentication and authorization, it is necessary to have candidates registered in the system.
+
 
 ### 1.5 Input and Output Data
 
 **Input Data:**
 
 * Typed data:
-	* e-mail
+	* email
     * password
 
 **Output Data:**
@@ -107,6 +109,6 @@ _N/A_
 
 ### 1.6. System Sequence Diagram (SSD)
 
-_N/A_
+![SSD -> Support and apply authentication and authorization](svg/SSD-USG007.svg)
 
 <img width=100% src="https://capsule-render.vercel.app/api?type=waving&height=120&color=4E1764&section=footer"/>

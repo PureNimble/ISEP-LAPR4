@@ -2,6 +2,17 @@
 
 # Project Jobs4U
 
+```
+      _         _           _  _          
+     | |       | |         | || |         
+     | |  ___  | |__   ___ | || |_  _   _ 
+ _   | | / _ \ | '_ \ / __||__   _|| | | |
+| |__| || (_) || |_) |\__ \   | |  | |_| |
+ \____/  \___/ |_.__/ |___/   |_|   \__,_|
+```
+
+_Jobs4u logo created with kammerl ascii signature using font "big" and kerning_
+
 ## 1. Description of the Project
 
 As part of the LEI ([Licenciatura Engenharia Informática](https://www.isep.ipp.pt/Course/Course/26)) degree's integrative project at ISEP ([Instituto Superior de Engenharia do Porto](https://www.isep.ipp.pt)) for the 2023/2024 academic year, we are embarking on a project to develop a Minimum Viable Product (MVP) for Jobs4U aimed at automating their talent acquisition process. Our objective is to enhance the efficiency of how Jobs4U connects companies with top candidates. Within the next 3 months, we will collaborate to design, code, and deploy a system that optimizes the recruitment workflow, from identifying potential candidates to compiling a prioritized list of candidates for job offers. This repository serves as our central workspace, containing initial source code, project management tools, and comprehensive documentation to support us through the software development lifecycle.
@@ -15,6 +26,9 @@ As part of the LEI ([Licenciatura Engenharia Informática](https://www.isep.ipp.
 > ⚠️ _Before building, ensure that you have a JDK installed and confirm that the JAVA_HOME environment variable is set to the JDK installation directory._
 
 ### For linux/unix/macos
+> ⚠️ _Before building on linux/unix/macos, ensure that you have the following prerequisites:_
+> - _Make (If not installed, you can install it by running `sudo apt-get install make`)_
+> - _GCC (If not installed, you can install it by running `sudo apt-get install gcc`)_
 ```
 ./bin/build-all.sh
 ```

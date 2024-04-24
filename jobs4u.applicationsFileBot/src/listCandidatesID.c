@@ -1,18 +1,23 @@
-// standard libraries
+#include <stddef.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <unistd.h>
 #include <string.h>
-// directory libraries
 #include <dirent.h>
-// signal libraries
-#include <signal.h>
-// info about this project
-#include "info.h"
-#include "utils.h"
+#include <unistd.h>
 #include "hashSet.h"
-#include <sys/types.h>
-
+#include "config.h"
+#include "utils.h"
+/**
+ * @brief Lists the IDs of the candidates found in the specified directory.
+ * 
+ * This function opens the specified directory and reads the names of the files in it.
+ * It extracts the candidate IDs from the file names and adds them to a hash set.
+ * Finally, it writes the candidate IDs to a file descriptor and returns the number of candidate IDs found.
+ * 
+ * @param fd The file descriptor to write the candidate IDs to.
+ * @param config The configuration settings for the application.
+ * @return The number of candidate IDs found.
+ */
 int listCandidatesID(int* fd, Config* config) {
     DIR* d;
     struct dirent* dir;
@@ -26,12 +31,11 @@ int listCandidatesID(int* fd, Config* config) {
 
     HashSet* set = createHashSet();
 
-    //create a Set
     while ((dir = readdir(d)) != NULL)
     {
         if (strcmp(dir->d_name, ".") == 0 || strcmp(dir->d_name, "..") == 0) continue;
         char buffer[100];
-        strcpy(buffer, dir->d_name);  // Copy the file name into the buffer
+        strcpy(buffer, dir->d_name);  
 
         char* token = strtok(buffer, "-");
         if (token != NULL && isInteger(token))
@@ -50,5 +54,4 @@ int listCandidatesID(int* fd, Config* config) {
     }
 
     return b;
-
 }

@@ -1,19 +1,20 @@
 <img width=100% src="https://capsule-render.vercel.app/api?type=waving&height=120&color=4E1764"/>
 
-# US 1006 - Display all the personal data of a candidate.
+# US 1006b - Display all the personal data of a candidate and their applications.
 
 ## 1. Requirements Engineering
 
 ### 1.1. User Story Description
 
 
-* As Customer Manager, I want to display all the personal data of a candidate.
+* As Customer Manager, I want to display all the personal data of a candidate, including his/her applications.
 
 
 ### 1.2. Customer Specifications and Clarifications
 
 **From the specifications document:**
-* The system should display just the candidate details.
+
+* The system should display the candidate details and their application list.
 
 **From the client clarifications:**
 
@@ -39,13 +40,15 @@
 
 **AC 1:** The name used to identify the candidate should just be the one used in the application. 
 
-**AC 2:** The Customer Manager should be able to access the personal data of any candidate.
+**AC 2:** The Customer Manager should be able to access the personal data and application list of any candidate.
 
 ### 1.4. Found out Dependencies
 
 * **US 2000a:** To list a candidate said candidate should first be registered.
 
 * **US 2000c:** The Customer Manager must have the possibility to list all candidates.
+
+* **US 2001:** To list the applications of a candidate said applications should be able to be registered.
 
 ### 1.5 Input and Output Data
 
@@ -58,10 +61,11 @@
 
 * List of Candidates
 * Personal details of selected Candidate
+* List of applications made by the selected Candidate.
 
 ### 1.6. System Sequence Diagram (SSD)
 
-![SSD -> Display Candidate Personal Data](svg/SSD-US1006-displayCandidatePersonalData.svg)
+![SSD -> Display Candidate Personal Data](svg/SSD-US1006b-displayCandidatePersonalDataAndApplications.svg)
 
 
 <img width=100% src="https://capsule-render.vercel.app/api?type=waving&height=120&color=4E1764&section=footer"/>

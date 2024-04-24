@@ -1,0 +1,28 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+title System Sequence Diagram (SSD) - Enable Or Disable Users
+
+autonumber
+
+actor Operator
+participant ":System" as System
+
+activate Operator
+
+    Operator -> System : Asks to import data related to candidates applications
+    activate System
+
+        System --> Operator : Requests the path of the shared folder
+    deactivate System
+
+    Operator -> System : Provides information
+    activate System 
+        note left of System : The system imports only\n the path of the file and\n not the file itself
+
+        System --> Operator : Informs that the data was imported successfully
+    deactivate System
+
+@enduml

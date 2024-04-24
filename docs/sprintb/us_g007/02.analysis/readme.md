@@ -1,6 +1,6 @@
 <img width=100% src="https://capsule-render.vercel.app/api?type=waving&height=120&color=4E1764"/>
 
-# US G006 -  Elaborate a Domain Model using DDD
+# US G007 - Support and apply authentication and authorization
 
 ## 2. Analysis
 

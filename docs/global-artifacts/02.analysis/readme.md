@@ -15,48 +15,33 @@ An association is a relationship between instances of objects that indicates a r
 
 | Concept (A)   |  Association |  Concept (B)  |
 | ------------- |:------------:| ------------: |
-| Admin | defines | Operator |
-| Admin | registers and manages | Customer |
-| Admin | manages | CustomerManager |
-| Admin | is a | User |
 | Application | has | ApplicationDate |
 | Application | has | ApplicationNumber |
-| Application | has | Rank |
 | Application | has | Result |
-| ApplicationsFileBot | Exports | File |
-| ApplicationPhase | has | Aplicattion |
+| Application | from | Candidate |
+| ApplicationPhase | is a | Phase |
 | AnalysisPhase | is a | Phase |
-| AnalysisPhase | has | Rank |
 | Authentication | authenticated by | Email |
 | Authentication | authenticated by | Password |
 | Authentication | generates | CreatedOn |
 | Authentication | generates | Token |
+| Authentication | uses | PasswordPolicy |
+| Authentication | uses | PasswordEncoder |
 | Candidate | is a | User |
-| Candidate | provides | CandidateAnswer |
-| Candidate | has | Application |
-| CandidateAnswer | has | AnswerBody |
-| CandidateAnswer | for an | InterviewQuestion |
-| CandidateAnswer | for a | SpecificationQuestion |
-| Customer | has | JobOpening |
-| Customer | has | JobOpening |
-| Customer | is a | User |
+| Candidate | has | FullName |
+| Candidate | has | PhoneNumber |
+| Candidate | has | Email |
+| CandidateAnswer | has | Grade |
+| CandidateAnswer | for | Interview |
+| Customer | has | FullName |
+| Customer | has | PhoneNumber |
+| Customer | has | Email |
 | Customer | has | CustomerCode |
-| Customer | has | CustomerAddress |
-| CustomerManager | manages | Customer |
-| CustomerManager | is a | User |
-| CustomerManager | setup | RecruitmentProcess |
-| CustomerManager | defines | Position |
-| Date | is a | QuestionModel |
-| DecimalNumber | is a | QuestionModel |
-| IntegerNumber | is a | QuestionModel |
+| Customer | has | Address |
 | Interview | has | InterviewDate |
-| Interview | uses | InterviewModel |
-| InterviewPhase | has | Interview |
-| InterviewModel | has | InterviewDescription |
-| InterviewModel | has | InterviewQuestion |
-| InterviewQuestion | has | Grade |
-| InterviewQuestion | has | Quotation |
-| InterviewQuestion | uses | QuestionModel |
+| Interview | has | InterviewTime |
+| Interview | uses | Plugin |
+| InterviewPhase | is a | Phase |
 | JobOpening | has | JobReference |
 | JobOpening | has | TitleOrFunction |
 | JobOpening | has | ContractType |
@@ -65,49 +50,31 @@ An association is a relationship between instances of objects that indicates a r
 | JobOpening | has | Company |
 | JobOpening | has | NumbersOfVacancies |
 | JobOpening | has | JobDescription |
-| JobOpening | has | RecruitmentProcess |
 | JobOpening | has | RequirementSpecification |
-| LanguageEngineer | is a | User |
-| LanguageEngineer | deploys and configure | InterviewModel |
-| LanguageEngineer | deploys and configure | RequirementModel |
-| MultipleChoiseAnswer | is a | QuestionModel |
-| NumericScale | is a | QuestionModel |
-| Operator | is a | User |
-| Operator | may register | Candidate |
-| Operator | imports | File |
-| Operator | registers | Application |
 | Phase | has | State |
-| Phase | has | InitialPhaseDate |
-| Phase | has | FinalPhaseDate |
-| QuestionModel | has | QuestionBody |
-| QuestionModel | has | ExpectedAnswer |
-| Rank | has | PositionNumber |
+| Phase | has | InitialDate |
+| Phase | has | FinalDate |
+| Plugin | has | Description |
+| Plugin | has | RequirementModel |
+| Plugin | has | InterviewModel |
+| Rank | for | JobOpening |
+| RecruitmentProcess | for | JobOpening |
 | RecruitmentProcess | has | InitialDate |
 | RecruitmentProcess | has | FinalDate |
 | RecruitmentProcess | has | Phase |
-| RequirementModel | has | RequirementDescription |
-| RequirementModel | has | SpecificationQuestion |
-| RequirementSpecification | uses | RequirementModel |
+| RequirementSpecification | uses | Plugin |
 | Result | has | Outcome |
 | Result | can have | Justification |
-| ResultPhase | has | Result |
-| ScreeningPhase | has | RequirementSpecification |
-| ShortTextAnswer | is a | QuestionModel |
-| SingleChoiseAnswer | is a | QuestionModel |
-| SpecificationQuestion | uses | QuestionModel |
-| Time | is a | QuestionModel |
-| TrueOrFalse | is a | QuestionModel |
-| User | has | FullName |
+| ResultPhase | is a | Phase |
+| ScreeningPhase | is a | Phase |
 | User | has | Email |
 | User | has | Password |
-| User | has | TaxPayerNumber |
-| User | has | BirthDate |
 | User | has | IsActive |
+| User | has | Role |
 | User | authenticated by | Authentication |
 
 
 ## Domain Model
-
 
 ![Domain Model](svg/domain-model.svg)
 

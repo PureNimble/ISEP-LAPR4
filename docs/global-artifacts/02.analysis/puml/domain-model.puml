@@ -21,12 +21,8 @@ skinparam package {
 package "<<aggregate>> User" {
     entity User <<entity>> <<root>> {}
 
-    class Email <<valueObject>> <<(V, #FF8B40)>> {}
-    class FullName <<valueObject>> <<(V, #FF8B40)>> {}
     class Password <<valueObject>> <<(V, #FF8B40)>> {}
-    class TaxPayerNumber <<valueObject>> <<(V, #FF8B40)>> {}
-    class PhoneNumber <<valueObject>> <<(V, #FF8B40)>> {}
-    class BirthDate <<valueObject>> <<(V, #FF8B40)>> {}
+    class Role <<valueObject>> <<(V, #FF8B40)>> {}
     class IsActive <<valueObject>> <<(V, #FF8B40)>> {}
 
     class Authentication <<service>> <<(S, #85C1E9)>> {}
@@ -37,16 +33,15 @@ package "<<aggregate>> User" {
     class PasswordEncoder <<service>> <<(S, #85C1E9)>> {}
 }
 
-class ApplicationsFileBot <<service>> <<(S, #85C1E9)>> {}
-
-class File <<valueObject>> <<(V, #FF8B40)>> {}
+class FullName <<valueObject>> <<(V, #FF8B40)>> {}
+class PhoneNumber <<valueObject>> <<(V, #FF8B40)>> {}
+class Email <<valueObject>> <<(V, #FF8B40)>> {}
 
 ' Application Aggregate
 package "<<aggregate>> Application" {
     entity Application <<entity>> <<root>> {}
     entity Result <<entity>> {}
-    
-    class RankPosition <<valueObject>> <<(V, #FF8B40)>> {}
+
     class ApplicationDate <<valueObject>> <<(V, #FF8B40)>> {}
     class ApplicationNumber <<valueObject>> <<(V, #FF8B40)>> {}
     class Outcome <<valueObject>> <<(V, #FF8B40)>> {}
@@ -56,29 +51,22 @@ package "<<aggregate>> Application" {
     note left of Justification: Rejected outcomes must have a justification
 }
 
-' Admin Aggregate
-package "<<aggregate>> Admin" {
-    entity Admin <<entity>> <<root>> {}
+' Rank Aggregate
+package "<<aggregate>> Rank" {
+    entity Rank <<entity>> <<root>> {}
 }
 
-' Customer Manager Aggregate
-package "<<aggregate>> Customer Manager" {
-    entity CustomerManager <<entity>> <<root>> {}
-}
-
-' Operator Aggregate
-package "<<aggregate>> Operator" {
-    entity Operator <<entity>> <<root>> {}
-}
-
-' Language Engineer Aggregate
-package "<<aggregate>> Language Engineer"{
-    entity LanguageEngineer <<entity>> <<root>> {}
-}
 
 ' Candidate Aggregate
 package "<<aggregate>> Candidate" {
     entity Candidate <<entity>> <<root>> {}
+}
+
+' Candidate Answer Aggregate
+package "<<aggregate>> Candidate Answer" {
+    entity CandidateAnswer <<entity>> <<root>> {}
+
+    class Grade <<valueObject>> <<(V, #FF8B40)>> {}
 }
 
 ' Customer Aggregate
@@ -99,45 +87,26 @@ package "<<aggregate>> Job Opening" {
     class Company <<valueObject>> <<(V, #FF8B40)>> {}
     class NumberOfVacancies <<valueObject>> <<(V, #FF8B40)>> {}
     class JobDescription <<valueObject>> <<(V, #FF8B40)>> {}
+    entity RequirementSpecification <<entity>> {}
 }
 
 class Address <<valueObject>> <<(V, #FF8B40)>> {}
-
-' RequirementSpecification
-package "<<aggregate>> Requirement Specification" {
-    entity RequirementSpecification <<entity>> <<root>> {}
-}
 
 ' Interview Aggregate
 package "<<aggregate>> Interview" {
     entity Interview <<entity>> <<root>> {}
 
     class InterviewDate <<valueObject>> <<(V, #FF8B40)>> {}
+    class InterviewTime <<valueObject>> <<(V, #FF8B40)>> {}
 }
 
-' Candidate Answer Aggregate
-package "<<aggregate>> Candidate Answer" {
-    entity CandidateAnswer <<entity>> <<root>> {}
-
-    class AnswerBody <<valueObject>> <<(V, #FF8B40)>> {}
-}
-
-' Requirement Model Aggregate
-package "<<aggregate>> Requirement Model" {
-    entity RequirementModel <<entity>> <<root>> {}
-}
-
-' Interview Model Aggregate
-package "<<aggregate>> Interview Model" {
-    entity InterviewModel <<entity>> <<root>> {}
-}
 
 ' Plugin Aggregate
 package "<<aggregate>> Plugin" {
     entity Plugin <<entity>> <<root>> {}
-    
-    class ANTLR <<service>> <<(S, #85C1E9)>> {}
-    
+    entity RequirementModel <<entity>> {}
+    entity InterviewModel <<entity>> {}
+        
     class Description <<valueObject>> <<(V, #FF8B40)>> {}
 }
 
@@ -155,56 +124,15 @@ package "<<aggregate>> RecruitmentProcess" {
     class FinalDate <<valueObject>> <<(V, #FF8B40)>> {}
     class State <<valueObject>> <<(V, #FF8B40)>> {}
 
-    note left of State: State can be Opened or Closed
+    note right of State: State can be Opened or Closed
 }
 
-' Question Model Aggregate
-package "<<interface>> Question Model" {
-    entity QuestionModel <<entity>> <<root>> {}
-    entity TrueOrFalse <<entity>> {}
-    entity ShortTextAnswer <<entity>> {}
-    entity SingleChoiceAnswer <<entity>> {}
-    entity MultipleChoiceAnswer <<entity>> {}
-    entity IntegerNumber <<entity>> {}
-    entity DecimalNumber <<entity>> {}
-    entity Date <<entity>> {}
-    entity Time <<entity>> {}
-    entity NumericScale <<entity>> {}
-
-    class QuestionBody <<valueObject>> <<(V, #FF8B40)>> {}
-    class ExpectedAnswer <<valueObject>> <<(V, #FF8B40)>> {}
-}
-
-' Interview Question Aggregate
-package "<<aggregate>> Interview Question" {
-    entity InterviewQuestion <<entity>> <<root>> {}
-
-    class Quotation <<valueObject>> <<(V, #FF8B40)>> {}
-}
-
-class Grade <<valueObject>> <<(V, #FF8B40)>> {}
-
-' Requirement Question Aggregate
-package "<<aggregate>> Requirement Question" {
-    entity RequirementQuestion <<entity>> <<root>> {}
-}
-
-' User value objects relationships
+' User relationships
 User "1" --> "1" Email : has
-User "1" --> "1" FullName : has
 User "1" --> "1" Password : has
-User "1" --> "1" TaxPayerNumber : has
-User "1" --> "1" PhoneNumber : has
-User "1" --> "1" BirthDate : has
+User "1" --> "1" Role : has
 User "1" --> "1" IsActive : can be
 User "1" --> "1" Authentication : authenticated by
-
-Admin -up-* User
-CustomerManager -up-* User
-Operator -up-* User
-Customer -up-* User
-LanguageEngineer -up-* User
-Candidate -up-* User
 
 ' Authentication relationships
 Authentication "1" ..> "1" Email : authenticated by
@@ -218,28 +146,11 @@ Authentication "1" ..> "1" PasswordEncoder : uses
 Password "1" ..> "1" PasswordPolicy : applies
 Password "1" ..> "1" PasswordEncoder : uses
 
-' Admin relationships
-Admin "*" --> "*" Customer: registers and manages
-Admin "*" --> "*" CustomerManager: manages
-Admin "*" --> "*" Operator: defines
-
-' Operator relationships
-Operator "*" --> "*" Candidate: may register
-Operator "*" --> "*" Application: registers
-Operator "*" --> "*" File: reads
-
-' Customer Manager relationships
-CustomerManager "*" --> "*" Customer: manages
-CustomerManager "*" --> "*" JobOpening: registers and manages
-CustomerManager "*" --> "*" RecruitmentProcess: setup
-
 ' Recruitment Process relationships
-RecruitmentProcess "1" --> "1" InitialDate: has
-RecruitmentProcess "1" --> "1" FinalDate: has
-RecruitmentProcess "1" --> "*" Phase: has
-RecruitmentProcess "1" --> "*" Application: has
-RecruitmentProcess "1" --> "*" RequirementSpecification: has
-RecruitmentProcess "1" --> "*" Interview: can have
+RecruitmentProcess "1" --> "1" InitialDate : has
+RecruitmentProcess "1" --> "1" FinalDate : has
+RecruitmentProcess "1" --> "*" Phase : has
+RecruitmentProcess "1" --> "1" JobOpening : for
 
 ' Job Opening relationships
 JobOpening "1" --> "1" JobReference : has
@@ -250,80 +161,40 @@ JobOpening "1" --> "1" Address : has
 JobOpening "1" --> "1" Company : has
 JobOpening "1" --> "1" NumberOfVacancies : has
 JobOpening "1" --> "1" JobDescription : has
-JobOpening "1" --> "1" RecruitmentProcess: has
 JobOpening "1" --> "1" RequirementSpecification: has
+JobOpening "1" -down--> "1" Interview : can have
 
 ' Plugin relationships
 Plugin "1" --> "1" Description : has
-Plugin "1" --> "1" ANTLR: uses
-
-' InterviewPhase Models relationships
-InterviewModel -up-* Plugin
-InterviewModel "1" --> "*" InterviewQuestion: has
-
-' Job Requirement Model relationships
-RequirementModel -up-* Plugin
-RequirementModel "1" --> "*" RequirementQuestion: has
+Plugin -down-* InterviewModel
+Plugin -down-* RequirementModel
 
 ' Interview relationships
-Interview "1" --> "1" InterviewDate: has
-Interview "1" --> "1" Grade: has
-Interview "1" --> "1" InterviewModel: uses
-
-' Interview Answers relationships
-CandidateAnswer "1" --> "1" AnswerBody : has
-
-' Applications File Bot relationships
-ApplicationsFileBot "*" --> "*" File: imports
-
-' Language Engineer relationships
-LanguageEngineer "*" --> "*" Plugin: deploy and configure
+Interview "1" --> "1" InterviewDate : has
+Interview "1" --> "1" InterviewTime : has
+Interview "1" --> "1" Plugin : uses
 
 ' Result relationships
-Result "1" --> "1" Outcome: has
-Result "1" --> "1" Justification: can have
-
-' Candidate relationships
-Candidate "1" --> "*" CandidateAnswer: provides
-Candidate "1" --> "*" Application: has
-
-' Candidate Answer relationships
-CandidateAnswer "*" --> "1" Interview: is for an
-CandidateAnswer "*" --> "1" RequirementSpecification: is for a
-
-' Interview Question relationships
-InterviewQuestion "1" --> "1" Grade : has
-InterviewQuestion "1" --> "1" Quotation : has
-InterviewQuestion "*" --> "1" QuestionModel: uses
-
-' Specification Question relationships
-RequirementQuestion "*" --> "1" QuestionModel: uses
-
-' Question Model relationships
-TrueOrFalse -up-|> QuestionModel: is a
-ShortTextAnswer -up-|> QuestionModel: is a
-SingleChoiceAnswer -up-|> QuestionModel: is a
-MultipleChoiceAnswer -up-|> QuestionModel: is a
-IntegerNumber -up-|> QuestionModel: is a
-DecimalNumber -up-|> QuestionModel: is a
-Date -up-|> QuestionModel: is a
-Time -up-|> QuestionModel: is a
-NumericScale -up-|> QuestionModel: is a
+Result "1" --> "1" Outcome : has
+Result "1" --> "1" Justification : can have
 
 ' Application relationships
 Application "1" --> "1" ApplicationDate : has
 Application "1" --> "1" ApplicationNumber : has
-Application "1" --> "1" Result : has
-Application "1" --> "1" RankPosition : has
+Application "1" --> "0..1" Result : has
+Application "1" --> "1" JobOpening : for
+Application "1" --> "1" Candidate : from
 
 ' Customer relationships
 Customer "1" --> "1" CustomerCode : has
 Customer "1" --> "1" Address : has
-Customer "1" --> "*" JobOpening: has
+Customer "1" --> "1" FullName : has
+Customer "1" --> "1" Email : has
+Customer "1" --> "1" PhoneNumber : has
+Customer "1" ---|> "1" User : has
 
-' Question Model relationships
-QuestionModel "1" --> "1" QuestionBody : has
-QuestionModel "1" --> "1" ExpectedAnswer : has
+' Job Opening relationships
+JobOpening "1" --> "1" Customer : has
 
 ' Phase relationships
 Phase "1" --> "1" State: has
@@ -337,6 +208,19 @@ AnalysisPhase -up-|> Phase: is a
 ResultPhase -up-|> Phase: is a
 
 ' Requirement Specification relationships
-RequirementSpecification "1" --> "1" RequirementModel: uses
+RequirementSpecification "1" --> "1" Plugin: uses
+
+' Candidate relationships
+Candidate "1" --> "1" FullName : has
+Candidate "1" --> "1" PhoneNumber : has
+Candidate "1" --> "1" Email : has
+Candidate "1" ---|> "1" User : has
+
+' Rank relationships
+Rank "1" --> "1" JobOpening : for
+
+' Candidate Answer relationships
+CandidateAnswer "1" --> "1" Interview : for
+CandidateAnswer "1" --> "1" Grade : has
 
 @enduml

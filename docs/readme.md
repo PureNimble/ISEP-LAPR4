@@ -28,11 +28,11 @@ The assignment of tasks (requirements/user stories/use cases) during the project
 
 | Student Nr.	| Name | Sprint A | Sprint B   | Sprint C |
 |---------------|------|:--------:|:----------:|:--------:|
-| [1221694](team-members/1221694/readme.md) | João Pinto    | [`US G001`](sprinta/us_g001/readme.md) [`US G002`](sprinta/us_g002/readme.md) [`US G003`](sprinta/us_g003/readme.md) [`US G004`](sprinta/us_g004/readme.md) [`US G005`](sprinta/us_g005/readme.md) [`US G006`](sprinta/us_g006/readme.md) |  |  |
-| [1220612](team-members/1220612/readme.md) | José Sá       | [`US G001`](sprinta/us_g001/readme.md) [`US G002`](sprinta/us_g002/readme.md) [`US G003`](sprinta/us_g003/readme.md) [`US G004`](sprinta/us_g004/readme.md) [`US G005`](sprinta/us_g005/readme.md) [`US G006`](sprinta/us_g006/readme.md) |  |  |
-| [1201804](team-members/1201804/readme.md) | Rafael Araújo | [`US G001`](sprinta/us_g001/readme.md) [`US G002`](sprinta/us_g002/readme.md) [`US G003`](sprinta/us_g003/readme.md) [`US G004`](sprinta/us_g004/readme.md) [`US G005`](sprinta/us_g005/readme.md) [`US G006`](sprinta/us_g006/readme.md) |  |  |
-| [1220777](team-members/1220777/readme.md) | Rui Lima      | [`US G001`](sprinta/us_g001/readme.md) [`US G002`](sprinta/us_g002/readme.md) [`US G003`](sprinta/us_g003/readme.md) [`US G004`](sprinta/us_g004/readme.md) [`US G005`](sprinta/us_g005/readme.md) [`US G006`](sprinta/us_g006/readme.md) |  |  |
-| [1221700](team-members/1221700/readme.md) | Vasco Sousa   | [`US G001`](sprinta/us_g001/readme.md) [`US G002`](sprinta/us_g002/readme.md) [`US G003`](sprinta/us_g003/readme.md) [`US G004`](sprinta/us_g004/readme.md) [`US G005`](sprinta/us_g005/readme.md) [`US G006`](sprinta/us_g006/readme.md) |  |  |
+| [1221694](team-members/1221694/readme.md) | João Pinto | [`US G001`](sprinta/us_g001/readme.md) [`US G002`](sprinta/us_g002/readme.md) [`US G003`](sprinta/us_g003/readme.md) [`US G004`](sprinta/us_g004/readme.md) [`US G005`](sprinta/us_g005/readme.md) [`US G006`](sprinta/us_g006/readme.md) | [`US G006`](sprintb/us_g006/readme.md) [`US G007`](sprintb/us_g007/readme.md) [`US 2001`](sprintb/us_2001/readme.md) [`US 2002`](sprintb/us_2002/readme.md) [`US 2003`](sprintb/us_2003/readme.md) |  |
+| [1220612](team-members/1220612/readme.md) | José Sá | [`US G001`](sprinta/us_g001/readme.md) [`US G002`](sprinta/us_g002/readme.md) [`US G003`](sprinta/us_g003/readme.md) [`US G004`](sprinta/us_g004/readme.md) [`US G005`](sprinta/us_g005/readme.md) [`US G006`](sprinta/us_g006/readme.md) | [`US G006`](sprintb/us_g006/readme.md) [`US G007`](sprintb/us_g007/readme.md) [`US 1006`](sprintb/us_1006/readme.md) [`US 1006b`](sprintb/us_1006b/readme.md) [`US 1009`](sprintb/us_1009/readme.md) |  |
+| [1201804](team-members/1201804/readme.md) | Rafael Araújo | [`US G001`](sprinta/us_g001/readme.md) [`US G002`](sprinta/us_g002/readme.md) [`US G003`](sprinta/us_g003/readme.md) [`US G004`](sprinta/us_g004/readme.md) [`US G005`](sprinta/us_g005/readme.md) [`US G006`](sprinta/us_g006/readme.md) | [`US G006`](sprintb/us_g006/readme.md) [`US G007`](sprintb/us_g007/readme.md) [`US 1001`](sprintb/us_1001/readme.md) [`US 1003`](sprintb/us_1003/readme.md) [`US 1007`](sprintb/us_1007/readme.md) [`US 1012`](sprintb/us_1012/readme.md) |  |
+| [1220777](team-members/1220777/readme.md) | Rui Lima | [`US G001`](sprinta/us_g001/readme.md) [`US G002`](sprinta/us_g002/readme.md) [`US G003`](sprinta/us_g003/readme.md) [`US G004`](sprinta/us_g004/readme.md) [`US G005`](sprinta/us_g005/readme.md) [`US G006`](sprinta/us_g006/readme.md) | [`US G006`](sprintb/us_g006/readme.md) [`US G007`](sprintb/us_g007/readme.md) [`US 1011`](sprintb/us_1011/readme.md) [`US 2000a`](sprintb/us_2000a/readme.md) [`US 2000c`](sprintb/us_2000c/readme.md) |  |
+| [1221700](team-members/1221700/readme.md) | Vasco Sousa | [`US G001`](sprinta/us_g001/readme.md) [`US G002`](sprinta/us_g002/readme.md) [`US G003`](sprinta/us_g003/readme.md) [`US G004`](sprinta/us_g004/readme.md) [`US G005`](sprinta/us_g005/readme.md) [`US G006`](sprinta/us_g006/readme.md) | [`US G006`](sprintb/us_g006/readme.md) [`US G007`](sprintb/us_g007/readme.md) [`US 1000`](sprintb/us_1000/readme.md) [`US 1002`](sprintb/us_1002/readme.md) [`US 1005`](sprintb/us_1005/readme.md) [`US 1008`](sprintb/us_1008/readme.md) |  |
 
 ## 4. Global Artifacts
 
@@ -44,17 +44,17 @@ The assignment of tasks (requirements/user stories/use cases) during the project
 ### Sprint A
 
 | Student Nr.	| Name | Justification | Engineering Process | Issues and Version Control | Team Work | Deployment | Integration | Req. Satisfaction | 
-|------------|--------|-------|---------------------|----------------------------|-----------|------------|-------------|-------------------|
-| [1221694](team-members/1221694/readme.md) | João Pinto    | [1221694 - Justification](team-members/1221694/lapr4/sprinta/readme.md) |                    5 |                           5 |          3 |           4 |            5 |                  4 |
-| [1220612](team-members/1220612/readme.md) | José Sá       | [1220612 - Justification](team-members/1220612/lapr4/sprinta/readme.md) | 4                   | 4                          | 3         | 4          | 4           | 3                 |
-| [1201804](team-members/1201804/readme.md) | Rafael Araújo | [1201804 - Justification](team-members/1201804/lapr4/sprinta/readme.md) |                    5 |                           5 |          4 |           4 |            5 |                  4 |
-| [1220777](team-members/1220777/readme.md) | Rui Lima      | [1220777 - Justification](team-members/1220777/lapr4/sprinta/readme.md) | 4                   | 3                          | 4         | 3          | 3           | 3                 |
-| [1221700](team-members/1221700/readme.md) | Vasco Sousa   | [1221700 - Justification](team-members/1221700/lapr4/sprinta/readme.md) |                    5 |                           5 |          3 |           4 |            5 |                  4 |
+|------------|--------|-------|:-------------------:|:--------------------------:|:---------:|:----------:|:-----------:|:-----------------:|
+| [1221694](team-members/1221694/readme.md) | João Pinto    | [1221694 - Justification](team-members/1221694/lapr4/sprinta/readme.md) | 5 | 5 | 3 | 4 | 5 | 4 |
+| [1220612](team-members/1220612/readme.md) | José Sá       | [1220612 - Justification](team-members/1220612/lapr4/sprinta/readme.md) | 4 | 4 | 3 | 4 | 4 | 3 |
+| [1201804](team-members/1201804/readme.md) | Rafael Araújo | [1201804 - Justification](team-members/1201804/lapr4/sprinta/readme.md) | 5 | 5 | 4 | 4 | 5 | 4 |
+| [1220777](team-members/1220777/readme.md) | Rui Lima      | [1220777 - Justification](team-members/1220777/lapr4/sprinta/readme.md) | 4 | 3 | 4 | 3 | 3 | 3 |
+| [1221700](team-members/1221700/readme.md) | Vasco Sousa   | [1221700 - Justification](team-members/1221700/lapr4/sprinta/readme.md) | 5 | 5 | 3 | 4 | 5 | 4 |
 
 ### Sprint B
 
 | Student Nr.	| Name | Justification | Engineering Process | Issues and Version Control | Team Work | Deployment | Integration | Req. Satisfaction | 
-|------------|--------|-------|----------|----------|----------|--------|----------|----------|
+|------------|--------|-------|:-------------------:|:--------------------------:|:---------:|:----------:|:-----------:|:-----------------:|
 | [1221694](team-members/1221694/readme.md) | João Pinto    | [1221694 - Justification](team-members/1221694/lapr4/sprintb/readme.md) |  |  |  |  |  |  |
 | [1220612](team-members/1220612/readme.md) | José Sá       | [1220612 - Justification](team-members/1220612/lapr4/sprintb/readme.md) |  |  |  |  |  |  |
 | [1201804](team-members/1201804/readme.md) | Rafael Araújo | [1201804 - Justification](team-members/1201804/lapr4/sprintb/readme.md) |  |  |  |  |  |  |
@@ -64,7 +64,7 @@ The assignment of tasks (requirements/user stories/use cases) during the project
 ### Sprint C
 
 | Student Nr.	| Name | Justification | Engineering Process | Issues and Version Control | Team Work | Deployment | Integration | Req. Satisfaction | 
-|------------|--------|-------|----------|----------|----------|--------|----------|----------|
+|------------|--------|-------|:-------------------:|:--------------------------:|:---------:|:----------:|:-----------:|:-----------------:|
 | [1221694](team-members/1221694/readme.md) | João Pinto    | [1221694 - Justification](team-members/1221694/lapr4/sprintc/readme.md) |  |  |  |  |  |  |
 | [1220612](team-members/1220612/readme.md) | José Sá       | [1220612 - Justification](team-members/1220612/lapr4/sprintc/readme.md) |  |  |  |  |  |  |
 | [1201804](team-members/1201804/readme.md) | Rafael Araújo | [1201804 - Justification](team-members/1201804/lapr4/sprintc/readme.md) |  |  |  |  |  |  |

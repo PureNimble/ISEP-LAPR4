@@ -12,5 +12,10 @@
 | **A**  | [_`US G004`_](../../sprinta/us_g004/readme.md) |
 | **A**  | [_`US G005`_](../../sprinta/us_g005/readme.md) |
 | **A**  | [_`US G006`_](../../sprinta/us_g006/readme.md) |
+| **B**  | [_`US G006`_](../../sprintb/us_g006/readme.md) |
+| **B**  | [_`US G007`_](../../sprintb/us_g007/readme.md) |
+| **B**  | [_`US 1011`_](../../sprintb/us_1011/readme.md) |
+| **B**  | [_`US 2000a`_](../../sprintb/us_2000a/readme.md) |
+| **B**  | [_`US 2000c`_](../../sprintb/us_2000c/readme.md) |
 
 <img width=100% src="https://capsule-render.vercel.app/api?type=waving&height=120&color=4E1764&section=footer"/>

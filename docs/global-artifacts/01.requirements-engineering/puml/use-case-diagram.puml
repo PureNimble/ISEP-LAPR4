@@ -31,9 +31,8 @@ actor "Language Engineer" as LE #white;line:purple;line.bold;text:black
 
 rectangle Backoffice {
     usecase "Manage Customers and its Managers" as UC1
-    usecase "Deploy and Configure Plugin" as UC2
-    usecase "Register Application" as UC3
-    usecase "Manage Job Openings" as UC4
+    usecase "Register Application" as UC2
+    usecase "Manage Job Openings" as UC3
     usecase "Register, disable/enable, and list users of the backoffice" as US1000
     usecase "Register a customer and that the system automatically creates a user for that customer" as US1001
     usecase "Register a job opening" as US1002
@@ -54,14 +53,13 @@ rectangle Backoffice {
 
 AD --> UC1
 AD --> US1000
-LE --> UC2
 LE --> US1008
-OP --> UC3
+OP --> UC2
 OP --> US2000a
 OP --> US2000c
 OP --> US2002
 OP --> US2003
-CM --> UC4
+CM --> UC3
 CM --> US1001
 CM --> US1002
 CM --> US1003

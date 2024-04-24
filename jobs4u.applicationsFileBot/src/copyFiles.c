@@ -13,8 +13,10 @@
 #include <sys/types.h>
 
 /**
- * @brief Check if there are new files in the directory( send a signal to the
- *  parent process if there are new files)
+ * @brief Copy all files from new Candidates to the output directory.
+ * 
+ * @param fd The file descriptor for the pipe.
+ * @param config The configuration struct.
  */
 void copyFiles(int* fd, Config* config)
 {
@@ -24,46 +26,70 @@ void copyFiles(int* fd, Config* config)
     while (1)
     {
         read(fd[0], &candidateID, sizeof(candidateID));
-        //TODO: copy the file
         printf("Candidate ID: %d PID:%d\n", candidateID,getpid());
+
         pid_t pid;
+        int status;
         char buffer[300];
         sprintf(buffer, "%s%d-candidate-data.txt",config->inputPath, candidateID);
-        char * job = read_first_line(buffer);
-        job[strlen(job) - 1] = '\0';
-        pid = createChildProcess();
-        if (pid == 0){
-            // create new directory and copy the files  
-            sprintf(buffer, "%s%s/%d", config->outputPath, job, candidateID);
-            char command[1024];
-            snprintf(command, sizeof(command), "mkdir -p %s && /bin/cp %s%d* %s", buffer, config->inputPath, candidateID, buffer);                
-            execlp("/bin/sh", "sh", "-c", command, NULL);
-            exit(EXIT_FAILURE);   
+
+        if(isFileOrDirectory(buffer)!= 1){
+            sprintf(buffer, "Candidate ID: %d has an invalid format\n", candidateID);
+            errorMessages(buffer);
         }
-        kill(getppid(), SIGUSR2); // send signal to parent
+        else{
+            char * job = readFirstLine(buffer, candidateID);
+            if(job != NULL){
+                job[strlen(job) - 1] = '\0';
+                pid = createChildProcess();
+
+                if (pid == 0){
+                    // create new directory and copy the files  
+                    sprintf(buffer, "%s%s/%d", config->outputPath, job, candidateID);
+                    char command[1024];
+                    snprintf(command, sizeof(command), "mkdir -p %s && /bin/cp -u %s%d-* %s", buffer, config->inputPath, candidateID, buffer);                
+                    execlp("/bin/sh", "sh", "-c", command, NULL);
+                    exit(EXIT_FAILURE);   
+                }
+
+                wait(&status);
+                
+                if(WIFEXITED(status)){
+                    if(WEXITSTATUS(status) == EXIT_FAILURE){
+                        errorMessages("Failed to copy files");
+                    }
+                }
+            }
+        }
+        kill(getppid(), SIGRTMIN); // send signal to parent
     }
 }
 
-
-
-
-
-char* read_first_line(char* file_path) {
+/**
+ * @brief Read the first line of a file.
+ * 
+ * @param file_path The path to the file.
+ * @return char* The first line of the file, or NULL if an error occurred.
+ */
+char* readFirstLine(char* file_path, int candidateID) {
     FILE* file = fopen(file_path, "r"); // Open the file for reading
+    char buffer[300];
     if (file == NULL) {
-        printf("Failed to open file at %s\n", file_path);
+        sprintf(buffer,"Failed to open file at %s\n", file_path);
+        errorMessages(buffer);
         return NULL;
     }
 
     char* line = malloc(256 * sizeof(char)); // Allocate memory for the line
     if (line == NULL) {
-        printf("Failed to allocate memory for the line\n");
+        errorMessages("Failed to allocate memory for the line\n");
         fclose(file);
         return NULL;
     }
 
     if (fgets(line, 256, file) == NULL) { // Read the first line
-        printf("Failed to read the first line from %s\n", file_path);
+        sprintf(buffer,"Failed to read the job Opening ID from Candidate:%d\n",candidateID);
+        errorMessages(buffer);
         free(line);
         line = NULL;
     }

@@ -15,10 +15,12 @@ void newFileChecker(Config *config);
 // Parent Code (listCandidatesID.c and reportFile.c)
 int listCandidatesID(int *fd, Config *config);
 void reportFile(Config *config);
-char* read_first_line(char* file_path);
+void printFilesRecursively(char *basePath, FILE *file);
+
 
 // Children Code (copyFiles.c)
 void copyFiles(int* fd, Config* config);
+char* readFirstLine(char* file_path, int candidateID);
 
 
 #endif // INFO_H

@@ -13,8 +13,16 @@
 #include <sys/types.h>
 
 /**
- * @brief Check if there are new files in the directory( send a signal to the
- *  parent process if there are new files)
+ * @brief Check if there are new files in the directory and send a signal to the
+ *        parent process if there are new files.
+ * 
+ * This function continuously checks for new files in the specified directory 
+ *  and sends a signal to the parent process if any new files are found. 
+ *  It uses the given configuration to determine the input path and the 
+ *  frequency at which to check for new files.
+ * 
+ * @param config A pointer to the configuration struct that contains the input 
+ *             path and the frequency of checking for new files.
  */
 void newFileChecker(Config *config)
 {
@@ -28,15 +36,14 @@ void newFileChecker(Config *config)
 
         if (pid == 0)
         {
-            close(exec_fd[0]); // Close the read end of the pipe
+            close(exec_fd[0]); 
             if (dup2(exec_fd[1], STDOUT_FILENO) == -1)
             {
                 perror("dup2");
                 kill(getppid(), SIGINT);
             }
-            close(exec_fd[1]); // Close the write end of the pipe
+            close(exec_fd[1]);
             char command[100];
-            // command to get the birth time of the files in the directory
             int ret = snprintf(command, sizeof(command), "stat -c '%%W' %s/* 2>&1 | sort -n", config->inputPath);
             if (ret < 0 || ret >= sizeof(command))
             {
@@ -47,12 +54,10 @@ void newFileChecker(Config *config)
             perror("execlp");
             kill(getppid(), SIGINT);
         }
-        // Parent process
         char buffer[1024];
         ssize_t numRead;
         unsigned int counter = 0;
         int* files_birth;
-        // read from the pipe the birth time of the files
         numRead = read(exec_fd[0], buffer, sizeof(buffer) - 1);
         buffer[numRead] = '\0';
         char* token = strtok(buffer, "\n");

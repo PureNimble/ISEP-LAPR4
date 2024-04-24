@@ -15,8 +15,10 @@
 #include <unistd.h>
 
 /**
+ * @brief Generates a report file containing the names of all files in a given directory.
+ * The report file is named with a timestamp and saved in the specified output path.
  *
- * @brief Handle the signals
+ * @param config A pointer to the Config struct containing the configuration settings.
  */
 void reportFile(Config *config)
 {
@@ -38,9 +40,17 @@ void reportFile(Config *config)
     //write the name of the directory inside output path and all files inside
     printFilesRecursively(config->outputPath,file);
     fclose(file);
-    
 }
 
+/**
+ * @brief Print files recursively
+ * 
+ * This function prints the names of all files and directories inside a given directory recursively.
+ * It takes a base path and a file pointer as parameters.
+ * 
+ * @param basePath The base path of the directory to print files from.
+ * @param file A pointer to the file where the names will be printed.
+ */
 void printFilesRecursively(char *basePath, FILE *file)
 {
     char path[1000];
@@ -54,7 +64,6 @@ void printFilesRecursively(char *basePath, FILE *file)
     while ((dp = readdir(dir)) != NULL)
     {
         // first character is a integer
-        
         if (strcmp(dp->d_name, ".") != 0 && strcmp(dp->d_name, "..") != 0 )
         {
             // Construct new path from our base path

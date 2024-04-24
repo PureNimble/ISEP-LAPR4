@@ -1,0 +1,31 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+title System Sequence Diagram (SSD) - Display all the personal data of a candidate
+
+autonumber
+
+actor "Costumer Manager" as Manager
+participant ":System" as System
+
+activate Manager
+
+    Manager -> System : Asks for list of candidates
+    activate System
+
+        ref over System , Manager: List candidates\n(US 2000c)
+        System -> Manager : Shows list of candidates and asks to select one
+
+    deactivate System
+
+    Manager -> System : Selects a candidate
+    activate System
+
+        System -> Manager : Displays personal data of selected candidate
+        System -> Manager : Displays list of the applications sent by the candidate
+
+    deactivate System
+    
+@enduml

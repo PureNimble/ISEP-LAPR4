@@ -22,7 +22,6 @@ void setUpSignal()
     act.sa_handler = handle_signal;
     act.sa_flags = SA_RESTART;
     sigaction(SIGUSR1, &act, NULL);
-    sigaction(SIGUSR2, &act, NULL);
     sigaction(SIGINT, &act, NULL);
     //act.sa_handler = handler;
     act.sa_flags = 0;
@@ -37,7 +36,6 @@ void setUpSignal()
  * It performs different actions based on the received signal.
  * - For SIGUSR1, it writes a message indicating that new files were found.
  * - For SIGINT, it writes a message indicating that SIGINT was received and terminates all child processes.
- * - For SIGUSR2, it writes a message indicating that a child process ended.
  * - For any other signal, it increments the received_signals counter.
  * 
  * @param signal The signal number.
@@ -54,10 +52,6 @@ void handle_signal(int signal)
         // Kill all child processes
         kill(0, SIGTERM);
         exit(0);
-    case SIGUSR2:
-        write(1, "Child process ended.\n", 22);
-        received_signals++;
-        break;
     default:
         received_signals++;
         break;

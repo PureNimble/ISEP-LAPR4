@@ -33,7 +33,6 @@ package "<<aggregate>> User" {
     class PasswordEncoder <<service>> <<(S, #85C1E9)>> {}
 }
 
-class FullName <<valueObject>> <<(V, #FF8B40)>> {}
 class PhoneNumber <<valueObject>> <<(V, #FF8B40)>> {}
 class Email <<valueObject>> <<(V, #FF8B40)>> {}
 
@@ -60,6 +59,9 @@ package "<<aggregate>> Rank" {
 ' Candidate Aggregate
 package "<<aggregate>> Candidate" {
     entity Candidate <<entity>> <<root>> {}
+
+    class FirstName <<valueObject>> <<(V, #FF8B40)>> {}
+    class LastName <<valueObject>> <<(V, #FF8B40)>> {}
 }
 
 ' Candidate Answer Aggregate
@@ -73,6 +75,7 @@ package "<<aggregate>> Candidate Answer" {
 package "<<aggregate>> Customer" {
     entity Customer <<entity>> <<root>> {}
 
+    class CompanyName <<valueObject>> <<(V, #FF8B40)>> {}
     class CustomerCode <<valueObject>> <<(V, #FF8B40)>> {}
 }
 
@@ -187,8 +190,8 @@ Application "1" --> "1" Candidate : from
 
 ' Customer relationships
 Customer "1" --> "1" CustomerCode : has
+Customer "1" --> "1" CompanyName : has
 Customer "1" --> "1" Address : has
-Customer "1" --> "1" FullName : has
 Customer "1" --> "1" Email : has
 Customer "1" --> "1" PhoneNumber : has
 Customer "1" ---|> "1" User : has
@@ -211,7 +214,8 @@ ResultPhase -up-|> Phase: is a
 RequirementSpecification "1" --> "1" Plugin: uses
 
 ' Candidate relationships
-Candidate "1" --> "1" FullName : has
+Candidate "1" --> "1" FirstName : has
+Candidate "1" --> "1" LastName : has
 Candidate "1" --> "1" PhoneNumber : has
 Candidate "1" --> "1" Email : has
 Candidate "1" ---|> "1" User : has

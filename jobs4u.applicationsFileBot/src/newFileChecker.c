@@ -44,8 +44,8 @@ void newFileChecker(Config *config)
             }
             close(exec_fd[1]);
             char command[100];
-            int ret = snprintf(command, sizeof(command), "stat -c '%%W' %s/* 2>&1 | sort -n", config->inputPath);
-            if (ret < 0 || ret >= sizeof(command))
+            int ret = snprintf(command, sizeof(command), "stat -c '%%Y' %s/* 2>&1 | sort -n", config->inputPath);
+            if (ret < 0 || ret >= (int) sizeof(command))
             {
                 fprintf(stderr, "snprintf");
                 kill(getppid(), SIGINT);

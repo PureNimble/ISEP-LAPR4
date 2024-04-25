@@ -9,8 +9,9 @@
 #include <signal.h>
 // info about this project
 #include "info.h"
-#include "utils.h"
 #include <sys/types.h>
+#include <sys/wait.h>
+#include "utils.h"
 
 /**
  * @brief Copy all files from new Candidates to the output directory.
@@ -59,6 +60,7 @@ void copyFiles(int* fd, Config* config)
                         errorMessages("Failed to copy files");
                     }
                 }
+                free(job);
             }
         }
         kill(getppid(), SIGRTMIN); // send signal to parent

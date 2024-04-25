@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <stddef.h>
 #include <stdlib.h>
+#include "utils.h"
 
 /**
  * Reads the configuration file and populates the Config structure.

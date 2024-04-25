@@ -10,4 +10,7 @@ int createChildProcess();
 void createMalloc(void* ptr);
 void* createRealloc(void* ptr, size_t size);
 
+int isFileOrDirectory(char *path);
+void errorMessages(char *message);
+
 #endif // UTILS_H

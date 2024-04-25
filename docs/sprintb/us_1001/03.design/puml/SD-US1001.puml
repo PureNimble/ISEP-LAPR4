@@ -1,0 +1,96 @@
+@startuml SD
+
+title Sequence Diagram - US1001
+
+skinparam linetype ortho
+skinparam maxmessagesize 150
+skinparam sequenceParticipant underline
+
+actor "Customer Manager" as customerManager
+
+participant "RegisterCustomerUI" as UI
+participant "RegisterCustomerController" as CustomerController
+participant "CustomerService" as CustomerService
+participant "Customer" as Customer
+participant "CustomerRepository" as CustomerRepository
+participant "JpaCustomerRepository" as JpaCustomerRepository
+participant "RegisterCustomerUserController" as CustomerUserController
+participant "UserManagementService" as ManagementService
+participant "UserTypesFactory" as Factory
+participant "UserRepository" as UserRepository
+participant "JpaUserRepository" as JpaUserRepository
+database "Database" as DB
+
+activate customerManager
+
+customerManager -> UI: Asks to register a customer
+
+activate UI
+    UI --> customerManager: Asks for information (company name, address, customer code, email, phone number, first name, last name)
+deactivate UI
+
+customerManager -> UI: Provides information
+
+activate UI
+    UI -> CustomerController: addCustomer(companyName, address, customerCode, email, phone)
+        activate CustomerController
+            CustomerController -> CustomerService: addCustomer(companyName, address, customerCode, email, phone)
+        activate CustomerService
+            CustomerService -> Customer: createCustomer(companyName, address, customerCode, email, phone)
+        activate Customer
+            Customer --> CustomerService: return Customer
+        deactivate Customer
+            CustomerService -> CustomerRepository: save(customer)
+        activate CustomerRepository
+            CustomerRepository -> JpaCustomerRepository: save(customer)
+        activate JpaCustomerRepository
+            JpaCustomerRepository -> DB: persist(customer)
+            activate DB
+                DB --> JpaCustomerRepository: return Customer
+            deactivate DB
+            JpaCustomerRepository --> CustomerRepository: return Customer
+        deactivate JpaCustomerRepository
+            CustomerRepository --> CustomerService: return Customer
+        deactivate CustomerRepository
+            CustomerService --> CustomerController: return Customer
+        deactivate CustomerService
+            CustomerController --> UI: return Customer
+        deactivate CustomerController    
+    UI -> CustomerUserController: addCustomerUser(email, password, first name, last name)
+activate CustomerUserController
+
+CustomerUserController -> ManagementService: registerNewCustomerUser(email, password, first name, last name)
+
+activate ManagementService
+    ManagementService -> Factory: withRoleCustomerUser(email, password, first name, last name)
+activate Factory
+    Factory --> ManagementService : customerUser
+deactivate Factory
+
+ManagementService -> UserRepository: save(customerUser)
+
+activate UserRepository
+    UserRepository -> JpaUserRepository: save(customerUser)
+activate JpaUserRepository
+    JpaUserRepository -> DB: persist(customerUser)
+    activate DB
+        DB --> JpaUserRepository: return User
+    deactivate DB
+    JpaUserRepository --> UserRepository: return User
+deactivate JpaUserRepository
+
+UserRepository --> ManagementService: return User
+deactivate UserRepository
+
+ManagementService --> CustomerUserController: return User
+deactivate ManagementService
+
+CustomerUserController --> UI: return User
+deactivate CustomerUserController
+
+UI --> customerManager: Informs success or failure
+deactivate UI
+
+deactivate customerManager
+
+@enduml

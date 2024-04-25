@@ -1,0 +1,69 @@
+@startuml
+title US1000 - SD - Register Backoffice Users
+skinparam linetype ortho
+skinparam maxmessagesize 150
+skinparam sequenceParticipant underline
+
+actor "Admin" as admin
+
+participant "RegisterBackofficeUserUI" as UI
+participant "RegisterBackofficeUserController" as Controller
+participant "UserManagementService" as Service
+participant "UserTypesFactory" as Factory
+participant "UserRepository" as Repository
+participant "JpaUserRepository" as JpaRepository
+database "Database" as DB
+
+activate admin
+admin -> UI: Asks to register an User of the Backoffice
+
+activate UI
+UI --> admin: Asks for information (name, email, role)
+note left UI : The Admin has to provide \nthe name and email and \nmust pick a role from the \nlist of available roles \n(Customer Manager and Operator)
+
+deactivate UI
+
+admin -> UI: Provides information
+activate UI
+
+alt IF Role.Operator.toString().equals(role)
+    activate Controller
+    UI -> Controller: addManager(email,password,fullname)
+    activate Service
+    Controller -> Service: registerNewManager(email,password,fullname)
+    activate Factory
+    Service -> Factory: withRoleManager(email,password,fullname)
+
+    else IF Role.CustomerManager.toString().equals(role)
+    UI -> Controller: addCustomerManager(email,password,fullname)
+    Controller -> Service: registerNewCustomerManager(email,password,fullname)
+    Service -> Factory: withRoleCustomerManager(email,password,fullname)
+
+    else IF Role.LanguageEngineer.toString().equals(role)
+    UI -> Controller: addLanguageEngineer(email,password,fullname)
+    Controller -> Service: registerNewLanguageEngineer(email,password,fullname)
+    Service -> Factory: withRoleLanguageEngineer(email,password,fullname)
+
+end
+
+Factory --> Service : user
+deactivate Factory
+Service -> Repository: save(user)
+activate Repository
+Repository -> JpaRepository: save(user)
+activate JpaRepository
+JpaRepository -> DB: persist(user)
+DB --> JpaRepository: return User
+JpaRepository --> Repository: return User
+deactivate JpaRepository
+Repository --> Service: return User
+deactivate Repository
+Service --> Controller: return User
+Controller --> UI: return User
+deactivate Service
+deactivate Controller
+UI --> admin: Informs success or failure
+deactivate UI
+
+deactivate admin
+@enduml

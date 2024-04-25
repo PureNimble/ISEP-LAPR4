@@ -1,0 +1,61 @@
+@startuml CD-US1003
+
+title Class Diagram - US1003
+
+skinparam class {
+    skinparam classAttributeIconSize 0
+    skinparam packageStyle rectangle
+    skinparam shadowing false
+    skinparam linetype polyline
+    BackgroundColor #FEF9E7
+    ArrowColor Black
+}
+
+class "ListJobOpeningUI" as UI {}
+
+class "JobOpeningController" as ListJobOpeningController {
+    +allJobOpenings(): void
+    +applyFilter(filterCriteria: FilterCriteria): void
+}
+
+class "JobOpeningService" as JobOpeningService {
+    +allJobOpenings(): Iterable<JobOpeningDTO>
+    +applyFilter(filterCriteria: FilterCriteria): Iterable<JobOpeningDTO>
+}
+
+class "JobOpening" as JobOpening {
+    -jobReference: JobReference
+    -titleOrFunction: TitleOrFunction
+    -contractType: ContractType
+    -mode: Mode
+    -company: Company
+    -numberOfVacancies: NumberOfVacancies
+    -jobDescription: JobDescription
+    +toDTO(): JobOpeningDTO
+}
+
+class "JobOpeningDTO" as JobOpeningDTO {
+    +create(jobOpening: JobOpening): JobOpeningDTO
+}
+
+class "JobOpeningRepository" as JobOpeningRepository {
+    +findAll(): Iterable<JobOpening>
+    +findByCriteria(filterCriteria: FilterCriteria): Iterable<JobOpening>
+}
+
+class "JpaJobOpeningRepository" as JpaJobOpeningRepository {
+    +findAll(): Iterable<JobOpening>
+    +findByCriteria(filterCriteria: FilterCriteria): Iterable<JobOpening>
+}
+
+class "Database" as DB <<(D, #8BEBFF)>> {}
+
+UI --> ListJobOpeningController
+ListJobOpeningController --> JobOpeningService
+JobOpeningService --> JobOpening
+JobOpening --> JobOpeningDTO
+JobOpeningService --> JobOpeningRepository
+JobOpeningRepository --> JpaJobOpeningRepository
+JpaJobOpeningRepository --> DB
+
+@enduml

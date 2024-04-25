@@ -28,12 +28,13 @@ An association is a relationship between instances of objects that indicates a r
 | Authentication | uses | PasswordPolicy |
 | Authentication | uses | PasswordEncoder |
 | Candidate | is a | User |
-| Candidate | has | FullName |
+| Candidate | has | FirstName |
+| Candidate | has | LastName |
 | Candidate | has | PhoneNumber |
 | Candidate | has | Email |
 | CandidateAnswer | has | Grade |
 | CandidateAnswer | for | Interview |
-| Customer | has | FullName |
+| Customer | has | CompanyName |
 | Customer | has | PhoneNumber |
 | Customer | has | Email |
 | Customer | has | CustomerCode |

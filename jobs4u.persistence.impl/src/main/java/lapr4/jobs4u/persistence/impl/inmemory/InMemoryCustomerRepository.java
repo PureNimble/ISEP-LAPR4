@@ -18,32 +18,40 @@
  * DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-package lapr4.jobs4u.app.user.console.presentation;
+package lapr4.jobs4u.persistence.impl.inmemory;
 
-import eapli.framework.infrastructure.authz.application.AuthorizationService;
-import eapli.framework.infrastructure.authz.application.AuthzRegistry;
-import eapli.framework.presentation.console.AbstractUI;
+import java.util.Optional;
+
+import lapr4.jobs4u.clientusermanagement.domain.ClientUser;
+import lapr4.jobs4u.clientusermanagement.domain.CustomerCode;
+import lapr4.jobs4u.clientusermanagement.repositories.ClientUserRepository;
+import eapli.framework.infrastructure.authz.domain.model.Username;
+import eapli.framework.infrastructure.repositories.impl.inmemory.InMemoryDomainRepository;
 
 /**
  *
- * @author mcn
+ * @author Jorge Santos ajs@isep.ipp.pt 02/04/2016
  */
-@SuppressWarnings("squid:S106")
-public abstract class ClientUserBaseUI extends AbstractUI {
+public class InMemoryCustomerRepository
+        extends InMemoryDomainRepository<ClientUser, CustomerCode>
+        implements ClientUserRepository {
 
-    private final AuthorizationService authz = AuthzRegistry.authorizationService();
-
-    @Override
-    public String headline() {
-
-        return authz.session().map(s -> "Base [ @" + s.authenticatedUser().identity() + " ] ")
-                .orElse("Base [ ==Anonymous== ]");
+    static {
+        InMemoryInitializer.init();
     }
 
     @Override
-    protected void drawFormTitle(final String title) {
-        final String titleBorder = BORDER.substring(0, 2) + " " + title;
-        System.out.println(titleBorder);
-        drawFormBorder();
+    public Optional<ClientUser> findByUsername(final Username name) {
+        return matchOne(e -> e.user().username().equals(name));
+    }
+
+    @Override
+    public Optional<ClientUser> findByCustomerCode(final CustomerCode number) {
+        return Optional.of(data().get(number));
+    }
+
+    @Override
+    public Iterable<ClientUser> findAllActive() {
+        return match(e -> e.user().isActive());
     }
 }

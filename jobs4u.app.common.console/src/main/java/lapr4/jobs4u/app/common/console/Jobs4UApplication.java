@@ -32,7 +32,7 @@ import eapli.framework.infrastructure.pubsub.impl.inprocess.service.InProcessPub
  * @author Paulo Gandra Sousa
  */
 @SuppressWarnings("squid:S106")
-public abstract class BaseApplication {
+public abstract class Jobs4UApplication {
 
     // we are assuming we will always use the in process event
     // dispatcher. check the Spring version of the Base project
@@ -40,7 +40,7 @@ public abstract class BaseApplication {
     final EventDispatcher dispatcher = InProcessPubSub.dispatcher();
 
     protected static final String SEPARATOR_HR = "=====================================";
-    private static final Logger LOGGER = LogManager.getLogger(BaseApplication.class);
+    private static final Logger LOGGER = LogManager.getLogger(Jobs4UApplication.class);
 
     /**
      * @param args

@@ -34,20 +34,20 @@ import eapli.framework.infrastructure.authz.domain.model.SystemUser;
 public class ClientUserBuilder implements DomainFactory<ClientUser> {
 
     private SystemUser systemUser;
-    private MecanographicNumber mecanographicNumber;
+    private CustomerCode customerCode;
 
     public ClientUserBuilder withSystemUser(final SystemUser systemUser) {
         this.systemUser = systemUser;
         return this;
     }
 
-    public ClientUserBuilder withMecanographicNumber(final MecanographicNumber mecanographicNumber) {
-        this.mecanographicNumber = mecanographicNumber;
+    public ClientUserBuilder withCustomerCode(final CustomerCode customerCode) {
+        this.customerCode = customerCode;
         return this;
     }
 
-    public ClientUserBuilder withMecanographicNumber(final String mecanographicNumber) {
-        this.mecanographicNumber = new MecanographicNumber(mecanographicNumber);
+    public ClientUserBuilder withCustomerCode(final String customerCode) {
+        this.customerCode = new CustomerCode(customerCode);
         return this;
     }
 
@@ -55,6 +55,6 @@ public class ClientUserBuilder implements DomainFactory<ClientUser> {
     public ClientUser build() {
         // since the factory knows that all the parts are needed it could throw
         // an exception. however, we will leave that to the constructor
-        return new ClientUser(this.systemUser, this.mecanographicNumber);
+        return new ClientUser(this.systemUser, this.customerCode);
     }
 }

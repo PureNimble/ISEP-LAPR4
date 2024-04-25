@@ -26,7 +26,7 @@ import java.util.Optional;
 
 import lapr4.jobs4u.Application;
 import lapr4.jobs4u.clientusermanagement.domain.ClientUser;
-import lapr4.jobs4u.clientusermanagement.domain.MecanographicNumber;
+import lapr4.jobs4u.clientusermanagement.domain.CustomerCode;
 import lapr4.jobs4u.clientusermanagement.repositories.ClientUserRepository;
 import eapli.framework.domain.repositories.TransactionalContext;
 import eapli.framework.infrastructure.authz.domain.model.Username;
@@ -36,17 +36,17 @@ import eapli.framework.infrastructure.repositories.impl.jpa.JpaAutoTxRepository;
  *
  * @author Jorge Santos ajs@isep.ipp.pt 02/04/2016
  */
-class JpaClientUserRepository
-        extends JpaAutoTxRepository<ClientUser, MecanographicNumber, MecanographicNumber>
+class JpaCustomerRepository
+        extends JpaAutoTxRepository<ClientUser, CustomerCode, CustomerCode>
         implements ClientUserRepository {
 
-    public JpaClientUserRepository(final TransactionalContext autoTx) {
-        super(autoTx, "mecanographicNumber");
+    public JpaCustomerRepository(final TransactionalContext autoTx) {
+        super(autoTx, "customerCode");
     }
 
-    public JpaClientUserRepository(final String puname) {
+    public JpaCustomerRepository(final String puname) {
         super(puname, Application.settings().getExtendedPersistenceProperties(),
-                "mecanographicNumber");
+                "customerCode");
     }
 
     @Override
@@ -57,10 +57,10 @@ class JpaClientUserRepository
     }
 
     @Override
-    public Optional<ClientUser> findByMecanographicNumber(final MecanographicNumber number) {
+    public Optional<ClientUser> findByCustomerCode(final CustomerCode number) {
         final Map<String, Object> params = new HashMap<>();
         params.put("number", number);
-        return matchOne("e.mecanographicNumber=:number", params);
+        return matchOne("e.customerCode=:number", params);
     }
 
     @Override

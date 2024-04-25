@@ -31,40 +31,46 @@ import eapli.framework.infrastructure.authz.domain.model.Role;
  */
 public final class BaseRoles {
     /**
-     * poweruser
-     */
-    public static final Role POWER_USER = Role.valueOf("POWER_USER");
-    /**
-     * Utente
-     */
-    public static final Role CLIENT_USER = Role.valueOf("CLIENT_USER");
-    /**
-     * Base Administrator
+     * Jobs4U Administrator
      */
     public static final Role ADMIN = Role.valueOf("ADMIN");
     /**
-     *
+     * Customer Manager
      */
-    public static final Role KITCHEN_MANAGER = Role.valueOf("KITCHEN_MANAGER");
+    public static final Role CUSTOMER_MANAGER = Role.valueOf("CUSTOMER_MANAGER");
     /**
-     *
+     * Operator
      */
-    public static final Role MENU_MANAGER = Role.valueOf("MENU_MANAGER");
+    public static final Role OPERATOR = Role.valueOf("OPERATOR");
     /**
-     *
+     * Language Engineer
      */
-    public static final Role CASHIER = Role.valueOf("CASHIER");
-
+    public static final Role LANGUAGE_ENGINEER = Role.valueOf("LANGUAGE_ENGINEER");
+    /**
+     * Customer
+     */
+    public static final Role CUSTOMER = Role.valueOf("CUSTOMER");
+    /**
+     * Candidate
+     */
+    public static final Role CANDIDATE = Role.valueOf("CANDIDATE");
+    
     /**
      * get available role types for adding new users
      *
      * @return
      */
     public static Role[] nonUserValues() {
-        return new Role[] { ADMIN, KITCHEN_MANAGER, MENU_MANAGER, CASHIER };
+        return new Role[] { ADMIN, CUSTOMER_MANAGER, OPERATOR, LANGUAGE_ENGINEER , CUSTOMER, CANDIDATE};
     }
 
+    /**
+     * Checks if a given role is a collaborator.
+     *
+     * @param role the role to check
+     * @return true if the role is a collaborator, false otherwise
+     */
     public boolean isCollaborator(final Role role) {
-        return role != CLIENT_USER;
+        return role != CUSTOMER && role != CANDIDATE;
     }
 }

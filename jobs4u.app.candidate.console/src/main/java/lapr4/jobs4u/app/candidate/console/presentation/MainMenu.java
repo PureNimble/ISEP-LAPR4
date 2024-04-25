@@ -21,15 +21,12 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package lapr4.jobs4u.app.user.console.presentation;
+package lapr4.jobs4u.app.candidate.console.presentation;
 
-import lapr4.jobs4u.app.common.console.presentation.authz.LoginUI;
-import lapr4.jobs4u.app.user.console.presentation.myuser.SignupRequestAction;
-import lapr4.jobs4u.infrastructure.authz.AuthenticationCredentialHandler;
+import lapr4.jobs4u.app.common.console.presentation.authz.MyUserMenu;
 import lapr4.jobs4u.usermanagement.domain.BaseRoles;
-import eapli.framework.actions.ChainedAction;
 import eapli.framework.actions.menu.Menu;
-import eapli.framework.presentation.console.AbstractUI;
+import eapli.framework.actions.menu.MenuItem;
 import eapli.framework.presentation.console.ExitWithMessageAction;
 import eapli.framework.presentation.console.menu.MenuItemRenderer;
 import eapli.framework.presentation.console.menu.MenuRenderer;
@@ -38,12 +35,14 @@ import eapli.framework.presentation.console.menu.VerticalMenuRenderer;
 /**
  * @author Paulo Gandra Sousa
  */
-public class FrontMenu extends AbstractUI {
+class MainMenu extends CandidateUI {
+
+    private static final String SEPARATOR_LABEL = "--------------";
 
     private static final int EXIT_OPTION = 0;
 
-    private static final int LOGIN_OPTION = 1;
-    private static final int SIGNUP_OPTION = 2;
+    // MAIN MENU
+    private static final int MY_USER_OPTION = 1;
 
     @Override
     public boolean show() {
@@ -56,22 +55,21 @@ public class FrontMenu extends AbstractUI {
      */
     @Override
     public boolean doShow() {
-        final Menu menu = new Menu();
-        menu.addItem(LOGIN_OPTION, "Login", new ChainedAction(new LoginUI(new AuthenticationCredentialHandler(),
-                BaseRoles.CLIENT_USER)::show, () -> {
-                    new MainMenu().mainLoop();
-                    return true;
-                }));
-        //TODO: instead of leaving the app, return to the main menu again
-        menu.addItem(SIGNUP_OPTION, "Sign up", new SignupRequestAction());
-        menu.addItem(EXIT_OPTION, "Exit", new ExitWithMessageAction("Bye, Bye"));
-
+        final Menu menu = buildMainMenu();
         final MenuRenderer renderer = new VerticalMenuRenderer(menu, MenuItemRenderer.DEFAULT);
         return renderer.render();
     }
 
-    @Override
-    public String headline() {
-        return "Base";
+    private Menu buildMainMenu() {
+        final Menu mainMenu = new Menu();
+
+        final Menu myUserMenu = new MyUserMenu(BaseRoles.CANDIDATE);
+        mainMenu.addSubMenu(MY_USER_OPTION, myUserMenu);
+
+        mainMenu.addItem(MenuItem.separator(SEPARATOR_LABEL));
+
+        mainMenu.addItem(EXIT_OPTION, "Exit", new ExitWithMessageAction("Goodbye!"));
+
+        return mainMenu;
     }
 }

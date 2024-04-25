@@ -21,7 +21,6 @@
 package lapr4.jobs4u.infrastructure.persistence;
 
 import lapr4.jobs4u.clientusermanagement.repositories.ClientUserRepository;
-import lapr4.jobs4u.clientusermanagement.repositories.SignupRequestRepository;
 import eapli.framework.domain.repositories.TransactionalContext;
 import eapli.framework.infrastructure.authz.domain.repositories.UserRepository;
 
@@ -67,20 +66,4 @@ public interface RepositoryFactory {
      * @return
      */
     ClientUserRepository clientUsers();
-
-    /**
-     *
-     * @param autoTx
-     *            the transactional context to enroll
-     * @return
-     */
-    SignupRequestRepository signupRequests(TransactionalContext autoTx);
-
-    /**
-     * repository will be created in auto transaction mode
-     *
-     * @return
-     */
-    SignupRequestRepository signupRequests();
-
 }

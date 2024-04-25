@@ -23,7 +23,7 @@ package lapr4.jobs4u.clientusermanagement.repositories;
 import java.util.Optional;
 
 import lapr4.jobs4u.clientusermanagement.domain.ClientUser;
-import lapr4.jobs4u.clientusermanagement.domain.MecanographicNumber;
+import lapr4.jobs4u.clientusermanagement.domain.CustomerCode;
 import eapli.framework.domain.repositories.DomainRepository;
 import eapli.framework.infrastructure.authz.domain.model.Username;
 
@@ -32,7 +32,7 @@ import eapli.framework.infrastructure.authz.domain.model.Username;
  * @author Jorge Santos ajs@isep.ipp.pt 02/04/2016
  */
 public interface ClientUserRepository
-        extends DomainRepository<MecanographicNumber, ClientUser> {
+        extends DomainRepository<CustomerCode, ClientUser> {
 
     /**
      * returns the client user (utente) whose username is given
@@ -49,7 +49,7 @@ public interface ClientUserRepository
      * @param number
      * @return
      */
-    default Optional<ClientUser> findByMecanographicNumber(final MecanographicNumber number) {
+    default Optional<ClientUser> findByCustomerCode(final CustomerCode number) {
         return ofIdentity(number);
     }
 

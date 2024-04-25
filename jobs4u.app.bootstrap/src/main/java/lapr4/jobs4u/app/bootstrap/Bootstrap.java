@@ -20,41 +20,39 @@
  */
 package lapr4.jobs4u.app.bootstrap;
 
-import lapr4.jobs4u.app.common.console.BaseApplication;
-import lapr4.jobs4u.clientusermanagement.application.eventhandlers.NewUserRegisteredFromSignupWatchDog;
-import lapr4.jobs4u.clientusermanagement.domain.events.NewUserRegisteredFromSignupEvent;
-import lapr4.jobs4u.clientusermanagement.domain.events.SignupAcceptedEvent;
-import lapr4.jobs4u.infrastructure.bootstrapers.BaseBootstrapper;
-import lapr4.jobs4u.infrastructure.bootstrapers.demo.BaseDemoBootstrapper;
+import lapr4.jobs4u.app.common.console.Jobs4UApplication;
+import lapr4.jobs4u.infrastructure.bootstrapers.Bootstrapper;
+import lapr4.jobs4u.infrastructure.bootstrapers.demo.DemoBootstrapper;
 import lapr4.jobs4u.infrastructure.persistence.PersistenceContext;
 import lapr4.jobs4u.infrastructure.smoketests.BaseDemoSmokeTester;
-import lapr4.jobs4u.usermanagement.application.eventhandlers.SignupAcceptedWatchDog;
 import lapr4.jobs4u.usermanagement.domain.BasePasswordPolicy;
 import eapli.framework.collections.util.ArrayPredicates;
 import eapli.framework.infrastructure.authz.application.AuthzRegistry;
 import eapli.framework.infrastructure.authz.domain.model.PlainTextEncoder;
 import eapli.framework.infrastructure.pubsub.EventDispatcher;
+import eapli.framework.io.util.Console;
 
 /**
  * Base Bootstrapping data app
  */
 @SuppressWarnings("squid:S106")
-public final class BaseBootstrap extends BaseApplication {
+public final class Bootstrap extends Jobs4UApplication {
     /**
      * avoid instantiation of this class.
      */
-    private BaseBootstrap() {
+    private Bootstrap() {
     }
 
     private boolean isToBootstrapDemoData;
     private boolean isToRunSampleE2E;
+    private boolean isToWaitInTheEnd;
 
     public static void main(final String[] args) {
 
         AuthzRegistry.configure(PersistenceContext.repositories().users(), new BasePasswordPolicy(),
                 new PlainTextEncoder());
 
-        new BaseBootstrap().run(args);
+        new Bootstrap().run(args);
     }
 
     @Override
@@ -62,19 +60,23 @@ public final class BaseBootstrap extends BaseApplication {
         handleArgs(args);
 
         System.out.println("\n\n------- MASTER DATA -------");
-        new BaseBootstrapper().execute();
+        new Bootstrapper().execute();
 
         if (isToBootstrapDemoData) {
             System.out.println("\n\n------- DEMO DATA -------");
-            new BaseDemoBootstrapper().execute();
+            new DemoBootstrapper().execute();
         }
         if (isToRunSampleE2E) {
             System.out.println("\n\n------- BASIC SCENARIO -------");
             new BaseDemoSmokeTester().execute();
         }
+        if (isToWaitInTheEnd) {
+            Console.readLine("\n\n>>>>>> Enter to finish the program.");
+        }
     }
 
     private void handleArgs(final String[] args) {
+        isToWaitInTheEnd = ArrayPredicates.contains(args, "-wait");
         isToRunSampleE2E = ArrayPredicates.contains(args, "-smoke:basic");
         if (isToRunSampleE2E) {
             isToBootstrapDemoData = true;
@@ -95,8 +97,5 @@ public final class BaseBootstrap extends BaseApplication {
 
     @SuppressWarnings("unchecked")
     @Override
-    protected void doSetupEventHandlers(final EventDispatcher dispatcher) {
-        dispatcher.subscribe(new NewUserRegisteredFromSignupWatchDog(), NewUserRegisteredFromSignupEvent.class);
-        dispatcher.subscribe(new SignupAcceptedWatchDog(), SignupAcceptedEvent.class);
-    }
+    protected void doSetupEventHandlers(final EventDispatcher dispatcher) {}
 }

@@ -21,8 +21,7 @@
 package lapr4.jobs4u.persistence.impl.inmemory;
 
 import lapr4.jobs4u.clientusermanagement.repositories.ClientUserRepository;
-import lapr4.jobs4u.clientusermanagement.repositories.SignupRequestRepository;
-import lapr4.jobs4u.infrastructure.bootstrapers.BaseBootstrapper;
+import lapr4.jobs4u.infrastructure.bootstrapers.Bootstrapper;
 import lapr4.jobs4u.infrastructure.persistence.RepositoryFactory;
 import eapli.framework.domain.repositories.TransactionalContext;
 import eapli.framework.infrastructure.authz.domain.repositories.UserRepository;
@@ -36,7 +35,7 @@ public class InMemoryRepositoryFactory implements RepositoryFactory {
 
     static {
         // only needed because of the in memory persistence
-        new BaseBootstrapper().execute();
+        new Bootstrapper().execute();
     }
 
     @Override
@@ -52,22 +51,12 @@ public class InMemoryRepositoryFactory implements RepositoryFactory {
     @Override
     public ClientUserRepository clientUsers(final TransactionalContext tx) {
 
-        return new InMemoryClientUserRepository();
+        return new InMemoryCustomerRepository();
     }
 
     @Override
     public ClientUserRepository clientUsers() {
         return clientUsers(null);
-    }
-
-    @Override
-    public SignupRequestRepository signupRequests() {
-        return signupRequests(null);
-    }
-
-    @Override
-    public SignupRequestRepository signupRequests(final TransactionalContext tx) {
-        return new InMemorySignupRequestRepository();
     }
 
     @Override

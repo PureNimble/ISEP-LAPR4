@@ -20,7 +20,7 @@
  */
 package lapr4.jobs4u.persistence.impl.inmemory;
 
-import lapr4.jobs4u.infrastructure.bootstrapers.BaseBootstrapper;
+import lapr4.jobs4u.infrastructure.bootstrapers.Bootstrapper;
 
 final class InMemoryInitializer {
 
@@ -34,7 +34,7 @@ final class InMemoryInitializer {
     private InMemoryInitializer() {
         // to ensure some default test data is available, specially when using
         // in memory persistence
-        new BaseBootstrapper().execute();
+        new Bootstrapper().execute();
     }
 
     private void initialize() {

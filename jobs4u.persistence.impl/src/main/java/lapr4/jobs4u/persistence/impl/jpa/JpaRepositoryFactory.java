@@ -21,7 +21,6 @@
 package lapr4.jobs4u.persistence.impl.jpa;
 
 import lapr4.jobs4u.Application;
-import lapr4.jobs4u.clientusermanagement.repositories.SignupRequestRepository;
 import lapr4.jobs4u.infrastructure.persistence.RepositoryFactory;
 import eapli.framework.domain.repositories.TransactionalContext;
 import eapli.framework.infrastructure.authz.domain.repositories.UserRepository;
@@ -46,23 +45,13 @@ public class JpaRepositoryFactory implements RepositoryFactory {
     }
 
     @Override
-    public JpaClientUserRepository clientUsers(final TransactionalContext autoTx) {
-        return new JpaClientUserRepository(autoTx);
+    public JpaCustomerRepository clientUsers(final TransactionalContext autoTx) {
+        return new JpaCustomerRepository(autoTx);
     }
 
     @Override
-    public JpaClientUserRepository clientUsers() {
-        return new JpaClientUserRepository(Application.settings().getPersistenceUnitName());
-    }
-
-    @Override
-    public SignupRequestRepository signupRequests(final TransactionalContext autoTx) {
-        return new JpaSignupRequestRepository(autoTx);
-    }
-
-    @Override
-    public SignupRequestRepository signupRequests() {
-        return new JpaSignupRequestRepository(Application.settings().getPersistenceUnitName());
+    public JpaCustomerRepository clientUsers() {
+        return new JpaCustomerRepository(Application.settings().getPersistenceUnitName());
     }
 
     @Override

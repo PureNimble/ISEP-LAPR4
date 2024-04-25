@@ -18,40 +18,38 @@
  * DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-package lapr4.jobs4u.persistence.impl.inmemory;
+package lapr4.jobs4u.app.customer.console;
 
-import java.util.Optional;
-
-import lapr4.jobs4u.clientusermanagement.domain.ClientUser;
-import lapr4.jobs4u.clientusermanagement.domain.MecanographicNumber;
-import lapr4.jobs4u.clientusermanagement.repositories.ClientUserRepository;
-import eapli.framework.infrastructure.authz.domain.model.Username;
-import eapli.framework.infrastructure.repositories.impl.inmemory.InMemoryDomainRepository;
+import lapr4.jobs4u.app.customer.console.presentation.FrontMenu;
+import lapr4.jobs4u.infrastructure.persistence.PersistenceContext;
+import lapr4.jobs4u.usermanagement.domain.BasePasswordPolicy;
+import eapli.framework.infrastructure.authz.application.AuthzRegistry;
+import eapli.framework.infrastructure.authz.domain.model.PlainTextEncoder;
 
 /**
- *
- * @author Jorge Santos ajs@isep.ipp.pt 02/04/2016
+ * Base User App.
  */
-public class InMemoryClientUserRepository
-        extends InMemoryDomainRepository<ClientUser, MecanographicNumber>
-        implements ClientUserRepository {
+@SuppressWarnings("squid:S106")
+public final class CustomerApp {
 
-    static {
-        InMemoryInitializer.init();
+    /**
+     * Empty constructor is private to avoid instantiation of this class.
+     */
+    private CustomerApp() {
     }
 
-    @Override
-    public Optional<ClientUser> findByUsername(final Username name) {
-        return matchOne(e -> e.user().username().equals(name));
-    }
+    public static void main(final String[] args) {
+        System.out.println("=====================================");
+        System.out.println("Customer App");
+        System.out.println("(C) 2024");
+        System.out.println("=====================================");
 
-    @Override
-    public Optional<ClientUser> findByMecanographicNumber(final MecanographicNumber number) {
-        return Optional.of(data().get(number));
-    }
+        AuthzRegistry.configure(PersistenceContext.repositories().users(),
+                new BasePasswordPolicy(), new PlainTextEncoder());
 
-    @Override
-    public Iterable<ClientUser> findAllActive() {
-        return match(e -> e.user().isActive());
+        new FrontMenu().show();
+
+        // exiting the application, closing all threads
+        System.exit(0);
     }
 }

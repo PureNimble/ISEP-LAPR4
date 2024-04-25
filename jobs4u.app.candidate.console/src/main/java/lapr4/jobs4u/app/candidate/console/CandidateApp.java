@@ -18,13 +18,11 @@
  * DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-package lapr4.jobs4u.app.other.console;
+package lapr4.jobs4u.app.candidate.console;
 
-import lapr4.jobs4u.app.common.console.presentation.authz.LoginAction;
-import lapr4.jobs4u.app.other.console.presentation.MainMenu;
+import lapr4.jobs4u.app.candidate.console.presentation.FrontMenu;
 import lapr4.jobs4u.infrastructure.persistence.PersistenceContext;
 import lapr4.jobs4u.usermanagement.domain.BasePasswordPolicy;
-import lapr4.jobs4u.usermanagement.domain.BaseRoles;
 import eapli.framework.infrastructure.authz.application.AuthzRegistry;
 import eapli.framework.infrastructure.authz.domain.model.PlainTextEncoder;
 
@@ -33,28 +31,24 @@ import eapli.framework.infrastructure.authz.domain.model.PlainTextEncoder;
  * @author Paulo Gandra Sousa
  */
 @SuppressWarnings("squid:S106")
-public final class OtherApp {
+public final class CandidateApp {
 
     /**
      * Empty constructor is private to avoid instantiation of this class.
      */
-    private OtherApp() {
+    private CandidateApp() {
     }
 
     public static void main(final String[] args) {
         System.out.println("=====================================");
-        System.out.println("Base POS");
-        System.out.println("(C) 2016, 2017, 2018");
+        System.out.println("Candidate App");
+        System.out.println("(C) 2024");
         System.out.println("=====================================");
 
         AuthzRegistry.configure(PersistenceContext.repositories().users(),
                 new BasePasswordPolicy(), new PlainTextEncoder());
 
-        // login and go to main menu
-        if (new LoginAction(BaseRoles.CASHIER).execute()) {
-            final MainMenu menu = new MainMenu();
-            menu.mainLoop();
-        }
+        new FrontMenu().show();
 
         // exiting the application, closing all threads
         System.exit(0);

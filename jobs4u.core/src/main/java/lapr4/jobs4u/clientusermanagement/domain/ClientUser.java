@@ -44,7 +44,7 @@ import eapli.framework.infrastructure.authz.domain.model.SystemUser;
  * @author Jorge Santos ajs@isep.ipp.pt
  */
 @Entity
-public class ClientUser implements AggregateRoot<MecanographicNumber> {
+public class ClientUser implements AggregateRoot<CustomerCode> {
 
     private static final long serialVersionUID = 1L;
 
@@ -52,7 +52,7 @@ public class ClientUser implements AggregateRoot<MecanographicNumber> {
     private Long version;
 
     @EmbeddedId
-    private MecanographicNumber mecanographicNumber;
+    private CustomerCode customerCode;
 
     /**
      * cascade = CascadeType.NONE as the systemUser is part of another aggregate
@@ -60,12 +60,12 @@ public class ClientUser implements AggregateRoot<MecanographicNumber> {
     @OneToOne()
     private SystemUser systemUser;
 
-    public ClientUser(final SystemUser user, final MecanographicNumber mecanographicNumber) {
-        if (mecanographicNumber == null || user == null) {
+    public ClientUser(final SystemUser user, final CustomerCode customerCode) {
+        if (customerCode == null || user == null) {
             throw new IllegalArgumentException();
         }
         this.systemUser = user;
-        this.mecanographicNumber = mecanographicNumber;
+        this.customerCode = customerCode;
     }
 
     protected ClientUser() {
@@ -91,12 +91,12 @@ public class ClientUser implements AggregateRoot<MecanographicNumber> {
         return DomainEntities.areEqual(this, other);
     }
 
-    public MecanographicNumber mecanographicNumber() {
+    public CustomerCode customerCode() {
         return identity();
     }
 
     @Override
-    public MecanographicNumber identity() {
-        return this.mecanographicNumber;
+    public CustomerCode identity() {
+        return this.customerCode;
     }
 }

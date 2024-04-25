@@ -21,29 +21,23 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package lapr4.jobs4u.app.other.console.presentation;
+package lapr4.jobs4u.app.customer.console.presentation;
 
-import lapr4.jobs4u.Application;
 import lapr4.jobs4u.app.common.console.presentation.authz.MyUserMenu;
 import lapr4.jobs4u.usermanagement.domain.BaseRoles;
-import eapli.framework.actions.Actions;
 import eapli.framework.actions.menu.Menu;
 import eapli.framework.actions.menu.MenuItem;
 import eapli.framework.infrastructure.authz.application.AuthorizationService;
 import eapli.framework.infrastructure.authz.application.AuthzRegistry;
-import eapli.framework.presentation.console.AbstractUI;
 import eapli.framework.presentation.console.ExitWithMessageAction;
-import eapli.framework.presentation.console.menu.HorizontalMenuRenderer;
 import eapli.framework.presentation.console.menu.MenuItemRenderer;
 import eapli.framework.presentation.console.menu.MenuRenderer;
 import eapli.framework.presentation.console.menu.VerticalMenuRenderer;
 
 /**
- * TODO split this class in more specialized classes for each menu
- *
  * @author Paulo Gandra Sousa
  */
-public class MainMenu extends AbstractUI {
+class MainMenu extends CustomerUI {
 
     private static final String SEPARATOR_LABEL = "--------------";
 
@@ -51,32 +45,6 @@ public class MainMenu extends AbstractUI {
 
     // MAIN MENU
     private static final int MY_USER_OPTION = 1;
-    private static final int SALES_OPTION = 7;
-
-    private final AuthorizationService authz = AuthzRegistry.authorizationService();
-
-    private final Menu menu;
-    private final MenuRenderer renderer;
-
-    public MainMenu() {
-        menu = buildMainMenu();
-        renderer = getRenderer(menu);
-    }
-
-    private MenuRenderer getRenderer(final Menu menu) {
-        final MenuRenderer theRenderer;
-        if (Application.settings().isMenuLayoutHorizontal()) {
-            theRenderer = new HorizontalMenuRenderer(menu, MenuItemRenderer.DEFAULT);
-        } else {
-            theRenderer = new VerticalMenuRenderer(menu, MenuItemRenderer.DEFAULT);
-        }
-        return theRenderer;
-    }
-
-    @Override
-    public boolean doShow() {
-        return renderer.render();
-    }
 
     @Override
     public boolean show() {
@@ -84,42 +52,26 @@ public class MainMenu extends AbstractUI {
         return doShow();
     }
 
+    /**
+     * @return true if the user selected the exit option
+     */
     @Override
-    public String headline() {
-
-        return authz.session().map(s -> "Base [ @" + s.authenticatedUser().identity() + " ]")
-                .orElse("Base [ ==Anonymous== ]");
+    public boolean doShow() {
+        final Menu menu = buildMainMenu();
+        final MenuRenderer renderer = new VerticalMenuRenderer(menu, MenuItemRenderer.DEFAULT);
+        return renderer.render();
     }
 
     private Menu buildMainMenu() {
         final Menu mainMenu = new Menu();
 
-        final Menu myUserMenu = new MyUserMenu(BaseRoles.CASHIER);
+        final Menu myUserMenu = new MyUserMenu(BaseRoles.CUSTOMER);
         mainMenu.addSubMenu(MY_USER_OPTION, myUserMenu);
 
-        if (!Application.settings().isMenuLayoutHorizontal()) {
-            mainMenu.addItem(MenuItem.separator(SEPARATOR_LABEL));
-        }
+        mainMenu.addItem(MenuItem.separator(SEPARATOR_LABEL));
 
-        if (authz.isAuthenticatedUserAuthorizedTo(BaseRoles.CASHIER)) {
-            final Menu cashierMenu = buildCashierMenu();
-            mainMenu.addSubMenu(SALES_OPTION, cashierMenu);
-        }
-
-        if (!Application.settings().isMenuLayoutHorizontal()) {
-            mainMenu.addItem(MenuItem.separator(SEPARATOR_LABEL));
-        }
-
-        mainMenu.addItem(EXIT_OPTION, "Exit", new ExitWithMessageAction("Bye, Bye"));
+        mainMenu.addItem(EXIT_OPTION, "Exit", new ExitWithMessageAction("Goodbye!"));
 
         return mainMenu;
-    }
-
-    private Menu buildCashierMenu() {
-        final Menu cashierMenu = new Menu("Sales  >");
-
-        cashierMenu.addItem(EXIT_OPTION, "Return", Actions.SUCCESS);
-
-        return cashierMenu;
     }
 }

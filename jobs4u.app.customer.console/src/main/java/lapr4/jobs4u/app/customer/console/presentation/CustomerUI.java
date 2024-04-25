@@ -18,38 +18,32 @@
  * DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-package lapr4.jobs4u.app.user.console;
+package lapr4.jobs4u.app.customer.console.presentation;
 
-import lapr4.jobs4u.app.user.console.presentation.FrontMenu;
-import lapr4.jobs4u.infrastructure.persistence.PersistenceContext;
-import lapr4.jobs4u.usermanagement.domain.BasePasswordPolicy;
+import eapli.framework.infrastructure.authz.application.AuthorizationService;
 import eapli.framework.infrastructure.authz.application.AuthzRegistry;
-import eapli.framework.infrastructure.authz.domain.model.PlainTextEncoder;
+import eapli.framework.presentation.console.AbstractUI;
 
 /**
- * Base User App.
+ *
+ * @author mcn
  */
 @SuppressWarnings("squid:S106")
-public final class BaseUserApp {
+public abstract class CustomerUI extends AbstractUI {
 
-    /**
-     * Empty constructor is private to avoid instantiation of this class.
-     */
-    private BaseUserApp() {
+    private final AuthorizationService authz = AuthzRegistry.authorizationService();
+
+    @Override
+    public String headline() {
+
+        return authz.session().map(s -> "Customer App [ @" + s.authenticatedUser().identity() + " ] ")
+                .orElse("Customer App [ ==Anonymous== ]");
     }
 
-    public static void main(final String[] args) {
-        System.out.println("=====================================");
-        System.out.println("Base User App");
-        System.out.println("(C) 2016 - 2019");
-        System.out.println("=====================================");
-
-        AuthzRegistry.configure(PersistenceContext.repositories().users(),
-                new BasePasswordPolicy(), new PlainTextEncoder());
-
-        new FrontMenu().show();
-
-        // exiting the application, closing all threads
-        System.exit(0);
+    @Override
+    protected void drawFormTitle(final String title) {
+        final String titleBorder = BORDER.substring(0, 2) + " " + title;
+        System.out.println(titleBorder);
+        drawFormBorder();
     }
 }

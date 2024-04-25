@@ -24,7 +24,7 @@
 package lapr4.jobs4u.clientusermanagement.application;
 
 import lapr4.jobs4u.clientusermanagement.domain.ClientUser;
-import lapr4.jobs4u.clientusermanagement.domain.MecanographicNumber;
+import lapr4.jobs4u.clientusermanagement.domain.CustomerCode;
 import lapr4.jobs4u.clientusermanagement.repositories.ClientUserRepository;
 import lapr4.jobs4u.infrastructure.persistence.PersistenceContext;
 import lapr4.jobs4u.usermanagement.domain.BaseRoles;
@@ -42,18 +42,15 @@ public class ClientUserService {
         private final AuthorizationService authz = AuthzRegistry.authorizationService();
         private final ClientUserRepository repo = PersistenceContext.repositories().clientUsers();
 
-        public Optional<ClientUser> findClientUserByMecNumber(
-                        final String mecNumber) {
-                authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.POWER_USER,
-                                BaseRoles.ADMIN,
-                                BaseRoles.CASHIER);
-                return repo.ofIdentity(MecanographicNumber.valueOf(mecNumber));
+        public Optional<ClientUser> findClientUserByCustomerCode(
+                        final String customerCode) {
+                authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.ADMIN, BaseRoles.CUSTOMER_MANAGER);
+                return repo.ofIdentity(CustomerCode.valueOf(customerCode));
         }
 
         public Optional<ClientUser> findClientUserByUsername(
                         final Username user) {
-                authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.POWER_USER,
-                                BaseRoles.ADMIN);
+                authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.ADMIN);
                 return repo.findByUsername(user);
         }
 }

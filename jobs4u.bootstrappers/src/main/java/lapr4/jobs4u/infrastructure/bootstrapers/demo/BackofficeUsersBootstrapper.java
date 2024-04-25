@@ -38,32 +38,50 @@ public class BackofficeUsersBootstrapper extends UsersBootstrapperBase implement
 
     @Override
     public boolean execute() {
-        registerCashier("cashier", PASSWORD1, "Johny", "Cash", "johny.doe@emai.l.com");
-        registerKitchenManager("kitchen", PASSWORD1, "Oven", "Stove", "Oven.and.stove@emai.l.com");
-        registerMenuManager("chef", PASSWORD1, "Master", "Chef", "master.chef@emai.l.com");
+        registerCustomerManager("cm", PASSWORD1, "Johny", "Cash", "johny.doe@email.com");
+        registerOperator("op", PASSWORD1, "Oven", "Stove", "Oven.and.stove@email.com");
+        registerLanguageEngineer("le", PASSWORD1, "Master", "Chef", "master.chef@email.com");
+        registerCustomer("cu", PASSWORD1, "Paulo", "Stone", "Paulo.and.Stone@email.com");
+        registerCandidate("ca", PASSWORD1, "Fried", "Uabo", "Fried.and.Uabo@email.com");
         return true;
     }
 
-    private void registerCashier(final String username, final String password,
+    private void registerCustomerManager(final String username, final String password,
             final String firstName, final String lastName, final String email) {
         final Set<Role> roles = new HashSet<>();
-        roles.add(BaseRoles.CASHIER);
+        roles.add(BaseRoles.CUSTOMER_MANAGER);
 
         registerUser(username, password, firstName, lastName, email, roles);
     }
 
-    private void registerKitchenManager(final String username, final String password,
+    private void registerOperator(final String username, final String password,
             final String firstName, final String lastName, final String email) {
         final Set<Role> roles = new HashSet<>();
-        roles.add(BaseRoles.KITCHEN_MANAGER);
+        roles.add(BaseRoles.OPERATOR);
 
         registerUser(username, password, firstName, lastName, email, roles);
     }
 
-    private void registerMenuManager(final String username, final String password,
+    private void registerLanguageEngineer(final String username, final String password,
             final String firstName, final String lastName, final String email) {
         final Set<Role> roles = new HashSet<>();
-        roles.add(BaseRoles.MENU_MANAGER);
+        roles.add(BaseRoles.LANGUAGE_ENGINEER);
+
+        registerUser(username, password, firstName, lastName, email, roles);
+    }
+
+    private void registerCustomer(final String username, final String password,
+            final String firstName, final String lastName, final String email) {
+        final Set<Role> roles = new HashSet<>();
+        roles.add(BaseRoles.CUSTOMER);
+
+        registerUser(username, password, firstName, lastName, email, roles);
+    }
+
+    private void registerCandidate(final String username, final String password,
+            final String firstName, final String lastName, final String email) {
+        final Set<Role> roles = new HashSet<>();
+        roles.add(BaseRoles.CANDIDATE);
 
         registerUser(username, password, firstName, lastName, email, roles);
     }

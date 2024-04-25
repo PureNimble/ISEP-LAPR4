@@ -30,28 +30,28 @@ import eapli.framework.strings.util.StringPredicates;
  * @author Jorge Santos ajs@isep.ipp.pt
  */
 @Embeddable
-public class MecanographicNumber implements ValueObject, Comparable<MecanographicNumber> {
+public class CustomerCode implements ValueObject, Comparable<CustomerCode> {
 
     private static final long serialVersionUID = 1L;
 
     private String number;
 
-    public MecanographicNumber(final String mecanographicNumber) {
-        if (StringPredicates.isNullOrEmpty(mecanographicNumber)) {
+    public CustomerCode(final String customerCode) {
+        if (StringPredicates.isNullOrEmpty(customerCode)) {
             throw new IllegalArgumentException(
-                    "Mecanographic Number should neither be null nor empty");
+                    "Customer Code should neither be null nor empty");
         }
-        // TODO validate invariants, i.e., mecanographic number regular
+        // TODO validate invariants, i.e., code number regular
         // expression
-        this.number = mecanographicNumber;
+        this.number = customerCode;
     }
 
-    protected MecanographicNumber() {
+    protected CustomerCode() {
         // for ORM
     }
 
-    public static MecanographicNumber valueOf(final String mecanographicNumber) {
-        return new MecanographicNumber(mecanographicNumber);
+    public static CustomerCode valueOf(final String customerCode) {
+        return new CustomerCode(customerCode);
     }
 
     @Override
@@ -59,11 +59,11 @@ public class MecanographicNumber implements ValueObject, Comparable<Mecanographi
         if (this == o) {
             return true;
         }
-        if (!(o instanceof MecanographicNumber)) {
+        if (!(o instanceof CustomerCode)) {
             return false;
         }
 
-        final MecanographicNumber that = (MecanographicNumber) o;
+        final CustomerCode that = (CustomerCode) o;
         return this.number.equals(that.number);
     }
 
@@ -78,7 +78,7 @@ public class MecanographicNumber implements ValueObject, Comparable<Mecanographi
     }
 
     @Override
-    public int compareTo(final MecanographicNumber arg0) {
+    public int compareTo(final CustomerCode arg0) {
         return number.compareTo(arg0.number);
     }
 }

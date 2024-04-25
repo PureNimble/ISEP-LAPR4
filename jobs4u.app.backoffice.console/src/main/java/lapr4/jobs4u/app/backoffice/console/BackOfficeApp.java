@@ -23,15 +23,9 @@
  */
 package lapr4.jobs4u.app.backoffice.console;
 
-import lapr4.jobs4u.app.backoffice.console.presentation.MainMenu;
-import lapr4.jobs4u.app.common.console.BaseApplication;
-import lapr4.jobs4u.app.common.console.presentation.authz.LoginUI;
-import lapr4.jobs4u.clientusermanagement.application.eventhandlers.NewUserRegisteredFromSignupWatchDog;
-import lapr4.jobs4u.clientusermanagement.domain.events.NewUserRegisteredFromSignupEvent;
-import lapr4.jobs4u.clientusermanagement.domain.events.SignupAcceptedEvent;
-import lapr4.jobs4u.infrastructure.authz.AuthenticationCredentialHandler;
+import lapr4.jobs4u.app.backoffice.console.presentation.FrontMenu;
+import lapr4.jobs4u.app.common.console.Jobs4UApplication;
 import lapr4.jobs4u.infrastructure.persistence.PersistenceContext;
-import lapr4.jobs4u.usermanagement.application.eventhandlers.SignupAcceptedWatchDog;
 import lapr4.jobs4u.usermanagement.domain.BasePasswordPolicy;
 import eapli.framework.infrastructure.authz.application.AuthzRegistry;
 import eapli.framework.infrastructure.authz.domain.model.PlainTextEncoder;
@@ -42,12 +36,12 @@ import eapli.framework.infrastructure.pubsub.EventDispatcher;
  * @author Paulo Gandra Sousa
  */
 @SuppressWarnings("squid:S106")
-public final class BaseBackoffice extends BaseApplication {
+public final class BackOfficeApp extends Jobs4UApplication {
 
     /**
      * avoid instantiation of this class.
      */
-    private BaseBackoffice() {
+    private BackOfficeApp() {
     }
 
     /**
@@ -59,34 +53,24 @@ public final class BaseBackoffice extends BaseApplication {
         AuthzRegistry.configure(PersistenceContext.repositories().users(),
                 new BasePasswordPolicy(), new PlainTextEncoder());
 
-        new BaseBackoffice().run(args);
+        new BackOfficeApp().run(args);
     }
 
     @Override
     protected void doMain(final String[] args) {
-        // login and go to main menu
-        if (new LoginUI(new AuthenticationCredentialHandler()).show()) {
-            // go to main menu
-            final MainMenu menu = new MainMenu();
-            menu.mainLoop();
-        }
+        new FrontMenu().show();
     }
 
     @Override
     protected String appTitle() {
-        return "Base Back Office";
+        return "Jobs4U - BackOffice";
     }
 
     @Override
     protected String appGoodbye() {
-        return "Base Back Office";
+        return "Goodbye!";
     }
 
-    @SuppressWarnings("unchecked")
     @Override
-    protected void doSetupEventHandlers(final EventDispatcher dispatcher) {
-        dispatcher.subscribe(new NewUserRegisteredFromSignupWatchDog(),
-                NewUserRegisteredFromSignupEvent.class);
-        dispatcher.subscribe(new SignupAcceptedWatchDog(), SignupAcceptedEvent.class);
-    }
+    protected void doSetupEventHandlers(final EventDispatcher dispatcher) {}
 }

@@ -1,0 +1,38 @@
+@startuml
+title US1000 - SD - List Backoffice Users
+skinparam linetype ortho
+skinparam maxmessagesize 150
+skinparam sequenceParticipant underline
+
+actor "Admin" as admin
+
+participant "ListBackofficeUsersUI" as UI
+participant "ListBackofficeUsersController" as C
+participant "BackofficeUserRepository" as R
+participant "JpaBaseRepository" as RJPA
+database "H2Database" as DB
+
+activate admin
+admin -> UI : Asks to list Users of the Backoffice
+activate UI
+UI -> C : listBackofficeUsers()
+activate C
+C -> R : findAllActive()
+activate R
+R -> RJPA : findAllActive()
+activate RJPA
+RJPA -> RJPA : findAll()
+RJPA -> DB : createQuery("SELECT u FROM User u",User.class)
+DB --> RJPA : returns List<User>
+RJPA --> RJPA : returns List<User>
+RJPA --> RJPA : filter active users
+deactivate RJPA
+RJPA --> R : returns List<User>
+deactivate R
+R --> C : returns List<User>
+deactivate C
+C --> UI : returns List<User>
+UI --> admin : hows list of users
+deactivate UI
+deactivate admin
+@enduml

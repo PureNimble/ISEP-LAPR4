@@ -1,0 +1,63 @@
+@startuml
+title US1000 - SD - Enable/Disable Users from the backoffice
+skinparam linetype ortho
+skinparam maxmessagesize 150
+skinparam sequenceParticipant underline
+
+actor "Admin" as admin
+
+participant "EnableDisableUserUI" as UI
+participant "EnableDisableUserController" as C
+participant "BackofficeUserRepository" as R
+participant "JpaBaseRepository" as RJPA
+participant "User" as U
+database "H2Database" as DB
+
+activate admin
+admin -> UI : Asks to disable or enable an User of the Backoffice
+activate UI
+UI -> admin : Asks for information (User email, option)
+note left UI : The Admin has to choose\nbetween enable/disable\nand provide the User email
+deactivate UI
+admin -> UI : Provides information
+activate UI
+UI -> C : enableDisableUser(option, user)
+activate C
+note left C : option = 1..enable\noption = 2..disable
+C -> R : findByEmail(new email(user))
+activate R
+R -> RJPA : findByEmail(new email(user))
+activate RJPA
+RJPA -> DB : createQuery("SELECT u FROM User u WHERE u.email = :value", User.class)
+DB --> RJPA : returns User
+alt option = 1
+   RJPA -> U : enable()
+   activate U
+   deactivate U
+else option = 2
+   RJPA -> U : disable()
+    activate U
+    deactivate U
+end
+U --> RJPA : returns boolean
+activate U
+deactivate U
+RJPA --> R : returns boolean
+R --> C : returns boolean
+alt boolean = true
+   C -> R : save(person.get())
+   R -> RJPA : save(person.get())
+   RJPA -> DB : merge(person.get())
+   DB --> RJPA : returns User
+   RJPA --> R : returns User
+   deactivate RJPA
+   R --> C : returns User
+   deactivate R
+    C --> UI : return true
+else boolean = false
+    C --> UI : return false
+end
+deactivate C
+UI --> admin : Informs success or failure
+deactivate admin
+@enduml

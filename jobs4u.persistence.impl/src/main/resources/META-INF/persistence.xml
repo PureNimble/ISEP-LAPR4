@@ -14,7 +14,7 @@
     <class>lapr4.jobs4u.clientusermanagement.domain.SignupRequest</class>
 
     <properties>
-      <!--<property name="jakarta.persistence.jdbc.url" value="jdbc:h2:tcp://localhost/~/jobs4u"/>-->
+      <!-- <property name="jakarta.persistence.jdbc.url" value="jdbc:h2:tcp://localhost/~/jobs4u"/> -->
       <property name="jakarta.persistence.jdbc.url" value="jdbc:h2:tcp://vsgate-s2.dei.isep.ipp.pt:10264/jobs4u"/>
 
       <property name="jakarta.persistence.jdbc.user" value="sa"/>

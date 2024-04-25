@@ -71,6 +71,26 @@
 >
 > **Answer:** Não percebi bem o conceito de customers não registados. Penso que esse conceito não existe. A US 1001 indica que se pretende registar um customer. Ao registar-se o customer deve-se também criar um utilizador para que o customer possa aceder à App de customers.
 
+> **Date:** 2024-04-21
+>
+> **Question 110:** Password para o customer- Na US1001, o customer manager ao registrar um customer deve definir uma password para este usuário ou será que deve ser gerado pelo sistema?
+>
+> **Answer:** Já respondida em Q19.
+>
+> **Question 111:** Regras de negócio para endereço do customer- Quais são as regras de negócio do endereço do customer?
+>
+> **Answer:** Se me perguntar se é suficiente, nesta fase, que o sistema aceite apenas endereços nacionais, a minha resposta é afirmativa. Se a pergunta era outra, por favor coloque de novo, desta vez como se estivesse a falar com alguém que não sabe o que são regras de negócio, mas é especialista no negócio.
+>
+> **Question 112:** É correto assumir que o customer fica automaticamente atribuido ao customer manager que o registou?
+>
+> **Answer:** Sim. No âmbito deste projeto vamos assumir que isso deve acontecer.
+
+> **Date:** 2024-04-23
+>
+> **Question 122:** E-mail atribuído ao Customer- Na US 1001 é pedido que a criação de um User através da CustomerEntity criada seja automática. Contudo, para a criação de um User é necessário um e-mail. Permite que seja pedido um e-mail ao Manager, para ficar associado á entidade? A password já será gerada automaticamente, por isso seria também possível a geração automática de um e-mail.
+>
+> **Answer:** Para essa US faze sentido assumir que o Customer Manager conhece o email a ser suado para esse Customer e pode introduzi-lo. Tal como para outras situações similares podem assumir que a password é gerada pelo sistema e que existe uam forma do utilizador conhecer essa password, mas que está forá do âmbito actual do sistema. Não percebi à referência a CustomerEntity. O que é?
+
 ### 1.3. Acceptance Criteria
 
 * **AC1:** The system must automatically create a user for the customer that the Customer Manager registers.
@@ -86,13 +106,13 @@ _N/A_
 **Input Data:**
 
 * Typed data:
-	* name
+	* company name
+	* customer code
 	* e-mail
 	* address
 	* phone number
-	* birth date
-	* tax payer number
-	* costumer code
+	* first name
+	* last name
 
 **Output Data:**
 
@@ -100,6 +120,6 @@ _N/A_
 
 ### 1.6. System Sequence Diagram (SSD)
 
-_N/A_
+![SSD - US1001](svg/SSD-US1001.svg)
 
 <img width=100% src="https://capsule-render.vercel.app/api?type=waving&height=120&color=4E1764&section=footer"/>

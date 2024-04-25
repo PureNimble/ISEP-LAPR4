@@ -31,8 +31,8 @@
 	</properties>
 	<modules>
 		<module>jobs4u.app.backoffice.console</module>
-		<module>jobs4u.app.user.console</module>
-		<module>jobs4u.app.other.console</module>
+		<module>jobs4u.app.customer.console</module>
+		<module>jobs4u.app.candidate.console</module>
 		<module>jobs4u.app.common.console</module>
 		<module>jobs4u.app.bootstrap</module>
 		<module>jobs4u.bootstrappers</module>

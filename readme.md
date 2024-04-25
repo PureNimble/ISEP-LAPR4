@@ -3,15 +3,15 @@
 # Project Jobs4U
 
 ```
-      _         _           _  _          
-     | |       | |         | || |         
-     | |  ___  | |__   ___ | || |_  _   _ 
- _   | | / _ \ | '_ \ / __||__   _|| | | |
-| |__| || (_) || |_) |\__ \   | |  | |_| |
- \____/  \___/ |_.__/ |___/   |_|   \__,_|
+      _         _           _  _    _    _ 
+     | |       | |         | || |  | |  | |
+     | |  ___  | |__   ___ | || |_ | |  | |
+ _   | | / _ \ | '_ \ / __||__   _|| |  | |
+| |__| || (_) || |_) |\__ \   | |  | |__| |
+ \____/  \___/ |_.__/ |___/   |_|   \____/ 
 ```
 
-_Jobs4u logo created with kammerl ascii signature using font "big" and kerning_
+_Jobs4U logo created with [kammerl ascii signature](https://www.kammerl.de/ascii/AsciiSignature.php) using font "big" and kerning_
 
 ## 1. Description of the Project
 
@@ -67,7 +67,26 @@ You can also execute the tests using the following commands:
 
 ## 5. How to Run
 
-### To run Backoffice
+### To run Bootstrap
+
+> ⚠️ _Only run the bootstrap if you are connecting to a newly created database!_
+
+#### For linux/unix/macos
+```
+./bin/run-bootstrap.sh
+```
+#### For windows
+```
+.\bin\run-bootstrap.bat
+```
+
+#### You can add one of the following arguments to the script to run a specific module:
+
+* To run the Demo Data: `-bootstrap:demo`
+
+* To run the Basic Scenario: `-smoke:basic`
+
+### To run Backoffice App
 
 #### For linux/unix/macos
 ```
@@ -78,37 +97,26 @@ You can also execute the tests using the following commands:
 .\bin\run-backoffice.bat
 ```
 
-### To run User
+### To run Customer App
 
 #### For linux/unix/macos
 ```
-./bin/run-user.sh 
+./bin/run-customer.sh 
 ```
 #### For windows
 ```
-.\bin\run-user.bat
+.\bin\run-customer.bat
 ```
 
-### To run Other
+### To run Candidate App
 
 #### For linux/unix/macos
 ```
-./bin/run-other.sh 
+./bin/run-candidate.sh 
 ```
 #### For windows
 ```
-.\bin\run-other.bat
-```
-
-### To run Bootstrap
-
-#### For linux/unix/macos
-```
-./bin/run-bootstrap.sh 
-```
-#### For windows
-```
-.\bin\run-bootstrap.bat
+.\bin\run-candidate.bat
 ```
 
 ## 6. How to Install/Deploy into Another Machine (or Virtual Machine)

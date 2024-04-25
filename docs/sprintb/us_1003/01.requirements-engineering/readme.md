@@ -6,9 +6,7 @@
 
 ### 1.1. User Story Description
 
-
 * As Customer Manager, I want to list job openings.
-
 
 ### 1.2. Customer Specifications and Clarifications
 
@@ -48,9 +46,15 @@ _N/A_
 >
 > **Answer:**  No contexto da Q68 a referência a activa surge no contexto de datas. Uma job opening cujo processo já tenha terminado não está ativa.
 >
-> **Question 96:**  As Customer Manager, I want to list job openings – Em relação à listagem dos jobs openings, um customer manager pode listar todos os jobs openings ou apenas os que lhe foram atribuídos. Posto de outra forma, os job openings são atribuídos a um customer manager específico, e o mesmo só pode ter acesso à sua lista de job openings?
+> **Question 96:** Em relação à listagem dos jobs openings, um customer manager pode listar todos os jobs openings ou apenas os que lhe foram atribuídos. Posto de outra forma, os job openings são atribuídos a um customer manager específico, e o mesmo só pode ter acesso à sua lista de job openings?
 >
 > **Answer:**  Penso que faz sentido listar apenas os “seus” job openings.
+
+> **Date:** 2024-04-23
+>
+> **Question 120:** O cliente esclareceu o aspeto do status de uma job opening nas questões Q68 e Q95. Disse que uma job opening deixava de estar ativa quando o seu processo de recrutamento termina-se. Contudo, em que estado estão as job openings que já foram registadas mas ainda não têm um processo de recrutamento associado a si?
+>
+> **Answer:**  Relativamente ao estado (nome do estado) em que estão depois de serem registadas mas ainda não terem um processo eu não sei o que responder. Mas posso acrescentar que se não têm processo então não têm datas para as fases do processo e, portanto, parece-me que ainda não entraram na fase de application, pelo que ninguém tem “oficialmente” conhecimento dessa oferta de emprego e não devem haver candidaturas para essa oferta.
 
 ### 1.3. Acceptance Criteria
 
@@ -65,7 +69,7 @@ _N/A_
 
 ### 1.4. Found out Dependencies
 
-* **US 1002 - Register Job Openings:** To list all job opening, it is necessary to have a job opening registered.
+* **US 1002 - Register Job Openings:** To list all job openings, it is necessary to have a job opening registered.
 
 ### 1.5 Input and Output Data
 

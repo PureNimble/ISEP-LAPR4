@@ -43,8 +43,8 @@ import eapli.framework.infrastructure.authz.domain.model.SystemUserBuilder;
  */
 public class ClientUserTest {
 
-    private final String aMecanographicNumber = "abc";
-    private final String anotherMecanographicNumber = "xyz";
+    private final String aCustomerCode = "abc";
+    private final String anotherCustomerCode = "xyz";
 
     public static SystemUser dummyUser(final String username, final Role... roles) {
         // should we load from spring context?
@@ -57,12 +57,12 @@ public class ClientUserTest {
     }
 
     @Test
-    public void ensureClientUserEqualsPassesForTheSameMecanographicNumber() throws Exception {
+    public void ensureClientUserEqualsPassesForTheSameCustomerCode() throws Exception {
 
-        final ClientUser aClientUser = new ClientUserBuilder().withMecanographicNumber("DUMMY")
+        final ClientUser aClientUser = new ClientUserBuilder().withCustomerCode("DUMMY")
                 .withSystemUser(getNewDummyUser()).build();
 
-        final ClientUser anotherClientUser = new ClientUserBuilder().withMecanographicNumber("DUMMY")
+        final ClientUser anotherClientUser = new ClientUserBuilder().withCustomerCode("DUMMY")
                 .withSystemUser(getNewDummyUser()).build();
 
         final boolean expected = aClientUser.equals(anotherClientUser);
@@ -71,15 +71,15 @@ public class ClientUserTest {
     }
 
     @Test
-    public void ensureClientUserEqualsFailsForDifferenteMecanographicNumber() throws Exception {
+    public void ensureClientUserEqualsFailsForDifferenteCustomerCode() throws Exception {
         final Set<Role> roles = new HashSet<>();
         roles.add(BaseRoles.ADMIN);
 
-        final ClientUser aClientUser = new ClientUserBuilder().withMecanographicNumber(aMecanographicNumber)
+        final ClientUser aClientUser = new ClientUserBuilder().withCustomerCode(aCustomerCode)
                 .withSystemUser(getNewDummyUser()).build();
 
         final ClientUser anotherClientUser = new ClientUserBuilder()
-                .withMecanographicNumber(anotherMecanographicNumber).withSystemUser(getNewDummyUser()).build();
+                .withCustomerCode(anotherCustomerCode).withSystemUser(getNewDummyUser()).build();
 
         final boolean expected = aClientUser.equals(anotherClientUser);
 
@@ -100,7 +100,7 @@ public class ClientUserTest {
         final Set<Role> roles = new HashSet<>();
         roles.add(BaseRoles.ADMIN);
 
-        final ClientUser aClientUser = new ClientUserBuilder().withMecanographicNumber("DUMMY")
+        final ClientUser aClientUser = new ClientUserBuilder().withCustomerCode("DUMMY")
                 .withSystemUser(getNewDummyUser()).build();
 
         @SuppressWarnings("unlikely-arg-type")
@@ -111,7 +111,7 @@ public class ClientUserTest {
 
     @Test
     public void ensureClientUserIsTheSameAsItsInstance() throws Exception {
-        final ClientUser aClientUser = new ClientUserBuilder().withMecanographicNumber("DUMMY")
+        final ClientUser aClientUser = new ClientUserBuilder().withCustomerCode("DUMMY")
                 .withSystemUser(getNewDummyUser()).build();
 
         final boolean expected = aClientUser.sameAs(aClientUser);
@@ -120,14 +120,14 @@ public class ClientUserTest {
     }
 
     @Test
-    public void ensureTwoClientUserWithDifferentMecanographicNumbersAreNotTheSame() throws Exception {
+    public void ensureTwoClientUserWithDifferentCustomerCodesAreNotTheSame() throws Exception {
         final Set<Role> roles = new HashSet<>();
         roles.add(BaseRoles.ADMIN);
-        final ClientUser aClientUser = new ClientUserBuilder().withMecanographicNumber(aMecanographicNumber)
+        final ClientUser aClientUser = new ClientUserBuilder().withCustomerCode(aCustomerCode)
                 .withSystemUser(getNewDummyUser()).build();
 
         final ClientUser anotherClientUser = new ClientUserBuilder()
-                .withMecanographicNumber(anotherMecanographicNumber).withSystemUser(getNewDummyUser()).build();
+                .withCustomerCode(anotherCustomerCode).withSystemUser(getNewDummyUser()).build();
 
         final boolean expected = aClientUser.sameAs(anotherClientUser);
 

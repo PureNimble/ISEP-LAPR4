@@ -1,4 +1,4 @@
-package lapr4.jobs4u.utente.consoleapp;
+package lapr4.jobs4u.customer.console;
 
 import junit.framework.Test;
 import junit.framework.TestCase;
@@ -7,14 +7,14 @@ import junit.framework.TestSuite;
 /**
  * Unit test for simple App.
  */
-public class AppTest extends TestCase {
+public class CustomerAppTest extends TestCase {
 
     /**
      * Create the test case
      *
      * @param testName name of the test case
      */
-    public AppTest(String testName) {
+    public CustomerAppTest(String testName) {
         super(testName);
     }
 
@@ -22,7 +22,7 @@ public class AppTest extends TestCase {
      * @return the suite of tests being tested
      */
     public static Test suite() {
-        return new TestSuite(AppTest.class);
+        return new TestSuite(CustomerAppTest.class);
     }
 
     /**

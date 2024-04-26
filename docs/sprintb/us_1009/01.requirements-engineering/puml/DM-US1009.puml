@@ -1,0 +1,30 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+title System Sequence Diagram (SSD) - Select the requirements specification to be used for a job opening
+
+autonumber
+
+actor "Costumer Manager" as Manager
+participant ":System" as System
+
+activate Manager
+
+    Manager -> System : Asks for list of requirements specifications
+    activate System
+
+
+        System -> Manager : Shows list of candidates and asks to select one
+
+    deactivate System
+
+    Manager -> System : Selects a requirements specification
+    activate System
+
+        System -> Manager : Informs success or failure
+
+    deactivate System
+
+@enduml

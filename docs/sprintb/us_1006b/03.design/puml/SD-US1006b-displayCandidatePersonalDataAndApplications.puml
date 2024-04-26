@@ -1,0 +1,47 @@
+@startuml
+title US1006b - SD - Display Candidate Data and Applications
+skinparam linetype ortho
+skinparam maxmessagesize 150
+skinparam sequenceParticipant underline
+
+actor "Customer Manager" as CM
+
+participant "DisplayCandidateDataUI" as UI
+participant "DisplayCandidateApplicationsController" as C
+participant "ApplicationRepository" as R
+participant "JpaBaseRepository" as RJPA
+database "H2Database" as DB
+
+
+
+
+activate CM
+    CM -> UI : Asks to display the personal data of a candidate
+    activate UI
+        ref over UI , CM: List candidates\n(US 2000c)
+            UI -> CM : Shows list of candidates and asks to select one
+    deactivate UI
+    CM -> UI : Selects a candidate
+    activate UI
+        UI -> CM : Displays Candidate Data
+        UI -> C : getApplications(Candidate candidate)
+        activate C
+            C -> R : findApplicationsFromCandidate(Candidate candidate)
+            activate R
+                R -> RJPA : findApplicationsFromCandidate(Candidate candidate)
+                activate RJPA
+                    RJPA -> RJPA : findApplicationsFromCandidate(Candidate candidate)
+                    RJPA -> DB : createQuery(SELECT a FROM Application a WHERE a.candidate = :candidate", application.class)
+                    RJPA -> DB : setParameter("candidate", candidate)
+                    DB -> RJPA : return List<Application>
+                    RJPA -> RJPA : return List<Application>
+                    RJPA -> R : return List<Application>
+                deactivate RJPA
+                R -> C : return List<Application>
+            deactivate R
+            C -> UI : return List<Application>
+        deactivate C
+        UI -> CM : Displays Application List
+    deactivate UI
+deactivate CM
+@enduml

@@ -21,10 +21,10 @@ jobs:
     - name: Create error logs directory
       run: mkdir -p error-logs
 
-    - name: Set up JDK 17
+    - name: Set up JDK 21
       uses: actions/setup-java@v4
       with:
-        java-version: '17'
+        java-version: '21'
         distribution: 'temurin'
         cache: maven
 
@@ -32,7 +32,7 @@ jobs:
     - name: Set execute permissions on build scripts
       run: chmod +x bin/build-all.sh bin/generate-plantuml-diagrams.sh bin/mvnw || true
 
-    - name: Full build with Maven
+    - name: Full build with Maven and GCC
       run: ./bin/build-all.sh 2> error-logs/build-all.log || true
     
     - name: Upload coverage report

@@ -48,7 +48,7 @@ An association is a relationship between instances of objects that indicates a r
 | JobOpening | has | ContractType |
 | JobOpening | has | Mode |
 | JobOpening | has | Address |
-| JobOpening | has | Company |
+| JobOpening | has | CompanyName |
 | JobOpening | has | NumbersOfVacancies |
 | JobOpening | has | JobDescription |
 | JobOpening | has | RequirementSpecification |
@@ -60,8 +60,6 @@ An association is a relationship between instances of objects that indicates a r
 | Plugin | has | InterviewModel |
 | Rank | for | JobOpening |
 | RecruitmentProcess | for | JobOpening |
-| RecruitmentProcess | has | InitialDate |
-| RecruitmentProcess | has | FinalDate |
 | RecruitmentProcess | has | Phase |
 | RequirementSpecification | uses | Plugin |
 | Result | has | Outcome |

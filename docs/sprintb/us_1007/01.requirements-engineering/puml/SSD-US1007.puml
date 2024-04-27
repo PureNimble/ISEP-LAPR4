@@ -1,0 +1,40 @@
+@startuml SSD-US1007
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+title System Sequence Diagram (SSD) - Setup the phases of the process for a job opening
+
+autonumber
+
+actor "Customer Manager" as CustomerManager
+participant ":System" as System
+
+activate CustomerManager
+
+CustomerManager -> System : Asks to setup the phases of the process for a job opening
+activate System
+    ref over System, CustomerManager : US1003 ➡️ List Job Openings
+    System --> CustomerManager : Shows list of job openings and asks to select one
+deactivate System
+    CustomerManager -> System : Selects job opening to setup the phases
+activate System
+
+loop for each phase
+    alt phase is "Interview"
+        System --> CustomerManager : Asks if the interview phase is needed
+        CustomerManager -> System : Responds (y/n)
+        alt response is "y"
+            System --> CustomerManager : Asks for information (initial date and final date)
+            CustomerManager -> System : Provides information
+        end
+    else
+        System --> CustomerManager : Asks for information (initial date and final date)
+        CustomerManager -> System : Provides information
+    end
+end
+
+System --> CustomerManager : Informs success or failure
+deactivate System
+
+@enduml

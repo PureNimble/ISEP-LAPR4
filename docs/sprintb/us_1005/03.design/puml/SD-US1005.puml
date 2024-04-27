@@ -1,0 +1,67 @@
+@startuml SD-US1005
+
+title Sequence Diagram - US1005
+
+skinparam linetype ortho
+skinparam maxmessagesize 150
+skinparam sequenceParticipant underline
+
+actor "Customer Manager" as customerManager
+
+participant "ListApplicationUI" as UI
+participant "ListApplicationController" as ListApplicationController
+participant "ApplicationService" as ApplicationService
+participant "ApplicationRepository" as ApplicationRepository
+participant "JpaApplicationRepository" as JpaApplicationRepository
+participant "Application" as Application
+participant "ApplicationDTO" as ApplicationDTO
+database "Database" as DB
+
+activate customerManager
+
+customerManager -> UI: Asks for a list of job openings
+
+activate UI
+    ref over customerManager, DB : US1003 ➡️ List Job Openings
+    UI --> customerManager : Shows list of job openings and asks to select one
+deactivate UI
+customerManager -> UI : selects a job opening
+activate UI
+    UI --> ListApplicationController: allApplications()
+    activate ListApplicationController
+        ListApplicationController -> ApplicationService: allApplications()
+        activate ApplicationService
+            ApplicationService -> ApplicationRepository: findAll()
+            activate ApplicationRepository
+                ApplicationRepository -> JpaApplicationRepository: findAll()
+                activate JpaApplicationRepository
+                    JpaApplicationRepository -> DB: createQuery("SELECT a FROM Application a WHERE ...", Application.class)
+                    activate DB
+                        DB --> JpaApplicationRepository: Iterable<Application>
+                        note right: Should only return applications\n assigned to that job opening
+                    deactivate DB
+                    ApplicationRepository <-- JpaApplicationRepository: Iterable<Application>
+                    deactivate JpaApplicationRepository
+                        ApplicationService <-- ApplicationRepository: Iterable<Application>
+                    deactivate ApplicationRepository
+                loop for each Application
+                    ApplicationService -> Application: toDTO()
+                    activate Application
+                        Application --> ApplicationDTO: create
+                        activate ApplicationDTO
+                        Application <-- ApplicationDTO: ApplicationDTO
+                        deactivate ApplicationDTO
+                        ApplicationService <-- Application: ApplicationDTO
+                    deactivate Application
+                end
+            deactivate ApplicationRepository
+            ListApplicationController <-- ApplicationService: Iterable<ApplicationDTO>
+        deactivate ApplicationService
+        ListApplicationController --> UI: Iterable<ApplicationDTO>
+    deactivate ListApplicationController
+    UI --> customerManager: List of Applications
+deactivate UI
+
+deactivate customerManager
+
+@enduml

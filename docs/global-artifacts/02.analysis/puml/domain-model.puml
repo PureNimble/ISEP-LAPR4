@@ -75,9 +75,10 @@ package "<<aggregate>> Candidate Answer" {
 package "<<aggregate>> Customer" {
     entity Customer <<entity>> <<root>> {}
 
-    class CompanyName <<valueObject>> <<(V, #FF8B40)>> {}
     class CustomerCode <<valueObject>> <<(V, #FF8B40)>> {}
 }
+
+class CompanyName <<valueObject>> <<(V, #FF8B40)>> {}
 
 ' Job Opening Aggregate
 package "<<aggregate>> Job Opening" {
@@ -87,7 +88,6 @@ package "<<aggregate>> Job Opening" {
     class TitleOrFunction <<valueObject>> <<(V, #FF8B40)>> {}
     class ContractType <<valueObject>> <<(V, #FF8B40)>> {}
     class Mode <<valueObject>> <<(V, #FF8B40)>> {}
-    class Company <<valueObject>> <<(V, #FF8B40)>> {}
     class NumberOfVacancies <<valueObject>> <<(V, #FF8B40)>> {}
     class JobDescription <<valueObject>> <<(V, #FF8B40)>> {}
     entity RequirementSpecification <<entity>> {}
@@ -150,8 +150,6 @@ Password "1" ..> "1" PasswordPolicy : applies
 Password "1" ..> "1" PasswordEncoder : uses
 
 ' Recruitment Process relationships
-RecruitmentProcess "1" --> "1" InitialDate : has
-RecruitmentProcess "1" --> "1" FinalDate : has
 RecruitmentProcess "1" --> "*" Phase : has
 RecruitmentProcess "1" --> "1" JobOpening : for
 
@@ -161,7 +159,7 @@ JobOpening "1" --> "1" TitleOrFunction : has
 JobOpening "1" --> "1" ContractType : has
 JobOpening "1" --> "1" Mode : has
 JobOpening "1" --> "1" Address : has
-JobOpening "1" --> "1" Company : has
+JobOpening "1" --> "1" CompanyName : has
 JobOpening "1" --> "1" NumberOfVacancies : has
 JobOpening "1" --> "1" JobDescription : has
 JobOpening "1" --> "1" RequirementSpecification: has

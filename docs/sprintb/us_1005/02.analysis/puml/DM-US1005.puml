@@ -1,6 +1,6 @@
-@startuml domain-model
+@startuml DM-US1005
 
-title Domain Model - US2002
+title DOMAIN MODEL - US1005
 
 hide empty members
 'skinparam Linetype ortho
@@ -31,29 +31,13 @@ package "<<aggregate>> Application" {
     note left of Justification: Rejected outcomes must have a justification
 }
 
-' Candidate Aggregate
-package "<<aggregate>> Candidate" {
-    entity Candidate <<entity>> <<root>> {}
-
-    class FirstName <<valueObject>> <<(V, #FF8B40)>> {}
-    class LastName <<valueObject>> <<(V, #FF8B40)>> {}
-}
+' Result relationships
+Result "1" --> "1" Outcome : has
+Result "1" --> "1" Justification : can have
 
 ' Application relationships
 Application "1" --> "1" ApplicationDate : has
 Application "1" --> "1" ApplicationNumber : has
 Application "1" --> "0..1" Result : has
-Application "1" --> "1" Candidate : has
-
-' Result relationships
-Result "1" --> "1" Outcome : has
-Result "1" --> "1" Justification : can have
-
-' Candidate relationships
-Candidate "1" --> "1" FirstName : has
-Candidate "1" --> "1" LastName : has
-Candidate "1" --> "1" PhoneNumber : has
-Candidate "1" --> "1" Email : has
-
 
 @enduml

@@ -1,14 +1,14 @@
 <img width=100% src="https://capsule-render.vercel.app/api?type=waving&height=120&color=4E1764"/>
 
-# US 1005 - List all applications for a job opening.
+# US 1007 - Setup the phases of the process for a job opening.
 
 ## 1. Context
 
-- `Description:` As Customer Manager, I want to list all applications for a job opening.
+- `Description:`  As Customer Manager, I want to setup the phases of the process for a job opening.
 
 - `Sprint:` This US makes part of the intermediary stage of development of the integrative project of this semester, Sprint B.
 
-- `Objectives:` The team must make sure that the system can list all applications for a job opening.
+- `Objectives:` The team must make sure that the system is able to setup the phases of the process for a job opening.
 
 ## 2. Requirements
 

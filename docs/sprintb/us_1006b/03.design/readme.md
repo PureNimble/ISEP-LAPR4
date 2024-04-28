@@ -12,7 +12,7 @@
 | 			  		        | 	... asking to select the candidate?						   		                      | ListCandidateDataUI                    | Information Expert: The UI knows how to interact with the user and ask for the candidate to be displayed.     |
 | 			  		        | 	... coordinating the US?                                            | DisplayCandidateApplicationsController | Controller: The controller is responsible for handling the user's request and coordinating the use case.      |
 | 			  		        | 	... finding the applications made by the candidate selected?							 | ApplicationRepository                  | Information Expert: The repository knows how to find the specified applications.                              |
-| 			  		        | 	... querying the database?						                                    | JpaBaseRepository                      | Information Expert: The JpaBaseRepository knows how to interact with the database.                            |
+| 			  		        | 	... querying the database?						                                    | JpaApplicationRepository               | Information Expert: The JpaBaseRepository knows how to interact with the database.                            |
 
 ### Systematization ##
 
@@ -25,17 +25,17 @@ Other software classes (i.e. Pure Fabrication) identified:
 * ListCandidateDataUI
 * DisplayCandidateApplicationsController
 * ApplicationRepository
-* JpaBaseRepository
+* JpaApplicationRepository
 
 These classes are responsible for the user interface, controlling the use case, and interacting with the database, respectively.
 
 
 ## 3.2. Sequence Diagram (SD)
 
-![SD -> Display Candidate Data](svg/SD-US1006-displayCandidatePersonalData.svg)
+![SD -> Display Candidate Data And Applications](svg/SD-US1006b-displayCandidatePersonalDataAndApplications.svg)
 
 ## 3.3. Class Diagram (CD)
 
-_N/A_
+![CD -> Display Candidate Data](svg/CD-US1006b.svg)
 
 <img width=100% src="https://capsule-render.vercel.app/api?type=waving&height=120&color=4E1764&section=footer"/>

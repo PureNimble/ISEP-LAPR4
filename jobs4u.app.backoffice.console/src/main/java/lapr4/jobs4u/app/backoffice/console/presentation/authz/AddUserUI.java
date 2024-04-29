@@ -27,7 +27,6 @@ import java.util.HashSet;
 import java.util.Set;
 
 import lapr4.jobs4u.usermanagement.application.AddUserController;
-import eapli.framework.actions.Actions;
 import eapli.framework.actions.menu.Menu;
 import eapli.framework.actions.menu.MenuItem;
 import eapli.framework.domain.repositories.ConcurrencyException;
@@ -52,8 +51,6 @@ public class AddUserUI extends AbstractUI {
     protected boolean doShow() {
         // FIXME avoid duplication with SignUpUI. reuse UserDataWidget from
         // UtenteApp
-        final String username = Console.readLine("Username");
-        final String password = Console.readLine("Password");
         final String firstName = Console.readLine("First Name");
         final String lastName = Console.readLine("Last Name");
         final String email = Console.readLine("E-Mail");
@@ -65,9 +62,9 @@ public class AddUserUI extends AbstractUI {
         } while (!show);
 
         try {
-            this.theController.addUser(username, password, firstName, lastName, email, roleTypes);
+            this.theController.addUser(email, firstName, lastName, roleTypes);
         } catch (final IntegrityViolationException | ConcurrencyException e) {
-            System.out.println("That username is already in use.");
+            System.out.println("That E-mail is already in use.");
         }
 
         return false;
@@ -82,8 +79,7 @@ public class AddUserUI extends AbstractUI {
 
     private Menu buildRolesMenu(final Set<Role> roleTypes) {
         final Menu rolesMenu = new Menu();
-        int counter = 0;
-        rolesMenu.addItem(MenuItem.of(counter++, "No Role", Actions.SUCCESS));
+        int counter = 1;
         for (final Role roleType : theController.getRoleTypes()) {
             rolesMenu.addItem(MenuItem.of(counter++, roleType.toString(), () -> roleTypes.add(roleType)));
         }

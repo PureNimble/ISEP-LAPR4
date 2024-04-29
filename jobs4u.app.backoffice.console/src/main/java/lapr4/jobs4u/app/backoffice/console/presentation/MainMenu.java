@@ -27,6 +27,8 @@ import lapr4.jobs4u.Application;
 import lapr4.jobs4u.app.backoffice.console.presentation.authz.AddUserUI;
 import lapr4.jobs4u.app.backoffice.console.presentation.authz.DeactivateUserAction;
 import lapr4.jobs4u.app.backoffice.console.presentation.authz.ListUsersAction;
+import lapr4.jobs4u.app.backoffice.console.presentation.authz.RegisterCustomerUI;
+import lapr4.jobs4u.app.backoffice.console.presentation.authz.SetUpRecruitmentProcessUI;
 import lapr4.jobs4u.app.common.console.presentation.authz.MyUserMenu;
 import lapr4.jobs4u.usermanagement.domain.BaseRoles;
 import eapli.framework.actions.Actions;
@@ -106,9 +108,23 @@ public class MainMenu extends AbstractUI {
                 mainMenu.addItem(MenuItem.separator(SEPARATOR_LABEL));
             }
 
-            if (authz.isAuthenticatedUserAuthorizedTo(BaseRoles.ADMIN, BaseRoles.CUSTOMER_MANAGER, BaseRoles.OPERATOR,
-                    BaseRoles.LANGUAGE_ENGINEER)) {
+            if (authz.isAuthenticatedUserAuthorizedTo(BaseRoles.ADMIN)) {
                 final Menu usersMenu = buildAdminMenu();
+                mainMenu.addSubMenu(USERS_OPTION, usersMenu);
+            }
+
+            if (authz.isAuthenticatedUserAuthorizedTo(BaseRoles.CUSTOMER_MANAGER)) {
+                final Menu usersMenu = buildCustomerManagerMenu();
+                mainMenu.addSubMenu(USERS_OPTION, usersMenu);
+            }
+
+            if (authz.isAuthenticatedUserAuthorizedTo(BaseRoles.OPERATOR)) {
+                final Menu usersMenu = buildOperatorMenu();
+                mainMenu.addSubMenu(USERS_OPTION, usersMenu);
+            }
+
+            if (authz.isAuthenticatedUserAuthorizedTo(BaseRoles.LANGUAGE_ENGINEER)) {
+                final Menu usersMenu = buildLanguageEngineerMenu();
                 mainMenu.addSubMenu(USERS_OPTION, usersMenu);
             }
 
@@ -125,6 +141,39 @@ public class MainMenu extends AbstractUI {
     }
 
     private Menu buildAdminMenu() {
+        final Menu menu = new Menu("Users >");
+
+        menu.addItem(ADD_USER_OPTION, "Add User", new AddUserUI()::show);
+        menu.addItem(LIST_USERS_OPTION, "List all Users", new ListUsersAction());
+        menu.addItem(DEACTIVATE_USER_OPTION, "Deactivate User", new DeactivateUserAction());
+        menu.addItem(EXIT_OPTION, RETURN_LABEL, Actions.SUCCESS);
+
+        return menu;
+    }
+
+    private Menu buildCustomerManagerMenu() {
+        final Menu menu = new Menu("Users >");
+
+        menu.addItem(ADD_USER_OPTION, "Register Customer", new RegisterCustomerUI()::show);
+        menu.addItem(LIST_USERS_OPTION, "List all Job Openings", new ListUsersAction());
+        menu.addItem(DEACTIVATE_USER_OPTION, "SetUpRecruitmentProcess", new SetUpRecruitmentProcessUI()::show);
+        menu.addItem(EXIT_OPTION, RETURN_LABEL, Actions.SUCCESS);
+
+        return menu;
+    }
+
+    private Menu buildOperatorMenu() {
+        final Menu menu = new Menu("Users >");
+
+        menu.addItem(ADD_USER_OPTION, "Register Candidate", new AddUserUI()::show);
+        menu.addItem(LIST_USERS_OPTION, "List all Users", new ListUsersAction());
+        menu.addItem(DEACTIVATE_USER_OPTION, "Deactivate User", new DeactivateUserAction());
+        menu.addItem(EXIT_OPTION, RETURN_LABEL, Actions.SUCCESS);
+
+        return menu;
+    }
+
+    private Menu buildLanguageEngineerMenu() {
         final Menu menu = new Menu("Users >");
 
         menu.addItem(ADD_USER_OPTION, "Add User", new AddUserUI()::show);

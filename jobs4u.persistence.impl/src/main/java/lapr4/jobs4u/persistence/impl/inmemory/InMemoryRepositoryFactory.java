@@ -20,9 +20,10 @@
  */
 package lapr4.jobs4u.persistence.impl.inmemory;
 
-import lapr4.jobs4u.clientusermanagement.repositories.ClientUserRepository;
+import lapr4.jobs4u.customerusermanagement.repositories.CustomerRepository;
 import lapr4.jobs4u.infrastructure.bootstrapers.Bootstrapper;
 import lapr4.jobs4u.infrastructure.persistence.RepositoryFactory;
+import lapr4.jobs4u.recruitmentprocessmanagement.repositories.RecruitmentProcessRepository;
 import eapli.framework.domain.repositories.TransactionalContext;
 import eapli.framework.infrastructure.authz.domain.repositories.UserRepository;
 import eapli.framework.infrastructure.authz.repositories.impl.inmemory.InMemoryUserRepository;
@@ -49,20 +50,28 @@ public class InMemoryRepositoryFactory implements RepositoryFactory {
     }
 
     @Override
-    public ClientUserRepository clientUsers(final TransactionalContext tx) {
-
-        return new InMemoryCustomerRepository();
-    }
-
-    @Override
-    public ClientUserRepository clientUsers() {
-        return clientUsers(null);
-    }
-
-    @Override
     public TransactionalContext newTransactionalContext() {
         // in memory does not support transactions...
         return null;
     }
 
+    @Override
+    public CustomerRepository customers(final TransactionalContext tx) {
+        return new InMemoryCustomerRepository();
+    }
+
+    @Override
+    public CustomerRepository customers() {
+        return customers(null);
+    }
+
+    @Override
+    public RecruitmentProcessRepository recruitmentProcesses(final TransactionalContext tx) {
+        return new InMemoryRecruitmentProcessRepository();
+    }
+
+    @Override
+    public RecruitmentProcessRepository recruitmentProcesses() {
+        return recruitmentProcesses(null);
+    }
 }

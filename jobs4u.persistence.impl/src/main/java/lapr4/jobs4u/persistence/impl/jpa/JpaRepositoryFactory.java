@@ -45,19 +45,29 @@ public class JpaRepositoryFactory implements RepositoryFactory {
     }
 
     @Override
-    public JpaCustomerRepository clientUsers(final TransactionalContext autoTx) {
+    public TransactionalContext newTransactionalContext() {
+        return JpaAutoTxRepository.buildTransactionalContext(Application.settings().getPersistenceUnitName(),
+                Application.settings().getExtendedPersistenceProperties());
+    }
+
+    @Override
+    public JpaCustomerRepository customers(final TransactionalContext autoTx) {
         return new JpaCustomerRepository(autoTx);
     }
 
     @Override
-    public JpaCustomerRepository clientUsers() {
+    public JpaCustomerRepository customers() {
         return new JpaCustomerRepository(Application.settings().getPersistenceUnitName());
     }
 
     @Override
-    public TransactionalContext newTransactionalContext() {
-        return JpaAutoTxRepository.buildTransactionalContext(Application.settings().getPersistenceUnitName(),
-                Application.settings().getExtendedPersistenceProperties());
+    public JpaRecruitmentProcessRepository recruitmentProcesses(final TransactionalContext autoTx) {
+        return new JpaRecruitmentProcessRepository(autoTx);
+    }
+
+    @Override
+    public JpaRecruitmentProcessRepository recruitmentProcesses() {
+        return new JpaRecruitmentProcessRepository(Application.settings().getPersistenceUnitName());
     }
 
 }

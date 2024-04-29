@@ -25,6 +25,9 @@ import java.util.Set;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import lapr4.jobs4u.customerusermanagement.application.RegisterCustomerController;
+import lapr4.jobs4u.customerusermanagement.domain.Customer;
+import lapr4.jobs4u.infrastructure.persistence.PersistenceContext;
 import lapr4.jobs4u.usermanagement.application.AddUserController;
 import lapr4.jobs4u.usermanagement.application.ListUsersController;
 import eapli.framework.domain.repositories.ConcurrencyException;
@@ -38,6 +41,8 @@ public class UsersBootstrapperBase {
 
     final AddUserController userController = new AddUserController();
     final ListUsersController listUserController = new ListUsersController();
+    final RegisterCustomerController registerCustomerController = new RegisterCustomerController(
+            PersistenceContext.repositories().customers());
 
     public UsersBootstrapperBase() {
         super();
@@ -51,16 +56,29 @@ public class UsersBootstrapperBase {
      * @param email
      * @param roles
      */
-    protected SystemUser registerUser(final String username, final String password, final String firstName,
-            final String lastName, final String email, final Set<Role> roles) {
+    protected SystemUser registerUser(final String email, final String firstName,
+            final String lastName, final Set<Role> roles) {
         SystemUser u = null;
         try {
-            u = userController.addUser(username, password, firstName, lastName, email, roles);
-            LOGGER.debug("»»» %s", username);
+            u = userController.addUser(email, firstName, lastName, roles);
+            LOGGER.debug("»»» %s", email);
         } catch (final IntegrityViolationException | ConcurrencyException e) {
             // assuming it is just a primary key violation due to the tentative
             // of inserting a duplicated user. let's just lookup that user
-            u = listUserController.find(Username.valueOf(username)).orElseThrow(() -> e);
+            u = listUserController.find(Username.valueOf(email)).orElseThrow(() -> e);
+        }
+        return u;
+    }
+
+    protected Customer addCustomer(String name, String address, String customerCode, String email, String phoneNumber, String firstName, String lastName, final Set<Role> roles) {
+        Customer u = null;
+        try {
+            u = registerCustomerController.registerCustomer(registerUser(email, firstName, lastName, roles), name, address, customerCode, email, phoneNumber);
+            LOGGER.debug("»»» %s", email);
+        } catch (final IntegrityViolationException | ConcurrencyException e) {
+            // assuming it is just a primary key violation due to the tentative
+            // of inserting a duplicated user. let's just lookup that user
+            //u = listUserController.find(Username.valueOf(email)).orElseThrow(() -> e);
         }
         return u;
     }

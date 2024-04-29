@@ -18,34 +18,23 @@
  * DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-package lapr4.jobs4u.infrastructure.bootstrapers;
+package lapr4.jobs4u.infrastructure.smoketests;
 
-import java.util.HashSet;
-import java.util.Set;
-
-import lapr4.jobs4u.usermanagement.domain.BaseRoles;
 import eapli.framework.actions.Action;
-import eapli.framework.infrastructure.authz.domain.model.Role;
 
 /**
- * @author Paulo Gandra Sousa
+ * execute simple smoke tests on the application layer. we are assuming that the
+ * bootstrappers mainly test the "register" use cases and some of the "finders"
+ * to support those "register", so this class will focus mainly on executing the
+ * other application methods
+ *
  */
-public class MasterUsersBootstrapper extends UsersBootstrapperBase implements Action {
+@SuppressWarnings("squid:S1126")
+public class Jobs4UDemoSmokeTester implements Action {
 
     @Override
     public boolean execute() {
-        registerAdmin("admin@email.local", "John", "Doe");
+        // TODO: Add your smoke test execute here
         return true;
-    }
-
-    /**
-     *
-     */
-    private void registerAdmin(final String email, final String firstName,
-            final String lastName) {
-        final Set<Role> roles = new HashSet<>();
-        roles.add(BaseRoles.ADMIN);
-
-        registerUser(email, firstName, lastName, roles);
     }
 }

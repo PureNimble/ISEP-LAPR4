@@ -1,0 +1,28 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+title System Sequence Diagram (SSD) - List all applications for a Job Opening
+
+autonumber
+
+actor "Operator" as Manager
+participant ":ListCandidatesUI" as System
+
+database "Database" as DB
+
+activate Manager
+
+    Manager -> System : Asks to list all candidates
+    activate System
+
+        note left of System : The system will show a list of candidates\n(US 2000a)
+            ref over Manager, System : US2000a ➡️ List candidates
+
+
+        System -> Manager : Shows list of candidates
+
+    deactivate System
+    
+@enduml

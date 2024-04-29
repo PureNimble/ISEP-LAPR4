@@ -26,7 +26,9 @@ package lapr4.jobs4u.app.backoffice.console.presentation;
 import lapr4.jobs4u.Application;
 import lapr4.jobs4u.app.backoffice.console.presentation.authz.AddUserUI;
 import lapr4.jobs4u.app.backoffice.console.presentation.authz.DeactivateUserAction;
+import lapr4.jobs4u.app.backoffice.console.presentation.authz.ImportApplicationsUI;
 import lapr4.jobs4u.app.backoffice.console.presentation.authz.ListUsersAction;
+import lapr4.jobs4u.app.backoffice.console.presentation.authz.RegisterCandidateUI;
 import lapr4.jobs4u.app.backoffice.console.presentation.authz.RegisterCustomerUI;
 import lapr4.jobs4u.app.backoffice.console.presentation.authz.SetUpRecruitmentProcessUI;
 import lapr4.jobs4u.app.common.console.presentation.authz.MyUserMenu;
@@ -58,6 +60,9 @@ public class MainMenu extends AbstractUI {
     private static final int ADD_USER_OPTION = 1;
     private static final int LIST_USERS_OPTION = 2;
     private static final int DEACTIVATE_USER_OPTION = 3;
+
+    // OPERATOR
+    private static final int IMPORT_APPLICATIONS_OPTION = 4;
 
     // MAIN MENU
     private static final int MY_USER_OPTION = 1;
@@ -134,7 +139,8 @@ public class MainMenu extends AbstractUI {
 
         } else {
             System.out
-                    .println("You don't have permission to access this Application. Please contact the Administrator.\n");
+                    .println(
+                            "You don't have permission to access this Application. Please contact the Administrator.\n");
         }
         mainMenu.addItem(EXIT_OPTION, "Exit", new ExitWithMessageAction("Goodbye!"));
         return mainMenu;
@@ -165,9 +171,10 @@ public class MainMenu extends AbstractUI {
     private Menu buildOperatorMenu() {
         final Menu menu = new Menu("Users >");
 
-        menu.addItem(ADD_USER_OPTION, "Register Candidate", new AddUserUI()::show);
+        menu.addItem(ADD_USER_OPTION, "Register Candidate", new RegisterCandidateUI()::show);
         menu.addItem(LIST_USERS_OPTION, "List all Users", new ListUsersAction());
         menu.addItem(DEACTIVATE_USER_OPTION, "Deactivate User", new DeactivateUserAction());
+        menu.addItem(IMPORT_APPLICATIONS_OPTION, "Import Applications", new ImportApplicationsUI()::show);
         menu.addItem(EXIT_OPTION, RETURN_LABEL, Actions.SUCCESS);
 
         return menu;

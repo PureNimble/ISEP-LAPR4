@@ -26,6 +26,7 @@ package lapr4.jobs4u.infrastructure.bootstrapers;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import lapr4.jobs4u.infrastructure.bootstrapers.demo.CandidateBootstrapper;
 import lapr4.jobs4u.infrastructure.bootstrapers.demo.CustomerBootstrapper;
 import lapr4.jobs4u.infrastructure.bootstrapers.demo.RecruitmentProcessBootstrapper;
 import lapr4.jobs4u.infrastructure.persistence.PersistenceContext;
@@ -64,6 +65,7 @@ public class Bootstrapper implements Action {
     public boolean execute() {
         // declare bootstrap actions
         final Action[] actions = { new MasterUsersBootstrapper(), new CustomerBootstrapper(),
+                new CandidateBootstrapper(),
                 new RecruitmentProcessBootstrapper() };
 
         registerPowerUser();

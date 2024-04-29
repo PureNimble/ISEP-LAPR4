@@ -38,11 +38,12 @@ public class CustomerBootstrapper extends UsersBootstrapperBase implements Actio
         registerCustomer("FnacWorten", "Rua do Povo", "fnacworten", "fnac@email.local", "910000000", "Pedro", "Worten");
         return true;
     }
-    
-    private void registerCustomer(String name, String address, String customerCode, String email, String phoneNumber, String firstName, String lastName) {
+
+    private void registerCustomer(final String name, final String address, final String customerCode,
+            final String email, final String phoneNumber, final String firstName, final String lastName) {
         final Set<Role> roles = new HashSet<>();
         roles.add(BaseRoles.CUSTOMER);
-    
+
         addCustomer(name, address, customerCode, email, phoneNumber, firstName, lastName, roles);
     }
 }

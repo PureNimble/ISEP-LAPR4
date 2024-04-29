@@ -89,10 +89,6 @@ public class AppSettings {
         return this.applicationProperties.getProperty(REPOSITORY_FACTORY_KEY);
     }
 
-    public Integer getHighCaloriesDishLimit() {
-        return Integer.valueOf(this.applicationProperties.getProperty(HIGH_CALORIES_DISH_LIMIT));
-    }
-
     @SuppressWarnings({ "rawtypes", "unchecked" })
     public Map getExtendedPersistenceProperties() {
         final Map ret = new HashMap();

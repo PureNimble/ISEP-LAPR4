@@ -1,10 +1,8 @@
-package lapr4.jobs4u.customerusermanagement.customer.domain;
+package lapr4.jobs4u.customermanagement.domain;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import org.junit.Test;
-
-import lapr4.jobs4u.customerusermanagement.domain.CustomerCode;
 
 public class CustomerCodeTest {
 

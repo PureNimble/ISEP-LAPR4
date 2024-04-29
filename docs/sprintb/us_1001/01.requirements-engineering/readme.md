@@ -41,6 +41,10 @@
 > **Question 20:** Uma pessoa poderá ter vários papeis no sistema?
 >
 > **Answer:** Será muito difícil controlar que uma pessoa não consegue ter mais do que uma forma de acesso ao sistema (por exemplo, uma pessoa que é Customer Manager poderá ser, no limite, também uma candidato a uma oferta de emprego). Relativamente aos papéis “internos” eu diria que devemos considerar uma hierarquia de acessos. O Admin pode fazer “tudo” o que os outros fazem. Segue-se o Customer Manager e por último o Operator.
+>
+> **Question 22:** Relativamente ao Job Opening (secção 2.2.2), o job reference refere que deve ser gerado pelo sistema a partir de um customer code. O que é este customer code e se existe alguma regra para a sua criação?
+>
+> **Answer:** Eu diria que qualquer customer terá de ter um código identificativo (único) que poderá ser uma espécie de abreviatura do seu nome. Com um número limitado de caracteres. Por exemplo, para o cliente Instituto Superior de Engenharia do Porto, o customer code poderia ser ISEP e não poderia haver mais nenhum customer com este customer code. Um limite razoável seria talvez 8 a 10 carateres. Podemos definir 10. Este código é introduzido manualmente na criação do customer no sistema.
 
 > **Date:** 2024-03-23
 >
@@ -73,11 +77,11 @@
 
 > **Date:** 2024-04-21
 >
-> **Question 110:** Password para o customer- Na US1001, o customer manager ao registrar um customer deve definir uma password para este usuário ou será que deve ser gerado pelo sistema?
+> **Question 110:** Na US1001, o customer manager ao registrar um customer deve definir uma password para este usuário ou será que deve ser gerado pelo sistema?
 >
 > **Answer:** Já respondida em Q19.
 >
-> **Question 111:** Regras de negócio para endereço do customer- Quais são as regras de negócio do endereço do customer?
+> **Question 111:** Quais são as regras de negócio do endereço do customer?
 >
 > **Answer:** Se me perguntar se é suficiente, nesta fase, que o sistema aceite apenas endereços nacionais, a minha resposta é afirmativa. Se a pergunta era outra, por favor coloque de novo, desta vez como se estivesse a falar com alguém que não sabe o que são regras de negócio, mas é especialista no negócio.
 >
@@ -87,7 +91,7 @@
 
 > **Date:** 2024-04-23
 >
-> **Question 122:** E-mail atribuído ao Customer- Na US 1001 é pedido que a criação de um User através da CustomerEntity criada seja automática. Contudo, para a criação de um User é necessário um e-mail. Permite que seja pedido um e-mail ao Manager, para ficar associado á entidade? A password já será gerada automaticamente, por isso seria também possível a geração automática de um e-mail.
+> **Question 122:** Na US 1001 é pedido que a criação de um User através da CustomerEntity criada seja automática. Contudo, para a criação de um User é necessário um e-mail. Permite que seja pedido um e-mail ao Manager, para ficar associado á entidade? A password já será gerada automaticamente, por isso seria também possível a geração automática de um e-mail.
 >
 > **Answer:** Para essa US faze sentido assumir que o Customer Manager conhece o email a ser suado para esse Customer e pode introduzi-lo. Tal como para outras situações similares podem assumir que a password é gerada pelo sistema e que existe uam forma do utilizador conhecer essa password, mas que está forá do âmbito actual do sistema. Não percebi à referência a CustomerEntity. O que é?
 
@@ -96,6 +100,8 @@
 * **AC1:** The system must automatically create a user for the customer that the Customer Manager registers.
 
 * **AC2:** The address of the customer must be registered.
+
+* **AC3:** The customer code must be unique and between 8-10.
 
 ### 1.4. Found out Dependencies
 

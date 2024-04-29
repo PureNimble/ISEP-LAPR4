@@ -22,36 +22,37 @@ package lapr4.jobs4u.persistence.impl.inmemory;
 
 import java.util.Optional;
 
-import lapr4.jobs4u.clientusermanagement.domain.ClientUser;
-import lapr4.jobs4u.clientusermanagement.domain.CustomerCode;
-import lapr4.jobs4u.clientusermanagement.repositories.ClientUserRepository;
 import eapli.framework.infrastructure.authz.domain.model.Username;
 import eapli.framework.infrastructure.repositories.impl.inmemory.InMemoryDomainRepository;
+import lapr4.jobs4u.customerusermanagement.domain.Customer;
+import lapr4.jobs4u.customerusermanagement.domain.CustomerCode;
+import lapr4.jobs4u.customerusermanagement.repositories.CustomerRepository;
 
 /**
  *
  * @author Jorge Santos ajs@isep.ipp.pt 02/04/2016
  */
 public class InMemoryCustomerRepository
-        extends InMemoryDomainRepository<ClientUser, CustomerCode>
-        implements ClientUserRepository {
+        extends InMemoryDomainRepository<Customer, CustomerCode>
+        implements CustomerRepository {
 
     static {
         InMemoryInitializer.init();
     }
 
     @Override
-    public Optional<ClientUser> findByUsername(final Username name) {
-        return matchOne(e -> e.user().username().equals(name));
+    public Optional<Customer> findByEmail(final Username email) {
+        return matchOne(e -> e.user().username().equals(email));
     }
 
+    @SuppressWarnings("unlikely-arg-type")
     @Override
-    public Optional<ClientUser> findByCustomerCode(final CustomerCode number) {
+    public Optional<Customer> findByCustomerCode(final CustomerCode number) {
         return Optional.of(data().get(number));
     }
 
     @Override
-    public Iterable<ClientUser> findAllActive() {
+    public Iterable<Customer> findAllActive() {
         return match(e -> e.user().isActive());
     }
 }

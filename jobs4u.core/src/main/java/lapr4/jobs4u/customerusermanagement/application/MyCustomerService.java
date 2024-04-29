@@ -18,12 +18,12 @@
  * DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-package lapr4.jobs4u.myclientuser.application;
+package lapr4.jobs4u.customerusermanagement.application;
 
 import java.util.Optional;
 
-import lapr4.jobs4u.clientusermanagement.domain.ClientUser;
-import lapr4.jobs4u.clientusermanagement.repositories.ClientUserRepository;
+import lapr4.jobs4u.customerusermanagement.domain.Customer;
+import lapr4.jobs4u.customerusermanagement.repositories.CustomerRepository;
 import lapr4.jobs4u.infrastructure.persistence.PersistenceContext;
 import lapr4.jobs4u.usermanagement.domain.BaseRoles;
 import eapli.framework.infrastructure.authz.application.AuthorizationService;
@@ -35,24 +35,24 @@ import eapli.framework.infrastructure.authz.domain.model.SystemUser;
  *
  * @author Paulo Gandra de Sousa
  */
-public class MyClientUserService {
+public class MyCustomerService {
 
     private final AuthorizationService authz = AuthzRegistry.authorizationService();
-    private final ClientUserRepository repo = PersistenceContext.repositories().clientUsers();
+    private final CustomerRepository repo = PersistenceContext.repositories().customers();
 
-    public ClientUser me() {
+    public Customer me() {
         final UserSession s = authz.session().orElseThrow(IllegalStateException::new);
         final SystemUser myUser = s.authenticatedUser();
         // TODO cache the client user object
-        final Optional<ClientUser> me = repo.findByUsername(myUser.identity());
+        final Optional<Customer> me = repo.findByEmail(myUser.identity());
         return me.orElseThrow(IllegalStateException::new);
     }
 
-    public ClientUser myUser() {
+    public Customer myUser() {
         authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.CUSTOMER);
         final UserSession s = authz.session().orElseThrow(IllegalStateException::new);
         final SystemUser me = s.authenticatedUser();
-        return repo.findByUsername(me.identity()).orElseThrow(IllegalStateException::new);
+        return repo.findByEmail(me.identity()).orElseThrow(IllegalStateException::new);
     }
 
 }

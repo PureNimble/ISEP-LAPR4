@@ -18,12 +18,14 @@
  * DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-package lapr4.jobs4u.clientusermanagement.domain;
+package lapr4.jobs4u.customerusermanagement.domain;
 
 import jakarta.persistence.Embeddable;
 
+import java.util.regex.Pattern;
+
 import eapli.framework.domain.model.ValueObject;
-import eapli.framework.strings.util.StringPredicates;
+import eapli.framework.validations.Preconditions;
 
 /**
  *
@@ -33,21 +35,17 @@ import eapli.framework.strings.util.StringPredicates;
 public class CustomerCode implements ValueObject, Comparable<CustomerCode> {
 
     private static final long serialVersionUID = 1L;
+    private static final Pattern VALID_CODE_REGEX = Pattern.compile("^[\\pL\\pM\\p{Nl}][\\pL\\pM\\p{Nl} '\\-]{7,9}$", 2);
+    private final String code;
 
-    private String number;
-
-    public CustomerCode(final String customerCode) {
-        if (StringPredicates.isNullOrEmpty(customerCode)) {
-            throw new IllegalArgumentException(
-                    "Customer Code should neither be null nor empty");
-        }
-        // TODO validate invariants, i.e., code number regular
-        // expression
-        this.number = customerCode;
+    protected CustomerCode(final String customerCode) {
+        Preconditions.nonEmpty(customerCode, "Customer code should neither be null nor empty");
+        Preconditions.matches(VALID_CODE_REGEX, customerCode, "Invalid Customer Code: " + customerCode);
+        this.code = customerCode;
     }
 
     protected CustomerCode() {
-        // for ORM
+        this.code = null;
     }
 
     public static CustomerCode valueOf(final String customerCode) {
@@ -64,21 +62,21 @@ public class CustomerCode implements ValueObject, Comparable<CustomerCode> {
         }
 
         final CustomerCode that = (CustomerCode) o;
-        return this.number.equals(that.number);
+        return this.code.equals(that.code);
     }
 
     @Override
     public int hashCode() {
-        return this.number.hashCode();
+        return this.code.hashCode();
     }
 
     @Override
     public String toString() {
-        return this.number;
+        return this.code;
     }
 
     @Override
     public int compareTo(final CustomerCode arg0) {
-        return number.compareTo(arg0.number);
+        return code.compareTo(arg0.code);
     }
 }

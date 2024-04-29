@@ -11,6 +11,7 @@
     <class>eapli.framework.infrastructure.authz.domain.model.RoleSet</class>
     <class>eapli.framework.infrastructure.authz.domain.model.RoleAssignment</class>
     <class>lapr4.jobs4u.customerusermanagement.domain.Customer</class>
+    <class>lapr4.jobs4u.customerusermanagement.domain.CustomerUser</class>
     <class>lapr4.jobs4u.recruitmentprocessmanagement.domain.RecruitmentProcess</class>
     <class>lapr4.jobs4u.recruitmentprocessmanagement.domain.ApplicationPhase</class>
     <class>lapr4.jobs4u.recruitmentprocessmanagement.domain.ScreeningPhase</class>

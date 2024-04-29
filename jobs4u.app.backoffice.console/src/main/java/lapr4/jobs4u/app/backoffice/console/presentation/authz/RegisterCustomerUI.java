@@ -5,9 +5,11 @@ import java.util.Set;
 import eapli.framework.domain.repositories.ConcurrencyException;
 import eapli.framework.domain.repositories.IntegrityViolationException;
 import eapli.framework.infrastructure.authz.domain.model.Role;
+import eapli.framework.infrastructure.authz.domain.model.SystemUser;
 import eapli.framework.io.util.Console;
 import eapli.framework.presentation.console.AbstractUI;
-import lapr4.jobs4u.customerusermanagement.application.RegisterCustomerController;
+import lapr4.jobs4u.customermanagement.application.RegisterCustomerController;
+import lapr4.jobs4u.customermanagement.domain.Customer;
 import lapr4.jobs4u.infrastructure.persistence.PersistenceContext;
 import lapr4.jobs4u.usermanagement.application.AddUserController;
 import lapr4.jobs4u.usermanagement.domain.BaseRoles;
@@ -15,7 +17,7 @@ import lapr4.jobs4u.usermanagement.domain.BaseRoles;
 public class RegisterCustomerUI extends AbstractUI {
 
     private final RegisterCustomerController registerCustomerController = new RegisterCustomerController(
-            PersistenceContext.repositories().customers());
+            PersistenceContext.repositories().customers(), PersistenceContext.repositories().customerUsers());
 
     private final AddUserController addUserController = new AddUserController();
 
@@ -32,15 +34,13 @@ public class RegisterCustomerUI extends AbstractUI {
         final String representativefirstName = Console.readLine("First Name:");
         final String representativelastName = Console.readLine("Last Name:");
         final String representativeEmail = Console.readLine("E-mail:");
-        final String representativephoneNumber = Console.readLine("Phone Number:");
 
         try {
             final Set<Role> roleTypes = new HashSet<>();
             roleTypes.add(BaseRoles.CUSTOMER);
-            this.registerCustomerController.registerCustomer(
-                    (this.addUserController.addUser(representativeEmail, representativefirstName,
-                            representativelastName, roleTypes)),
-                    companyName, companyAddress, companyCode, companyEmail, companyPhoneNumber);
+            final Customer customer = this.registerCustomerController.registerCustomer(companyName, companyAddress, companyCode, companyEmail, companyPhoneNumber);
+            final SystemUser user = this.addUserController.addUser(representativeEmail, representativefirstName, representativelastName, roleTypes);
+            this.registerCustomerController.registerCustomerUser(customer, user);
         } catch (final IntegrityViolationException | ConcurrencyException e) {
             System.out.println("That E-mail is already registered.");
         }

@@ -1,4 +1,4 @@
-package lapr4.jobs4u.customerusermanagement.domain;
+package lapr4.jobs4u.customermanagement.domain;
 
 import jakarta.persistence.Embeddable;
 

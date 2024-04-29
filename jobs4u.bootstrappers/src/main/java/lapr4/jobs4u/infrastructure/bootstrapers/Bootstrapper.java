@@ -54,7 +54,7 @@ public class Bootstrapper implements Action {
             Bootstrapper.class);
 
     private static final String POWERUSER_PWD = "poweruserA1";
-    private static final String POWERUSER = "poweruser";
+    private static final String POWERUSER = "poweruser@email.com";
 
     private final AuthorizationService authz = AuthzRegistry.authorizationService();
     private final AuthenticationService authenticationService = AuthzRegistry.authenticationService();
@@ -63,7 +63,8 @@ public class Bootstrapper implements Action {
     @Override
     public boolean execute() {
         // declare bootstrap actions
-        final Action[] actions = { new MasterUsersBootstrapper(), new CustomerBootstrapper(), new RecruitmentProcessBootstrapper() };
+        final Action[] actions = { new MasterUsersBootstrapper(), new CustomerBootstrapper(),
+                new RecruitmentProcessBootstrapper() };
 
         registerPowerUser();
         authenticateForBootstrapping();
@@ -84,7 +85,8 @@ public class Bootstrapper implements Action {
     private boolean registerPowerUser() {
         final SystemUserBuilder userBuilder = UserBuilderHelper.builder();
         userBuilder.withUsername(POWERUSER).withPassword(POWERUSER_PWD).withName("joe", "power")
-                .withEmail("joe@email.org").withRoles(BaseRoles.ADMIN);
+                .withEmail(POWERUSER).withRoles(BaseRoles.ADMIN, BaseRoles.CUSTOMER_MANAGER, BaseRoles.OPERATOR,
+                        BaseRoles.LANGUAGE_ENGINEER);
         final SystemUser newUser = userBuilder.build();
 
         SystemUser poweruser;

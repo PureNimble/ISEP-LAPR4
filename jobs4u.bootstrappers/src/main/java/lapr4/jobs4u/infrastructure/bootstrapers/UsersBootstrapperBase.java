@@ -25,8 +25,9 @@ import java.util.Set;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import lapr4.jobs4u.customerusermanagement.application.RegisterCustomerController;
-import lapr4.jobs4u.customerusermanagement.domain.Customer;
+import lapr4.jobs4u.customermanagement.application.RegisterCustomerController;
+import lapr4.jobs4u.customermanagement.domain.Customer;
+import lapr4.jobs4u.customermanagement.domain.CustomerUser;
 import lapr4.jobs4u.infrastructure.persistence.PersistenceContext;
 import lapr4.jobs4u.usermanagement.application.AddUserController;
 import lapr4.jobs4u.usermanagement.application.ListUsersController;
@@ -42,7 +43,7 @@ public class UsersBootstrapperBase {
     final AddUserController userController = new AddUserController();
     final ListUsersController listUserController = new ListUsersController();
     final RegisterCustomerController registerCustomerController = new RegisterCustomerController(
-            PersistenceContext.repositories().customers());
+            PersistenceContext.repositories().customers(), PersistenceContext.repositories().customerUsers());
 
     public UsersBootstrapperBase() {
         super();
@@ -70,16 +71,19 @@ public class UsersBootstrapperBase {
         return u;
     }
 
-    protected Customer addCustomer(String name, String address, String customerCode, String email, String phoneNumber, String firstName, String lastName, final Set<Role> roles) {
-        Customer u = null;
+    protected CustomerUser addCustomer(String name, String address, String customerCode, String email, String phoneNumber, String firstName, String lastName, final Set<Role> roles) {
+        CustomerUser cu = null;
         try {
-            u = registerCustomerController.registerCustomer(registerUser(email, firstName, lastName, roles), name, address, customerCode, email, phoneNumber);
+            Customer c = registerCustomerController.registerCustomer(name, address, customerCode, email, phoneNumber);
+            SystemUser su = registerUser(email, firstName, lastName, roles);
+            cu = registerCustomerController.registerCustomerUser(c, su);
+
             LOGGER.debug("»»» %s", email);
         } catch (final IntegrityViolationException | ConcurrencyException e) {
             // assuming it is just a primary key violation due to the tentative
             // of inserting a duplicated user. let's just lookup that user
-            //u = listUserController.find(Username.valueOf(email)).orElseThrow(() -> e);
+            //cu = listUserController.find(Username.valueOf(email)).orElseThrow(() -> e);
         }
-        return u;
+        return cu;
     }
 }

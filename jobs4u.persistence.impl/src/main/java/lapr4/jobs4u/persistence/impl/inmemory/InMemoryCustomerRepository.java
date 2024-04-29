@@ -22,11 +22,10 @@ package lapr4.jobs4u.persistence.impl.inmemory;
 
 import java.util.Optional;
 
-import eapli.framework.infrastructure.authz.domain.model.Username;
 import eapli.framework.infrastructure.repositories.impl.inmemory.InMemoryDomainRepository;
-import lapr4.jobs4u.customerusermanagement.domain.Customer;
-import lapr4.jobs4u.customerusermanagement.domain.CustomerCode;
-import lapr4.jobs4u.customerusermanagement.repositories.CustomerRepository;
+import lapr4.jobs4u.customermanagement.domain.Customer;
+import lapr4.jobs4u.customermanagement.domain.CustomerCode;
+import lapr4.jobs4u.customermanagement.repositories.CustomerRepository;
 
 /**
  *
@@ -41,18 +40,7 @@ public class InMemoryCustomerRepository
     }
 
     @Override
-    public Optional<Customer> findByEmail(final Username email) {
-        return matchOne(e -> e.user().username().equals(email));
-    }
-
-    @SuppressWarnings("unlikely-arg-type")
-    @Override
     public Optional<Customer> findByCustomerCode(final CustomerCode number) {
         return Optional.of(data().get(number));
-    }
-
-    @Override
-    public Iterable<Customer> findAllActive() {
-        return match(e -> e.user().isActive());
     }
 }

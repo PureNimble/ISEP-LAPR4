@@ -18,12 +18,12 @@
  * DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-package lapr4.jobs4u.customerusermanagement.application;
+package lapr4.jobs4u.customermanagement.application;
 
 import java.util.Optional;
 
-import lapr4.jobs4u.customerusermanagement.domain.Customer;
-import lapr4.jobs4u.customerusermanagement.repositories.CustomerRepository;
+import lapr4.jobs4u.customermanagement.domain.CustomerUser;
+import lapr4.jobs4u.customermanagement.repositories.CustomerUserRepository;
 import lapr4.jobs4u.infrastructure.persistence.PersistenceContext;
 import lapr4.jobs4u.usermanagement.domain.BaseRoles;
 import eapli.framework.infrastructure.authz.application.AuthorizationService;
@@ -35,20 +35,20 @@ import eapli.framework.infrastructure.authz.domain.model.SystemUser;
  *
  * @author Paulo Gandra de Sousa
  */
-public class MyCustomerService {
+public class MyCustomerUserService {
 
     private final AuthorizationService authz = AuthzRegistry.authorizationService();
-    private final CustomerRepository repo = PersistenceContext.repositories().customers();
+    private final CustomerUserRepository repo = PersistenceContext.repositories().customerUsers();
 
-    public Customer me() {
+    public CustomerUser me() {
         final UserSession s = authz.session().orElseThrow(IllegalStateException::new);
         final SystemUser myUser = s.authenticatedUser();
         // TODO cache the client user object
-        final Optional<Customer> me = repo.findByEmail(myUser.identity());
+        final Optional<CustomerUser> me = repo.findByEmail(myUser.identity());
         return me.orElseThrow(IllegalStateException::new);
     }
 
-    public Customer myUser() {
+    public CustomerUser myUser() {
         authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.CUSTOMER);
         final UserSession s = authz.session().orElseThrow(IllegalStateException::new);
         final SystemUser me = s.authenticatedUser();

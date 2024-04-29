@@ -1,8 +1,7 @@
-package lapr4.jobs4u.customerusermanagement.domain;
+package lapr4.jobs4u.customermanagement.domain;
 
 import eapli.framework.domain.model.DomainFactory;
 import eapli.framework.general.domain.model.EmailAddress;
-import eapli.framework.infrastructure.authz.domain.model.SystemUser;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -10,27 +9,20 @@ import org.apache.logging.log4j.Logger;
 public class CustomerBuilder implements DomainFactory<Customer> {
 
     private static final Logger LOGGER = LogManager.getLogger(CustomerBuilder.class);
-    private SystemUser systemUser;
     private CompanyName companyName;
     private Address address;
     private CustomerCode customerCode;
     private EmailAddress email;
     private PhoneNumber phoneNumber;
 
-    public CustomerBuilder with(final SystemUser systemUser, final String name, final String address,
+    public CustomerBuilder with(final String name, final String address,
             final String customerCode,
             final String email, final String phoneNumber) {
-        this.withSystemUser(systemUser);
         this.withCustomerName(name);
         this.withAddress(address);
         this.withCustomerCode(customerCode);
         this.withEmail(email);
         this.withPhoneNumber(phoneNumber);
-        return this;
-    }
-
-    public CustomerBuilder withSystemUser(final SystemUser systemUser) {
-        this.systemUser = systemUser;
         return this;
     }
 
@@ -61,12 +53,11 @@ public class CustomerBuilder implements DomainFactory<Customer> {
 
     @Override
     public Customer build() {
-        final Customer customer = new Customer(this.systemUser, this.customerCode, this.companyName, this.phoneNumber,
+        final Customer customer = new Customer(this.customerCode, this.companyName, this.phoneNumber,
                 this.address, this.email);
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("Registering new customer [{}] {} {} {} {} {} {}", customer, this.systemUser,
-                    this.customerCode, this.companyName,
-                    this.phoneNumber, this.address, this.email);
+            LOGGER.debug("Registering new customer [{}] {} {} {} {} {} {}", customer, this.customerCode,
+                    this.companyName, this.phoneNumber, this.address, this.email);
         }
         return customer;
     }

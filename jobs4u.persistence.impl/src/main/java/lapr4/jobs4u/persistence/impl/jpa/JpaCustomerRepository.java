@@ -25,11 +25,10 @@ import java.util.Map;
 import java.util.Optional;
 
 import lapr4.jobs4u.Application;
-import lapr4.jobs4u.customerusermanagement.domain.Customer;
-import lapr4.jobs4u.customerusermanagement.domain.CustomerCode;
-import lapr4.jobs4u.customerusermanagement.repositories.CustomerRepository;
+import lapr4.jobs4u.customermanagement.domain.Customer;
+import lapr4.jobs4u.customermanagement.domain.CustomerCode;
+import lapr4.jobs4u.customermanagement.repositories.CustomerRepository;
 import eapli.framework.domain.repositories.TransactionalContext;
-import eapli.framework.infrastructure.authz.domain.model.Username;
 import eapli.framework.infrastructure.repositories.impl.jpa.JpaAutoTxRepository;
 
 /**
@@ -50,21 +49,9 @@ class JpaCustomerRepository
     }
 
     @Override
-    public Optional<Customer> findByEmail(final Username email) {
-        final Map<String, Object> params = new HashMap<>();
-        params.put("email", email);
-        return matchOne("e.systemUser.username=:email", params);
-    }
-
-    @Override
     public Optional<Customer> findByCustomerCode(final CustomerCode number) {
         final Map<String, Object> params = new HashMap<>();
         params.put("number", number);
         return matchOne("e.customerCode=:number", params);
-    }
-
-    @Override
-    public Iterable<Customer> findAllActive() {
-        return match("e.systemUser.active = true");
     }
 }

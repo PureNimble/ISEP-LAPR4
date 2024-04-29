@@ -1,15 +1,13 @@
-package lapr4.jobs4u.customerusermanagement.domain;
+package lapr4.jobs4u.customermanagement.domain;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
-import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.Version;
 import eapli.framework.domain.model.AggregateRoot;
 import eapli.framework.domain.model.DomainEntities;
 import eapli.framework.general.domain.model.EmailAddress;
-import eapli.framework.infrastructure.authz.domain.model.SystemUser;
 import eapli.framework.validations.Preconditions;
 
 @Entity
@@ -36,16 +34,9 @@ public class Customer implements AggregateRoot<CustomerCode> {
     @Column(nullable = false)
     private EmailAddress email;
 
-    /**
-     * cascade = CascadeType.NONE as the systemUser is part of another aggregate
-     */
-    @OneToOne(optional = false)
-    private SystemUser systemUser;
-
-    Customer(final SystemUser systemUser, final CustomerCode customerCode, final CompanyName companyName,
+    Customer(final CustomerCode customerCode, final CompanyName companyName,
             final PhoneNumber phoneNumber, final Address address, final EmailAddress email) {
-        Preconditions.noneNull(new Object[] { systemUser, customerCode, companyName, phoneNumber, address, email });
-        this.systemUser = systemUser;
+        Preconditions.noneNull(new Object[] { customerCode, companyName, phoneNumber, address, email });
         this.customerCode = customerCode;
         this.companyName = companyName;
         this.phoneNumber = phoneNumber;
@@ -55,10 +46,6 @@ public class Customer implements AggregateRoot<CustomerCode> {
 
     protected Customer() {
         // for ORM only
-    }
-
-    public SystemUser user() {
-        return this.systemUser;
     }
 
     @Override

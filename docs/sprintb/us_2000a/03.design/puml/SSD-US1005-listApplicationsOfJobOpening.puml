@@ -1,0 +1,112 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+title System Sequence Diagram (SSD) - List all applications for a Job Opening
+
+autonumber
+
+actor "Operator" as Manager
+participant "RegisterCandidateCreateUserUI" as System
+participant "RegisterCandidateCreateUserController" as Controller
+participant "Candidate" as candidate
+participant "CandidateRepository" as repository
+participant "JpaCandidateRepository" as jpa
+participant "CustomerUserController" as CustomerUserController
+participant "ManagementService" as ManagementService
+participant "Factory" as Factory
+participant "UserRepository" as UserRepository
+participant "JpaUserRepository" as JpaUserRepository
+database "Database" as DB
+
+activate Manager
+
+    Manager -> System : Asks to register a candidate and create the corresponding user
+    activate System
+
+     System -> Manager : request data of candidate
+
+    deactivate System
+
+    Manager -> System : inserts data
+    activate System
+
+        System -> Controller : RegisterCandidateAddUser(email,name)
+
+        activate Controller
+
+        Controller -> candidate : createCandidate(email,name)
+
+        activate candidate
+
+        candidate -> Controller : return candidate
+
+        deactivate candidate
+
+        Controller -> repository : save(candidate)
+
+        activate repository
+
+        repository -> jpa : save(candidate)
+
+        activate jpa
+
+        jpa  -> DB : persist(candidate)
+
+        activate DB
+
+        DB -> jpa : return candidate
+
+        deactivate DB
+
+        jpa -> repository : return candidate
+
+        deactivate jpa
+
+        repository -> Controller : return candidate
+
+        deactivate repository
+
+        Controller -> System : return candidate
+
+        deactivate Controller
+
+         System -> CustomerUserController: addCustomerUser(email, password, first name, last name)
+        activate CustomerUserController
+
+        CustomerUserController -> ManagementService: registerNewCustomerUser(email, password, first name, last name)
+
+        activate ManagementService
+            ManagementService -> Factory: withRoleCustomerUser(email, password, first name, last name)
+        activate Factory
+            Factory --> ManagementService : customerUser
+        deactivate Factory
+
+        ManagementService -> UserRepository: save(customerUser)
+
+        activate UserRepository
+            UserRepository -> JpaUserRepository: save(customerUser)
+        activate JpaUserRepository
+            JpaUserRepository -> DB: persist(customerUser)
+            activate DB
+                DB --> JpaUserRepository: return User
+            deactivate DB
+            JpaUserRepository --> UserRepository: return User
+        deactivate JpaUserRepository
+
+        UserRepository --> ManagementService: return User
+        deactivate UserRepository
+
+        ManagementService --> CustomerUserController: return User
+        deactivate ManagementService
+
+        CustomerUserController --> System: return User
+        deactivate CustomerUserController
+
+        System --> Manager: Informs success or failure
+
+
+    deactivate System
+    
+@enduml

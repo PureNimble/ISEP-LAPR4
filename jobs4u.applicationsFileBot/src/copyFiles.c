@@ -13,40 +13,45 @@
 #include <sys/wait.h>
 #include "utils.h"
 
+void createMallocString(char** str, char* value);
 /**
  * @brief Copy all files from new Candidates to the output directory.
  * 
  * @param fd The file descriptor for the pipe.
  * @param config The configuration struct.
  */
-void copyFiles(int* fd, Config* config)
+void copyFiles(int* send_work_fd,int* recive_work_fd, Config* config)
 {
-    close(fd[1]); // close the write end of the pipe
+    //close(send_work_fd[1]); // close the write end of the pipe
+    //close(recive_work_fd[0]); // close the read end of the pipe
     int candidateID;
 
     while (1)
     {
-        read(fd[0], &candidateID, sizeof(candidateID));
+        read(send_work_fd[0], &candidateID, sizeof(candidateID));
         printf("Candidate ID: %d PID:%d\n", candidateID,getpid());
+        Files files;
+
 
         pid_t pid;
         int status;
         char buffer[300];
         sprintf(buffer, "%s%d-candidate-data.txt",config->inputPath, candidateID);
-
         if(isFileOrDirectory(buffer)!= 1){
             sprintf(buffer, "Candidate ID: %d has an invalid format\n", candidateID);
             errorMessages(buffer);
         }
         else{
-            char * job = readFirstLine(buffer, candidateID);
-            if(job != NULL){
-                job[strlen(job) - 1] = '\0';
+            files.candidateID = candidateID;
+            files.numFiles = 0;
+            char * job;
+            if((job = readFirstLine(buffer, candidateID)) != NULL){
+                strcpy(files.jobOffer_dir, job);
+                files.jobOffer_dir[strlen(files.jobOffer_dir) - 1] = '\0';
                 pid = createChildProcess();
-
                 if (pid == 0){
                     // create new directory and copy the files  
-                    sprintf(buffer, "%s%s/%d", config->outputPath, job, candidateID);
+                    sprintf(buffer, "%s%s/%d", config->outputPath, files.jobOffer_dir, candidateID);
                     char command[1024];
                     snprintf(command, sizeof(command), "mkdir -p %s && /bin/cp -u %s%d-* %s", buffer, config->inputPath, candidateID, buffer);                
                     execlp("/bin/sh", "sh", "-c", command, NULL);
@@ -60,42 +65,24 @@ void copyFiles(int* fd, Config* config)
                         errorMessages("Failed to copy files");
                     }
                 }
-                free(job);
+                // list all files in the directory
+                sprintf(buffer, "%s%s/%d", config->outputPath, files.jobOffer_dir, candidateID);
+                DIR *dir;
+                struct dirent *entry;
+
+                if (!(dir = opendir(buffer))){
+                    errorMessages("Failed to open directory\n");
+                    return;  // or exit(1), depending on your program structure
+                }
+                while ((entry = readdir(dir)) != NULL){
+                    if(entry->d_type == DT_REG){
+                        strcpy(files.files[files.numFiles], entry->d_name);
+                        files.numFiles++;
+                    }
+                }
+                closedir(dir);
             }
         }
-        kill(getppid(), SIGRTMIN); // send signal to parent
+         write(recive_work_fd[1], &files, sizeof(files));
     }
-}
-
-/**
- * @brief Read the first line of a file.
- * 
- * @param file_path The path to the file.
- * @return char* The first line of the file, or NULL if an error occurred.
- */
-char* readFirstLine(char* file_path, int candidateID) {
-    FILE* file = fopen(file_path, "r"); // Open the file for reading
-    char buffer[300];
-    if (file == NULL) {
-        sprintf(buffer,"Failed to open file at %s\n", file_path);
-        errorMessages(buffer);
-        return NULL;
-    }
-
-    char* line = malloc(256 * sizeof(char)); // Allocate memory for the line
-    if (line == NULL) {
-        errorMessages("Failed to allocate memory for the line\n");
-        fclose(file);
-        return NULL;
-    }
-
-    if (fgets(line, 256, file) == NULL) { // Read the first line
-        sprintf(buffer,"Failed to read the job Opening ID from Candidate:%d\n",candidateID);
-        errorMessages(buffer);
-        free(line);
-        line = NULL;
-    }
-
-    fclose(file); // Close the file
-    return line;
 }

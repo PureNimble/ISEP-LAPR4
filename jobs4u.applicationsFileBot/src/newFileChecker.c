@@ -40,7 +40,7 @@ void newFileChecker(Config *config)
             if (dup2(exec_fd[1], STDOUT_FILENO) == -1)
             {
                 perror("dup2");
-                kill(getppid(), SIGINT);
+                exit(EXIT_FAILURE);
             }
             close(exec_fd[1]);
             char command[100];
@@ -48,11 +48,11 @@ void newFileChecker(Config *config)
             if (ret < 0 || ret >= (int) sizeof(command))
             {
                 fprintf(stderr, "snprintf");
-                kill(getppid(), SIGINT);
+                exit(EXIT_FAILURE);
             }
             execlp("/bin/sh", "sh", "-c", command, NULL);
             perror("execlp");
-            kill(getppid(), SIGINT);
+            exit(EXIT_FAILURE);
         }
         char buffer[1024];
         ssize_t numRead;
@@ -65,19 +65,19 @@ void newFileChecker(Config *config)
         if (token[0] == 's')
         {
             perror("stat error -> Invalid input path");
-            kill(getppid(), SIGINT);
+            exit(EXIT_FAILURE);
         }
         if ((files_birth = malloc(0)) == NULL)
         {
             perror("malloc error -> files_birth");
-            kill(getppid(), SIGINT);
+            exit(EXIT_FAILURE);
         }
         while (token != NULL)
         {
             counter++;
             if ((files_birth = realloc(files_birth, (counter) * sizeof(files_birth))) == NULL) {
                 perror("realloc error -> files_birth");
-                kill(getppid(), SIGINT);
+                exit(EXIT_FAILURE);
             }
             files_birth[counter - 1] = atoi(token);
             token = strtok(NULL, "\n");

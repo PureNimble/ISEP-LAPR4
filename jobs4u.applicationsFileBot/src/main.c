@@ -12,37 +12,37 @@
  *        the parent process.
  */
 
-volatile sig_atomic_t received_signals = 0;
-// pipes check
-// format project
-// read project
 int main() {
     Config config;
-    readConfigFile(&config); 
+    readConfigFile(&config);
     printConfig(&config); 
 
-    int fd[2],i, numberOfCandidates;
-    pid_t pid[config.numberOfChildren];
-    memset(pid, 0, sizeof(pid));
-    setUpSignal(); 
+    int send_work_fd[2],recive_work[2]; // child/parent pipe
+    int i, numberOfCandidates, pid;
+    setUpSignal();
     
     if (createChildProcess() == 0)
         newFileChecker(&config); 
 
-    createPipe(fd);
+    createPipe(send_work_fd);
+    createPipe(recive_work);
     for (i = 0; i < config.numberOfChildren; i++) {
-        pid[i] = createChildProcess();
-        if (pid[i] == 0) copyFiles(fd,&config);  
+        pid = createChildProcess();
+        if (pid == 0) copyFiles(send_work_fd,recive_work,&config);  
     }
 
     while (1){  
-        pause(); 
-        numberOfCandidates = listCandidatesID(fd,&config);
+        pause();
+        numberOfCandidates = listCandidatesID(send_work_fd,&config);
         printf("Number of Candidates: %d\n", numberOfCandidates);
-        while(numberOfCandidates != received_signals);
-        received_signals = 0;
+        Files *files = malloc(sizeof(Files) * numberOfCandidates);
+        for (i = 0; i < numberOfCandidates; i++) {
+            Files file;
+            read(recive_work[0], &file, sizeof(Files));
+            files[i] = file;
+        }
         printf("All files have been copied\n");
-        reportFile(&config);
+        reportFile(&config,files,numberOfCandidates);
         printf("Report file has been generated\n");
     }
 

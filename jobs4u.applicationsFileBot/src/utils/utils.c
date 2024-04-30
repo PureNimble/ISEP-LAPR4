@@ -36,7 +36,7 @@ pid_t createChildProcess()
     if (pid == -1)
     {
         perror("fork");
-        kill(0, SIGTERM);
+        exit(EXIT_FAILURE);
     }
     return pid;
 }
@@ -125,4 +125,54 @@ int isInteger(char* str)
 void errorMessages(char *message)
 {
     fprintf(stderr, "[ERROR] An error occurred: %s\n", message);
+}
+
+
+/**
+ * @brief Create a malloc string.
+ * 
+ * @param str The string to be created.
+ * @param value The value to be assigned to the string.
+ */
+void createMallocString(char** str, char* value) {
+    *str = malloc(strlen(value) + 1);
+    if (*str == NULL) {
+        errorMessages("Failed to allocate memory for the string\n");
+        return;
+    }
+    strcpy(*str, value);
+}
+
+
+/**
+ * @brief Read the first line of a file.
+ * 
+ * @param file_path The path to the file.
+ * @return char* The first line of the file, or NULL if an error occurred.
+ */
+char* readFirstLine(char* file_path, int candidateID) {
+    FILE* file = fopen(file_path, "r"); // Open the file for reading
+    char buffer[300];
+    if (file == NULL) {
+        sprintf(buffer,"Failed to open file at %s\n", file_path);
+        errorMessages(buffer);
+        return NULL;
+    }
+
+    char* line = malloc(256 * sizeof(char)); // Allocate memory for the line
+    if (line == NULL) {
+        errorMessages("Failed to allocate memory for the line\n");
+        fclose(file);
+        return NULL;
+    }
+
+    if (fgets(line, 256, file) == NULL) { // Read the first line
+        sprintf(buffer,"Failed to read the job Opening ID from Candidate:%d\n",candidateID);
+        errorMessages(buffer);
+        free(line);
+        line = NULL;
+    }
+
+    fclose(file); // Close the file
+    return line;
 }

@@ -1,7 +1,10 @@
 package lapr4.jobs4u.app.common.console.presentation.utils;
 
 import eapli.framework.io.util.Console;
+
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 public class Utils {
 
@@ -19,11 +22,11 @@ public class Utils {
         return selectsIndex(list);
     }
 
-    static public <E> void showList(List<E> list, String header) {
+    static public <E> void showList(Iterable<E> iterable, String header) {
         System.out.println(header);
 
         int index = 0;
-        for (Object o : list) {
+        for (Object o : iterable) {
             index++;
 
             System.out.println(index + ". " + o.toString());
@@ -46,17 +49,23 @@ public class Utils {
         return value - 1;
     }
 
-    static public <E> Object showAndSelectOne(List<E> list, String header) {
-        showList(list, header);
-        return selectsObject(list);
+    static public <E> Object showAndSelectOne(Iterable<E> iterable, String header) {
+        showList(iterable, header);
+        return selectsObject(iterable);
     }
 
-    static public <E> Object selectsObject(List<E> list) {
+    static public <E> E selectsObject(Iterable<E> iterable) {
+        List<E> list = StreamSupport.stream(iterable.spliterator(), false).collect(Collectors.toList());
         String input;
         Integer value;
         do {
             input = Console.readNonEmptyLine("Insira uma opção: ", "Por favor insira uma opção válida");
-            value = Integer.valueOf(input);
+            try {
+                value = Integer.valueOf(input);
+            } catch (NumberFormatException e) {
+                System.out.println("Por favor insira um número válido");
+                value = -1;
+            }
         } while (value < 0 || value > list.size());
 
         return value == 0 ? null : list.get(value - 1);

@@ -23,14 +23,14 @@ public class RegisterCustomerUI extends AbstractUI {
 
     @Override
     protected boolean doShow() {
-        System.out.println("Company Data:");
+        System.out.println("\nCompany Data:\n");
         final String companyName = Console.readLine("Name:");
         final String companyAddress = Console.readLine("Address:");
         final String companyCode = Console.readLine("Code:");
         final String companyEmail = Console.readLine("E-mail:");
         final String companyPhoneNumber = Console.readLine("Phone Number:");
 
-        System.out.println("Representative Data:");
+        System.out.println("\nRepresentative Data:\n");
         final String representativefirstName = Console.readLine("First Name:");
         final String representativelastName = Console.readLine("Last Name:");
         final String representativeEmail = Console.readLine("E-mail:");

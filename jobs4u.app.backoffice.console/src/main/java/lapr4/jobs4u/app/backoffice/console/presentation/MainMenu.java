@@ -30,6 +30,7 @@ import lapr4.jobs4u.app.backoffice.console.presentation.authz.ImportApplications
 import lapr4.jobs4u.app.backoffice.console.presentation.authz.ListUsersAction;
 import lapr4.jobs4u.app.backoffice.console.presentation.authz.RegisterCandidateUI;
 import lapr4.jobs4u.app.backoffice.console.presentation.authz.RegisterCustomerUI;
+import lapr4.jobs4u.app.backoffice.console.presentation.authz.RegisterJobOpeningUI;
 import lapr4.jobs4u.app.backoffice.console.presentation.authz.SetUpRecruitmentProcessUI;
 import lapr4.jobs4u.app.common.console.presentation.authz.MyUserMenu;
 import lapr4.jobs4u.usermanagement.domain.BaseRoles;
@@ -60,6 +61,12 @@ public class MainMenu extends AbstractUI {
     private static final int ADD_USER_OPTION = 1;
     private static final int LIST_USERS_OPTION = 2;
     private static final int DEACTIVATE_USER_OPTION = 3;
+
+    //CUSTOMER MANAGER
+    private static final int REGISTER_CUSTOMER = 1;
+    private static final int REGISTER_JOB_OPENING = 2;
+    private static final int LIST_JOB_OPENINGS = 3;
+    private static final int SETUP_RECRUITMENT_PROCESS = 4;
 
     // OPERATOR
     private static final int IMPORT_APPLICATIONS_OPTION = 4;
@@ -160,9 +167,10 @@ public class MainMenu extends AbstractUI {
     private Menu buildCustomerManagerMenu() {
         final Menu menu = new Menu("Users >");
 
-        menu.addItem(ADD_USER_OPTION, "Register Customer", new RegisterCustomerUI()::show);
-        menu.addItem(LIST_USERS_OPTION, "List all Job Openings", new ListUsersAction());
-        menu.addItem(DEACTIVATE_USER_OPTION, "SetUpRecruitmentProcess", new SetUpRecruitmentProcessUI()::show);
+        menu.addItem(REGISTER_CUSTOMER, "Register Customer", new RegisterCustomerUI()::show);
+        menu.addItem(REGISTER_JOB_OPENING, "Register Job Opening", new RegisterJobOpeningUI()::show);
+        menu.addItem(LIST_JOB_OPENINGS, "List all Job Openings", new ListUsersAction());
+        menu.addItem(SETUP_RECRUITMENT_PROCESS, "SetUp Recruitment Process", new SetUpRecruitmentProcessUI()::show);
         menu.addItem(EXIT_OPTION, RETURN_LABEL, Actions.SUCCESS);
 
         return menu;

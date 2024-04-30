@@ -1,19 +1,8 @@
 package lapr4.jobs4u.app.backoffice.console.presentation.authz;
 
-import java.util.HashSet;
-import java.util.Set;
-
 import lapr4.jobs4u.applicationmanagement.application.ImportApplicationsController;
-import eapli.framework.actions.menu.Menu;
-import eapli.framework.actions.menu.MenuItem;
-import eapli.framework.domain.repositories.ConcurrencyException;
-import eapli.framework.domain.repositories.IntegrityViolationException;
-import eapli.framework.infrastructure.authz.domain.model.Role;
 import eapli.framework.io.util.Console;
 import eapli.framework.presentation.console.AbstractUI;
-import eapli.framework.presentation.console.menu.MenuItemRenderer;
-import eapli.framework.presentation.console.menu.MenuRenderer;
-import eapli.framework.presentation.console.menu.VerticalMenuRenderer;
 
 /**
  * UI for adding a user to the application.

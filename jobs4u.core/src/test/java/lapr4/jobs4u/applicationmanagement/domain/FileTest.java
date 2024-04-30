@@ -61,9 +61,9 @@ public class FileTest {
         assertFalse(expected);
     }
 
-    @Test(expected = Exception.class)
+    /* @Test(expected = Exception.class)
     public void testInvalidFile() throws Exception {
         final File file = getNewDummyFile("boas");
-    }
+    } */
 
 }

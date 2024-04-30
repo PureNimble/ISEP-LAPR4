@@ -26,6 +26,7 @@ import lapr4.jobs4u.customermanagement.repositories.CustomerRepository;
 import lapr4.jobs4u.customermanagement.repositories.CustomerUserRepository;
 import lapr4.jobs4u.infrastructure.bootstrapers.Bootstrapper;
 import lapr4.jobs4u.infrastructure.persistence.RepositoryFactory;
+import lapr4.jobs4u.jobopeningmanagement.repositories.JobOpeningRepository;
 import lapr4.jobs4u.recruitmentprocessmanagement.repositories.RecruitmentProcessRepository;
 import eapli.framework.domain.repositories.TransactionalContext;
 import eapli.framework.infrastructure.authz.domain.repositories.UserRepository;
@@ -106,5 +107,15 @@ public class InMemoryRepositoryFactory implements RepositoryFactory {
     @Override
     public RecruitmentProcessRepository recruitmentProcesses() {
         return recruitmentProcesses(null);
+    }
+
+    @Override
+    public JobOpeningRepository jobOpenings(final TransactionalContext tx) {
+        return new InMemoryJobOpeningRepository();
+    }
+
+    @Override
+    public JobOpeningRepository jobOpenings() {
+        return jobOpenings(null);
     }
 }

@@ -14,13 +14,13 @@
     <class>lapr4.jobs4u.customermanagement.domain.CustomerUser</class>
     <class>lapr4.jobs4u.candidatemanagement.domain.Candidate</class>
     <class>lapr4.jobs4u.candidatemanagement.domain.CandidateUser</class>
-    <class>lapr4.jobs4u.customerusermanagement.domain.CustomerUser</class>
     <class>lapr4.jobs4u.recruitmentprocessmanagement.domain.RecruitmentProcess</class>
     <class>lapr4.jobs4u.recruitmentprocessmanagement.domain.ApplicationPhase</class>
     <class>lapr4.jobs4u.recruitmentprocessmanagement.domain.ScreeningPhase</class>
     <class>lapr4.jobs4u.recruitmentprocessmanagement.domain.InterviewPhase</class>
     <class>lapr4.jobs4u.recruitmentprocessmanagement.domain.AnalysisPhase</class>
     <class>lapr4.jobs4u.recruitmentprocessmanagement.domain.ResultPhase</class>
+    <class>lapr4.jobs4u.jobopeningmanagement.domain.JobOpening</class>
 
     <properties>
       <!-- <property name="jakarta.persistence.jdbc.url" value="jdbc:h2:tcp://localhost/~/jobs4u"/> -->

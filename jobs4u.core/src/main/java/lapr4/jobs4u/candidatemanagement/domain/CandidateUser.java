@@ -40,18 +40,10 @@ public class CandidateUser implements AggregateRoot<Long> {
     @JoinColumn(name = "account_email", unique = true)
     private SystemUser systemUser;
 
-    /**
-     * cascade = CascadeType.NONE as the systemUser is part of another aggregate
-     */
-    @OneToOne(optional = false)
-    @JoinColumn(name = "managed_by")
-    private SystemUser manager;
-
-    CandidateUser(final Candidate candidate, final SystemUser systemUser, final SystemUser manager) {
-        Preconditions.noneNull(new Object[] { candidate, systemUser, manager });
+    CandidateUser(final Candidate candidate, final SystemUser systemUser) {
+        Preconditions.noneNull(new Object[] { candidate, systemUser });
         this.candidate = candidate;
         this.systemUser = systemUser;
-        this.manager = manager;
     }
 
     protected CandidateUser() {

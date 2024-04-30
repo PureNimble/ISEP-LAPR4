@@ -11,13 +11,10 @@ public class CandidateUserBuilder implements DomainFactory<CandidateUser> {
     private static final Logger LOGGER = LogManager.getLogger(CandidateUserBuilder.class);
     private Candidate candidate;
     private SystemUser systemUser;
-    private SystemUser manager;
 
-    public CandidateUserBuilder with(final Candidate candidate,
-            final SystemUser systemUser, final SystemUser manager) {
+    public CandidateUserBuilder with(final Candidate candidate, final SystemUser systemUser) {
         this.withCandidate(candidate);
         this.withSystemUser(systemUser);
-        this.withManager(manager);
         return this;
     }
 
@@ -31,17 +28,12 @@ public class CandidateUserBuilder implements DomainFactory<CandidateUser> {
         return this;
     }
 
-    public CandidateUserBuilder withManager(final SystemUser manager) {
-        this.manager = manager;
-        return this;
-    }
-
     @Override
     public CandidateUser build() {
-        final CandidateUser candidateUser = new CandidateUser(this.candidate, this.systemUser, this.manager);
+        final CandidateUser candidateUser = new CandidateUser(this.candidate, this.systemUser);
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("Registering new candidateUser [{}] {} {} {} {} {} {}", candidateUser, this.candidate,
-                    this.systemUser, this.manager);
+            LOGGER.debug("Registering new Candidate User [{}] {} {}", candidateUser, this.candidate,
+                    this.systemUser);
         }
         return candidateUser;
     }

@@ -29,40 +29,38 @@ public class RegisterCandidateController {
     public Candidate registerCandidate(final String firstName, final String lastName,
             final String email, final String phoneNumber) {
         authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.OPERATOR);
-        return createCandidate(firstName, lastName, email, phoneNumber);
+        final UserSession s = authz.session().orElseThrow(IllegalStateException::new);
+        final SystemUser creator = s.authenticatedUser();
+        return createCandidate(firstName, lastName, email, phoneNumber, creator);
     }
 
     public CandidateUser registerCandidateUser(final Candidate candidate,
             final SystemUser systemUser) {
         authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.OPERATOR);
-        final UserSession s = authz.session().orElseThrow(IllegalStateException::new);
-        final SystemUser manager = s.authenticatedUser();
-        return createCandidateUser(candidate, systemUser, manager);
+        return createCandidateUser(candidate, systemUser);
     }
 
     private Candidate createCandidate(final String firstName, final String lastName,
-            final String email, final String phoneNumber) {
-        final Candidate candidate = doCreateCandidate(firstName, lastName, email, phoneNumber);
+            final String email, final String phoneNumber, final SystemUser creator) {
+        final Candidate candidate = doCreateCandidate(firstName, lastName, email, phoneNumber, creator);
         return candidateRepository.save(candidate);
     }
 
     private CandidateUser createCandidateUser(final Candidate candidate,
-            final SystemUser systemUser,
-            final SystemUser manager) {
-        final CandidateUser candidateUser = doCreateCandidateUser(candidate, systemUser, manager);
+            final SystemUser systemUser) {
+        final CandidateUser candidateUser = doCreateCandidateUser(candidate, systemUser);
         return candidateUserRepository.save(candidateUser);
     }
 
     private Candidate doCreateCandidate(final String firstName, final String lastName,
-            final String email, final String phoneNumber) {
+            final String email, final String phoneNumber, final SystemUser creator) {
         return new CandidateBuilder().with(firstName, lastName,
-                email, phoneNumber).build();
+                email, phoneNumber, creator).build();
     }
 
     private CandidateUser doCreateCandidateUser(final Candidate candidate,
-            final SystemUser systemUser,
-            final SystemUser manager) {
+            final SystemUser systemUser) {
         return new CandidateUserBuilder().with(candidate,
-                systemUser, manager).build();
+                systemUser).build();
     }
 }

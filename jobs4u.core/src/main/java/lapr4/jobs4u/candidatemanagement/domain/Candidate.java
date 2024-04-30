@@ -3,6 +3,8 @@ package lapr4.jobs4u.candidatemanagement.domain;
 import jakarta.persistence.Column;
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.Version;
 import lapr4.jobs4u.customermanagement.domain.PhoneNumber;
@@ -10,6 +12,7 @@ import eapli.framework.domain.model.AggregateRoot;
 import eapli.framework.domain.model.DomainEntities;
 import eapli.framework.general.domain.model.EmailAddress;
 import eapli.framework.infrastructure.authz.domain.model.Name;
+import eapli.framework.infrastructure.authz.domain.model.SystemUser;
 import eapli.framework.validations.Preconditions;
 
 @Entity
@@ -30,11 +33,19 @@ public class Candidate implements AggregateRoot<EmailAddress> {
     @Column(nullable = false)
     private PhoneNumber phoneNumber;
 
-    Candidate(final Name name, final EmailAddress email, final PhoneNumber phoneNumber) {
-        Preconditions.noneNull(new Object[] { name, email, phoneNumber });
+    /**
+     * cascade = CascadeType.NONE as the systemUser is part of another aggregate
+     */
+    @OneToOne(optional = false)
+    @JoinColumn(name = "registered_by")
+    private SystemUser creator;
+
+    Candidate(final Name name, final EmailAddress email, final PhoneNumber phoneNumber, final SystemUser creator) {
+        Preconditions.noneNull(new Object[] { name, email, phoneNumber, creator });
         this.name = name;
         this.email = email;
         this.phoneNumber = phoneNumber;
+        this.creator = creator;
     }
 
     protected Candidate() {
@@ -63,5 +74,10 @@ public class Candidate implements AggregateRoot<EmailAddress> {
     @Override
     public EmailAddress identity() {
         return this.email;
+    }
+
+    @Override
+    public String toString() {
+        return name.toString() + " - " + email.toString();
     }
 }

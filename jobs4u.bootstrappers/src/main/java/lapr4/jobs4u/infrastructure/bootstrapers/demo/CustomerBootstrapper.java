@@ -35,7 +35,7 @@ public class CustomerBootstrapper extends UsersBootstrapperBase implements Actio
 
     @Override
     public boolean execute() {
-        registerCustomer("FnacWorten", "Rua do Povo", "fnacworten", "fnac@email.local", "910000000", "Pedro", "Worten");
+        registerCustomer("Customer", "Rua do Customer", "customer", "cu@email.local", "912345678", "Customer", "Customer");
         return true;
     }
 

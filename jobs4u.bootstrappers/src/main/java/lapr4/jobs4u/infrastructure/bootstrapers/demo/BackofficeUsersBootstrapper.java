@@ -38,7 +38,6 @@ public class BackofficeUsersBootstrapper extends UsersBootstrapperBase implement
         registerCustomerManager("cm@email.local", "Customer", "Manager");
         registerOperator("op@email.local", "Operator", "Operator");
         registerLanguageEngineer("le@email.local", "Language", "Engineer");
-        registerCandidate("ca@email.local", "Candidate", "Candidate");
         return true;
     }
 
@@ -59,13 +58,6 @@ public class BackofficeUsersBootstrapper extends UsersBootstrapperBase implement
     private void registerLanguageEngineer(final String email, final String firstName, final String lastName) {
         final Set<Role> roles = new HashSet<>();
         roles.add(BaseRoles.LANGUAGE_ENGINEER);
-    
-        registerUser(email, firstName, lastName, roles);
-    }
-    
-    private void registerCandidate(final String email, final String firstName, final String lastName) {
-        final Set<Role> roles = new HashSet<>();
-        roles.add(BaseRoles.CANDIDATE);
     
         registerUser(email, firstName, lastName, roles);
     }

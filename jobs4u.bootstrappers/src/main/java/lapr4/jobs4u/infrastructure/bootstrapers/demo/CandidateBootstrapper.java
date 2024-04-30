@@ -12,7 +12,7 @@ public class CandidateBootstrapper extends UsersBootstrapperBase implements Acti
 
     @Override
     public boolean execute() {
-        registerCandidate("Pedro", "Candidate", "ca@email.local", "910000000");
+        registerCandidate("Candidate", "Candidate", "ca@email.local", "912345678");
         return true;
     }
 

@@ -61,7 +61,7 @@ public final class BaseRoles {
      * @return
      */
     public static Role[] nonUserValues() {
-        return new Role[] { ADMIN, CUSTOMER_MANAGER, OPERATOR, LANGUAGE_ENGINEER , CUSTOMER, CANDIDATE};
+        return new Role[] {CUSTOMER_MANAGER, OPERATOR, LANGUAGE_ENGINEER};
     }
 
     /**

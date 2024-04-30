@@ -34,19 +34,18 @@ public class MasterUsersBootstrapper extends UsersBootstrapperBase implements Ac
 
     @Override
     public boolean execute() {
-        registerAdmin("admin", TestDataConstants.PASSWORD1, "Jane", "Doe Admin",
-                "jane.doe@email.local");
+        registerAdmin("admin@email.local", "John", "Doe");
         return true;
     }
 
     /**
      *
      */
-    private void registerAdmin(final String username, final String password, final String firstName,
-            final String lastName, final String email) {
+    private void registerAdmin(final String email, final String firstName,
+            final String lastName) {
         final Set<Role> roles = new HashSet<>();
         roles.add(BaseRoles.ADMIN);
-
-        registerUser(username, password, firstName, lastName, email, roles);
+        
+        registerUser(email, firstName, lastName, roles);
     }
 }

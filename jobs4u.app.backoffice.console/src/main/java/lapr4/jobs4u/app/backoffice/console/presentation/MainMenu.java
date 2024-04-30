@@ -26,7 +26,12 @@ package lapr4.jobs4u.app.backoffice.console.presentation;
 import lapr4.jobs4u.Application;
 import lapr4.jobs4u.app.backoffice.console.presentation.authz.AddUserUI;
 import lapr4.jobs4u.app.backoffice.console.presentation.authz.DeactivateUserAction;
+import lapr4.jobs4u.app.backoffice.console.presentation.authz.ImportApplicationsUI;
 import lapr4.jobs4u.app.backoffice.console.presentation.authz.ListUsersAction;
+import lapr4.jobs4u.app.backoffice.console.presentation.authz.RegisterCandidateUI;
+import lapr4.jobs4u.app.backoffice.console.presentation.authz.RegisterCustomerUI;
+import lapr4.jobs4u.app.backoffice.console.presentation.authz.RegisterJobOpeningUI;
+import lapr4.jobs4u.app.backoffice.console.presentation.authz.SetUpRecruitmentProcessUI;
 import lapr4.jobs4u.app.common.console.presentation.authz.MyUserMenu;
 import lapr4.jobs4u.usermanagement.domain.BaseRoles;
 import eapli.framework.actions.Actions;
@@ -56,6 +61,15 @@ public class MainMenu extends AbstractUI {
     private static final int ADD_USER_OPTION = 1;
     private static final int LIST_USERS_OPTION = 2;
     private static final int DEACTIVATE_USER_OPTION = 3;
+
+    //CUSTOMER MANAGER
+    private static final int REGISTER_CUSTOMER = 1;
+    private static final int REGISTER_JOB_OPENING = 2;
+    private static final int LIST_JOB_OPENINGS = 3;
+    private static final int SETUP_RECRUITMENT_PROCESS = 4;
+
+    // OPERATOR
+    private static final int IMPORT_APPLICATIONS_OPTION = 4;
 
     // MAIN MENU
     private static final int MY_USER_OPTION = 1;
@@ -106,9 +120,23 @@ public class MainMenu extends AbstractUI {
                 mainMenu.addItem(MenuItem.separator(SEPARATOR_LABEL));
             }
 
-            if (authz.isAuthenticatedUserAuthorizedTo(BaseRoles.ADMIN, BaseRoles.CUSTOMER_MANAGER, BaseRoles.OPERATOR,
-                    BaseRoles.LANGUAGE_ENGINEER)) {
+            if (authz.isAuthenticatedUserAuthorizedTo(BaseRoles.ADMIN)) {
                 final Menu usersMenu = buildAdminMenu();
+                mainMenu.addSubMenu(USERS_OPTION, usersMenu);
+            }
+
+            if (authz.isAuthenticatedUserAuthorizedTo(BaseRoles.CUSTOMER_MANAGER)) {
+                final Menu usersMenu = buildCustomerManagerMenu();
+                mainMenu.addSubMenu(USERS_OPTION, usersMenu);
+            }
+
+            if (authz.isAuthenticatedUserAuthorizedTo(BaseRoles.OPERATOR)) {
+                final Menu usersMenu = buildOperatorMenu();
+                mainMenu.addSubMenu(USERS_OPTION, usersMenu);
+            }
+
+            if (authz.isAuthenticatedUserAuthorizedTo(BaseRoles.LANGUAGE_ENGINEER)) {
+                final Menu usersMenu = buildLanguageEngineerMenu();
                 mainMenu.addSubMenu(USERS_OPTION, usersMenu);
             }
 
@@ -118,13 +146,49 @@ public class MainMenu extends AbstractUI {
 
         } else {
             System.out
-                    .println("You don't have permission to access this Application. Please contact the Administrator.\n");
+                    .println(
+                            "You don't have permission to access this Application. Please contact the Administrator.\n");
         }
         mainMenu.addItem(EXIT_OPTION, "Exit", new ExitWithMessageAction("Goodbye!"));
         return mainMenu;
     }
 
     private Menu buildAdminMenu() {
+        final Menu menu = new Menu("Users >");
+
+        menu.addItem(ADD_USER_OPTION, "Add User", new AddUserUI()::show);
+        menu.addItem(LIST_USERS_OPTION, "List all Users", new ListUsersAction());
+        menu.addItem(DEACTIVATE_USER_OPTION, "Deactivate User", new DeactivateUserAction());
+        menu.addItem(EXIT_OPTION, RETURN_LABEL, Actions.SUCCESS);
+
+        return menu;
+    }
+
+    private Menu buildCustomerManagerMenu() {
+        final Menu menu = new Menu("Users >");
+
+        menu.addItem(REGISTER_CUSTOMER, "Register Customer", new RegisterCustomerUI()::show);
+        menu.addItem(REGISTER_JOB_OPENING, "Register Job Opening", new RegisterJobOpeningUI()::show);
+        menu.addItem(LIST_JOB_OPENINGS, "List all Job Openings", new ListUsersAction());
+        menu.addItem(SETUP_RECRUITMENT_PROCESS, "SetUp Recruitment Process", new SetUpRecruitmentProcessUI()::show);
+        menu.addItem(EXIT_OPTION, RETURN_LABEL, Actions.SUCCESS);
+
+        return menu;
+    }
+
+    private Menu buildOperatorMenu() {
+        final Menu menu = new Menu("Users >");
+
+        menu.addItem(ADD_USER_OPTION, "Register Candidate", new RegisterCandidateUI()::show);
+        menu.addItem(LIST_USERS_OPTION, "List all Users", new ListUsersAction());
+        menu.addItem(DEACTIVATE_USER_OPTION, "Deactivate User", new DeactivateUserAction());
+        menu.addItem(IMPORT_APPLICATIONS_OPTION, "Import Applications", new ImportApplicationsUI()::show);
+        menu.addItem(EXIT_OPTION, RETURN_LABEL, Actions.SUCCESS);
+
+        return menu;
+    }
+
+    private Menu buildLanguageEngineerMenu() {
         final Menu menu = new Menu("Users >");
 
         menu.addItem(ADD_USER_OPTION, "Add User", new AddUserUI()::show);

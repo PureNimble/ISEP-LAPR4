@@ -27,8 +27,6 @@ import lapr4.jobs4u.app.common.console.presentation.authz.MyUserMenu;
 import lapr4.jobs4u.usermanagement.domain.BaseRoles;
 import eapli.framework.actions.menu.Menu;
 import eapli.framework.actions.menu.MenuItem;
-import eapli.framework.infrastructure.authz.application.AuthorizationService;
-import eapli.framework.infrastructure.authz.application.AuthzRegistry;
 import eapli.framework.presentation.console.ExitWithMessageAction;
 import eapli.framework.presentation.console.menu.MenuItemRenderer;
 import eapli.framework.presentation.console.menu.MenuRenderer;

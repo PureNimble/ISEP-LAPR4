@@ -20,7 +20,12 @@
  */
 package lapr4.jobs4u.infrastructure.persistence;
 
-import lapr4.jobs4u.clientusermanagement.repositories.ClientUserRepository;
+import lapr4.jobs4u.candidatemanagement.repositories.CandidateRepository;
+import lapr4.jobs4u.candidatemanagement.repositories.CandidateUserRepository;
+import lapr4.jobs4u.customermanagement.repositories.CustomerRepository;
+import lapr4.jobs4u.customermanagement.repositories.CustomerUserRepository;
+import lapr4.jobs4u.jobopeningmanagement.repositories.JobOpeningRepository;
+import lapr4.jobs4u.recruitmentprocessmanagement.repositories.RecruitmentProcessRepository;
 import eapli.framework.domain.repositories.TransactionalContext;
 import eapli.framework.infrastructure.authz.domain.repositories.UserRepository;
 
@@ -40,7 +45,7 @@ public interface RepositoryFactory {
     /**
      *
      * @param autoTx
-     *            the transactional context to enrol
+     *               the transactional context to enrol
      * @return
      */
     UserRepository users(TransactionalContext autoTx);
@@ -55,15 +60,90 @@ public interface RepositoryFactory {
     /**
      *
      * @param autoTx
-     *            the transactional context to enroll
+     *               the transactional context to enroll
      * @return
      */
-    ClientUserRepository clientUsers(TransactionalContext autoTx);
+    CustomerRepository customers(TransactionalContext autoTx);
 
     /**
      * repository will be created in auto transaction mode
      *
      * @return
      */
-    ClientUserRepository clientUsers();
+    CustomerRepository customers();
+
+    /**
+     *
+     * @param autoTx
+     *               the transactional context to enroll
+     * @return
+     */
+    CandidateRepository candidates(TransactionalContext autoTx);
+
+    /**
+     * repository will be created in auto transaction mode
+     *
+     * @return
+     */
+    CandidateRepository candidates();
+
+    /**
+     *
+     * @param autoTx
+     *               the transactional context to enroll
+     * @return
+     */
+    CustomerUserRepository customerUsers(TransactionalContext autoTx);
+
+    /**
+     * repository will be created in auto transaction mode
+     *
+     * @return
+     */
+    CustomerUserRepository customerUsers();
+
+    /**
+     *
+     * @param autoTx
+     *               the transactional context to enroll
+     * @return
+     */
+    CandidateUserRepository candidateUsers(TransactionalContext autoTx);
+
+    /**
+     * repository will be created in auto transaction mode
+     *
+     * @return
+     */
+    CandidateUserRepository candidateUsers();
+
+    /**
+     *
+     * @param autoTx
+     *               the transactional context to enroll
+     * @return
+     */
+    RecruitmentProcessRepository recruitmentProcesses(TransactionalContext autoTx);
+
+    /**
+     * repository will be created in auto transaction mode
+     *
+     * @return
+     */
+    RecruitmentProcessRepository recruitmentProcesses();
+
+    /**
+     *
+     * @param autoTx
+     *            the transactional context to enroll
+     * @return
+     */
+    JobOpeningRepository jobOpenings(TransactionalContext autoTx);
+
+    /**
+     * repository will be created in auto transaction mode
+     *
+     * @return
+     */
+    JobOpeningRepository jobOpenings();
 }

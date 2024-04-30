@@ -26,6 +26,10 @@ package lapr4.jobs4u.infrastructure.bootstrapers;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import lapr4.jobs4u.infrastructure.bootstrapers.demo.BackofficeUsersBootstrapper;
+import lapr4.jobs4u.infrastructure.bootstrapers.demo.CandidateBootstrapper;
+import lapr4.jobs4u.infrastructure.bootstrapers.demo.CustomerBootstrapper;
+import lapr4.jobs4u.infrastructure.bootstrapers.demo.RecruitmentProcessBootstrapper;
 import lapr4.jobs4u.infrastructure.persistence.PersistenceContext;
 import lapr4.jobs4u.usermanagement.domain.BaseRoles;
 import lapr4.jobs4u.usermanagement.domain.UserBuilderHelper;
@@ -52,7 +56,7 @@ public class Bootstrapper implements Action {
             Bootstrapper.class);
 
     private static final String POWERUSER_PWD = "poweruserA1";
-    private static final String POWERUSER = "poweruser";
+    private static final String POWERUSER = "poweruser@email.com";
 
     private final AuthorizationService authz = AuthzRegistry.authorizationService();
     private final AuthenticationService authenticationService = AuthzRegistry.authenticationService();
@@ -61,7 +65,9 @@ public class Bootstrapper implements Action {
     @Override
     public boolean execute() {
         // declare bootstrap actions
-        final Action[] actions = { new MasterUsersBootstrapper(), };
+        final Action[] actions = { new MasterUsersBootstrapper(), new BackofficeUsersBootstrapper(), new CustomerBootstrapper(),
+                new CandidateBootstrapper(),
+                new RecruitmentProcessBootstrapper() };
 
         registerPowerUser();
         authenticateForBootstrapping();
@@ -82,7 +88,8 @@ public class Bootstrapper implements Action {
     private boolean registerPowerUser() {
         final SystemUserBuilder userBuilder = UserBuilderHelper.builder();
         userBuilder.withUsername(POWERUSER).withPassword(POWERUSER_PWD).withName("joe", "power")
-                .withEmail("joe@email.org").withRoles(BaseRoles.ADMIN);
+                .withEmail(POWERUSER).withRoles(BaseRoles.ADMIN, BaseRoles.CUSTOMER_MANAGER, BaseRoles.OPERATOR,
+                        BaseRoles.LANGUAGE_ENGINEER);
         final SystemUser newUser = userBuilder.build();
 
         SystemUser poweruser;

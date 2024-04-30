@@ -45,19 +45,68 @@ public class JpaRepositoryFactory implements RepositoryFactory {
     }
 
     @Override
-    public JpaCustomerRepository clientUsers(final TransactionalContext autoTx) {
-        return new JpaCustomerRepository(autoTx);
-    }
-
-    @Override
-    public JpaCustomerRepository clientUsers() {
-        return new JpaCustomerRepository(Application.settings().getPersistenceUnitName());
-    }
-
-    @Override
     public TransactionalContext newTransactionalContext() {
         return JpaAutoTxRepository.buildTransactionalContext(Application.settings().getPersistenceUnitName(),
                 Application.settings().getExtendedPersistenceProperties());
     }
 
+    @Override
+    public JpaCustomerRepository customers(final TransactionalContext autoTx) {
+        return new JpaCustomerRepository(autoTx);
+    }
+
+    @Override
+    public JpaCustomerRepository customers() {
+        return new JpaCustomerRepository(Application.settings().getPersistenceUnitName());
+    }
+
+    @Override
+    public JpaCandidateRepository candidates(final TransactionalContext autoTx) {
+        return new JpaCandidateRepository(autoTx);
+    }
+
+    @Override
+    public JpaCandidateRepository candidates() {
+        return new JpaCandidateRepository(Application.settings().getPersistenceUnitName());
+    }
+
+    @Override
+    public JpaCandidateUserRepository candidateUsers(final TransactionalContext autoTx) {
+        return new JpaCandidateUserRepository(autoTx);
+    }
+
+    @Override
+    public JpaCandidateUserRepository candidateUsers() {
+        return new JpaCandidateUserRepository(Application.settings().getPersistenceUnitName());
+    }
+
+    @Override
+    public JpaCustomerUserRepository customerUsers(final TransactionalContext autoTx) {
+        return new JpaCustomerUserRepository(autoTx);
+    }
+
+    @Override
+    public JpaCustomerUserRepository customerUsers() {
+        return new JpaCustomerUserRepository(Application.settings().getPersistenceUnitName());
+    }
+
+    @Override
+    public JpaRecruitmentProcessRepository recruitmentProcesses(final TransactionalContext autoTx) {
+        return new JpaRecruitmentProcessRepository(autoTx);
+    }
+
+    @Override
+    public JpaRecruitmentProcessRepository recruitmentProcesses() {
+        return new JpaRecruitmentProcessRepository(Application.settings().getPersistenceUnitName());
+    }
+
+    @Override
+    public JpaJobOpeningRepository jobOpenings(final TransactionalContext autoTx) {
+        return new JpaJobOpeningRepository(autoTx);
+    }
+
+    @Override
+    public JpaJobOpeningRepository jobOpenings() {
+        return new JpaJobOpeningRepository(Application.settings().getPersistenceUnitName());
+    }
 }

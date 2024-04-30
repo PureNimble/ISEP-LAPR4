@@ -1,0 +1,61 @@
+@startuml CD-US1005
+
+title Class Diagram - US1005
+
+skinparam class {
+    skinparam classAttributeIconSize 0
+    skinparam packageStyle rectangle
+    skinparam shadowing false
+    skinparam linetype polyline
+    BackgroundColor #FEF9E7
+    ArrowColor Black
+}
+
+class "ListApplicationUI" as UI {}
+
+class "ListApplicationController" as ApplicationController {
+    +allApplications(): List<ApplicationDTO>
+}
+
+class "ApplicationService" as ApplicationService {
+    +allApplications(): List<ApplicationDTO>
+}
+
+class "Application" as Application {
+    -applicationDate: ApplicationDate
+    -applicationNumber: ApplicationNumber
+    -result: Result
+    -jobOpening: JobOpening
+    +toDTO(): ApplicationDTO
+}
+
+class "ApplicationDTO" as ApplicationDTO {
+    -jobOpening: JobOpening
+}
+
+class "ApplicationRepository" as ApplicationRepository {
+    +findAll(): List<Application>
+}
+
+class "JpaApplicationRepository" as JpaApplicationRepository {
+    +findAll(): List<Application>
+}
+
+class "Database" as DB <<(D, #8BEBFF)>> {
+}
+
+class "Result" as Result {
+    -outcome: Outcome
+    -justification: Justification
+}
+
+UI --> ApplicationController
+ApplicationController --> ApplicationService
+ApplicationService --> ApplicationRepository
+ApplicationService --> Application
+ApplicationRepository --> JpaApplicationRepository
+JpaApplicationRepository --> DB
+Application --> ApplicationDTO
+Application --> Result
+
+@enduml

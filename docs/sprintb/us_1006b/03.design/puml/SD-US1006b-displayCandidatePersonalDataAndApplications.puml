@@ -1,0 +1,65 @@
+@startuml
+title US1006b - SD - Display Candidate Data and Applications
+skinparam linetype ortho
+skinparam maxmessagesize 150
+skinparam sequenceParticipant underline
+
+actor "Customer Manager" as CM
+
+participant "DisplayCandidateDataUI" as UI
+participant "DisplayCandidateApplicationsController" as C
+participant "DisplayCandidateApplicationsService" as S
+participant "ApplicationRepository" as R
+participant "JpaApplicationRepository" as RJPA
+participant "Application" as A
+participant "ApplicationDTO" as ADTO
+database "Database" as DB
+
+
+
+
+activate CM
+    CM -> UI : Asks to display the personal data of a candidate
+    activate UI
+        ref over DB , CM: List candidates\n(US 2000c)
+            UI -> CM : Shows list of candidates and asks to select one
+    deactivate UI
+    CM -> UI : Selects a candidate
+    activate UI
+        UI -> CM : Displays Candidate Data
+        UI -> C : getApplications(Candidate candidate)
+        activate C
+            C -> S : findApplicationsFromCandidate(Candidate candidate)
+            activate S
+                S -> R : findApplicationsFromCandidate(Candidate candidate)
+                    activate R
+                    R -> RJPA : findApplicationsFromCandidate(Candidate candidate)
+                    activate RJPA
+                        RJPA -> RJPA : findApplicationsFromCandidate(Candidate candidate)
+                        RJPA -> DB : createQuery(SELECT a FROM Application a WHERE a.candidate = :candidate", application.class)
+                        activate DB
+                            RJPA -> DB : setParameter("candidate", candidate)
+                            DB --> RJPA : Iterable<Application>
+                        deactivate DB
+                        RJPA --> R : Iterable<Application>
+                    deactivate RJPA
+                    R --> S : Iterable<Application>
+                    deactivate R
+                    loop for each Application
+                        S -> A: toDTO()
+                    activate A
+                        A --> ADTO: create
+                        activate ADTO
+                        A <-- ADTO: ApplicationDTO
+                        deactivate ADTO
+                        S <-- A: ApplicationDTO
+                    deactivate A
+                end
+                S --> C : Iterable<ApplicationDTO>
+            deactivate S
+            C --> UI : Iterable<ApplicationDTO>
+        deactivate C
+        UI --> CM : Displays Application List
+    deactivate UI
+deactivate CM
+@enduml

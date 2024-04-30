@@ -10,8 +10,17 @@
     <class>eapli.framework.infrastructure.authz.domain.model.Role</class>
     <class>eapli.framework.infrastructure.authz.domain.model.RoleSet</class>
     <class>eapli.framework.infrastructure.authz.domain.model.RoleAssignment</class>
-    <class>lapr4.jobs4u.clientusermanagement.domain.ClientUser</class>
-    <class>lapr4.jobs4u.clientusermanagement.domain.SignupRequest</class>
+    <class>lapr4.jobs4u.customermanagement.domain.Customer</class>
+    <class>lapr4.jobs4u.customermanagement.domain.CustomerUser</class>
+    <class>lapr4.jobs4u.candidatemanagement.domain.Candidate</class>
+    <class>lapr4.jobs4u.candidatemanagement.domain.CandidateUser</class>
+    <class>lapr4.jobs4u.recruitmentprocessmanagement.domain.RecruitmentProcess</class>
+    <class>lapr4.jobs4u.recruitmentprocessmanagement.domain.ApplicationPhase</class>
+    <class>lapr4.jobs4u.recruitmentprocessmanagement.domain.ScreeningPhase</class>
+    <class>lapr4.jobs4u.recruitmentprocessmanagement.domain.InterviewPhase</class>
+    <class>lapr4.jobs4u.recruitmentprocessmanagement.domain.AnalysisPhase</class>
+    <class>lapr4.jobs4u.recruitmentprocessmanagement.domain.ResultPhase</class>
+    <class>lapr4.jobs4u.jobopeningmanagement.domain.JobOpening</class>
 
     <properties>
       <!-- <property name="jakarta.persistence.jdbc.url" value="jdbc:h2:tcp://localhost/~/jobs4u"/> -->
@@ -20,7 +29,7 @@
       <property name="jakarta.persistence.jdbc.user" value="sa"/>
       <property name="jakarta.persistence.jdbc.password" value="lapr4"/>
       <property name="jakarta.persistence.jdbc.driver" value="org.h2.Driver"/>
-      <!-- <property name="jakarta.persistence.schema-generation.database.action" value="drop-and-create"/> -->
+      <property name="jakarta.persistence.schema-generation.database.action" value="drop-and-create"/>
       <!-- <property name="eclipselink.logging.level" value="FINE"/> -->
       <!-- <property name = "hibernate.show_sql" value = "true" /> -->
       <property name="hibernate.dialect" value="org.hibernate.dialect.H2Dialect"/>

@@ -25,6 +25,13 @@ import java.util.Set;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import lapr4.jobs4u.candidatemanagement.application.RegisterCandidateController;
+import lapr4.jobs4u.candidatemanagement.domain.Candidate;
+import lapr4.jobs4u.candidatemanagement.domain.CandidateUser;
+import lapr4.jobs4u.customermanagement.application.RegisterCustomerController;
+import lapr4.jobs4u.customermanagement.domain.Customer;
+import lapr4.jobs4u.customermanagement.domain.CustomerUser;
+import lapr4.jobs4u.infrastructure.persistence.PersistenceContext;
 import lapr4.jobs4u.usermanagement.application.AddUserController;
 import lapr4.jobs4u.usermanagement.application.ListUsersController;
 import eapli.framework.domain.repositories.ConcurrencyException;
@@ -38,6 +45,11 @@ public class UsersBootstrapperBase {
 
     final AddUserController userController = new AddUserController();
     final ListUsersController listUserController = new ListUsersController();
+    final RegisterCustomerController registerCustomerController = new RegisterCustomerController(
+            PersistenceContext.repositories().customers(), PersistenceContext.repositories().customerUsers());
+
+    final RegisterCandidateController registerCandidateController = new RegisterCandidateController(
+            PersistenceContext.repositories().candidates(), PersistenceContext.repositories().candidateUsers());
 
     public UsersBootstrapperBase() {
         super();
@@ -51,17 +63,52 @@ public class UsersBootstrapperBase {
      * @param email
      * @param roles
      */
-    protected SystemUser registerUser(final String username, final String password, final String firstName,
-            final String lastName, final String email, final Set<Role> roles) {
+    protected SystemUser registerUser(final String email, final String firstName,
+            final String lastName, final Set<Role> roles) {
         SystemUser u = null;
         try {
-            u = userController.addUser(username, password, firstName, lastName, email, roles);
-            LOGGER.debug("»»» %s", username);
+            u = userController.addUser(email, firstName, lastName, roles);
+            LOGGER.debug("»»» %s", email);
         } catch (final IntegrityViolationException | ConcurrencyException e) {
             // assuming it is just a primary key violation due to the tentative
             // of inserting a duplicated user. let's just lookup that user
-            u = listUserController.find(Username.valueOf(username)).orElseThrow(() -> e);
+            u = listUserController.find(Username.valueOf(email)).orElseThrow(() -> e);
         }
         return u;
+    }
+
+    protected CustomerUser addCustomer(final String name, final String address, final String customerCode,
+            final String email, final String phoneNumber, final String firstName, final String lastName,
+            final Set<Role> roles) {
+        CustomerUser cu = null;
+        try {
+            Customer c = registerCustomerController.registerCustomer(name, address, customerCode, email, phoneNumber);
+            SystemUser su = registerUser(email, firstName, lastName, roles);
+            cu = registerCustomerController.registerCustomerUser(c, su);
+
+            LOGGER.debug("»»» %s", email);
+        } catch (final IntegrityViolationException | ConcurrencyException e) {
+            // assuming it is just a primary key violation due to the tentative
+            // of inserting a duplicated user. let's just lookup that user
+            // cu = listUserController.find(Username.valueOf(email)).orElseThrow(() -> e);
+        }
+        return cu;
+    }
+
+    protected CandidateUser addCandidate(final String firstName, final String lastName, final String email,
+            final String phoneNumber, final Set<Role> roles) {
+        CandidateUser cu = null;
+        try {
+            Candidate ca = registerCandidateController.registerCandidate(firstName, lastName, email, phoneNumber);
+            SystemUser su = registerUser(email, firstName, lastName, roles);
+            cu = registerCandidateController.registerCandidateUser(ca, su);
+
+            LOGGER.debug("»»» %s", email);
+        } catch (final IntegrityViolationException | ConcurrencyException e) {
+            // assuming it is just a primary key violation due to the tentative
+            // of inserting a duplicated user. let's just lookup that user
+            // cu = listUserController.find(Username.valueOf(email)).orElseThrow(() -> e);
+        }
+        return cu;
     }
 }

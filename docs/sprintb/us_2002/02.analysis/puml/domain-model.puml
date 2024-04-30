@@ -1,6 +1,6 @@
 @startuml domain-model
 
-title Domain Model - US1000
+title Domain Model - US2002
 
 hide empty members
 'skinparam Linetype ortho
@@ -16,6 +16,44 @@ skinparam class {
 skinparam package {
     BackgroundColor #EBF5FB
 }
+
+' Application Aggregate
+package "<<aggregate>> Application" {
+    entity Application <<entity>> <<root>> {}
+    entity Result <<entity>> {}
+
+    class ApplicationDate <<valueObject>> <<(V, #FF8B40)>> {}
+    class ApplicationNumber <<valueObject>> <<(V, #FF8B40)>> {}
+    class Outcome <<valueObject>> <<(V, #FF8B40)>> {}
+    class Justification <<valueObject>> <<(V, #FF8B40)>> {}
+
+    note right of Outcome: Outcome can be Approved or Rejected
+    note left of Justification: Rejected outcomes must have a justification
+}
+
+' Candidate Aggregate
+package "<<aggregate>> Candidate" {
+    entity Candidate <<entity>> <<root>> {}
+
+    class FirstName <<valueObject>> <<(V, #FF8B40)>> {}
+    class LastName <<valueObject>> <<(V, #FF8B40)>> {}
+}
+
+' Application relationships
+Application "1" --> "1" ApplicationDate : has
+Application "1" --> "1" ApplicationNumber : has
+Application "1" --> "0..1" Result : has
+Application "1" --> "1" Candidate : has
+
+' Result relationships
+Result "1" --> "1" Outcome : has
+Result "1" --> "1" Justification : can have
+
+' Candidate relationships
+Candidate "1" --> "1" FirstName : has
+Candidate "1" --> "1" LastName : has
+Candidate "1" --> "1" PhoneNumber : has
+Candidate "1" --> "1" Email : has
 
 
 @enduml

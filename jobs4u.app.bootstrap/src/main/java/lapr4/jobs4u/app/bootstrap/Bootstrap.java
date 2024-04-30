@@ -24,7 +24,7 @@ import lapr4.jobs4u.app.common.console.Jobs4UApplication;
 import lapr4.jobs4u.infrastructure.bootstrapers.Bootstrapper;
 import lapr4.jobs4u.infrastructure.bootstrapers.demo.DemoBootstrapper;
 import lapr4.jobs4u.infrastructure.persistence.PersistenceContext;
-import lapr4.jobs4u.infrastructure.smoketests.BaseDemoSmokeTester;
+import lapr4.jobs4u.infrastructure.smoketests.Jobs4UDemoSmokeTester;
 import lapr4.jobs4u.usermanagement.domain.BasePasswordPolicy;
 import eapli.framework.collections.util.ArrayPredicates;
 import eapli.framework.infrastructure.authz.application.AuthzRegistry;
@@ -68,7 +68,7 @@ public final class Bootstrap extends Jobs4UApplication {
         }
         if (isToRunSampleE2E) {
             System.out.println("\n\n------- BASIC SCENARIO -------");
-            new BaseDemoSmokeTester().execute();
+            new Jobs4UDemoSmokeTester().execute();
         }
         if (isToWaitInTheEnd) {
             Console.readLine("\n\n>>>>>> Enter to finish the program.");

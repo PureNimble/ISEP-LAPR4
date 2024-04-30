@@ -1,0 +1,76 @@
+@startuml DM-US1001
+
+title Domain Model - US1001
+
+hide empty members
+'skinparam Linetype ortho
+
+skinparam class {
+    BackgroundColor<<valueObject>> #D6EAF8
+    BackgroundColor<<root>> #FDEBD0
+    BackgroundColor<<service>> #D1F2EB
+    BackgroundColor #FEF9E7
+    ArrowColor Black
+}
+
+skinparam package {
+    BackgroundColor #EBF5FB
+}
+
+' User Aggregate
+package "<<aggregate>> User" {
+    entity User <<entity>> <<root>> {}
+
+    class Password <<valueObject>> <<(V, #FF8B40)>> {}
+    class Role <<valueObject>> <<(V, #FF8B40)>> {}
+    class IsActive <<valueObject>> <<(V, #FF8B40)>> {}
+
+    class Authentication <<service>> <<(S, #85C1E9)>> {}
+
+    class Token <<valueObject>> <<(V, #FF8B40)>> {}
+    class createdOn <<valueObject>> <<(V, #FF8B40)>> {}
+    class PasswordPolicy <<service>> <<(S, #85C1E9)>> {}
+    class PasswordEncoder <<service>> <<(S, #85C1E9)>> {}
+}
+
+class PhoneNumber <<valueObject>> <<(V, #FF8B40)>> {}
+class Email <<valueObject>> <<(V, #FF8B40)>> {}
+
+' Customer Aggregate
+package "<<aggregate>> Customer" {
+    entity Customer <<entity>> <<root>> {}
+
+    class CompanyName <<valueObject>> <<(V, #FF8B40)>> {}
+    class CustomerCode <<valueObject>> <<(V, #FF8B40)>> {}
+}
+
+class Address <<valueObject>> <<(V, #FF8B40)>> {}
+
+' User relationships
+User "1" --> "1" Email : has
+User "1" --> "1" Password : has
+User "1" --> "1" Role : has
+User "1" --> "1" IsActive : can be
+User "1" --> "1" Authentication : authenticated by
+
+' Authentication relationships
+Authentication "1" ..> "1" Email : authenticated by
+Authentication "1" ..> "1" Password : authenticated by
+Authentication "1" ..> "1" Token : generates
+Authentication "1" ..> "1" createdOn : generates
+Authentication "1" ..> "1" PasswordPolicy : applies
+Authentication "1" ..> "1" PasswordEncoder : uses
+
+' Password relationships
+Password "1" ..> "1" PasswordPolicy : applies
+Password "1" ..> "1" PasswordEncoder : uses
+
+' Customer relationships
+Customer "1" --> "1" CustomerCode : has
+Customer "1" --> "1" CompanyName : has
+Customer "1" --> "1" Address : has
+Customer "1" --> "1" Email : has
+Customer "1" --> "1" PhoneNumber : has
+Customer "1" ---|> "1" User : has
+
+@enduml

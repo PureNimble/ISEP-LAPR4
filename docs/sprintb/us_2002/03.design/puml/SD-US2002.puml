@@ -1,0 +1,117 @@
+@startuml SD-US1001
+
+title Sequence Diagram - US1001
+
+skinparam linetype ortho
+skinparam maxmessagesize 150
+skinparam sequenceParticipant underline
+
+actor Operator
+
+participant "RegisterApplicationUI" as UI
+participant "RegisterApplicationController" as ApplicationController
+participant "ImportFileController" as FileController
+participant ApplicationService
+participant Candidate
+participant Application
+participant File
+participant "ApplicationRepository" as ApplicationRepository
+participant FileRepository
+participant JpaApplicationRepository
+participant JpaFileRepository
+participant CandidateRepository
+participant JpaCandidateRepository
+database "Database" as DB
+
+activate Operator
+
+Operator -> UI: Asks to import data related to Applications
+activate UI
+    UI --> Operator: Request the path of the shared folder
+deactivate UI
+
+Operator -> UI: Provides information
+
+activate UI
+    loop for each candidateID in the folder
+
+    UI -> ApplicationController: registerApplication()
+        activate ApplicationController
+            ApplicationController -> ApplicationService: addCandidate(firstName,lastName,email,phone)
+        activate ApplicationService
+            ApplicationService -> Candidate: createCandidate(firstName,lastName,email,phone)
+        activate Candidate
+            Candidate --> ApplicationService: return Candidate
+        deactivate Candidate
+        ApplicationService -> CandidateRepository: save(Candidate)
+        activate CandidateRepository
+            CandidateRepository -> JpaCandidateRepository: save(Candidate)
+        activate JpaCandidateRepository
+            JpaCandidateRepository -> DB: persist(Candidate)
+            activate DB
+                DB --> JpaCandidateRepository: return Candidate
+            deactivate DB
+            JpaCandidateRepository --> CandidateRepository: return Candidate
+        deactivate JpaCandidateRepository
+        CandidateRepository --> ApplicationService: return Candidate
+        deactivate CandidateRepository
+        ApplicationService --> ApplicationController: return Candidate
+        deactivate ApplicationService
+        ApplicationController -> ApplicationService: addApplication(candidate,applicationID,date)
+        activate ApplicationService
+            ApplicationService -> Application: createApplication(candidate,applicationID,date)
+        activate Application
+            Application --> ApplicationService: return (true/false)
+        deactivate Application
+            ApplicationService -> ApplicationRepository: save(Application)
+        activate ApplicationRepository
+            ApplicationRepository -> JpaApplicationRepository: save(Application)
+        activate JpaApplicationRepository
+            JpaApplicationRepository -> DB: persist(Application)
+            activate DB
+                DB --> JpaApplicationRepository: return (true/false)
+            deactivate DB
+            JpaApplicationRepository --> ApplicationRepository: return (true/false)
+        deactivate JpaApplicationRepository
+            ApplicationRepository --> ApplicationService: return (true/false)
+        deactivate ApplicationRepository
+            ApplicationService --> ApplicationController: return (true/false)
+        deactivate ApplicationService
+            ApplicationController --> UI: return (true/false)
+        deactivate ApplicationController  
+    UI -> FileController : importFiles()
+        activate FileController
+            FileController -> ApplicationService: importFiles()
+        activate ApplicationService
+        loop for each file related to the candidateID
+            ApplicationService -> File: createFile()
+        activate File
+            File --> ApplicationService: return File
+        deactivate File
+            ApplicationService -> FileRepository: save(File)
+        activate FileRepository
+            FileRepository -> JpaFileRepository: save(File)
+        activate JpaFileRepository
+            JpaFileRepository -> DB: persist(File)
+            activate DB
+                DB --> JpaFileRepository: return File
+            deactivate DB
+            JpaFileRepository --> FileRepository: return File
+        deactivate JpaFileRepository
+            FileRepository --> ApplicationService: return File
+        deactivate FileRepository
+            ApplicationService --> FileController: return File
+        deactivate ApplicationService
+            FileController --> UI: return File
+        deactivate FileController
+        end loop
+    end loop  
+
+
+
+UI --> Operator: Informs success or failure
+deactivate UI
+
+deactivate Operator
+
+@enduml

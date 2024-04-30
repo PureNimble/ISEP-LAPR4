@@ -33,56 +33,32 @@ import eapli.framework.infrastructure.authz.domain.model.Role;
  */
 public class BackofficeUsersBootstrapper extends UsersBootstrapperBase implements Action {
 
-    @SuppressWarnings("squid:S2068")
-    private static final String PASSWORD1 = "Password1";
-
     @Override
     public boolean execute() {
-        registerCustomerManager("cm", PASSWORD1, "Johny", "Cash", "johny.doe@email.com");
-        registerOperator("op", PASSWORD1, "Oven", "Stove", "Oven.and.stove@email.com");
-        registerLanguageEngineer("le", PASSWORD1, "Master", "Chef", "master.chef@email.com");
-        registerCustomer("cu", PASSWORD1, "Paulo", "Stone", "Paulo.and.Stone@email.com");
-        registerCandidate("ca", PASSWORD1, "Fried", "Uabo", "Fried.and.Uabo@email.com");
+        registerCustomerManager("cm@email.local", "Customer", "Manager");
+        registerOperator("op@email.local", "Operator", "Operator");
+        registerLanguageEngineer("le@email.local", "Language", "Engineer");
         return true;
     }
 
-    private void registerCustomerManager(final String username, final String password,
-            final String firstName, final String lastName, final String email) {
+    private void registerCustomerManager(final String email, final String firstName, final String lastName) {
         final Set<Role> roles = new HashSet<>();
         roles.add(BaseRoles.CUSTOMER_MANAGER);
-
-        registerUser(username, password, firstName, lastName, email, roles);
+    
+        registerUser(email, firstName, lastName, roles);
     }
-
-    private void registerOperator(final String username, final String password,
-            final String firstName, final String lastName, final String email) {
+    
+    private void registerOperator(final String email, final String firstName, final String lastName) {
         final Set<Role> roles = new HashSet<>();
         roles.add(BaseRoles.OPERATOR);
-
-        registerUser(username, password, firstName, lastName, email, roles);
+    
+        registerUser(email, firstName, lastName, roles);
     }
-
-    private void registerLanguageEngineer(final String username, final String password,
-            final String firstName, final String lastName, final String email) {
+    
+    private void registerLanguageEngineer(final String email, final String firstName, final String lastName) {
         final Set<Role> roles = new HashSet<>();
         roles.add(BaseRoles.LANGUAGE_ENGINEER);
-
-        registerUser(username, password, firstName, lastName, email, roles);
-    }
-
-    private void registerCustomer(final String username, final String password,
-            final String firstName, final String lastName, final String email) {
-        final Set<Role> roles = new HashSet<>();
-        roles.add(BaseRoles.CUSTOMER);
-
-        registerUser(username, password, firstName, lastName, email, roles);
-    }
-
-    private void registerCandidate(final String username, final String password,
-            final String firstName, final String lastName, final String email) {
-        final Set<Role> roles = new HashSet<>();
-        roles.add(BaseRoles.CANDIDATE);
-
-        registerUser(username, password, firstName, lastName, email, roles);
+    
+        registerUser(email, firstName, lastName, roles);
     }
 }

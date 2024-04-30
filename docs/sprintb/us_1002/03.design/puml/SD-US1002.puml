@@ -1,0 +1,65 @@
+@startuml SD-US1002
+
+title Sequence Diagram - US1002
+
+skinparam linetype ortho
+skinparam maxmessagesize 150
+skinparam sequenceParticipant underline
+
+actor "Customer Manager" as customerManager
+
+participant "RegisterJobOpeningUI" as UI
+participant "RegisterJobOpeningController" as RegisterJobOpeningController
+participant "JobOpeningService" as JobOpeningService
+participant "JobOpening" as JobOpening
+participant "JobOpeningRepository" as JobOpeningRepository
+participant "JpaJobOpeningRepository" as JpaJobOpeningRepository
+database "Database" as DB
+
+activate customerManager
+
+    customerManager -> UI: Asks to register a job opening
+
+    activate UI
+        UI --> customerManager:  Asks for information(Title or function, Contract Type, Mode, Address, Company, Number of vacancies, Description)
+    deactivate UI
+
+    customerManager -> UI: Provides information
+    activate UI
+        UI --> customerManager : Asks to select one of the requirements
+        ref over customerManager, DB : US1009 ➡️ Select Requirement
+    deactivate UI
+
+    customerManager -> UI : Selects one of the requirements
+    activate UI
+    
+    UI -> RegisterJobOpeningController: addJobOpening(titleOrFunction, contractType, mode, address, company, numberOfVacancies, description)
+        activate RegisterJobOpeningController
+            RegisterJobOpeningController -> JobOpeningService: addJobOpening(titleOrFunction, contractType, mode, address, company, numberOfVacancies, description)
+        activate JobOpeningService
+            JobOpeningService -> JobOpening: createJobOpening(titleOrFunction, contractType, mode, address, company, numberOfVacancies, description)
+        activate JobOpening
+            JobOpening --> JobOpeningService: jobOpening
+        deactivate JobOpening
+            JobOpeningService -> JobOpeningRepository: save(jobOpening)
+        activate JobOpeningRepository
+            JobOpeningRepository -> JpaJobOpeningRepository: save(jobOpening)
+        activate JpaJobOpeningRepository
+            JpaJobOpeningRepository -> DB: persist(jobOpening)
+            activate DB
+                DB --> JpaJobOpeningRepository: jobOpening
+            deactivate DB
+            JpaJobOpeningRepository --> JobOpeningRepository: jobOpening
+        deactivate JpaJobOpeningRepository
+            JobOpeningRepository --> JobOpeningService: jobOpening
+        deactivate JobOpeningRepository
+            JobOpeningService --> RegisterJobOpeningController: jobOpening
+        deactivate JobOpeningService
+            RegisterJobOpeningController --> UI: jobOpening
+        deactivate RegisterJobOpeningController    
+    UI --> customerManager: Informs success or failure
+deactivate UI
+
+deactivate customerManager
+
+@enduml

@@ -25,9 +25,9 @@ import java.util.Map;
 import java.util.Optional;
 
 import lapr4.jobs4u.Application;
-import lapr4.jobs4u.clientusermanagement.domain.ClientUser;
-import lapr4.jobs4u.clientusermanagement.domain.CustomerCode;
-import lapr4.jobs4u.clientusermanagement.repositories.ClientUserRepository;
+import lapr4.jobs4u.customermanagement.domain.Customer;
+import lapr4.jobs4u.customermanagement.domain.CustomerCode;
+import lapr4.jobs4u.customermanagement.repositories.CustomerRepository;
 import eapli.framework.domain.repositories.TransactionalContext;
 import eapli.framework.infrastructure.authz.domain.model.Username;
 import eapli.framework.infrastructure.repositories.impl.jpa.JpaAutoTxRepository;
@@ -37,8 +37,8 @@ import eapli.framework.infrastructure.repositories.impl.jpa.JpaAutoTxRepository;
  * @author Jorge Santos ajs@isep.ipp.pt 02/04/2016
  */
 class JpaCustomerRepository
-        extends JpaAutoTxRepository<ClientUser, CustomerCode, CustomerCode>
-        implements ClientUserRepository {
+        extends JpaAutoTxRepository<Customer, CustomerCode, CustomerCode>
+        implements CustomerRepository {
 
     public JpaCustomerRepository(final TransactionalContext autoTx) {
         super(autoTx, "customerCode");
@@ -50,21 +50,16 @@ class JpaCustomerRepository
     }
 
     @Override
-    public Optional<ClientUser> findByUsername(final Username name) {
-        final Map<String, Object> params = new HashMap<>();
-        params.put("name", name);
-        return matchOne("e.systemUser.username=:name", params);
-    }
-
-    @Override
-    public Optional<ClientUser> findByCustomerCode(final CustomerCode number) {
+    public Optional<Customer> findByCustomerCode(final CustomerCode number) {
         final Map<String, Object> params = new HashMap<>();
         params.put("number", number);
         return matchOne("e.customerCode=:number", params);
     }
 
-    @Override
-    public Iterable<ClientUser> findAllActive() {
-        return match("e.systemUser.active = true");
-    }
+	@Override
+	public Iterable<Customer> filterByCostumerManager(final Username name) {
+		final Map<String, Object> params = new HashMap<>();
+        params.put("name", name);
+        return match("e.manager.username=:name", params);
+	}
 }

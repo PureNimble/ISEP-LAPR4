@@ -1,0 +1,94 @@
+@startuml CD-US1001
+
+title Class Diagram - US1001
+
+skinparam class {
+    skinparam classAttributeIconSize 0
+    skinparam packageStyle rectangle
+    skinparam shadowing false
+    skinparam linetype polyline
+    BackgroundColor #FEF9E7
+    ArrowColor Black
+}
+
+class "RegisterApplicationUI" as UI {}
+
+class "RegisterApplicationController" as ApplicationController {
+    +addApplication(): void
+}
+
+class ImportFilesController{
+    +importFiles(): void
+
+}
+
+class "ApplicationService" as ApplicationService {
+    +addApplication(): Application
+}
+
+class "Application" as Application {
+    -companyName: String
+    -address: String
+    -ApplicationCode: String
+    -email: String
+    -phone: String
+    +createApplication(): Application
+}
+
+class File {
+    -fileName: String
+    -filePath: String
+    +createFile(): File
+}
+
+class Candidate {
+    -firstName: String
+    -lastName: String
+    -phoneNumber: PhoneNumber
+    -email: Email
+    +createCandidate(firstName,lastName,phoneNumber,email): Candidate
+}
+class FileRepository {
+    +save(File: File): File
+}
+class CandidateRepository {
+    +save(Candidate: Candidate): Candidate
+}
+class ApplicationRepository {
+    +save(Application: Application): Application
+}
+class JpaFileRepository {
+    +save(Application: Application): Application
+}
+class JpaCandidateRepository {
+    +save(Application: Application): Application
+}
+class JpaApplicationRepository {
+    +save(Application: Application): Application
+}
+
+class "Database" as DB <<(D, #8BEBFF)>> {
+}
+
+UI --> ApplicationController
+UI --> ImportFilesController
+
+'Import Files
+ImportFilesController --> File
+ImportFilesController --> FileRepository
+FileRepository --> JpaFileRepository
+JpaFileRepository --> DB
+
+'Register Candidate
+ApplicationService --> Candidate
+ApplicationService --> CandidateRepository
+CandidateRepository --> JpaCandidateRepository
+JpaCandidateRepository --> DB
+'Register Application
+ApplicationController --> ApplicationService
+ApplicationService --> Application
+ApplicationService --> ApplicationRepository
+ApplicationRepository --> JpaApplicationRepository
+JpaApplicationRepository --> DB
+
+@enduml

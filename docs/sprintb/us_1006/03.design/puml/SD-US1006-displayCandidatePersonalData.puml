@@ -1,0 +1,23 @@
+@startuml
+title US1006 - SD - Display Candidate Data
+skinparam linetype ortho
+skinparam maxmessagesize 150
+skinparam sequenceParticipant underline
+
+actor "Customer Manager" as CM
+
+participant "DisplayCandidateDataUI" as UI
+
+
+activate CM
+CM -> UI : Asks to display the personal data of a candidate
+activate UI
+ref over UI , CM: List candidates\n(US 2000c)
+        UI -> CM : Shows list of candidates and asks to select one
+deactivate UI
+CM -> UI : Selects a candidate
+activate UI
+UI -> CM : Displays Data
+deactivate UI
+deactivate CM
+@enduml

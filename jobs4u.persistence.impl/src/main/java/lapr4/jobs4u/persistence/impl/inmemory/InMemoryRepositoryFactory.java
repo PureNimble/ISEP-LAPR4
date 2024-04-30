@@ -20,9 +20,14 @@
  */
 package lapr4.jobs4u.persistence.impl.inmemory;
 
-import lapr4.jobs4u.clientusermanagement.repositories.ClientUserRepository;
+import lapr4.jobs4u.candidatemanagement.repositories.CandidateRepository;
+import lapr4.jobs4u.candidatemanagement.repositories.CandidateUserRepository;
+import lapr4.jobs4u.customermanagement.repositories.CustomerRepository;
+import lapr4.jobs4u.customermanagement.repositories.CustomerUserRepository;
 import lapr4.jobs4u.infrastructure.bootstrapers.Bootstrapper;
 import lapr4.jobs4u.infrastructure.persistence.RepositoryFactory;
+import lapr4.jobs4u.jobopeningmanagement.repositories.JobOpeningRepository;
+import lapr4.jobs4u.recruitmentprocessmanagement.repositories.RecruitmentProcessRepository;
 import eapli.framework.domain.repositories.TransactionalContext;
 import eapli.framework.infrastructure.authz.domain.repositories.UserRepository;
 import eapli.framework.infrastructure.authz.repositories.impl.inmemory.InMemoryUserRepository;
@@ -49,20 +54,68 @@ public class InMemoryRepositoryFactory implements RepositoryFactory {
     }
 
     @Override
-    public ClientUserRepository clientUsers(final TransactionalContext tx) {
-
-        return new InMemoryCustomerRepository();
-    }
-
-    @Override
-    public ClientUserRepository clientUsers() {
-        return clientUsers(null);
-    }
-
-    @Override
     public TransactionalContext newTransactionalContext() {
         // in memory does not support transactions...
         return null;
     }
 
+    @Override
+    public CustomerRepository customers(final TransactionalContext tx) {
+        return new InMemoryCustomerRepository();
+    }
+
+    @Override
+    public CustomerRepository customers() {
+        return customers(null);
+    }
+
+    @Override
+    public CandidateRepository candidates(final TransactionalContext tx) {
+        return new InMemoryCandidateRepository();
+    }
+
+    @Override
+    public CandidateRepository candidates() {
+        return candidates(null);
+    }
+
+    @Override
+    public CandidateUserRepository candidateUsers(final TransactionalContext tx) {
+        return new InMemoryCandidateUserRepository();
+    }
+
+    @Override
+    public CandidateUserRepository candidateUsers() {
+        return candidateUsers(null);
+    }
+
+    @Override
+    public CustomerUserRepository customerUsers(final TransactionalContext tx) {
+        return new InMemoryCustomerUserRepository();
+    }
+
+    @Override
+    public CustomerUserRepository customerUsers() {
+        return customerUsers(null);
+    }
+
+    @Override
+    public RecruitmentProcessRepository recruitmentProcesses(final TransactionalContext tx) {
+        return new InMemoryRecruitmentProcessRepository();
+    }
+
+    @Override
+    public RecruitmentProcessRepository recruitmentProcesses() {
+        return recruitmentProcesses(null);
+    }
+
+    @Override
+    public JobOpeningRepository jobOpenings(final TransactionalContext tx) {
+        return new InMemoryJobOpeningRepository();
+    }
+
+    @Override
+    public JobOpeningRepository jobOpenings() {
+        return jobOpenings(null);
+    }
 }

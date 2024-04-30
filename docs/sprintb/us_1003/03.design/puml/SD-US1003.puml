@@ -1,0 +1,102 @@
+@startuml SD-US1003
+
+title Sequence Diagram - US1003
+
+skinparam linetype ortho
+skinparam maxmessagesize 150
+skinparam sequenceParticipant underline
+
+actor "Customer Manager" as customerManager
+
+participant "ListJobOpeningUI" as UI
+participant "JobOpeningController" as ListJobOpeningController
+participant "JobOpeningService" as JobOpeningService
+participant "JobOpeningRepository" as JobOpeningRepository
+participant "JpaJobOpeningRepository" as JpaJobOpeningRepository
+participant "JobOpening" as JobOpening
+participant "JobOpeningDTO" as JobOpeningDTO
+database "Database" as DB
+
+activate customerManager
+
+customerManager -> UI: Asks for a list of job openings
+
+activate UI
+    UI --> ListJobOpeningController: allJobOpenings()
+    activate ListJobOpeningController
+        ListJobOpeningController -> JobOpeningService: allJobOpenings()
+        activate JobOpeningService
+            JobOpeningService -> JobOpeningRepository: findAll()
+            activate JobOpeningRepository
+                JobOpeningRepository -> JpaJobOpeningRepository: findAll()
+                activate JpaJobOpeningRepository
+                    JpaJobOpeningRepository -> DB: createQuery("SELECT * FROM JobOpening", JobOpening.class)
+                    activate DB
+                        DB --> JpaJobOpeningRepository: Iterable<JobOpening>
+                        note right: Should only return job openings\n assigned to that customer manager
+                    deactivate DB
+                    JobOpeningRepository <-- JpaJobOpeningRepository: Iterable<JobOpening>
+                deactivate JpaJobOpeningRepository
+                JobOpeningService <-- JobOpeningRepository: Iterable<JobOpening>
+                deactivate JobOpeningRepository
+                loop for each job opening
+                    JobOpeningService -> JobOpening: toDTO()
+                    activate JobOpening
+                        JobOpening --> JobOpeningDTO: create
+                        activate JobOpeningDTO
+                        JobOpening <-- JobOpeningDTO: JobOpeningDTO
+                        deactivate JobOpeningDTO
+                        JobOpeningService <-- JobOpening: JobOpeningDTO
+                    deactivate JobOpening
+                end
+            deactivate JobOpeningRepository
+            ListJobOpeningController <-- JobOpeningService: Iterable<JobOpeningDTO>
+        deactivate JobOpeningService
+        ListJobOpeningController --> UI: Iterable<JobOpeningDTO>
+    deactivate ListJobOpeningController
+    UI --> customerManager: List of job openings
+deactivate UI
+
+opt Optionally applies filters
+    loop While there are filters to apply
+        customerManager -> UI : Asks to filter the list of job openings
+        activate UI
+            UI --> ListJobOpeningController : applyFilter(filterCriteria)
+            activate ListJobOpeningController
+                ListJobOpeningController -> JobOpeningService : applyFilter(filterCriteria)
+                activate JobOpeningService
+                    JobOpeningService -> JobOpeningRepository : findByCriteria(filterCriteria)
+                    activate JobOpeningRepository
+                        JobOpeningRepository -> JpaJobOpeningRepository : findByCriteria(filterCriteria)
+                        activate JpaJobOpeningRepository
+                            JpaJobOpeningRepository -> DB : createQuery("SELECT * FROM JobOpening WHERE ...", JobOpening.class)
+                            activate DB
+                                DB --> JpaJobOpeningRepository : Iterable<JobOpening>
+                            deactivate DB
+                            JobOpeningRepository <-- JpaJobOpeningRepository : Iterable<JobOpening>
+                        deactivate JpaJobOpeningRepository
+                        JobOpeningService <-- JobOpeningRepository : Iterable<JobOpening>
+                    deactivate JobOpeningRepository
+                    loop for each job opening
+                        JobOpeningService -> JobOpening : toDTO()
+                        activate JobOpening
+                            JobOpening --> JobOpeningDTO : create
+                            activate JobOpeningDTO
+                            JobOpening <-- JobOpeningDTO : JobOpeningDTO
+                            deactivate JobOpeningDTO
+                            JobOpeningService <-- JobOpening : JobOpeningDTO
+                        deactivate JobOpening
+                    end
+                deactivate JobOpeningRepository
+                ListJobOpeningController <-- JobOpeningService : Iterable<JobOpeningDTO>
+            deactivate JobOpeningService
+            ListJobOpeningController --> UI : Iterable<JobOpeningDTO>
+        deactivate ListJobOpeningController
+        UI --> customerManager : List of job openings
+    end
+end
+deactivate UI
+
+deactivate customerManager
+
+@enduml

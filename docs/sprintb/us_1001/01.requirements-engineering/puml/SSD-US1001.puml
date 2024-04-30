@@ -1,0 +1,29 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+title System Sequence Diagram (SSD) - Register a customer
+
+autonumber
+
+actor "Customer Manager" as CustomerManager
+participant ":System" as System
+
+activate CustomerManager
+
+    CustomerManager -> System : Asks to register a customer
+    activate System
+
+        System --> CustomerManager : Asks for information (company name, address, customer code, email,\nphone number, first name, last name)
+
+    deactivate System
+
+    CustomerManager -> System : Provides information
+    activate System
+
+        System --> CustomerManager : Informs success or failure
+
+    deactivate System
+
+@enduml

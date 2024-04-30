@@ -29,39 +29,37 @@ public class RegisterCustomerController {
     public Customer registerCustomer(final String name, final String address, final String customerCode,
             final String email, final String phoneNumber) {
         authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.CUSTOMER_MANAGER);
-        return createCustomer(name, address, customerCode, email, phoneNumber);
+        final UserSession s = authz.session().orElseThrow(IllegalStateException::new);
+        final SystemUser manager = s.authenticatedUser();
+        return createCustomer(name, address, customerCode, email, phoneNumber, manager);
     }
 
     public CustomerUser registerCustomerUser(final Customer customer,
             final SystemUser systemUser) {
         authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.CUSTOMER_MANAGER);
-        final UserSession s = authz.session().orElseThrow(IllegalStateException::new);
-        final SystemUser manager = s.authenticatedUser();
-        return createCustomerUser(customer, systemUser, manager);
+        return createCustomerUser(customer, systemUser);
     }
 
     private Customer createCustomer(final String name, final String address, final String customerCode,
-            final String email, final String phoneNumber) {
-        final Customer customer = doCreateCustomer(name, address, customerCode, email, phoneNumber);
+            final String email, final String phoneNumber, final SystemUser manager) {
+        final Customer customer = doCreateCustomer(name, address, customerCode, email, phoneNumber, manager);
         return customerRepository.save(customer);
     }
 
     private CustomerUser createCustomerUser(final Customer customer,
-            final SystemUser systemUser,
-            final SystemUser manager) {
-        final CustomerUser customerUser = doCreateCustomerUser(customer, systemUser, manager);
+            final SystemUser systemUser) {
+        final CustomerUser customerUser = doCreateCustomerUser(customer, systemUser);
         return customerUserRepository.save(customerUser);
     }
 
     private Customer doCreateCustomer(final String name, final String address, final String customerCode,
-            final String email, final String phoneNumber) {
-        return new CustomerBuilder().with(name, address, customerCode, email, phoneNumber).build();
+            final String email, final String phoneNumber, final SystemUser manager) {
+        return new CustomerBuilder().with(name, address, customerCode, email, phoneNumber, manager).build();
     }
 
     private CustomerUser doCreateCustomerUser(final Customer customer,
-            final SystemUser systemUser,
-            final SystemUser manager) {
+            final SystemUser systemUser) {
         return new CustomerUserBuilder().with(customer,
-                systemUser, manager).build();
+                systemUser).build();
     }
 }

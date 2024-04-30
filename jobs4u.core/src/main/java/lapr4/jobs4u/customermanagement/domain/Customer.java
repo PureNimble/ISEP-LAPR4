@@ -3,11 +3,14 @@ package lapr4.jobs4u.customermanagement.domain;
 import jakarta.persistence.Column;
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.Version;
 import eapli.framework.domain.model.AggregateRoot;
 import eapli.framework.domain.model.DomainEntities;
 import eapli.framework.general.domain.model.EmailAddress;
+import eapli.framework.infrastructure.authz.domain.model.SystemUser;
 import eapli.framework.validations.Preconditions;
 
 @Entity
@@ -34,14 +37,22 @@ public class Customer implements AggregateRoot<CustomerCode> {
     @Column(nullable = false)
     private EmailAddress email;
 
+    /**
+     * cascade = CascadeType.NONE as the systemUser is part of another aggregate
+     */
+    @OneToOne(optional = false)
+    @JoinColumn(name = "managed_by")
+    private SystemUser manager;
+
     Customer(final CustomerCode customerCode, final CompanyName companyName,
-            final PhoneNumber phoneNumber, final Address address, final EmailAddress email) {
-        Preconditions.noneNull(new Object[] { customerCode, companyName, phoneNumber, address, email });
+            final PhoneNumber phoneNumber, final Address address, final EmailAddress email, final SystemUser manager) {
+        Preconditions.noneNull(new Object[] { customerCode, companyName, phoneNumber, address, email, manager });
         this.customerCode = customerCode;
         this.companyName = companyName;
         this.phoneNumber = phoneNumber;
         this.address = address;
         this.email = email;
+        this.manager = manager;
     }
 
     protected Customer() {
@@ -67,8 +78,17 @@ public class Customer implements AggregateRoot<CustomerCode> {
         return identity();
     }
 
+    public SystemUser manager() {
+        return this.manager;
+    }
+
     @Override
     public CustomerCode identity() {
         return this.customerCode;
+    }
+
+    @Override
+    public String toString() {
+        return customerCode.toString() + " - " + companyName.toString();
     }
 }

@@ -11,13 +11,11 @@ public class CustomerUserBuilder implements DomainFactory<CustomerUser> {
     private static final Logger LOGGER = LogManager.getLogger(CustomerUserBuilder.class);
     private Customer customer;
     private SystemUser systemUser;
-    private SystemUser manager;
 
     public CustomerUserBuilder with(final Customer customer,
-            final SystemUser systemUser, final SystemUser manager) {
+            final SystemUser systemUser) {
         this.withCustomer(customer);
         this.withSystemUser(systemUser);
-        this.withManager(manager);
         return this;
     }
 
@@ -31,17 +29,12 @@ public class CustomerUserBuilder implements DomainFactory<CustomerUser> {
         return this;
     }
 
-    public CustomerUserBuilder withManager(final SystemUser manager) {
-        this.manager = manager;
-        return this;
-    }
-
     @Override
     public CustomerUser build() {
-        final CustomerUser customerUser = new CustomerUser(this.customer, this.systemUser, this.manager);
+        final CustomerUser customerUser = new CustomerUser(this.customer, this.systemUser);
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("Registering new customer [{}] {} {} {} {} {} {}", customerUser, this.customer,
-                    this.systemUser, this.manager);
+            LOGGER.debug("Registering new Customer User [{}] {} {}", customerUser, this.customer,
+                    this.systemUser);
         }
         return customerUser;
     }

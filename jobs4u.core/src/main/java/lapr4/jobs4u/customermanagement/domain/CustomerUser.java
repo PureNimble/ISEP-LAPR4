@@ -40,18 +40,10 @@ public class CustomerUser implements AggregateRoot<Long> {
     @JoinColumn(name = "account_email", unique = true)
     private SystemUser systemUser;
 
-    /**
-     * cascade = CascadeType.NONE as the systemUser is part of another aggregate
-     */
-    @OneToOne(optional = false)
-    @JoinColumn(name = "managed_by")
-    private SystemUser manager;
-
-    CustomerUser(final Customer customer, final SystemUser systemUser, final SystemUser manager) {
-        Preconditions.noneNull(new Object[] { customer, systemUser, manager });
+    CustomerUser(final Customer customer, final SystemUser systemUser) {
+        Preconditions.noneNull(new Object[] { customer, systemUser });
         this.customer = customer;
         this.systemUser = systemUser;
-        this.manager = manager;
     }
 
     protected CustomerUser() {

@@ -9,7 +9,10 @@ import java.util.Set;
 import org.junit.Test;
 
 import eapli.framework.infrastructure.authz.domain.model.Role;
+import eapli.framework.infrastructure.authz.domain.model.SystemUser;
+import eapli.framework.infrastructure.authz.domain.model.SystemUserBuilder;
 import lapr4.jobs4u.usermanagement.domain.BaseRoles;
+import lapr4.jobs4u.usermanagement.domain.UserBuilderHelper;
 
 public class CustomerTest {
     private final String aCustomerCode = "abcdefghij";
@@ -18,8 +21,10 @@ public class CustomerTest {
     public static Customer dummyCustomer(final String code) {
         // should we load from spring context?
         final CustomerBuilder customerBuilder = new CustomerBuilder();
+        final SystemUserBuilder userBuilder = UserBuilderHelper.builder();
+        final SystemUser aSu = userBuilder.with("username@email.local", "Pass123", "firstName", "lastName", "email@email.local").build();
         return customerBuilder.with("Fnac", "R. Sara Afonso 105, 4460-841 Sra. da Hora", code,
-            "fnac@email.local", "910000000").build();
+            "fnac@email.local", "910000000", aSu).build();
     }
 
     private Customer getNewDummyCustomer(final String code) {

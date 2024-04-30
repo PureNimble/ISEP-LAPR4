@@ -18,8 +18,8 @@ public class CustomerUserTest {
         final SystemUser aSu = userBuilder.with("username@email.local", "Pass123", "firstName", "lastName", "email@email.local").build();
         final SystemUser anotherSu = userBuilder.with("manager@email.local", "Pass123", "firstName", "lastName", "manager@email.local").build();
         final Customer customer = new CustomerBuilder()
-                .with("Fnac", "R. Sara Afonso 105, 4460-841 Sra. da Hora", code, "fnac@email.com", "910000000").build();
-        return new CustomerUserBuilder().with(customer, aSu, anotherSu).build();
+                .with("Fnac", "R. Sara Afonso 105, 4460-841 Sra. da Hora", code, "fnac@email.com", "910000000", anotherSu).build();
+        return new CustomerUserBuilder().with(customer, aSu).build();
     }
 
     @Test

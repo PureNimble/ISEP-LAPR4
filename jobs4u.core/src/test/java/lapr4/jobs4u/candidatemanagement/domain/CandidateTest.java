@@ -9,7 +9,10 @@ import java.util.Set;
 import org.junit.Test;
 
 import eapli.framework.infrastructure.authz.domain.model.Role;
+import eapli.framework.infrastructure.authz.domain.model.SystemUser;
+import eapli.framework.infrastructure.authz.domain.model.SystemUserBuilder;
 import lapr4.jobs4u.usermanagement.domain.BaseRoles;
+import lapr4.jobs4u.usermanagement.domain.UserBuilderHelper;
 
 public class CandidateTest {
 
@@ -19,7 +22,11 @@ public class CandidateTest {
     public static Candidate dummyCandidate(final String email) {
         // should we load from spring context?
         final CandidateBuilder candidateBuilder = new CandidateBuilder();
-        return candidateBuilder.with("Candidate", "Candidate", email, "910000000").build();
+        final SystemUserBuilder userBuilder = UserBuilderHelper.builder();
+        final SystemUser creator = userBuilder
+                .with("manager@email.local", "Pass123", "firstName", "lastName", "manager@email.local").build();
+
+        return candidateBuilder.with("Candidate", "Candidate", email, "910000000", creator).build();
     }
 
     private Candidate getNewDummyCandidate(final String email) {

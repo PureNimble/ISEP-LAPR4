@@ -17,11 +17,12 @@ public class CandidateUserTest {
         final SystemUserBuilder userBuilder = UserBuilderHelper.builder();
         final SystemUser aSu = userBuilder
                 .with("username@email.local", "Pass123", "firstName", "lastName", "email@email.local").build();
-        final SystemUser anotherSu = userBuilder
+        final SystemUser creator = userBuilder
                 .with("manager@email.local", "Pass123", "firstName", "lastName", "manager@email.local").build();
+
         final Candidate candidate = new CandidateBuilder()
-                .with("Pedro", "Cadndiate", email, "910000000").build();
-        return new CandidateUserBuilder().with(candidate, aSu, anotherSu).build();
+                .with("Pedro", "Cadndiate", email, "910000000", creator).build();
+        return new CandidateUserBuilder().with(candidate, aSu).build();
     }
 
     @Test

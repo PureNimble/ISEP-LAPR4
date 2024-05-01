@@ -1,10 +1,12 @@
 package lapr4.jobs4u.jobopeningmanagement.application;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import org.springframework.stereotype.Component;
 
+import lapr4.jobs4u.customermanagement.domain.Customer;
 import lapr4.jobs4u.jobopeningmanagement.domain.JobOpening;
 import lapr4.jobs4u.jobopeningmanagement.domain.JobReference;
 import lapr4.jobs4u.jobopeningmanagement.dto.JobOpeningDTO;
@@ -33,7 +35,31 @@ public class ListJobOpeningsService {
         return jobOpeningsDTO;
     }
 
-    public JobOpening selectedJobOpening(JobOpeningDTO jobOpeningDTO) {
+    public Iterable<JobOpeningDTO> filterByCustomer(final Customer customer) {
+        final Iterable<JobOpening> jobOpenings = this.jobOpeningRepository.filterByCostumer(customer);
+        
+        List<JobOpeningDTO> jobOpeningsDTO = new ArrayList<>();
+        jobOpenings.forEach(jobOpening -> jobOpeningsDTO.add(jobOpening.toDTO()));
+        return jobOpeningsDTO;
+    }
+
+    public Iterable<JobOpeningDTO> filterByActive(final boolean active) {
+        final Iterable<JobOpening> jobOpenings = this.jobOpeningRepository.filterByActive(active);
+        
+        List<JobOpeningDTO> jobOpeningsDTO = new ArrayList<>();
+        jobOpenings.forEach(jobOpening -> jobOpeningsDTO.add(jobOpening.toDTO()));
+        return jobOpeningsDTO;
+    }
+
+    public Iterable<JobOpeningDTO> filterByDate(final Calendar date) {
+        final Iterable<JobOpening> jobOpenings = this.jobOpeningRepository.filterByDate(date);
+        
+        List<JobOpeningDTO> jobOpeningsDTO = new ArrayList<>();
+        jobOpenings.forEach(jobOpening -> jobOpeningsDTO.add(jobOpening.toDTO()));
+        return jobOpeningsDTO;
+    }
+    
+    public JobOpening selectedJobOpening(final JobOpeningDTO jobOpeningDTO) {
         JobOpening selectedJobOpening = jobOpeningRepository
                 .ofIdentity(JobReference.valueOf(jobOpeningDTO.getJobReference()))
                 .orElseThrow(IllegalArgumentException::new);

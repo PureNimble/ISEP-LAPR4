@@ -1,7 +1,10 @@
 package lapr4.jobs4u.persistence.impl.inmemory;
 
+import java.util.Calendar;
+
 import eapli.framework.infrastructure.authz.domain.model.Username;
 import eapli.framework.infrastructure.repositories.impl.inmemory.InMemoryDomainRepository;
+import lapr4.jobs4u.customermanagement.domain.Customer;
 import lapr4.jobs4u.customermanagement.domain.CustomerCode;
 import lapr4.jobs4u.jobopeningmanagement.domain.JobOpening;
 import lapr4.jobs4u.jobopeningmanagement.domain.JobReference;
@@ -20,7 +23,22 @@ public class InMemoryJobOpeningRepository extends InMemoryDomainRepository<JobOp
     }
 
     @Override
+    public Iterable<JobOpening> filterByCostumer(final Customer customer) {
+        return match(e -> e.customer().equals(customer));
+    }
+
+    @Override
     public String findHighestSequenceForCustomer(final CustomerCode customercode) {
         return findHighestSequenceForCustomer(customercode);
+    }
+
+    @Override
+    public Iterable<JobOpening> filterByActive(final boolean active) {
+        return match(e -> e.isActive() == active);
+    }
+
+    @Override
+    public Iterable<JobOpening> filterByDate(final Calendar date) {
+        return match(e -> e.registeredOn().equals(date));
     }
  }

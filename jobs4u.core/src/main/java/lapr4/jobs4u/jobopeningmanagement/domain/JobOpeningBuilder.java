@@ -4,6 +4,8 @@ import eapli.framework.domain.model.DomainFactory;
 import lapr4.jobs4u.customermanagement.domain.Address;
 import lapr4.jobs4u.customermanagement.domain.Customer;
 
+import java.util.Calendar;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -17,9 +19,11 @@ public class JobOpeningBuilder implements DomainFactory<JobOpening> {
     private Address address;
     private Customer customer;
     private JobDescription jobDescription;
+    private Calendar createdOn;
 
     public JobOpeningBuilder with(final String jobReference, final String titleOrFunction, final String contractType,
-            final String mode, final String address, final Customer customer, final String jobDescription) {
+            final String mode, final String address, final Customer customer, final String jobDescription,
+            final Calendar createdOn) {
         this.withJobReference(jobReference);
         this.withTitleOrFunction(titleOrFunction);
         this.withContractType(contractType);
@@ -27,6 +31,7 @@ public class JobOpeningBuilder implements DomainFactory<JobOpening> {
         this.withAddress(address);
         this.withCustomer(customer);
         this.withJobDescription(jobDescription);
+        this.createdOn = createdOn;
         return this;
     }
 
@@ -68,10 +73,11 @@ public class JobOpeningBuilder implements DomainFactory<JobOpening> {
     @Override
     public JobOpening build() {
         final JobOpening jobOpening = new JobOpening(this.jobReference, this.titleOrFunction, this.contractType,
-                this.mode, this.address, this.customer, this.jobDescription);
+                this.mode, this.address, this.customer, this.jobDescription, this.createdOn);
         if (LOGGER.isInfoEnabled()) {
-            LOGGER.info("Registering new Job Opening [{}] {} {} {} {} {} {} {}", jobOpening, this.jobReference,
-                    this.titleOrFunction, this.contractType, this.mode, this.address, this.customer, this.jobDescription);
+            LOGGER.info("Registering new Job Opening [{}] {} {} {} {} {} {} {} {}", jobOpening, this.jobReference,
+                    this.titleOrFunction, this.contractType, this.mode, this.address, this.customer,
+                    this.jobDescription, this.createdOn);
         }
         return jobOpening;
     }

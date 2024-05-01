@@ -31,7 +31,6 @@ public class RegisterJobOpeningUI extends AbstractUI {
         final String jobDescription = Console.readLine("Job Description:");
 
         try {
-            // TODO: job reference should be generated automatically by the system
             Iterable<Customer> customerList = this.listCustomersController.filterByCostumerManager();
             Customer customer = (Customer) Utils.showAndSelectOne(customerList, "Select the customer:");
             this.registerJobOpeningController.SetUpJobOpening(titleOrFunction, contractType, mode,

@@ -11,6 +11,7 @@ import org.junit.Test;
 import eapli.framework.infrastructure.authz.domain.model.Role;
 import eapli.framework.infrastructure.authz.domain.model.SystemUser;
 import eapli.framework.infrastructure.authz.domain.model.SystemUserBuilder;
+import eapli.framework.time.util.CurrentTimeCalendars;
 import lapr4.jobs4u.customermanagement.domain.Customer;
 import lapr4.jobs4u.customermanagement.domain.CustomerBuilder;
 import lapr4.jobs4u.usermanagement.domain.BaseRoles;
@@ -34,7 +35,7 @@ public class JobOpeningTest {
         ;
 
         return jobOpeningBuilder.with(jobReference, "titleOrFunction", "VOLUNTEER",
-                "HYBRID", "address", aCustomer, "jobDescription").build();
+                "HYBRID", "address", aCustomer, "jobDescription", CurrentTimeCalendars.now()).build();
     }
 
     private JobOpening getNewDummyJobOpening(final String jobReference) {

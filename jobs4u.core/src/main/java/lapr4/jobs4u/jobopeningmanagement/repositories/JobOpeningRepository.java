@@ -1,7 +1,10 @@
 package lapr4.jobs4u.jobopeningmanagement.repositories;
 
+import java.util.Calendar;
+
 import eapli.framework.domain.repositories.DomainRepository;
 import eapli.framework.infrastructure.authz.domain.model.Username;
+import lapr4.jobs4u.customermanagement.domain.Customer;
 import lapr4.jobs4u.customermanagement.domain.CustomerCode;
 import lapr4.jobs4u.jobopeningmanagement.domain.JobOpening;
 import lapr4.jobs4u.jobopeningmanagement.domain.JobReference;
@@ -10,5 +13,8 @@ public interface JobOpeningRepository extends DomainRepository<JobReference, Job
         
     Iterable<JobOpening> filterByCostumerManager(final Username username);
     String findHighestSequenceForCustomer(final CustomerCode customerCode);
+    Iterable<JobOpening> filterByCostumer(final Customer customer);
+    Iterable<JobOpening> filterByActive(final boolean active);
+    Iterable<JobOpening> filterByDate(final Calendar date);
 }
 

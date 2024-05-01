@@ -1,7 +1,10 @@
 package lapr4.jobs4u.jobopeningmanagement.application;
 
+import java.util.Calendar;
+
 import eapli.framework.application.UseCaseController;
 import eapli.framework.infrastructure.authz.application.AuthorizationService;
+import eapli.framework.time.util.CurrentTimeCalendars;
 import lapr4.jobs4u.customermanagement.domain.Customer;
 import lapr4.jobs4u.jobopeningmanagement.domain.JobOpening;
 import lapr4.jobs4u.jobopeningmanagement.domain.JobOpeningBuilder;
@@ -32,15 +35,15 @@ public class RegisterJobOpeningController {
             final String contractType,
             final String mode, final String address, final Customer customer, final String jobDescription) {
         final JobOpening jobOpening = doSetUpJobOpening(jobReference, titleOrFunction, contractType, mode, address,
-                customer, jobDescription);
+                customer, jobDescription, CurrentTimeCalendars.now());
         return jobOpeningRepository.save(jobOpening);
     }
 
     private JobOpening doSetUpJobOpening(final String jobReference, final String titleOrFunction,
             final String contractType,
-            final String mode, final String address, final Customer customer, final String jobDescription) {
+            final String mode, final String address, final Customer customer, final String jobDescription, Calendar createdOn) {
         return new JobOpeningBuilder()
-                .with(jobReference, titleOrFunction, contractType, mode, address, customer, jobDescription)
+                .with(jobReference, titleOrFunction, contractType, mode, address, customer, jobDescription, createdOn)
                 .build();
     }
 }

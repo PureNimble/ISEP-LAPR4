@@ -10,6 +10,7 @@ import org.junit.Test;
 
 import eapli.framework.infrastructure.authz.domain.model.SystemUser;
 import eapli.framework.infrastructure.authz.domain.model.SystemUserBuilder;
+import eapli.framework.time.util.CurrentTimeCalendars;
 import lapr4.jobs4u.candidatemanagement.domain.Candidate;
 import lapr4.jobs4u.candidatemanagement.domain.CandidateBuilder;
 import lapr4.jobs4u.customermanagement.domain.Customer;
@@ -48,7 +49,7 @@ public class ApplicationTest {
         ;
 
         JobOpening jobOpening = jobOpeningBuilder.with("12", "titleOrFunction", "VOLUNTEER",
-                "HYBRID", "address", aCustomer, "jobDescription").build();
+                "HYBRID", "address", aCustomer, "jobDescription", CurrentTimeCalendars.now()).build();
 
         return new ApplicationBuilder()
                 .with(applicationNumber, "10-12-2024", files, jobOpening, candidate).build();

@@ -5,13 +5,19 @@ import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
 import jakarta.persistence.Version;
 import lapr4.jobs4u.customermanagement.domain.Address;
 import lapr4.jobs4u.customermanagement.domain.Customer;
 import lapr4.jobs4u.jobopeningmanagement.dto.JobOpeningDTO;
+
+import java.util.Calendar;
+
 import eapli.framework.domain.model.AggregateRoot;
 import eapli.framework.domain.model.DomainEntities;
 import eapli.framework.representations.dto.DTOable;
+import eapli.framework.time.util.CurrentTimeCalendars;
 import eapli.framework.validations.Preconditions;
 
 @Entity
@@ -38,6 +44,11 @@ public class JobOpening implements AggregateRoot<JobReference>, DTOable<JobOpeni
     @Column(nullable = false)
     private Address address;
 
+    private boolean active;
+
+    @Temporal(TemporalType.DATE)
+    private Calendar registeredOn;
+
     /**
      * cascade = CascadeType.NONE as the systemUser is part of another aggregate
      */
@@ -48,8 +59,10 @@ public class JobOpening implements AggregateRoot<JobReference>, DTOable<JobOpeni
     private JobDescription jobDescription;
 
     JobOpening(final JobReference jobReference, final TitleOrFunction titleOrFunction, final ContractType contractType,
-            final Mode mode, final Address address, final Customer customer, final JobDescription jobDescription) {
+            final Mode mode, final Address address, final Customer customer, final JobDescription jobDescription,
+            final Calendar createdOn) {
         Preconditions.noneNull(jobReference, titleOrFunction, contractType, mode, address, customer, jobDescription);
+        this.registeredOn = createdOn == null ? CurrentTimeCalendars.now() : createdOn;
         this.jobReference = jobReference;
         this.titleOrFunction = titleOrFunction;
         this.contractType = contractType;
@@ -57,6 +70,7 @@ public class JobOpening implements AggregateRoot<JobReference>, DTOable<JobOpeni
         this.address = address;
         this.customer = customer;
         this.jobDescription = jobDescription;
+        this.active = true;
 
     }
 
@@ -81,6 +95,22 @@ public class JobOpening implements AggregateRoot<JobReference>, DTOable<JobOpeni
     @Override
     public boolean sameAs(final Object other) {
         return DomainEntities.areEqual(this, other);
+    }
+    
+    public boolean isActive() {
+        return this.active;
+    }
+
+    public Calendar registeredOn() {
+        return this.registeredOn;
+    }
+
+    public void deactivate() {
+        if (!this.active) {
+            throw new IllegalStateException("Cannot deactivate an inactive job opening");
+        } else {
+            this.active = false;
+        }
     }
 
     public JobOpeningDTO toDTO() {

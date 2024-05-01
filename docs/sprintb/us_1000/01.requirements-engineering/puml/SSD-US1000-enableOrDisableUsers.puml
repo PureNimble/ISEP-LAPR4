@@ -15,8 +15,8 @@ activate Admin
     Admin -> System : Asks to disable or enable an User of the Backoffice
     activate System
 
-        System --> Admin : Asks for information (User email, action)
-        note left System : The Admin has to choose\nbetween enable/disable\nand provide the User email
+        System --> Admin : Asks for information (User, action)
+        note left System : The Admin has to choose\nbetween enable/disable\nand provide the User
 
     deactivate System
 

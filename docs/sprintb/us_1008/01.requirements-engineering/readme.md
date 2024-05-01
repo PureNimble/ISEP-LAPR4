@@ -120,6 +120,28 @@ should be supported:
 >
 > **Answer:** A Q41 refere a mesma US. Lá refere-se que cada modulo será registado no sistema através de 2 dados, por exemplo, associando um nome ao jar num ficheiro de configuração – “5 anos experiencia java”, “req-model-5-years-java.jar”. Ou seja, assume-se que cada modulo terá um nome/designação (que suponho que deverá ser única) e a este nome ficará associado o nome do ficheiro jar (provavelmente um path completo) que implementa esse módulo. Ou seja, esse nome/designação pode ser considerado como um identificador especifico/manual.
 
+> **Date:** 2024-04-23
+>
+> **Question 121:** [US 1008] Perguntas para os plugins.- É possível esclarecer-nos se as perguntas a serem feitas para os Interview Models e os Requirement Especifications são aquelas que estão no exemplo da documentação ou tem algum grupo de questões que gostaria que nós utiliza-se-mos?
+>
+> **Answer:** O documento de especificação apresenta, como disse, exemplos. São apenas exemplos indicativos. Podem usar esses exemplos como casos de teste e como ponto de partida para definirem outros. Mas é suposto a solução suportar mais do que apenas os exemplos que estão no documento. Em qualquer dos plugins, o tipo de perguntas que deve ser suportado é o que está apresentado na página 8 do documento. Como product onwer eu gostaria que uma demonstração funcional do sistema incluísse pelo menos 2 plugins de cada tipo, para se poder demonstrar, minimamente, o suporte para mais do que um plugin usado (de cada tipo) em simultâneo. **Deve ainda demonstrar o uso de todos os tipos de perguntas apresentados na página 8 (atualizado em 2024-04-27)**
+>
+> **Question 124:** US1008- Na US1008, o deployment do jar file (plugin) é suposto ser armazenado na base de dados? De que forma vamos manter o plugin após diferentes utilizações? Ou devemos armazenar uma string para o path do jar file?
+>
+> **Answer:** Esta questão é um pouco técnica. Como cliente o que eu pretendo é que seja possível usar vários módulos (plugins). Não me parece que seja necessário armazenar os plugins na base de dados. Até poderia ser feito, mas não vamos por ai. Um plugin pode ser visto como parte do código da aplicação que é “feito” depois da aplicação estar em produção, podendo-se acrescentar “funcionalidade” à aplicação sem ter de gerar uma nova versão da aplicação, por intermédio da instalação de plugins. Sendo código. As suas versões são geridas como o restante código, num repositório de código fonte. Mas estou a entrar em considerações técnicas que queria evitar. Para questões técnicas existe outro fórum e existem os docentes das UC.
+
+> **Date:** 2024-04-26
+>
+> **Question 131:** US1008 - Interview Questions- Pode nos esclarecer se as perguntas para a entrevista são as mesmas para todos os candidatos ou se tem uma pool de perguntas das quais são selecionadas de forma aleatória. Essas questões e as notas de cada são fornecidas pelo cliente?
+>
+> **Answer:** As perguntas são as mesmas para todos os candidatos a um job opening (ver US 1011). As questões e as notas são definidas pelo Customer Manager em colaboração com o Customer. Por favor ver Q121.
+
+> **Date:** 2024-04-27
+>
+> **Question 132:** US1008 - US2003 - Usage of ANTLR- Is it possible to clarify the usage of ANTRL within user story 2003? You've stated in Q15, Q102 and Q119, that US2003 simply generates the file, while in US2004 the Operator defines the answers and uploads the file. Where is this file uploaded to? Given this, where is the usage of ANTRL in US2003 directed to?
+>
+> **Answer:** Regarding the first question, although difficult it is possible to generate the template text file using ANTLR. If so, there we have the usage o ANTLR. Although, unless there is some specific evaluation requirement from LPROG, **it is acceptable that the template file is hardcoded in the plugin** (no need for any “complex” generation process/function). Regarding the second question, the file is uploaded to the system. The last question was answered first.
+
 ### 1.3. Acceptance Criteria
 
 * **AC 1:** The generated plugin must be a jar file.

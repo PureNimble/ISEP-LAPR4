@@ -43,14 +43,12 @@ import eapli.framework.presentation.console.menu.VerticalMenuRenderer;
  *
  * Created by nuno on 22/03/16.
  */
-public class AddUserUI extends AbstractUI {
+public class AddBackofficeUserUI extends AbstractUI {
 
     private final AddUserController theController = new AddUserController();
 
     @Override
     protected boolean doShow() {
-        // FIXME avoid duplication with SignUpUI. reuse UserDataWidget from
-        // UtenteApp
         final String firstName = Console.readLine("First Name");
         final String lastName = Console.readLine("Last Name");
         final String email = Console.readLine("E-Mail");
@@ -88,6 +86,6 @@ public class AddUserUI extends AbstractUI {
 
     @Override
     public String headline() {
-        return "Add User";
+        return "Add Backoffice User";
     }
 }

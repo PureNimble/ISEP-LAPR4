@@ -20,6 +20,7 @@
  */
 package lapr4.jobs4u.persistence.impl.inmemory;
 
+import lapr4.jobs4u.applicationmanagement.repositories.ApplicationRepository;
 import lapr4.jobs4u.candidatemanagement.repositories.CandidateRepository;
 import lapr4.jobs4u.candidatemanagement.repositories.CandidateUserRepository;
 import lapr4.jobs4u.customermanagement.repositories.CustomerRepository;
@@ -117,5 +118,15 @@ public class InMemoryRepositoryFactory implements RepositoryFactory {
     @Override
     public JobOpeningRepository jobOpenings() {
         return jobOpenings(null);
+    }
+
+    @Override
+    public ApplicationRepository applications(final TransactionalContext tx) {
+        return new InMemoryApplicationRepository();
+    }
+
+    @Override
+    public ApplicationRepository applications() {
+        return applications(null);
     }
 }

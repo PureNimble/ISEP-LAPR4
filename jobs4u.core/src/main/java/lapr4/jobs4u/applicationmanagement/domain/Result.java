@@ -2,6 +2,7 @@ package lapr4.jobs4u.applicationmanagement.domain;
 
 import eapli.framework.domain.model.DomainEntities;
 import eapli.framework.domain.model.DomainEntity;
+import eapli.framework.validations.Preconditions;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -17,18 +18,17 @@ public class Result implements DomainEntity<Long> {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long pk;
 
-    @Column(nullable = false)
-    OutCome outcome;
+    @Column(nullable = true)
+    Outcome outcome;
 
     Justification justification;
 
-    protected Result(final String outcome, final String justification) {
-        this.outcome = new OutCome(outcome);
-        this.justification = Justification.valueOf(justification);
-
+    protected Result(String outcome) {
+        this.outcome = new Outcome(outcome);
     }
 
-    protected Result() {
+    public static Result valueOf() {
+        return new Result(OutcomeValue.PENDING.toString());
     }
 
     @Override
@@ -48,6 +48,19 @@ public class Result implements DomainEntity<Long> {
 
     public Long pk() {
         return identity();
+    }
+
+    public void addOutcome(String outcome, String justification) {
+        Preconditions.nonEmpty(outcome, justification);
+        this.outcome = new Outcome(outcome);
+        this.justification = new Justification(justification);
+    }
+
+    public void addOutcome(String outcome) {
+        Preconditions.nonEmpty(outcome);
+        Preconditions.ensure(outcome.equals(OutcomeValue.APPROVED.toString()),
+                "Justification is only needed for rejected applications.");
+        this.outcome = new Outcome(outcome);
     }
 
     @Override

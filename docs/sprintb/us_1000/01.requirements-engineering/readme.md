@@ -99,11 +99,12 @@ _N/A_
 **Input Data:**
 
 * Typed data:
-	* Name
+	* First Name
+	* Last Name
 	* Email
 
 * Selected data:
-	* Role (Customer Manager, Operator)
+	* Role (Customer Manager, Operator, Language Engineer)
 
 **Output Data:**
 
@@ -115,7 +116,7 @@ _N/A_
 
 **Input Data:**
 
-* Typed data:
+* Typed or Selected data:
 	* User data (email)
 
 * Selected data:

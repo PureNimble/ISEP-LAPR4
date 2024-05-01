@@ -21,6 +21,9 @@
     <class>lapr4.jobs4u.recruitmentprocessmanagement.domain.AnalysisPhase</class>
     <class>lapr4.jobs4u.recruitmentprocessmanagement.domain.ResultPhase</class>
     <class>lapr4.jobs4u.jobopeningmanagement.domain.JobOpening</class>
+    <class>lapr4.jobs4u.applicationmanagement.domain.Application</class>
+    <class>lapr4.jobs4u.applicationmanagement.domain.Result</class>
+
 
     <properties>
       <!-- <property name="jakarta.persistence.jdbc.url" value="jdbc:h2:tcp://localhost/~/jobs4u"/> -->

@@ -90,6 +90,23 @@ post, telephone), but the automation of this reception is outside the scope of t
 >
 > **Answer:** Os mais “normais” serão os que aparecem na documentação. Mas penso que faz sentido o sistema aceitar outros diferentes caso o Customer Manager assim o entender.
 
+> **Date:** 2024-04-22
+>
+> **Question 114:** US1002 - Um customer manager tem a responsabilidade de criar job openings para os customers em que é responsável. Na hora da criação da job opening, como é que ele refere qual é o customer daquela job opening? Seleciona um customer dentro dos que está responsável?
+>
+> **Answer:** Sim, pode ser como indica.
+>
+> **Question 115:** US1002, 1007, 1009 - Na US1002 ao registar um job opening é imperativo selecionar também o job requirement e/ou as fases de recrutamento?
+>
+> **Answer:** São US diferentes e, do meu ponto de vista, podem ser executadas em momentos diferentes. Apenas lembro que, como é evidente, desejo que o sistema esteja sempre num estado consistente.
+
+> **Date:** 2024-04-23
+>
+> **Question 117:** US1002 - Relativamente aos atributos Contract Type e Mode de um job opening. Os Contract Types são só "full-time or part-time" ou pode haver outros, exemplo part-time de 15 horas, part-time de 20 horas, etc...? O mesmo para Mode, só existe os três tipos mencionados no enunciado "Such as remote, hybrid, onsite" ou podem existir mais?
+>
+> **Answer:** Ver Q109.
+
+
 ### 1.3. Acceptance Criteria
 
 * **AC 1:** The job opening must include the following information:
@@ -128,14 +145,14 @@ post, telephone), but the automation of this reception is outside the scope of t
 
 * Typed data:
 	* Title or function
-	* Contract Type
-	* Mode
 	* Address
-	* Company
 	* Number of vacancies
 	* Description
 
 * Selected data:
+	* Contract Type
+	* Mode
+	* Company
 	* Requirements (US 1009)
 
 **Output Data:**

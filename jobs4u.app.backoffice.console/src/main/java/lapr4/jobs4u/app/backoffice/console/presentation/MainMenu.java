@@ -24,11 +24,11 @@
 package lapr4.jobs4u.app.backoffice.console.presentation;
 
 import lapr4.jobs4u.Application;
-import lapr4.jobs4u.app.backoffice.console.presentation.authz.AddUserUI;
-import lapr4.jobs4u.app.backoffice.console.presentation.authz.DeactivateUserAction;
+import lapr4.jobs4u.app.backoffice.console.presentation.authz.AddBackofficeUserUI;
+import lapr4.jobs4u.app.backoffice.console.presentation.authz.EnableOrDisableBackofficeUserUI;
 import lapr4.jobs4u.app.backoffice.console.presentation.authz.ImportApplicationsUI;
 import lapr4.jobs4u.app.backoffice.console.presentation.authz.ListJobOpeningsUI;
-import lapr4.jobs4u.app.backoffice.console.presentation.authz.ListUsersAction;
+import lapr4.jobs4u.app.backoffice.console.presentation.authz.ListBackofficeUsersUI;
 import lapr4.jobs4u.app.backoffice.console.presentation.authz.RegisterCandidateUI;
 import lapr4.jobs4u.app.backoffice.console.presentation.authz.RegisterCustomerUI;
 import lapr4.jobs4u.app.backoffice.console.presentation.authz.RegisterJobOpeningUI;
@@ -61,7 +61,7 @@ public class MainMenu extends AbstractUI {
     // USERS
     private static final int ADD_USER_OPTION = 1;
     private static final int LIST_USERS_OPTION = 2;
-    private static final int DEACTIVATE_USER_OPTION = 3;
+    private static final int ENABLE_DISABLE_USER_OPTION = 3;
 
     //CUSTOMER MANAGER
     private static final int REGISTER_CUSTOMER = 1;
@@ -157,9 +157,9 @@ public class MainMenu extends AbstractUI {
     private Menu buildAdminMenu() {
         final Menu menu = new Menu("Users >");
 
-        menu.addItem(ADD_USER_OPTION, "Add User", new AddUserUI()::show);
-        menu.addItem(LIST_USERS_OPTION, "List all Users", new ListUsersAction());
-        menu.addItem(DEACTIVATE_USER_OPTION, "Deactivate User", new DeactivateUserAction());
+        menu.addItem(ADD_USER_OPTION, "Add User", new AddBackofficeUserUI()::show);
+        menu.addItem(LIST_USERS_OPTION, "List all Users", new ListBackofficeUsersUI()::show);
+        menu.addItem(ENABLE_DISABLE_USER_OPTION, "Enable/Disable User", new EnableOrDisableBackofficeUserUI()::show);
         menu.addItem(EXIT_OPTION, RETURN_LABEL, Actions.SUCCESS);
 
         return menu;
@@ -181,8 +181,7 @@ public class MainMenu extends AbstractUI {
         final Menu menu = new Menu("Users >");
 
         menu.addItem(ADD_USER_OPTION, "Register Candidate", new RegisterCandidateUI()::show);
-        menu.addItem(LIST_USERS_OPTION, "List all Users", new ListUsersAction());
-        menu.addItem(DEACTIVATE_USER_OPTION, "Deactivate User", new DeactivateUserAction());
+        menu.addItem(LIST_USERS_OPTION, "List all Users", new ListBackofficeUsersUI()::show);
         menu.addItem(IMPORT_APPLICATIONS_OPTION, "Import Applications", new ImportApplicationsUI()::show);
         menu.addItem(EXIT_OPTION, RETURN_LABEL, Actions.SUCCESS);
 
@@ -192,9 +191,8 @@ public class MainMenu extends AbstractUI {
     private Menu buildLanguageEngineerMenu() {
         final Menu menu = new Menu("Users >");
 
-        menu.addItem(ADD_USER_OPTION, "Add User", new AddUserUI()::show);
-        menu.addItem(LIST_USERS_OPTION, "List all Users", new ListUsersAction());
-        menu.addItem(DEACTIVATE_USER_OPTION, "Deactivate User", new DeactivateUserAction());
+        menu.addItem(ADD_USER_OPTION, "Add User", new AddBackofficeUserUI()::show);
+        menu.addItem(LIST_USERS_OPTION, "List all Users", new ListBackofficeUsersUI()::show);
         menu.addItem(EXIT_OPTION, RETURN_LABEL, Actions.SUCCESS);
 
         return menu;

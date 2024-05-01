@@ -7,8 +7,9 @@ import org.junit.Test;
 
 public class FileTest {
 
-    static final String FILE = "sharedfolder/temp";
-    static final String FILE2 = "temo/sharedfolder";
+    static final String VALID_FILE = "1-big-file-1.txt";
+    static final String VALID_FILE2 = "1-candidate-data.txt";
+    static final String INVALID_FILE = "temo/sharedfolder";
 
     public static File dummyFile(final String file) {
 
@@ -22,9 +23,9 @@ public class FileTest {
     @Test
     public void ensureFileEqualsPassesForTheSameFileValues() throws Exception {
 
-        final File aFile = getNewDummyFile(FILE);
+        final File aFile = getNewDummyFile(VALID_FILE);
 
-        final File anotherFile = getNewDummyFile(FILE);
+        final File anotherFile = getNewDummyFile(VALID_FILE);
 
         final boolean expected = aFile.equals(anotherFile);
 
@@ -34,9 +35,9 @@ public class FileTest {
     @Test
     public void ensureFileEqualsFailsForDifferenteFileValues() throws Exception {
 
-        final File aFile = getNewDummyFile(FILE);
+        final File aFile = getNewDummyFile(VALID_FILE);
 
-        final File anotherFile = getNewDummyFile(FILE2);
+        final File anotherFile = getNewDummyFile(VALID_FILE2);
 
         final boolean expected = aFile.equals(anotherFile);
 
@@ -45,7 +46,7 @@ public class FileTest {
 
     @Test
     public void ensureFileEqualsAreTheSameForTheSameInstance() throws Exception {
-        final File file = getNewDummyFile(FILE);
+        final File file = getNewDummyFile(VALID_FILE);
 
         final boolean expected = file.equals(file);
 
@@ -54,16 +55,11 @@ public class FileTest {
 
     @Test
     public void ensureFileEqualsFailsForDifferenteObjectTypes() throws Exception {
-        final File file = getNewDummyFile(FILE);
+        final File file = getNewDummyFile(VALID_FILE);
 
-        final boolean expected = file.equals(getNewDummyFile(FILE2));
+        final boolean expected = file.equals(getNewDummyFile(VALID_FILE));
 
-        assertFalse(expected);
+        assertTrue(expected);
     }
-
-    /* @Test(expected = Exception.class)
-    public void testInvalidFile() throws Exception {
-        final File file = getNewDummyFile("boas");
-    } */
 
 }

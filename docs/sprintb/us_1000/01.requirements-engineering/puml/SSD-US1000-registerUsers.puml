@@ -15,8 +15,8 @@ activate Admin
     Admin -> System : Asks to register an User of the Backoffice
     activate System
 
-        System --> Admin : Asks for information (name, email, role)
-        note left System : The Admin has to provide \nthe name and email and \nmust pick a role from the \nlist of available roles \n(Customer Manager and Operator)
+        System --> Admin : Asks for information (first name, last name, email, role)
+        note left System : The Admin has to provide \nthe first and last name, the email and \nmust pick a role from the \nlist of available roles \n(Customer Manager, Operator and Language Engineer)
 
     deactivate System
 

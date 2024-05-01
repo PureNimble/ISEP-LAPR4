@@ -4,6 +4,7 @@ import jakarta.persistence.Column;
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.Version;
@@ -40,7 +41,7 @@ public class Customer implements AggregateRoot<CustomerCode> {
     /**
      * cascade = CascadeType.NONE as the systemUser is part of another aggregate
      */
-    @OneToOne(optional = false)
+    @ManyToOne(optional = false)
     @JoinColumn(name = "managed_by")
     private SystemUser manager;
 

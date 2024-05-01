@@ -30,6 +30,19 @@ _N/A_
 >
 > **Answer:** O processo de seleção/recrutamento termina apenas no “fim”, pelo que não percebo muito bem a primeira pergunta. Quanto à segunda pergunta penso que faz sentido incluir o estado da aplicação, até para o Customer Manager perceber as applications que foram rejeitadas por não passarem os requisitos. 
 
+> **Date:** 2024-04-24
+>
+> **Question 127:** US1005- Quando queremos listar applications temos de escolher de qual job opening vai ser. Como é que o costumer manager escolhe a job opening? Listamos todas as job openings que pertencem aos costumers que ele está responsável, para que ele escolhe uma?
+>
+> **Answer:** Pergunta similar à Q123. (Ver Engenharia de Requisitos da US1007)
+
+> **Date:** 2024-04-25
+>
+> **Question 129:** US1005- O customer manager vai receber a lista de todas as job Openings e selecionará uma, feito isto deve aparecer as job applications correspondentes. Que informações das job applications tem que ser mostradas ao listar?
+>
+> **Answer:** As candidaturas são de um candidato (pessoa), pelo acho que deve aparecer a identificação da candidatura (application), assim como a identificação do candidato e o seu nome.
+
+
 ### 1.3. Acceptance Criteria
 
 **AC 1:** All applications for a job opening must be listed independently of their state.

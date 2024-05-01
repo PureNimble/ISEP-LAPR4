@@ -24,12 +24,12 @@ import eapli.framework.actions.Action;
 
 /**
  *
- * @author losa
+ * @author Fernando
  */
-public class ListUsersAction implements Action {
+public class EnableOrDisableBackofficeUserAction implements Action {
 
     @Override
     public boolean execute() {
-        return new ListUsersUI().show();
+        return new EnableOrDisableBackofficeUserUI().show();
     }
 }

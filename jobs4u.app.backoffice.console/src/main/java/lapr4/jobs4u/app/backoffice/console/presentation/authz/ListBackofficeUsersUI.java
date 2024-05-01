@@ -33,12 +33,12 @@ import eapli.framework.visitor.Visitor;
  * @author losa
  */
 @SuppressWarnings({ "squid:S106" })
-public class ListUsersUI extends AbstractListUI<SystemUser> {
+public class ListBackofficeUsersUI extends AbstractListUI<SystemUser> {
     private ListUsersController theController = new ListUsersController();
 
     @Override
     public String headline() {
-        return "List Users";
+        return "List Backoffice Users";
     }
 
     @Override
@@ -58,7 +58,7 @@ public class ListUsersUI extends AbstractListUI<SystemUser> {
 
     @Override
     protected String elementName() {
-        return "User";
+        return "Backoffice User";
     }
 
     @Override

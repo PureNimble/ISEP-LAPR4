@@ -35,10 +35,16 @@ import eapli.framework.infrastructure.authz.domain.model.SystemUser;
  * @author Fernando
  */
 @UseCaseController
-public class DeactivateUserController {
+public class EnableOrDisableBackofficeUserController {
 
     private final AuthorizationService authz = AuthzRegistry.authorizationService();
     private final UserManagementService userSvc = AuthzRegistry.userService();
+
+    public Iterable<SystemUser> allUsers() {
+        authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.ADMIN);
+
+        return userSvc.allUsers();
+    }
 
     public Iterable<SystemUser> activeUsers() {
         authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.ADMIN);
@@ -46,9 +52,19 @@ public class DeactivateUserController {
         return userSvc.activeUsers();
     }
 
-    public SystemUser deactivateUser(final SystemUser user) {
+    public Iterable<SystemUser> deactivatedUsers() {
         authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.ADMIN);
 
-        return userSvc.deactivateUser(user);
+        return userSvc.deactivatedUsers();
+    }
+
+    public void enableOrDisableUser(SystemUser user, String newStatus) {
+        authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.ADMIN);
+
+        if (newStatus.equalsIgnoreCase("enable")) {
+            userSvc.activateUser(user);
+        } else if (newStatus.equalsIgnoreCase("disable")) {
+            userSvc.deactivateUser(user);
+        }
     }
 }

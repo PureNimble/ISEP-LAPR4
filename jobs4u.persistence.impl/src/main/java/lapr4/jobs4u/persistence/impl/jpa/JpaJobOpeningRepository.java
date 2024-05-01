@@ -3,6 +3,7 @@ package lapr4.jobs4u.persistence.impl.jpa;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 import eapli.framework.domain.repositories.TransactionalContext;
 import eapli.framework.infrastructure.authz.domain.model.Username;
@@ -61,6 +62,12 @@ public class JpaJobOpeningRepository extends JpaAutoTxRepository<JobOpening, Job
         final Map<String, Object> params = new HashMap<>();
         params.put("registeredOn", registeredOn);
         return match("e.registeredOn=:registeredOn", params);
+    }
+
+    public Optional<JobOpening> findJobOpeningByReference(final JobReference jobReference) {
+        final Map<String, Object> params = new HashMap<>();
+        params.put("jobReference", jobReference);
+        return matchOne("e.jobReference=:jobReference", params);
     }
 
 }

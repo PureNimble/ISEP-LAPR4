@@ -20,7 +20,7 @@ public class ApplicationBuilder implements DomainFactory<Application> {
     private JobOpening jobOpening;
     private Candidate candidate;
 
-    public ApplicationBuilder with(final String applicationNumber, final String date,
+    public ApplicationBuilder with(final String applicationNumber, final Date date,
             final List<File> file, final JobOpening jobOpening, final Candidate candidate) {
         this.withApplicationNumber(applicationNumber);
         this.withDate(date);
@@ -37,8 +37,8 @@ public class ApplicationBuilder implements DomainFactory<Application> {
         return this;
     }
 
-    public ApplicationBuilder withDate(final String date) {
-        this.date = Date.valueOf(date);
+    public ApplicationBuilder withDate(final Date date) {
+        this.date = date;
         return this;
     }
 

@@ -1,7 +1,6 @@
 package lapr4.jobs4u.applicationmanagement.domain;
 
 import jakarta.persistence.Embeddable;
-import java.util.regex.Pattern;
 import eapli.framework.domain.model.ValueObject;
 import eapli.framework.validations.Preconditions;
 
@@ -9,12 +8,10 @@ import eapli.framework.validations.Preconditions;
 public class ApplicationNumber implements ValueObject, Comparable<ApplicationNumber> {
 
     private static final long serialVersionUID = 1L;
-    private static final Pattern VALID_PATTERN = Pattern.compile("^[0-9]+$");
     private final String number;
 
     protected ApplicationNumber(final String applicationNumber) {
         Preconditions.nonEmpty(applicationNumber, "Application number should neither be null nor empty");
-        Preconditions.matches(VALID_PATTERN, applicationNumber, "Invalid Application Number: " + applicationNumber);
         this.number = applicationNumber;
     }
 

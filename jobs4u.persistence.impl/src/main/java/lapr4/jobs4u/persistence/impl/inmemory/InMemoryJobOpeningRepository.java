@@ -1,6 +1,7 @@
 package lapr4.jobs4u.persistence.impl.inmemory;
 
 import java.util.Calendar;
+import java.util.Optional;
 
 import eapli.framework.infrastructure.authz.domain.model.Username;
 import eapli.framework.infrastructure.repositories.impl.inmemory.InMemoryDomainRepository;
@@ -41,4 +42,8 @@ public class InMemoryJobOpeningRepository extends InMemoryDomainRepository<JobOp
     public Iterable<JobOpening> filterByDate(final Calendar date) {
         return match(e -> e.registeredOn().equals(date));
     }
- }
+    
+    public Optional<JobOpening> findJobOpeningByReference(final JobReference jobReference) {
+        return Optional.ofNullable(matchOne(e -> e.identity().equals(jobReference)).orElse(null));
+    }
+}

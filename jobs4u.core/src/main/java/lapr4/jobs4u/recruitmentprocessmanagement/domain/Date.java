@@ -45,6 +45,10 @@ public class Date implements ValueObject, Comparable<Date> {
         return thisDate.isBefore(otherDate);
     }
 
+    public static Date today() {
+        return new Date(LocalDate.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy")));
+    }
+
     @Override
     public boolean equals(final Object o) {
         if (this == o) {

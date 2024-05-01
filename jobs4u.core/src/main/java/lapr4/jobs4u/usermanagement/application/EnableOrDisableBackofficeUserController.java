@@ -24,6 +24,11 @@
 package lapr4.jobs4u.usermanagement.application;
 
 import lapr4.jobs4u.usermanagement.domain.BaseRoles;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+
 import eapli.framework.application.UseCaseController;
 import eapli.framework.infrastructure.authz.application.AuthorizationService;
 import eapli.framework.infrastructure.authz.application.AuthzRegistry;
@@ -49,13 +54,24 @@ public class EnableOrDisableBackofficeUserController {
     public Iterable<SystemUser> activeUsers() {
         authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.ADMIN);
 
-        return userSvc.activeUsers();
+        return this.backOffice(userSvc.activeUsers());
     }
 
     public Iterable<SystemUser> deactivatedUsers() {
         authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.ADMIN);
 
-        return userSvc.deactivatedUsers();
+        return this.backOffice(userSvc.deactivatedUsers());
+    }
+
+    public Iterable<SystemUser> backOffice(Iterable<SystemUser> systemUsers) {
+        authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.ADMIN);
+
+        List<SystemUser> userList = new ArrayList<>();
+        systemUsers.forEach(userList::add);
+        List<SystemUser> filtered = userList.stream()
+                .filter(systemUser -> systemUser.hasAny(BaseRoles.nonUserValues()))
+                .collect(Collectors.toList());
+        return filtered;
     }
 
     public void enableOrDisableUser(SystemUser user, String newStatus) {

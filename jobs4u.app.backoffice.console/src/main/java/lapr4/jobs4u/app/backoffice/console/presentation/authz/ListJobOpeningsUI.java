@@ -2,8 +2,6 @@ package lapr4.jobs4u.app.backoffice.console.presentation.authz;
 
 import java.io.PrintStream;
 
-import org.hibernate.event.spi.PersistContext;
-
 import eapli.framework.infrastructure.authz.application.AuthzRegistry;
 import eapli.framework.presentation.console.AbstractListUI;
 import eapli.framework.presentation.console.ListWidget;

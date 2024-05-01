@@ -32,6 +32,7 @@ import eapli.framework.infrastructure.authz.application.AuthzRegistry;
 import eapli.framework.infrastructure.authz.application.UserManagementService;
 import eapli.framework.infrastructure.authz.domain.model.SystemUser;
 import eapli.framework.infrastructure.authz.domain.model.Username;
+import eapli.framework.infrastructure.authz.domain.repositories.UserRepository;
 
 /**
  *
@@ -42,6 +43,11 @@ public class ListUsersController {
 
     private final AuthorizationService authz = AuthzRegistry.authorizationService();
     private final UserManagementService userSvc = AuthzRegistry.userService();
+    private final ListBackofficeUsersService listBackofficeUsersService;
+
+    public ListUsersController(UserRepository userRepository) {
+        this.listBackofficeUsersService = new ListBackofficeUsersService(userRepository);
+    }
 
     public Iterable<SystemUser> allUsers() {
         authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.ADMIN);
@@ -51,5 +57,11 @@ public class ListUsersController {
 
     public Optional<SystemUser> find(final Username u) {
         return userSvc.userOfIdentity(u);
+    }
+
+    public Iterable<SystemUser> backofficeUsers() {
+        authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.ADMIN);
+
+        return listBackofficeUsersService.backofficeUsers();
     }
 }

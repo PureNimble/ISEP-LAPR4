@@ -23,6 +23,7 @@
  */
 package lapr4.jobs4u.app.backoffice.console.presentation.authz;
 
+import lapr4.jobs4u.infrastructure.persistence.PersistenceContext;
 import lapr4.jobs4u.usermanagement.application.ListUsersController;
 import eapli.framework.infrastructure.authz.domain.model.SystemUser;
 import eapli.framework.presentation.console.AbstractListUI;
@@ -34,7 +35,7 @@ import eapli.framework.visitor.Visitor;
  */
 @SuppressWarnings({ "squid:S106" })
 public class ListBackofficeUsersUI extends AbstractListUI<SystemUser> {
-    private ListUsersController theController = new ListUsersController();
+    private ListUsersController theController = new ListUsersController(PersistenceContext.repositories().users());
 
     @Override
     public String headline() {
@@ -48,7 +49,7 @@ public class ListBackofficeUsersUI extends AbstractListUI<SystemUser> {
 
     @Override
     protected Iterable<SystemUser> elements() {
-        return theController.allUsers();
+        return theController.backofficeUsers();
     }
 
     @Override
@@ -63,6 +64,6 @@ public class ListBackofficeUsersUI extends AbstractListUI<SystemUser> {
 
     @Override
     protected String listHeader() {
-        return String.format("#  %-10s%-30s%-30s", "EMAIL", "F. NAME", "L. NAME");
+        return String.format("#  %-30s%-25s%-15s", "EMAIL", "NAME", "ROLE");
     }
 }

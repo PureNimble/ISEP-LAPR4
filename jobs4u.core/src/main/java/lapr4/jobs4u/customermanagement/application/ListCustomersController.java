@@ -25,10 +25,12 @@ public class ListCustomersController {
     }
 
     public Optional<Customer> find(final CustomerCode u) {
+        authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.CUSTOMER_MANAGER);
         return customerService.findByCustomerCode(u);
     }
 
     public Iterable<Customer> filterByCostumerManager() {
+        authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.CUSTOMER_MANAGER);
         return customerService.filterByCostumerManager();
     }
 }

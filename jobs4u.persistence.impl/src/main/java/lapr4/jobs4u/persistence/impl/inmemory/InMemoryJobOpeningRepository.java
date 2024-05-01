@@ -1,7 +1,6 @@
 package lapr4.jobs4u.persistence.impl.inmemory;
 
-import java.util.Optional;
-
+import eapli.framework.infrastructure.authz.domain.model.Username;
 import eapli.framework.infrastructure.repositories.impl.inmemory.InMemoryDomainRepository;
 import lapr4.jobs4u.jobopeningmanagement.domain.JobOpening;
 import lapr4.jobs4u.jobopeningmanagement.domain.JobReference;
@@ -15,7 +14,7 @@ public class InMemoryJobOpeningRepository extends InMemoryDomainRepository<JobOp
     }
 
     @Override
-    public Optional<JobOpening> findByJobReference(final JobReference reference) {
-        return Optional.of(data().get(reference));
+    public Iterable<JobOpening> filterByCostumerManager(final Username username) {
+        return match(e -> e.customer().manager().identity().equals(username));
     }
  }

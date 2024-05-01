@@ -20,6 +20,7 @@
  */
 package lapr4.jobs4u.infrastructure.persistence;
 
+import lapr4.jobs4u.applicationmanagement.repositories.ApplicationRepository;
 import lapr4.jobs4u.candidatemanagement.repositories.CandidateRepository;
 import lapr4.jobs4u.candidatemanagement.repositories.CandidateUserRepository;
 import lapr4.jobs4u.customermanagement.repositories.CustomerRepository;
@@ -135,7 +136,7 @@ public interface RepositoryFactory {
     /**
      *
      * @param autoTx
-     *            the transactional context to enroll
+     *               the transactional context to enroll
      * @return
      */
     JobOpeningRepository jobOpenings(TransactionalContext autoTx);
@@ -146,4 +147,19 @@ public interface RepositoryFactory {
      * @return
      */
     JobOpeningRepository jobOpenings();
+
+    /**
+     *
+     * @param autoTx
+     *               the transactional context to enroll
+     * @return
+     */
+    ApplicationRepository applications(TransactionalContext autoTx);
+
+    /**
+     * repository will be created in auto transaction mode
+     *
+     * @return
+     */
+    ApplicationRepository applications();
 }

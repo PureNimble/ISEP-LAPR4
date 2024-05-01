@@ -9,9 +9,13 @@ import jakarta.persistence.Column;
 import jakarta.persistence.ElementCollection;
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.Version;
+import lapr4.jobs4u.candidatemanagement.domain.Candidate;
+import lapr4.jobs4u.jobopeningmanagement.domain.JobOpening;
 import lapr4.jobs4u.recruitmentprocessmanagement.domain.Date;
 
 @Entity
@@ -34,18 +38,25 @@ public class Application implements AggregateRoot<ApplicationNumber> {
 
     @ElementCollection
     private List<File> file;
-    // TODO: add JobOpening
-    // @OneToOne(optional = false)
-    // @JoinColumn(name = "JobOpennig", unique = true)
-    // private JobOpening jobOpening;
+
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "JobOpenning")
+    private JobOpening jobOpening;
+
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "Candidate")
+    private Candidate candidate;
 
     Application(final Date date, final ApplicationNumber applicationNumber,
-            final List<File> file) {
-        Preconditions.noneNull(new Object[] { date, applicationNumber, file });
+            final List<File> file, final JobOpening jobOpening, final Candidate candidate,
+            final Result result) {
+        Preconditions.noneNull(new Object[] { date, applicationNumber, file, jobOpening, candidate, result });
         this.date = date;
         this.applicationNumber = applicationNumber;
         this.file = file;
-
+        this.jobOpening = jobOpening;
+        this.candidate = candidate;
+        this.result = result;
     }
 
     protected Application() {
@@ -71,8 +82,12 @@ public class Application implements AggregateRoot<ApplicationNumber> {
         return identity();
     }
 
-    public void addResult(Result result) {
-        this.result = result;
+    public void addResult(String outcome) {
+        this.result.addOutcome(outcome);
+    }
+
+    public void addResult(String outcome, String justification) {
+        this.result.addOutcome(outcome, justification);
     }
 
     @Override

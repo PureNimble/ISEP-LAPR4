@@ -5,20 +5,20 @@ import eapli.framework.validations.Preconditions;
 import jakarta.persistence.Embeddable;
 
 @Embeddable
-public class OutCome implements ValueObject, Comparable<OutCome> {
+public class Outcome implements ValueObject, Comparable<Outcome> {
 
     private static final long serialVersionUID = 1L;
     private final String outComeValue;
 
-    protected OutCome(final String outComeValue) {
+    protected Outcome(final String outComeValue) {
         Preconditions.nonEmpty(outComeValue, "OutCome should neither be null nor empty");
-        Preconditions.ensure(OutComeValue.valueOf(outComeValue) != null,
+        Preconditions.ensure(OutcomeValue.valueOf(outComeValue) != null,
                 "OutCome must be one of the APPROVED, REJECTED or PENDING states");
         this.outComeValue = outComeValue;
     }
 
-    public static OutCome valueOf(final String OutComeValue) {
-        return new OutCome(OutComeValue);
+    public static Outcome valueOf(final String OutComeValue) {
+        return new Outcome(OutComeValue);
     }
 
     @Override
@@ -26,11 +26,11 @@ public class OutCome implements ValueObject, Comparable<OutCome> {
         if (this == o) {
             return true;
         }
-        if (!(o instanceof OutCome)) {
+        if (!(o instanceof Outcome)) {
             return false;
         }
 
-        final OutCome that = (OutCome) o;
+        final Outcome that = (Outcome) o;
         return this.outComeValue.equals(that.outComeValue);
     }
 
@@ -45,7 +45,7 @@ public class OutCome implements ValueObject, Comparable<OutCome> {
     }
 
     @Override
-    public int compareTo(final OutCome arg0) {
+    public int compareTo(final Outcome arg0) {
         return outComeValue.compareTo(arg0.outComeValue);
     }
 }

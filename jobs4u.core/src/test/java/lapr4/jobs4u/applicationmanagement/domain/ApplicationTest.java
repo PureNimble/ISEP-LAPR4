@@ -8,33 +8,62 @@ import java.util.List;
 
 import org.junit.Test;
 
+import eapli.framework.infrastructure.authz.domain.model.SystemUser;
+import eapli.framework.infrastructure.authz.domain.model.SystemUserBuilder;
+import lapr4.jobs4u.candidatemanagement.domain.Candidate;
+import lapr4.jobs4u.candidatemanagement.domain.CandidateBuilder;
+import lapr4.jobs4u.customermanagement.domain.Customer;
+import lapr4.jobs4u.customermanagement.domain.CustomerBuilder;
+import lapr4.jobs4u.jobopeningmanagement.domain.JobOpening;
+import lapr4.jobs4u.jobopeningmanagement.domain.JobOpeningBuilder;
+import lapr4.jobs4u.usermanagement.domain.UserBuilderHelper;
+
 public class ApplicationTest {
-    static final String DATE = "10-02-2012";
-    static final String FILE = "sharedfolder/temp";
+
     static final String APPLICATION_NUMBER = "1";
     static final String APPLICATION_NUMBER2 = "2";
-    static final String FILE2 = "temo/sharedfolder";
-    static final String DATE2 = "10-02-2017";
 
-    public static Application dummyApplication(final String dateString, final String file,
-            final String applicationNumberString) {
+    public static Application dummyApplication(final String applicationNumber) {
         List<File> files = new ArrayList<File>();
-        File file1 = File.valueOf(file);
+        File file1 = File.valueOf("shared/temp");
         files.add(file1);
+        // candidateBuilder
+        final CandidateBuilder candidateBuilder = new CandidateBuilder();
+        final SystemUserBuilder userBuilder = UserBuilderHelper.builder();
+        final SystemUser creator = userBuilder
+                .with("manager@email.local", "Pass123", "firstName", "lastName", "manager@email.local").build();
 
-        return new ApplicationBuilder().with(applicationNumberString, dateString, files).build();
+        Candidate candidate = candidateBuilder.with("Candidate", "Candidate", "user@mail.local", "910000000", creator)
+                .build();
+
+        // jobOpeningBuilder
+        final JobOpeningBuilder jobOpeningBuilder = new JobOpeningBuilder();
+        final CustomerBuilder customerBuilder = new CustomerBuilder();
+        final SystemUser aSu = userBuilder
+                .with("username@email.local", "Pass123", "firstName", "lastName", "email@email.local").build();
+        final Customer aCustomer = customerBuilder
+                .with("Fnac", "R. Sara Afonso 105, 4460-841 Sra. da Hora", "abcdefghij",
+                        "fnac@email.local", "910000000", aSu)
+                .build();
+        ;
+
+        JobOpening jobOpening = jobOpeningBuilder.with("12", "titleOrFunction", "VOLUNTEER",
+                "HYBRID", "address", aCustomer, "jobDescription").build();
+
+        return new ApplicationBuilder()
+                .with(applicationNumber, "10-12-2024", files, jobOpening, candidate).build();
     }
 
-    private Application getNewDummyApplication(final String date, final String file, final String applicationNumber) {
-        return dummyApplication(date, file, applicationNumber);
+    private Application getNewDummyApplication(final String applicationNumber) {
+        return dummyApplication(applicationNumber);
     }
 
     @Test
     public void ensureApplicationEqualsPassesForTheSameApplicationValues() throws Exception {
 
-        final Application aApplication = getNewDummyApplication(DATE, FILE, APPLICATION_NUMBER);
+        final Application aApplication = getNewDummyApplication(APPLICATION_NUMBER);
 
-        final Application anotherApplication = getNewDummyApplication(DATE, FILE, APPLICATION_NUMBER);
+        final Application anotherApplication = getNewDummyApplication(APPLICATION_NUMBER);
 
         final boolean expected = aApplication.equals(anotherApplication);
 
@@ -44,9 +73,9 @@ public class ApplicationTest {
     @Test
     public void ensureApplicationEqualsFailsForDifferenteApplicationValues() throws Exception {
 
-        final Application aApplication = getNewDummyApplication(DATE, FILE, APPLICATION_NUMBER);
+        final Application aApplication = getNewDummyApplication(APPLICATION_NUMBER);
 
-        final Application anotherApplication = getNewDummyApplication(DATE2, FILE2, APPLICATION_NUMBER2);
+        final Application anotherApplication = getNewDummyApplication(APPLICATION_NUMBER2);
 
         final boolean expected = aApplication.equals(anotherApplication);
 
@@ -55,7 +84,7 @@ public class ApplicationTest {
 
     @Test
     public void ensureApplicationEqualsAreTheSameForTheSameInstance() throws Exception {
-        final Application applicationaApplication = getNewDummyApplication(DATE, FILE, APPLICATION_NUMBER);
+        final Application applicationaApplication = getNewDummyApplication(APPLICATION_NUMBER);
 
         final boolean expected = applicationaApplication.equals(applicationaApplication);
 
@@ -64,9 +93,9 @@ public class ApplicationTest {
 
     @Test
     public void ensureApplicationEqualsFailsForDifferenteObjectTypes() throws Exception {
-        final Application application = getNewDummyApplication(DATE, FILE, APPLICATION_NUMBER);
+        final Application application = getNewDummyApplication(APPLICATION_NUMBER);
 
-        final boolean expected = application.equals(getNewDummyApplication(DATE2, FILE2, APPLICATION_NUMBER2));
+        final boolean expected = application.equals(getNewDummyApplication(APPLICATION_NUMBER2));
 
         assertFalse(expected);
     }

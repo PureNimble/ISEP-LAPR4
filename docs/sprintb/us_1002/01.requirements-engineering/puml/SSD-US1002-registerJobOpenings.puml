@@ -7,7 +7,7 @@ title System Sequence Diagram (SSD) - Register Job Openings
 
 autonumber
 
-actor "Costumer Manager" as Manager
+actor "Customer Manager" as Manager
 participant ":System" as System
 
 activate Manager
@@ -15,7 +15,13 @@ activate Manager
     Manager -> System : Asks to register job opening
     activate System
         
-        System --> Manager : Asks for information (Title or function, Contract Type, Mode, Address, Company, Number of vacancies, Description)
+        System --> Manager : Asks for what Customer the job opening is
+    
+    deactivate System
+
+    Manager -> System : Provides company
+
+        System --> Manager : Asks for information (Title or function, Contract Type, Mode, Address, Number of vacancies, Description)
             note left System : The Costumer Manager has to provide \nall the information required
 
     deactivate System

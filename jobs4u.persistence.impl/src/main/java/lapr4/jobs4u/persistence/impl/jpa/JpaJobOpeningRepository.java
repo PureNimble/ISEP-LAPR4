@@ -2,11 +2,14 @@ package lapr4.jobs4u.persistence.impl.jpa;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 import eapli.framework.domain.repositories.TransactionalContext;
+import eapli.framework.general.domain.model.EmailAddress;
 import eapli.framework.infrastructure.authz.domain.model.Username;
 import eapli.framework.infrastructure.repositories.impl.jpa.JpaAutoTxRepository;
 import lapr4.jobs4u.Application;
+import lapr4.jobs4u.candidatemanagement.domain.Candidate;
 import lapr4.jobs4u.customermanagement.domain.CustomerCode;
 import lapr4.jobs4u.jobopeningmanagement.domain.JobOpening;
 import lapr4.jobs4u.jobopeningmanagement.domain.JobReference;
@@ -38,6 +41,13 @@ public class JpaJobOpeningRepository extends JpaAutoTxRepository<JobOpening, Job
                 .setParameter("customerCode", customerCode)
                 .getSingleResult() + 1;
         return count.toString();
+    }
+
+    @Override
+    public Optional<JobOpening> findJobOpeningByReference(final JobReference jobReference) {
+        final Map<String, Object> params = new HashMap<>();
+        params.put("jobReference", jobReference);
+        return matchOne("e.jobReference=:jobReference", params);
     }
 
 }

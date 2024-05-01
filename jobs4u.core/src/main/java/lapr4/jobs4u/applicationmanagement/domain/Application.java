@@ -40,7 +40,7 @@ public class Application implements AggregateRoot<ApplicationNumber> {
     private List<File> file;
 
     @ManyToOne(optional = false)
-    @JoinColumn(name = "JobOpenning")
+    @JoinColumn(name = "JobOpening")
     private JobOpening jobOpening;
 
     @ManyToOne(optional = false)

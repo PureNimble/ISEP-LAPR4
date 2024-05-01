@@ -1,5 +1,7 @@
 package lapr4.jobs4u.persistence.impl.inmemory;
 
+import java.util.Optional;
+
 import eapli.framework.infrastructure.authz.domain.model.Username;
 import eapli.framework.infrastructure.repositories.impl.inmemory.InMemoryDomainRepository;
 import lapr4.jobs4u.customermanagement.domain.CustomerCode;
@@ -23,4 +25,9 @@ public class InMemoryJobOpeningRepository extends InMemoryDomainRepository<JobOp
     public String findHighestSequenceForCustomer(final CustomerCode customercode) {
         return findHighestSequenceForCustomer(customercode);
     }
- }
+
+    @Override
+    public Optional<JobOpening> findJobOpeningByReference(final JobReference jobReference) {
+        return Optional.ofNullable(matchOne(e -> e.identity().equals(jobReference)).orElse(null));
+    }
+}

@@ -6,6 +6,7 @@ import eapli.framework.infrastructure.repositories.impl.inmemory.InMemoryDomainR
 import lapr4.jobs4u.applicationmanagement.domain.Application;
 import lapr4.jobs4u.applicationmanagement.domain.ApplicationNumber;
 import lapr4.jobs4u.applicationmanagement.repositories.ApplicationRepository;
+import lapr4.jobs4u.jobopeningmanagement.domain.JobReference;
 
 /**
  *
@@ -22,5 +23,10 @@ public class InMemoryApplicationRepository
     @Override
     public Optional<Application> findByApplicationNumber(final ApplicationNumber number) {
         return Optional.of(data().get(number));
+    }
+
+    @Override
+    public String findHighestSequenceForCustomer(JobReference jobReference) {
+        return findHighestSequenceForCustomer(jobReference);
     }
 }

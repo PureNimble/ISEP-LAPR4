@@ -21,10 +21,20 @@ public class Result implements DomainEntity<Long> {
     @Column(nullable = true)
     Outcome outcome;
 
+    @Column(nullable = true)
     Justification justification;
 
     protected Result(String outcome) {
         this.outcome = new Outcome(outcome);
+    }
+
+    protected Result(String outcome, String justification) {
+        this.outcome = new Outcome(outcome);
+        this.justification = new Justification(justification);
+    }
+
+    protected Result() {
+        // for ORM
     }
 
     public static Result valueOf() {

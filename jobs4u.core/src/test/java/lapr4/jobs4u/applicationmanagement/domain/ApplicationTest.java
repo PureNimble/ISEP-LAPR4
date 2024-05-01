@@ -16,6 +16,7 @@ import lapr4.jobs4u.customermanagement.domain.Customer;
 import lapr4.jobs4u.customermanagement.domain.CustomerBuilder;
 import lapr4.jobs4u.jobopeningmanagement.domain.JobOpening;
 import lapr4.jobs4u.jobopeningmanagement.domain.JobOpeningBuilder;
+import lapr4.jobs4u.recruitmentprocessmanagement.domain.Date;
 import lapr4.jobs4u.usermanagement.domain.UserBuilderHelper;
 
 public class ApplicationTest {
@@ -51,7 +52,7 @@ public class ApplicationTest {
                 "HYBRID", "address", aCustomer, "jobDescription").build();
 
         return new ApplicationBuilder()
-                .with(applicationNumber, "10-12-2024", files, jobOpening, candidate).build();
+                .with(applicationNumber, Date.today(), files, jobOpening, candidate).build();
     }
 
     private Application getNewDummyApplication(final String applicationNumber) {

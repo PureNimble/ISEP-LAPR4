@@ -62,6 +62,6 @@ public class ListJobOpeningsUI extends AbstractListUI<JobOpeningDTO> {
 
     @Override
     protected String listHeader() {
-        return String.format("#  %-15s%-15s%-15s", "C. CODE", "C. NAME", "J. REFERENCE");
+        return String.format("#  %-15s%-20s%-15s", "C. CODE", "C. NAME", "J. REFERENCE");
     }
 }

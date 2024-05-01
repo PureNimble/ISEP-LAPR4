@@ -35,7 +35,7 @@ import eapli.framework.validations.Preconditions;
 public class CustomerCode implements ValueObject, Comparable<CustomerCode> {
 
     private static final long serialVersionUID = 1L;
-    private static final Pattern VALID_CODE_REGEX = Pattern.compile("^[\\pL\\pM\\p{Nl}][\\pL\\pM\\p{Nl} '\\-]{7,9}$", 2);
+    private static final Pattern VALID_CODE_REGEX = Pattern.compile("^[A-Z][A-Z0-9]{0,9}$", 2);
     private final String code;
 
     protected CustomerCode(final String customerCode) {

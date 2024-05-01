@@ -95,7 +95,6 @@ public final class Bootstrap extends Jobs4UApplication {
         return "Bootstrap data done.";
     }
 
-    @SuppressWarnings("unchecked")
     @Override
     protected void doSetupEventHandlers(final EventDispatcher dispatcher) {}
 }

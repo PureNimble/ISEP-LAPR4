@@ -41,7 +41,7 @@ import eapli.framework.validations.Invariants;
 public class DemoBootstrapper implements Action {
 
     private static final String POWERUSER_A1 = "poweruserA1";
-    private static final String POWERUSER = "poweruser";
+    private static final String POWERUSER = "poweruser@email.com";
 
     private final AuthorizationService authz = AuthzRegistry.authorizationService();
     private final AuthenticationService authenticationService = AuthzRegistry.authenticationService();
@@ -49,7 +49,9 @@ public class DemoBootstrapper implements Action {
     @Override
     public boolean execute() {
         // declare bootstrap actions
-        final Action[] actions = { new BackofficeUsersBootstrapper(), new RecruitmentProcessBootstrapper()};
+        final Action[] actions = { new BackofficeUsersBootstrapper(), new CustomerBootstrapper(),
+                new CandidateBootstrapper(),
+        };
 
         authenticateForBootstrapping();
 

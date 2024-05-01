@@ -31,8 +31,8 @@ public class CandidateUserBuilder implements DomainFactory<CandidateUser> {
     @Override
     public CandidateUser build() {
         final CandidateUser candidateUser = new CandidateUser(this.candidate, this.systemUser);
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("Registering new Candidate User [{}] {} {}", candidateUser, this.candidate,
+        if (LOGGER.isInfoEnabled()) {
+            LOGGER.info("Registering new Candidate User [{}] {} {}", candidateUser, this.candidate,
                     this.systemUser);
         }
         return candidateUser;

@@ -37,8 +37,8 @@ public class ApplicationBuilder implements DomainFactory<Application> {
     @Override
     public Application build() {
         final Application application = new Application(this.date, this.applicationNumber, this.file);
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("Registering new application [{}] {} {} {}", application, this.date,
+        if (LOGGER.isInfoEnabled()) {
+            LOGGER.info("Registering new application [{}] {} {} {}", application, this.date,
                     this.applicationNumber, this.file);
         }
         return application;

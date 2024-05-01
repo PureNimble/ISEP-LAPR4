@@ -43,7 +43,6 @@ public class AppSettings {
     private static final String UI_MENU_LAYOUT_KEY = "ui.menu.layout";
     private static final String PERSISTENCE_UNIT_KEY = "persistence.persistenceUnit";
     private static final String SCHEMA_GENERATION_KEY = "jakarta.persistence.schema-generation.database.action";
-    private static final String HIGH_CALORIES_DISH_LIMIT = "HighCaloriesDishLimit";
 
     private final Properties applicationProperties = new Properties();
 
@@ -73,7 +72,6 @@ public class AppSettings {
         this.applicationProperties.setProperty(UI_MENU_LAYOUT_KEY, "horizontal");
         this.applicationProperties.setProperty(PERSISTENCE_UNIT_KEY, "eapli"
                 + ".base");
-        this.applicationProperties.setProperty(HIGH_CALORIES_DISH_LIMIT, "300");
     }
 
     public Boolean isMenuLayoutHorizontal() {

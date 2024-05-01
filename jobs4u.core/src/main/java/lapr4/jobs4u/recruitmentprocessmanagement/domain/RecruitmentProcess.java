@@ -9,9 +9,11 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.Version;
+import lapr4.jobs4u.jobopeningmanagement.domain.JobOpening;
 
 @Entity
 @Table(name = "T_RECRUITMENT_PROCESS")
@@ -33,6 +35,7 @@ public class RecruitmentProcess implements AggregateRoot<Long> {
     private ScreeningPhase screeningPhase;
 
     @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(nullable = true)
     private InterviewPhase interviewPhase;
 
     @OneToOne(cascade = CascadeType.ALL)
@@ -41,30 +44,42 @@ public class RecruitmentProcess implements AggregateRoot<Long> {
     @OneToOne(cascade = CascadeType.ALL)
     private ResultPhase resultPhase;
 
+    @OneToOne
+    private JobOpening jobOpening;
+
     RecruitmentProcess(final ApplicationPhase applicationPhase, final ScreeningPhase screeningPhase,
-            final InterviewPhase interviewPhase, final AnalysisPhase analysisPhase, final ResultPhase resultPhase) {
+            final InterviewPhase interviewPhase, final AnalysisPhase analysisPhase, final ResultPhase resultPhase,
+            final JobOpening jobOpening) {
         Preconditions.noneNull(
-                new Object[] { applicationPhase, screeningPhase, interviewPhase, analysisPhase, resultPhase });
+                new Object[] { applicationPhase, screeningPhase, interviewPhase, analysisPhase, resultPhase,
+                        jobOpening });
         if (!applicationPhase.finalDate().isBefore(screeningPhase.initialDate()) ||
                 !screeningPhase.finalDate().isBefore(interviewPhase.initialDate()) ||
                 !interviewPhase.finalDate().isBefore(analysisPhase.initialDate()) ||
                 !analysisPhase.finalDate().isBefore(resultPhase.initialDate()))
-            Actions.throwArgument("At least one of the required method parameters is null");
+            Actions.throwArgument("The phases must be in the correct order.");
         this.applicationPhase = applicationPhase;
         this.screeningPhase = screeningPhase;
         this.interviewPhase = interviewPhase;
         this.analysisPhase = analysisPhase;
         this.resultPhase = resultPhase;
+        this.jobOpening = jobOpening;
     }
 
     RecruitmentProcess(final ApplicationPhase applicationPhase, final ScreeningPhase screeningPhase,
-            final AnalysisPhase analysisPhase, final ResultPhase resultPhase) {
+            final AnalysisPhase analysisPhase, final ResultPhase resultPhase, final JobOpening jobOpening) {
         Preconditions.noneNull(
-                new Object[] { applicationPhase, screeningPhase, analysisPhase, resultPhase });
+                new Object[] { applicationPhase, screeningPhase, analysisPhase, resultPhase, jobOpening });
+        if (!applicationPhase.finalDate().isBefore(screeningPhase.initialDate()) ||
+                !screeningPhase.finalDate().isBefore(analysisPhase.initialDate()) ||
+                !analysisPhase.finalDate().isBefore(resultPhase.initialDate()))
+            Actions.throwArgument("The phases must be in the correct order.");
         this.applicationPhase = applicationPhase;
         this.screeningPhase = screeningPhase;
+        this.interviewPhase = null;
         this.analysisPhase = analysisPhase;
         this.resultPhase = resultPhase;
+        this.jobOpening = jobOpening;
     }
 
     protected RecruitmentProcess() {

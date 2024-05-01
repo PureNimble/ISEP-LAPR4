@@ -63,8 +63,8 @@ public class CustomerBuilder implements DomainFactory<Customer> {
     public Customer build() {
         final Customer customer = new Customer(this.customerCode, this.companyName, this.phoneNumber,
                 this.address, this.email, this.manager);
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("Registering new customer [{}] {} {} {} {} {} {}", customer, this.customerCode,
+        if (LOGGER.isInfoEnabled()) {
+            LOGGER.info("Registering new customer [{}] {} {} {} {} {} {}", customer, this.customerCode,
                     this.companyName, this.phoneNumber, this.address, this.email, this.manager);
         }
         return customer;

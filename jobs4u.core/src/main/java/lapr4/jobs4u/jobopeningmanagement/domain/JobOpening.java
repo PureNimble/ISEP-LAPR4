@@ -3,19 +3,20 @@ package lapr4.jobs4u.jobopeningmanagement.domain;
 import jakarta.persistence.Column;
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
-import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.Version;
 import lapr4.jobs4u.customermanagement.domain.Address;
 import lapr4.jobs4u.customermanagement.domain.Customer;
+import lapr4.jobs4u.jobopeningmanagement.dto.JobOpeningDTO;
 import eapli.framework.domain.model.AggregateRoot;
 import eapli.framework.domain.model.DomainEntities;
+import eapli.framework.representations.dto.DTOable;
 import eapli.framework.validations.Preconditions;
 
 @Entity
-@Table(name = "T_JOBOPENING")
-public class JobOpening implements AggregateRoot<JobReference> {
+@Table(name = "T_JOB_OPENING")
+public class JobOpening implements AggregateRoot<JobReference>, DTOable<JobOpeningDTO> {
 
     private static final long serialVersionUID = 1L;
 
@@ -41,7 +42,6 @@ public class JobOpening implements AggregateRoot<JobReference> {
      * cascade = CascadeType.NONE as the systemUser is part of another aggregate
      */
     @ManyToOne(optional = false)
-    @JoinColumn(name = "customer_name", referencedColumnName = "name")
     private Customer customer;
 
     @Column(nullable = false)
@@ -64,6 +64,10 @@ public class JobOpening implements AggregateRoot<JobReference> {
         // for ORM only
     }
 
+    public Customer customer() {
+        return this.customer;
+    }
+
     @Override
     public int hashCode() {
         return DomainEntities.hashCode(this);
@@ -79,12 +83,23 @@ public class JobOpening implements AggregateRoot<JobReference> {
         return DomainEntities.areEqual(this, other);
     }
 
-    public JobReference customerCode() {
+    public JobOpeningDTO toDTO() {
+        return new JobOpeningDTO(jobReference.toString(), titleOrFunction.toString(), contractType.toString(),
+                mode.toString(), address.toString(), customer.customerCode().toString(),
+                customer.companyName().toString(), jobDescription.toString());
+    }
+
+    public JobReference jobReference() {
         return identity();
     }
 
     @Override
     public JobReference identity() {
         return this.jobReference;
+    }
+
+    @Override
+    public String toString() {
+        return jobReference.toString();
     }
 }

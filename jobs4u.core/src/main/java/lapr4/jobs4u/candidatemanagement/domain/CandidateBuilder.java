@@ -49,8 +49,8 @@ public class CandidateBuilder implements DomainFactory<Candidate> {
     @Override
     public Candidate build() {
         final Candidate candidate = new Candidate(this.name, this.email, this.phoneNumber, this.creator);
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("Registering new candidate [{}] {} {} {} {}", candidate, this.name, this.email,
+        if (LOGGER.isInfoEnabled()) {
+            LOGGER.info("Registering new candidate [{}] {} {} {} {}", candidate, this.name, this.email,
                     this.phoneNumber, this.creator);
         }
         return candidate;

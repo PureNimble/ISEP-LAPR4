@@ -32,8 +32,8 @@ public class CustomerUserBuilder implements DomainFactory<CustomerUser> {
     @Override
     public CustomerUser build() {
         final CustomerUser customerUser = new CustomerUser(this.customer, this.systemUser);
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("Registering new Customer User [{}] {} {}", customerUser, this.customer,
+        if (LOGGER.isInfoEnabled()) {
+            LOGGER.info("Registering new Customer User [{}] {} {}", customerUser, this.customer,
                     this.systemUser);
         }
         return customerUser;

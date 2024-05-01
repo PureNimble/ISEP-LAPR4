@@ -86,7 +86,7 @@ public class UsersBootstrapperBase {
             SystemUser su = registerUser(email, firstName, lastName, roles);
             cu = registerCustomerController.registerCustomerUser(c, su);
 
-            LOGGER.debug("»»» %s", email);
+            LOGGER.debug("»»» {}", email);
         } catch (final IntegrityViolationException | ConcurrencyException e) {
             // assuming it is just a primary key violation due to the tentative
             // of inserting a duplicated user. let's just lookup that user
@@ -103,7 +103,7 @@ public class UsersBootstrapperBase {
             SystemUser su = registerUser(email, firstName, lastName, roles);
             cu = registerCandidateController.registerCandidateUser(ca, su);
 
-            LOGGER.debug("»»» %s", email);
+            LOGGER.debug("»»» {}", email);
         } catch (final IntegrityViolationException | ConcurrencyException e) {
             // assuming it is just a primary key violation due to the tentative
             // of inserting a duplicated user. let's just lookup that user

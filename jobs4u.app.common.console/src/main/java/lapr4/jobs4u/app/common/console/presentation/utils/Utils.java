@@ -11,10 +11,10 @@ public class Utils {
     static public boolean confirm(String message) {
         String input;
         do {
-            input = Console.readNonEmptyLine(message + " (S/N): ", "Por favor insira S ou N");
-        } while (!input.equalsIgnoreCase("s") && !input.equalsIgnoreCase("n"));
+            input = Console.readNonEmptyLine(message + " (Y/N): ", "Please Insert Y or N");
+        } while (!input.equalsIgnoreCase("y") && !input.equalsIgnoreCase("n"));
 
-        return input.equalsIgnoreCase("s");
+        return input.equalsIgnoreCase("y");
     }
 
     static public <E> int showAndSelectIndex(List<E> list, String header) {
@@ -31,14 +31,14 @@ public class Utils {
 
             System.out.println(index + ". " + o.toString());
         }
-        System.out.println("0. Sair");
+        System.out.println("0. Exit");
     }
 
     static public <E> int selectsIndex(List<E> list) {
         String input;
         Integer value;
         do {
-            input = Console.readNonEmptyLine("Insira uma opção: ", "Por favor insira uma opção válida");
+            input = Console.readNonEmptyLine("Insert an option: ", "Pleas insert a valid option");
             try {
                 value = Integer.valueOf(input);
             } catch (NumberFormatException ex) {
@@ -59,11 +59,11 @@ public class Utils {
         String input;
         Integer value;
         do {
-            input = Console.readNonEmptyLine("Insira uma opção: ", "Por favor insira uma opção válida");
+            input = Console.readNonEmptyLine("Insert an option: ", "Pleas insert a valid option");
             try {
                 value = Integer.valueOf(input);
             } catch (NumberFormatException e) {
-                System.out.println("Por favor insira um número válido");
+                System.out.println("Please insert a valid number");
                 value = -1;
             }
         } while (value < 0 || value > list.size());

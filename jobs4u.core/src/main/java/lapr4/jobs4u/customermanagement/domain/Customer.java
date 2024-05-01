@@ -91,4 +91,8 @@ public class Customer implements AggregateRoot<CustomerCode> {
     public String toString() {
         return customerCode.toString() + " - " + companyName.toString();
     }
+
+    public CompanyName companyName() {
+        return this.companyName;
+    }
 }

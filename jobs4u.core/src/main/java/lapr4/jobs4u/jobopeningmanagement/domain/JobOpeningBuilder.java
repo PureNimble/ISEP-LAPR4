@@ -69,8 +69,8 @@ public class JobOpeningBuilder implements DomainFactory<JobOpening> {
     public JobOpening build() {
         final JobOpening jobOpening = new JobOpening(this.jobReference, this.titleOrFunction, this.contractType,
                 this.mode, this.address, this.customer, this.jobDescription);
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("Registering new Job Opening [{}] {} {} {} {} {} {} {} {}", jobOpening, this.jobReference,
+        if (LOGGER.isInfoEnabled()) {
+            LOGGER.info("Registering new Job Opening [{}] {} {} {} {} {} {} {}", jobOpening, this.jobReference,
                     this.titleOrFunction, this.contractType, this.mode, this.address, this.customer, this.jobDescription);
         }
         return jobOpening;

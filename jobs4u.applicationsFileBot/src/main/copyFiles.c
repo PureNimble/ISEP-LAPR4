@@ -21,8 +21,6 @@
  */
 void copyFiles(int *send_work_fd, int *recive_work_fd, Config *config)
 {
-    // close(send_work_fd[1]); // close the write end of the pipe
-    // close(recive_work_fd[0]); // close the read end of the pipe
     int candidateID;
 
     while (1)

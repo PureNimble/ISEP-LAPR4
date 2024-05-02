@@ -12,12 +12,12 @@
 		compilation -->
 		<m2e.apt.activation>jdt_apt</m2e.apt.activation>
 
-		<eapli.framework.core.version>v24.2.0_RELEASE</eapli.framework.core.version>
-		<eapli.framework.authz.version>v24.2.0_RELEASE</eapli.framework.authz.version>
-		<eapli.framework.pubsub.version>v24.2.0_RELEASE</eapli.framework.pubsub.version>
+		<eapli.framework.core.version>25.0.0-RELEASE</eapli.framework.core.version>
+		<eapli.framework.authz.version>25.0.0-RELEASE</eapli.framework.authz.version>
+		<eapli.framework.pubsub.version>25.0.0-RELEASE</eapli.framework.pubsub.version>
 
 		<eapli.framework.core.version-snapshot>25.0.1</eapli.framework.core.version-snapshot>
-		<eapli.framework.authz.version-snapshot>21.2.0</eapli.framework.authz.version-snapshot>
+		<eapli.framework.authz.version-snapshot>22.0.0</eapli.framework.authz.version-snapshot>
 		<eapli.framework.pubsub.version-snapshot>22.1.0</eapli.framework.pubsub.version-snapshot>
 
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

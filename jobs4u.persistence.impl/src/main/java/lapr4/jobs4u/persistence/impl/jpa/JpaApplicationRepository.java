@@ -5,9 +5,10 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
-import lapr4.jobs4u.applicationmanagement.domain.ApplicationNumber;
 import lapr4.jobs4u.applicationmanagement.domain.Application;
+import lapr4.jobs4u.applicationmanagement.domain.ApplicationCode;
 import lapr4.jobs4u.applicationmanagement.repositories.ApplicationRepository;
+import lapr4.jobs4u.jobopeningmanagement.domain.JobOpening;
 import lapr4.jobs4u.jobopeningmanagement.domain.JobReference;
 import eapli.framework.domain.repositories.TransactionalContext;
 import eapli.framework.infrastructure.repositories.impl.jpa.JpaAutoTxRepository;
@@ -17,7 +18,7 @@ import eapli.framework.infrastructure.repositories.impl.jpa.JpaAutoTxRepository;
  * @author Jorge Santos ajs@isep.ipp.pt 02/04/2016
  */
 class JpaApplicationRepository
-        extends JpaAutoTxRepository<Application, ApplicationNumber, ApplicationNumber>
+        extends JpaAutoTxRepository<Application, ApplicationCode, ApplicationCode>
         implements ApplicationRepository {
 
     public JpaApplicationRepository(final TransactionalContext autoTx) {
@@ -30,7 +31,7 @@ class JpaApplicationRepository
     }
 
     @Override
-    public Optional<Application> findByApplicationNumber(final ApplicationNumber number) {
+    public Optional<Application> findByApplicationCode(final ApplicationCode number) {
         final Map<String, Object> params = new HashMap<>();
         params.put("number", number);
         return matchOne("e.applicationNumber=:number", params);
@@ -46,5 +47,12 @@ class JpaApplicationRepository
                 .getSingleResult() + 1;
         return count.toString();
 
+    }
+
+    @Override
+    public Iterable<Application> filterByJobOpening(JobOpening jobOpening) {
+        final Map<String, Object> params = new HashMap<>();
+        params.put("jobOpening", jobOpening);
+        return match("e.jobOpening=:jobOpening", params);
     }
 }

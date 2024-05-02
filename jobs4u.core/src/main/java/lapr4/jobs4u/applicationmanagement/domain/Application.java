@@ -14,13 +14,15 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.Version;
+import lapr4.jobs4u.applicationmanagement.dto.ApplicationDTO;
 import lapr4.jobs4u.candidatemanagement.domain.Candidate;
 import lapr4.jobs4u.jobopeningmanagement.domain.JobOpening;
+import lapr4.jobs4u.jobopeningmanagement.dto.JobOpeningDTO;
 import lapr4.jobs4u.recruitmentprocessmanagement.domain.Date;
 
 @Entity
 @Table(name = "T_APPLICATION")
-public class Application implements AggregateRoot<ApplicationNumber> {
+public class Application implements AggregateRoot<ApplicationCode> {
 
     private static final long serialVersionUID = 1L;
 
@@ -28,7 +30,7 @@ public class Application implements AggregateRoot<ApplicationNumber> {
     private Long version;
 
     @EmbeddedId
-    private ApplicationNumber applicationNumber;
+    private ApplicationCode applicationCode;
 
     @Column(nullable = false)
     private Date date;
@@ -47,12 +49,12 @@ public class Application implements AggregateRoot<ApplicationNumber> {
     @JoinColumn(name = "Candidate")
     private Candidate candidate;
 
-    Application(final Date date, final ApplicationNumber applicationNumber,
+    Application(final Date date, final ApplicationCode applicationCode,
             final List<File> file, final JobOpening jobOpening, final Candidate candidate,
             final Result result) {
-        Preconditions.noneNull(new Object[] { date, applicationNumber, file, jobOpening, candidate, result });
+        Preconditions.noneNull(new Object[] { date, applicationCode, file, jobOpening, candidate, result });
         this.date = date;
-        this.applicationNumber = applicationNumber;
+        this.applicationCode = applicationCode;
         this.file = file;
         this.jobOpening = jobOpening;
         this.candidate = candidate;
@@ -78,8 +80,12 @@ public class Application implements AggregateRoot<ApplicationNumber> {
         return DomainEntities.areEqual(this, other);
     }
 
-    public ApplicationNumber applicationNumber() {
+    public ApplicationCode applicationCode() {
         return identity();
+    }
+
+    public ApplicationDTO toDTO() {
+        return new ApplicationDTO(applicationCode.toString());
     }
 
     public void addResult(String outcome) {
@@ -91,8 +97,13 @@ public class Application implements AggregateRoot<ApplicationNumber> {
     }
 
     @Override
-    public ApplicationNumber identity() {
-        return this.applicationNumber;
+    public ApplicationCode identity() {
+        return this.applicationCode;
     }
+
+    public Object jobOpening() {
+        return this.jobOpening;
+    }
+
 
 }

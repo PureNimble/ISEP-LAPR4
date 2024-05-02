@@ -13,16 +13,16 @@ import org.apache.logging.log4j.Logger;
 public class ApplicationBuilder implements DomainFactory<Application> {
 
     private static final Logger LOGGER = LogManager.getLogger(ApplicationBuilder.class);
-    private ApplicationNumber applicationNumber;
+    private ApplicationCode applicationCode;
     private Date date;
     private Result result;
     private List<File> file;
     private JobOpening jobOpening;
     private Candidate candidate;
 
-    public ApplicationBuilder with(final String applicationNumber, final Date date,
+    public ApplicationBuilder with(final String applicationCode, final Date date,
             final List<File> file, final JobOpening jobOpening, final Candidate candidate) {
-        this.withApplicationNumber(applicationNumber);
+        this.withApplicationCode(applicationCode);
         this.withDate(date);
         this.withFile(file);
         this.withJobOpening(jobOpening);
@@ -32,8 +32,8 @@ public class ApplicationBuilder implements DomainFactory<Application> {
         return this;
     }
 
-    public ApplicationBuilder withApplicationNumber(final String applicationNumber) {
-        this.applicationNumber = ApplicationNumber.valueOf(applicationNumber);
+    public ApplicationBuilder withApplicationCode(final String applicationCode) {
+        this.applicationCode = ApplicationCode.valueOf(applicationCode);
         return this;
     }
 
@@ -64,11 +64,11 @@ public class ApplicationBuilder implements DomainFactory<Application> {
 
     @Override
     public Application build() {
-        final Application application = new Application(this.date, this.applicationNumber, this.file, this.jobOpening,
+        final Application application = new Application(this.date, this.applicationCode, this.file, this.jobOpening,
                 this.candidate, this.result);
         if (LOGGER.isInfoEnabled()) {
             LOGGER.info("Registering new application [{}] {} {} {} {} {} {}", application, this.date,
-                    this.applicationNumber, this.file, this.jobOpening, this.candidate, this.result);
+                    this.applicationCode, this.file, this.jobOpening, this.candidate, this.result);
         }
         return application;
     }

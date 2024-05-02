@@ -5,22 +5,22 @@ import eapli.framework.domain.model.ValueObject;
 import eapli.framework.validations.Preconditions;
 
 @Embeddable
-public class ApplicationNumber implements ValueObject, Comparable<ApplicationNumber> {
+public class ApplicationCode implements ValueObject, Comparable<ApplicationCode> {
 
     private static final long serialVersionUID = 1L;
     private final String number;
 
-    protected ApplicationNumber(final String applicationNumber) {
+    protected ApplicationCode(final String applicationNumber) {
         Preconditions.nonEmpty(applicationNumber, "Application number should neither be null nor empty");
         this.number = applicationNumber;
     }
 
-    protected ApplicationNumber() {
+    protected ApplicationCode() {
         this.number = null;
     }
 
-    public static ApplicationNumber valueOf(final String applicationNumber) {
-        return new ApplicationNumber(applicationNumber);
+    public static ApplicationCode valueOf(final String applicationNumber) {
+        return new ApplicationCode(applicationNumber);
     }
 
     @Override
@@ -28,11 +28,11 @@ public class ApplicationNumber implements ValueObject, Comparable<ApplicationNum
         if (this == o) {
             return true;
         }
-        if (!(o instanceof ApplicationNumber)) {
+        if (!(o instanceof ApplicationCode)) {
             return false;
         }
 
-        final ApplicationNumber that = (ApplicationNumber) o;
+        final ApplicationCode that = (ApplicationCode) o;
         return this.number.equals(that.number);
     }
 
@@ -47,7 +47,7 @@ public class ApplicationNumber implements ValueObject, Comparable<ApplicationNum
     }
 
     @Override
-    public int compareTo(final ApplicationNumber arg0) {
+    public int compareTo(final ApplicationCode arg0) {
         return number.compareTo(arg0.number);
     }
 }

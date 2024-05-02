@@ -1,7 +1,6 @@
 package lapr4.jobs4u.app.backoffice.console.presentation.authz;
 
 import java.io.PrintStream;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;

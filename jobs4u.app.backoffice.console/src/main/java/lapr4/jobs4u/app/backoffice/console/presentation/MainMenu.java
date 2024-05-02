@@ -68,6 +68,7 @@ public class MainMenu extends AbstractUI {
     private static final int REGISTER_JOB_OPENING = 2;
     private static final int LIST_JOB_OPENINGS = 3;
     private static final int SETUP_RECRUITMENT_PROCESS = 4;
+    private static final int LIST_APPLICATIONS = 5;
 
     // OPERATOR
     private static final int IMPORT_APPLICATIONS_OPTION = 4;
@@ -172,6 +173,7 @@ public class MainMenu extends AbstractUI {
         menu.addItem(REGISTER_JOB_OPENING, "Register Job Opening", new RegisterJobOpeningUI()::show);
         menu.addItem(LIST_JOB_OPENINGS, "List Job Openings", new ListJobOpeningsUI()::show);
         menu.addItem(SETUP_RECRUITMENT_PROCESS, "SetUp Recruitment Process", new SetUpRecruitmentProcessUI()::show);
+        menu.addItem(LIST_APPLICATIONS, "List Applications for a Job Opening", new ImportApplicationsUI()::show);
         menu.addItem(EXIT_OPTION, RETURN_LABEL, Actions.SUCCESS);
 
         return menu;

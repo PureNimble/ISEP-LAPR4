@@ -119,4 +119,34 @@ public class JpaRepositoryFactory implements RepositoryFactory {
     public JpaApplicationRepository applications() {
         return new JpaApplicationRepository(Application.settings().getPersistenceUnitName());
     }
+
+    @Override
+    public JpaQuestionRepository question() {
+        return new JpaQuestionRepository(Application.settings().getPersistenceUnitName());
+    }
+
+    @Override 
+    public JpaQuestionRepository question(final TransactionalContext autoTx) {
+        return new JpaQuestionRepository(autoTx);
+    }
+
+    @Override
+	public JpaQuestionImporterPluginRepository questionImporterPlugins() {
+		return new JpaQuestionImporterPluginRepository(Application.settings().getPersistenceUnitName());
+	}
+
+    @Override
+    public JpaQuestionImporterPluginRepository questionImporterPlugins(final TransactionalContext autoTx) {
+        return new JpaQuestionImporterPluginRepository(autoTx);
+    }
+
+    @Override
+    public JpaQuestionTypeRepository questionType() {
+        return new JpaQuestionTypeRepository(Application.settings().getPersistenceUnitName());
+    }
+
+    @Override
+    public JpaQuestionTypeRepository questionType(final TransactionalContext autoTx) {
+        return new JpaQuestionTypeRepository(autoTx);
+    }
 }

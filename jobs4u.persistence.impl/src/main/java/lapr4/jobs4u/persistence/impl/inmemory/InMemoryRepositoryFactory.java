@@ -27,7 +27,10 @@ import lapr4.jobs4u.customermanagement.repositories.CustomerRepository;
 import lapr4.jobs4u.customermanagement.repositories.CustomerUserRepository;
 import lapr4.jobs4u.infrastructure.bootstrapers.Bootstrapper;
 import lapr4.jobs4u.infrastructure.persistence.RepositoryFactory;
+import lapr4.jobs4u.integration.questions.import_.repositories.QuestionImporterPluginRepository;
 import lapr4.jobs4u.jobopeningmanagement.repositories.JobOpeningRepository;
+import lapr4.jobs4u.questionmanagement.repositories.QuestionRepository;
+import lapr4.jobs4u.questionmanagement.repositories.QuestionTypeRepository;
 import lapr4.jobs4u.recruitmentprocessmanagement.repositories.RecruitmentProcessRepository;
 import eapli.framework.domain.repositories.TransactionalContext;
 import eapli.framework.infrastructure.authz.domain.repositories.UserRepository;
@@ -128,5 +131,35 @@ public class InMemoryRepositoryFactory implements RepositoryFactory {
     @Override
     public ApplicationRepository applications() {
         return applications(null);
+    }
+
+    @Override
+    public QuestionImporterPluginRepository questionImporterPlugins(final TransactionalContext tx) {
+        return new InMemoryQuestionImporterPluginRepository();
+    }
+
+    @Override
+	public QuestionImporterPluginRepository questionImporterPlugins() {
+        return questionImporterPlugins(null);
+    }
+
+    @Override
+    public QuestionRepository question(TransactionalContext autoTx) {
+        return new InMemoryQuestionRepository();
+    }
+
+    @Override
+    public QuestionRepository question() {
+        return question(null);
+    }
+
+    @Override
+    public QuestionTypeRepository questionType() {
+        return new InMemoryQuestionTypeRepository();
+    }
+
+    @Override
+    public QuestionTypeRepository questionType(TransactionalContext autoTx) {
+        return new InMemoryQuestionTypeRepository();
     }
 }

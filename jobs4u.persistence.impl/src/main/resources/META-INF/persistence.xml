@@ -23,6 +23,9 @@
     <class>lapr4.jobs4u.jobopeningmanagement.domain.JobOpening</class>
     <class>lapr4.jobs4u.applicationmanagement.domain.Application</class>
     <class>lapr4.jobs4u.applicationmanagement.domain.Result</class>
+    <class>lapr4.jobs4u.integration.questions.import_.domain.QuestionImporterPlugin</class>
+    <class>lapr4.jobs4u.questionmanagement.domain.Question</class>
+    <class>lapr4.jobs4u.questionmanagement.domain.QuestionType</class>
 
 
     <properties>

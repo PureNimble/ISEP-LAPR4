@@ -45,9 +45,8 @@ public class ImportApplicationsController {
     }
 
     public Map<String, Set<String>> getCandidates(String folder) {
-        String test = "C:\\Users\\pinto\\Desktop\\project\\sem4pi-23-24-2di2\\jobs4u.applicationsFileBot\\resources\\output";
 
-        try (InputStream inputStream = new FileInputStream(test + "\\report.txt")) {
+        try (InputStream inputStream = new FileInputStream(folder + "/report.txt")) {
             String output = eapli.framework.io.util.Files.textFrom(inputStream);
 
             Map<String, Set<String>> candidateJobMap = new HashMap<>();
@@ -73,19 +72,17 @@ public class ImportApplicationsController {
             return candidateJobMap;
 
         } catch (IOException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
+            return null;
         }
 
-        return null;
     }
 
-    public List<String> getCandidateInfo(String candidateId, String jobId) {
-        String test = "C:\\Users\\pinto\\Desktop\\project\\sem4pi-23-24-2di2\\jobs4u.applicationsFileBot\\resources\\output";
+    public List<String> getCandidateInfo(String folder, String candidateId, String jobId) {
 
-        test += "\\" + jobId + "\\" + candidateId + "\\" + candidateId + "-candidate-data.txt";
+        folder += "/" + jobId + "/" + candidateId + "/" + candidateId + "-candidate-data.txt";
 
-        try (InputStream inputStream = new FileInputStream(test)) {
+        try (InputStream inputStream = new FileInputStream(folder)) {
             BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
             List<String> output = reader.lines().collect(Collectors.toList());
             output.remove(0);
@@ -102,20 +99,20 @@ public class ImportApplicationsController {
     }
 
     public Application registerApplication(
-            final List<lapr4.jobs4u.applicationmanagement.domain.File> file, final Optional<JobOpening> jobOpening,
+            final List<File> file, final Optional<JobOpening> jobOpening,
             final Candidate candidate) {
         return createaApplication(file, jobOpening, candidate);
     }
 
     private Application createaApplication(
-            final List<lapr4.jobs4u.applicationmanagement.domain.File> file, final Optional<JobOpening> jobOpening,
+            final List<File> file, final Optional<JobOpening> jobOpening,
             final Candidate candidate) {
         final Application application = doCreateApplication(file, jobOpening, candidate);
         return applicationRepository.save(application);
     }
 
-    private lapr4.jobs4u.applicationmanagement.domain.Application doCreateApplication(
-            final List<lapr4.jobs4u.applicationmanagement.domain.File> file, final Optional<JobOpening> jobOpening,
+    private Application doCreateApplication(
+            final List<File> file, final Optional<JobOpening> jobOpening,
             final Candidate candidate) {
         String applicationNumber;
 
@@ -136,19 +133,20 @@ public class ImportApplicationsController {
 
     public List<File> getFiles(String folder, String candidateId,
             String jobOffer) {
-        String test = "C:\\Users\\pinto\\Desktop\\project\\sem4pi-23-24-2di2\\jobs4u.applicationsFileBot\\resources\\output";
 
-        test += "\\" + jobOffer + "\\" + candidateId;
+        final String temp = folder + "/" + jobOffer + "/" + candidateId;
 
         List<File> files = new ArrayList<File>();
 
         try {
-            List<String> filesString = Files.list(Paths.get(test))
+            List<String> filesString = Files.list(Paths.get(temp))
                     .map(Path::getFileName)
                     .map(Path::toString)
                     .collect(Collectors.toList());
 
             filesString.forEach(file -> {
+                file = temp + "/" + file;
+                System.out.println(file);
                 if (!file.contains("candidate-data"))
                     files.add(File.valueOf(file));
             });

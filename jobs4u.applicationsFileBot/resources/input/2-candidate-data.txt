@@ -1,4 +1,4 @@
-FNAC1-1
+customer-1
 janedoe@email.com
 Jane Doe
 967654321

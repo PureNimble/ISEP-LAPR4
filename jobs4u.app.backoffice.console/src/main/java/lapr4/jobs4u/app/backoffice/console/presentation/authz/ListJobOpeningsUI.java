@@ -27,23 +27,24 @@ public class ListJobOpeningsUI extends AbstractListUI<JobOpeningDTO> {
     protected boolean doShow() {
         Iterable<JobOpeningDTO> elems = this.elements();
         showList(elems);
-    
+
         while (Utils.confirm("\nDo you want to filter the list?")) {
             final List<String> options = Arrays.asList("Filter by Customer", "Filter by Active", "Filter by Date");
             final int option = Utils.showAndSelectIndex(options, "\nWhich filter do you wish to apply?");
-    
+
             switch (option) {
                 case 0:
                     Customer customer = (Customer) Utils.showAndSelectOne(
-                            this.listCustomersController.filterByCostumerManager(), 
-                            "Select the customer:"
-                    );
+                            this.listCustomersController.filterByCostumerManager(),
+                            "Select the customer:");
                     elems = this.jobOpeningsByCustomer(customer);
                     break;
                 case 1:
-                    final List<String> activeOptions = Arrays.asList("See Active Job Openings", "See Inactive Job Openings");
-                    final int activeOption = Utils.showAndSelectIndex(activeOptions, "\nWhich type of Job Opening do you want to see?");
-                    elems = this.jobOpeningsByActive(activeOption==0);
+                    final List<String> activeOptions = Arrays.asList("See Active Job Openings",
+                            "See Inactive Job Openings");
+                    final int activeOption = Utils.showAndSelectIndex(activeOptions,
+                            "\nWhich type of Job Opening do you want to see?");
+                    elems = this.jobOpeningsByActive(activeOption == 0);
                     break;
                 case 2:
                     final Calendar day = Console.readCalendar("\nInsert the date (dd-mm-yyyy):", "dd-MM-yyyy");
@@ -53,9 +54,9 @@ public class ListJobOpeningsUI extends AbstractListUI<JobOpeningDTO> {
                     System.out.println("Invalid filter option.");
                     return true;
             }
-    
+
         }
-    
+
         return true;
     }
 

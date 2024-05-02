@@ -1,4 +1,4 @@
-FNAC1-1
+customer-1
 johndoe@email.com
 John Doe
 961234567

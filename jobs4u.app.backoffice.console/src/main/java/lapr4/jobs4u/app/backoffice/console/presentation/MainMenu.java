@@ -48,8 +48,6 @@ import eapli.framework.presentation.console.menu.MenuRenderer;
 import eapli.framework.presentation.console.menu.VerticalMenuRenderer;
 
 /**
- * TODO split this class in more specialized classes for each menu
- *
  * @author Paulo Gandra Sousa
  */
 public class MainMenu extends AbstractUI {
@@ -63,7 +61,7 @@ public class MainMenu extends AbstractUI {
     private static final int LIST_USERS_OPTION = 2;
     private static final int ENABLE_DISABLE_USER_OPTION = 3;
 
-    //CUSTOMER MANAGER
+    // CUSTOMER MANAGER
     private static final int REGISTER_CUSTOMER = 1;
     private static final int REGISTER_JOB_OPENING = 2;
     private static final int LIST_JOB_OPENINGS = 3;

@@ -12,6 +12,6 @@ public class RegisterJobOpeningService {
     }
 
     public String nextJobOpeningReference(final CustomerCode customerCode) {
-        return customerCode.toString() + " - " + jobOpeningRepository.findHighestSequenceForCustomer(customerCode);
+        return customerCode.toString() + "-" + jobOpeningRepository.findHighestSequenceForCustomer(customerCode);
     }
 }

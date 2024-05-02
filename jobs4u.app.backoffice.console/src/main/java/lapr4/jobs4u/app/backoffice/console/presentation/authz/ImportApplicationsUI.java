@@ -10,6 +10,8 @@ import lapr4.jobs4u.jobopeningmanagement.domain.JobReference;
 import lapr4.jobs4u.usermanagement.application.AddUserController;
 import lapr4.jobs4u.usermanagement.domain.BaseRoles;
 
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -40,15 +42,22 @@ public class ImportApplicationsUI extends AbstractUI {
     private final ImportApplicationsController theController = new ImportApplicationsController(
             PersistenceContext.repositories().applications(), PersistenceContext.repositories().jobOpenings());
 
+    private final static String DEFAULT_FOLDER = "jobs4u.applicationsFileBot/resources/output";
+
     @Override
     protected boolean doShow() {
-        final String folder;
-        String temp;
-        do {
-            temp = Console.readLine("Shared Folder Path");
-        } while (!Console.readLine("Do you want to import applications? (Y/N)").equalsIgnoreCase("Y"));
 
-        folder = temp;
+        final String folder;
+        if (Console.readBoolean("Do you want to use the default Path? (Y/N)")) {
+            folder = DEFAULT_FOLDER;
+        } else {
+            String temp;
+            do {
+                temp = Console.readLine("Shared Folder Path (Insert a valid path):");
+            } while (!Files.exists(Paths.get(temp)));
+
+            folder = temp;
+        }
 
         Map<String, Set<String>> candidateJobMap = new HashMap<>();
 
@@ -56,7 +65,7 @@ public class ImportApplicationsUI extends AbstractUI {
 
         candidateJobMap.forEach((jobOffer, candidateSet) -> {
             candidateSet.forEach(candidateId -> {
-                Candidate candidate = registerCandidates(candidateId, jobOffer);
+                Candidate candidate = registerCandidates(folder, candidateId, jobOffer);
                 Optional<JobOpening> job = this.theController.getJobOpennig(JobReference.valueOf(jobOffer));
                 List<File> files = this.theController.getFiles(folder, candidateId, jobOffer);
 
@@ -67,9 +76,9 @@ public class ImportApplicationsUI extends AbstractUI {
         return false;
     }
 
-    private Candidate registerCandidates(String candidateId, String jobOffer) {
+    private Candidate registerCandidates(String folder, String candidateId, String jobOffer) {
 
-        List<String> output = this.theController.getCandidateInfo(candidateId, jobOffer);
+        List<String> output = this.theController.getCandidateInfo(folder, candidateId, jobOffer);
         String email = output.get(0);
         String phoneNumber = output.get(1);
         String firstName = output.get(2);

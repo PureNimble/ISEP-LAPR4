@@ -60,7 +60,6 @@ public class FrontMenu extends AbstractUI {
                     new MainMenu().mainLoop();
                     return true;
                 }));
-        //TODO: instead of leaving the app, return to the main menu again
         menu.addItem(EXIT_OPTION, "Exit", new ExitWithMessageAction("Goodbye!"));
 
         final MenuRenderer renderer = new VerticalMenuRenderer(menu, MenuItemRenderer.DEFAULT);

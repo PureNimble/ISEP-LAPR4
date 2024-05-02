@@ -4,8 +4,6 @@ import jakarta.persistence.Embeddable;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.nio.file.Paths;
-import java.util.regex.Pattern;
 import eapli.framework.domain.model.ValueObject;
 import eapli.framework.io.util.Files;
 import eapli.framework.validations.Preconditions;
@@ -17,12 +15,10 @@ public class File implements ValueObject, Comparable<File> {
     private static final String EXTENSION = ".txt";
 
     private final String path;
-    private static final Pattern VALID_PATTERN = Pattern.compile("^[a-zA-Z0-9_/\\.\\-]+$");
 
     protected File(final String file) {
         Preconditions.nonEmpty(file, "File should neither be null nor empty");
-        Preconditions.matches(VALID_PATTERN, file, "Invalid File: " + file);
-        // Preconditions.ensure(isFileValid(file), "File does not exist");
+        Preconditions.ensure(isFileValid(file), "File does not exist");
         this.path = Files.ensureExtension(file, EXTENSION);
     }
 
@@ -62,9 +58,8 @@ public class File implements ValueObject, Comparable<File> {
         return path.compareTo(arg0.path);
     }
 
-    private boolean isFileValid(final String file) {
-        // check if path exists
-        return java.nio.file.Files.exists(Paths.get(file));
+    private static boolean isFileValid(final String file) {
+        return java.nio.file.Files.exists(java.nio.file.Paths.get(file));
     }
 
     /**

@@ -5,12 +5,16 @@ import eapli.framework.domain.model.DomainEntities;
 import eapli.framework.representations.dto.DTOable;
 import eapli.framework.validations.Preconditions;
 import jakarta.persistence.Column;
-import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import jakarta.persistence.Version;
 import lapr4.jobs4u.questionmanagement.dto.QuestionTypeDTO;
 
 @Entity
+@Table(name = "T_QUESTION_TYPE")
 public class QuestionType implements AggregateRoot<String>, DTOable<QuestionTypeDTO> {
 
     private static final long serialVersionUID = 1L;
@@ -18,19 +22,24 @@ public class QuestionType implements AggregateRoot<String>, DTOable<QuestionType
     @Version
     private Long version;
 
-    @EmbeddedId
-    @Column(nullable = false)
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    private Long pk;
+
+    @Column(nullable = false, unique = true)
     private String type;
 
+    @Column(nullable = false)
     private boolean active;
+
+    QuestionType(final String type) {
+        Preconditions.nonEmpty(type);
+        this.active = true;
+    }
+
 
     protected QuestionType() {
         // for ORM
-    }
-
-    public QuestionType(final String type) {
-        Preconditions.nonEmpty(type);
-        this.active = true;
     }
 
     public static QuestionType valueOf(final String type) {
@@ -44,26 +53,14 @@ public class QuestionType implements AggregateRoot<String>, DTOable<QuestionType
         return this.active;
     }
 
-    public boolean toogleState() {
-
+    public boolean toggleState() {
         this.active = !this.active;
         return isActive();
     }
-
-    @Override
-    public boolean hasIdentity(final String type) {
-        return type.equalsIgnoreCase(this.type);
-    }
-
+    
     @Override
     public String identity() {
         return this.type;
-    }
-
-    @Override
-    public boolean sameAs(final Object other) {
-        final QuestionType questionType = (QuestionType) other;
-        return this.equals(questionType) && isActive() == questionType.isActive();
     }
 
     @Override
@@ -74,6 +71,11 @@ public class QuestionType implements AggregateRoot<String>, DTOable<QuestionType
     @Override
     public boolean equals(final Object o) {
         return DomainEntities.areEqual(this, o);
+    }
+
+    @Override
+    public boolean sameAs(final Object other) {
+        return DomainEntities.areEqual(this, other);
     }
 
     /**

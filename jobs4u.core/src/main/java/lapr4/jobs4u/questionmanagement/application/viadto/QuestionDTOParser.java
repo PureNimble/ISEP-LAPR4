@@ -23,12 +23,9 @@
  */
 package lapr4.jobs4u.questionmanagement.application.viadto;
 
-import eapli.framework.general.domain.model.Designation;
-import eapli.framework.money.domain.model.Money;
 import eapli.framework.representations.dto.DTOParser;
 import lapr4.jobs4u.questionmanagement.domain.Question;
 import lapr4.jobs4u.questionmanagement.domain.QuestionBuilder;
-import lapr4.jobs4u.questionmanagement.domain.QuestionType;
 import lapr4.jobs4u.questionmanagement.dto.QuestionDTO;
 import lapr4.jobs4u.questionmanagement.repositories.QuestionTypeRepository;
 
@@ -51,7 +48,7 @@ public class QuestionDTOParser implements DTOParser<QuestionDTO, Question> {
     @Override
     public Question valueOf(final QuestionDTO dto) {
         final var type = questionTypeRepository.ofIdentity(dto.getType())
-                .orElseThrow(() -> new IllegalArgumentException("Unknown dish type: " + dto.getType()));
+                .orElseThrow(() -> new IllegalArgumentException("Unknown question type: " + dto.getType()));
 
         return new QuestionBuilder()
                 .withType(type)

@@ -20,8 +20,8 @@ public class QuestionBody implements ValueObject, Comparable<QuestionBody> {
         this.text = "";
     }
 
-    public static QuestionBody valueOf(final String answer) {
-        return new QuestionBody(answer);
+    public static QuestionBody valueOf(final String text) {
+        return new QuestionBody(text);
     }
 
     @Override

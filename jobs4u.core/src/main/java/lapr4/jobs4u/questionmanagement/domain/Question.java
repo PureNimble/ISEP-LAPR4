@@ -2,10 +2,10 @@ package lapr4.jobs4u.questionmanagement.domain;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.ElementCollection;
-import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.JoinColumn;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.Version;
@@ -27,13 +27,12 @@ public class Question implements AggregateRoot<Long>, DTOable<QuestionDTO> {
     @Version
     private Long version;
 
-    @EmbeddedId
-    @GeneratedValue
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="QUESTION_ID")
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "QUESTION_TYPE_ID")
     private QuestionType type;
 
     @Column(nullable = false)
@@ -95,6 +94,6 @@ public class Question implements AggregateRoot<Long>, DTOable<QuestionDTO> {
 
     @Override
     public QuestionDTO toDTO() {
-        return new QuestionDTO(this.type.identity(), this.body.toString(), this.possibleAnswers);
+        return new QuestionDTO(this.type.toString(), this.body.toString(), this.possibleAnswers);
     }
 }

@@ -32,7 +32,6 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import jakarta.persistence.UniqueConstraint;
 import jakarta.persistence.Version;
 import lapr4.jobs4u.integration.questions.import_.application.QuestionImporter;
 
@@ -42,7 +41,7 @@ import lapr4.jobs4u.integration.questions.import_.application.QuestionImporter;
  * @author Paulo Gandra de Sousa 2024.04.30
  */
 @Entity
-@Table(uniqueConstraints = { @UniqueConstraint(columnNames = { "name" }) })
+@Table(name = "T_QUESTION_IMPORTER_PLUGIN")
 public class QuestionImporterPlugin implements AggregateRoot<Designation> {
 	private static final long serialVersionUID = 1L;
 
@@ -56,7 +55,7 @@ public class QuestionImporterPlugin implements AggregateRoot<Designation> {
 	private Long version;
 
 	// business id
-	@Column(nullable = false)
+	@Column(nullable = false, unique = true)
 	private final Designation name;
 
 	private final Description description;

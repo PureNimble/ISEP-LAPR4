@@ -67,8 +67,8 @@ public class ImportQuestionsController {
 	 * @return the list of imported dishes
 	 * @throws IOException
 	 */
-	public List<Question> importDishes(final String filename) throws IOException {
-		authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.ADMIN);
+	public List<Question> importQuestions(final String filename) throws IOException {
+		authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.LANGUAGE_ENGINEER);
 
 		// TODO refactor this method to move logic from the controller into a service
 		// class

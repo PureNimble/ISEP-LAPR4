@@ -19,9 +19,9 @@ public class RegisterQuestionTypeController {
         this.repository = repository;
     }
 
-    public QuestionType registerDishType(final String type) {
+    public QuestionType registerQuestionType(final String type) {
         authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.LANGUAGE_ENGINEER);
-        final QuestionType newQuestionType = new QuestionType(type);
+        final QuestionType newQuestionType = QuestionType.valueOf(type);
         return repository.save(newQuestionType);
     }
 }

@@ -160,6 +160,6 @@ public class InMemoryRepositoryFactory implements RepositoryFactory {
 
     @Override
     public QuestionTypeRepository questionType(TransactionalContext autoTx) {
-        return new InMemoryQuestionTypeRepository();
+        return questionType(null);
     }
 }

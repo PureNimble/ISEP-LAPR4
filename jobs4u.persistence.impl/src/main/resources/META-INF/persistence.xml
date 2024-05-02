@@ -27,7 +27,6 @@
     <class>lapr4.jobs4u.questionmanagement.domain.Question</class>
     <class>lapr4.jobs4u.questionmanagement.domain.QuestionType</class>
 
-
     <properties>
       <!-- <property name="jakarta.persistence.jdbc.url" value="jdbc:h2:tcp://localhost/~/jobs4u"/> -->
       <property name="jakarta.persistence.jdbc.url" value="jdbc:h2:tcp://vsgate-s2.dei.isep.ipp.pt:10264/jobs4u"/>

@@ -43,7 +43,6 @@ public final class PersistenceContext {
     private PersistenceContext() {
         // ensure utility
     }
-
     public static RepositoryFactory repositories() {
         if (theFactory == null) {
             final String factoryClassName = Application.settings().getRepositoryFactory();

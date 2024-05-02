@@ -18,21 +18,12 @@
  * DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-package lapr4.jobs4u.app.backoffice.console.presentation.authz;
+package lapr4.jobs4u.integration.questions.import_.application;
+import java.io.IOException;
+import java.io.InputStream;
 
-import eapli.framework.infrastructure.authz.domain.model.SystemUser;
-import eapli.framework.visitor.Visitor;
+import lapr4.jobs4u.questionmanagement.dto.QuestionDTO;
 
-/**
- *
- * @author Paulo Gandra de Sousa
- *
- */
-@SuppressWarnings({ "squid:S106" })
-public class SystemUserPrinter implements Visitor<SystemUser> {
-
-    @Override
-    public void visit(final SystemUser visitee) {
-        System.out.printf("%-30s%-15s%-15s", visitee.email(), visitee.name().firstName(), visitee.name().lastName());
-    }
+public interface QuestionImporter {
+	Iterable<QuestionDTO> importFrom(InputStream filename) throws IOException;
 }

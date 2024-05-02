@@ -64,6 +64,6 @@ public class ListBackofficeUsersUI extends AbstractListUI<SystemUser> {
 
     @Override
     protected String listHeader() {
-        return String.format("#  %-30s%-25s%-15s", "EMAIL", "NAME", "ROLE");
+        return String.format("#  %-30s%-15s%-15s", "EMAIL", "NAME", "ROLE");
     }
 }

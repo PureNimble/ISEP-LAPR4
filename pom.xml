@@ -39,6 +39,7 @@
 		<module>jobs4u.core</module>
 		<module>jobs4u.infrastructure.application</module>
 		<module>jobs4u.persistence.impl</module>
+		<module>jobs4u.integrations.plugins.standard</module>
 	</modules>
 	<dependencies>
 		<dependency>
@@ -100,7 +101,7 @@
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
-			<version>1.18.30</version>
+			<version>1.18.32</version>
 			<scope>provided</scope>
 		</dependency>
 
@@ -181,7 +182,7 @@
 						<path>
 							<groupId>org.projectlombok</groupId>
 							<artifactId>lombok</artifactId>
-							<version>1.18.30</version>
+							<version>1.18.32</version>
 						</path>
 					</annotationProcessorPaths>
 				</configuration>
@@ -194,7 +195,7 @@
 					<dependency>
 						<groupId>org.projectlombok</groupId>
 						<artifactId>lombok</artifactId>
-						<version>1.18.30</version>
+						<version>1.18.32</version>
 					</dependency>
 				</dependencies>
 				<executions>

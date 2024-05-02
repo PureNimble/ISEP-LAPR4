@@ -18,21 +18,31 @@
  * DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-package lapr4.jobs4u.app.backoffice.console.presentation.authz;
+package lapr4.jobs4u.integrations.plugins.question.interview;
 
-import eapli.framework.infrastructure.authz.domain.model.SystemUser;
-import eapli.framework.visitor.Visitor;
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
-/**
- *
- * @author Paulo Gandra de Sousa
- *
- */
-@SuppressWarnings({ "squid:S106" })
-public class SystemUserPrinter implements Visitor<SystemUser> {
+import lapr4.jobs4u.integration.questions.import_.application.QuestionImporter;
+import lapr4.jobs4u.questionmanagement.domain.Answer;
+import lapr4.jobs4u.questionmanagement.dto.QuestionDTO;
+import lapr4.jobs4u.questionmanagement.dto.QuestionTypeDTO;
 
-    @Override
-    public void visit(final SystemUser visitee) {
-        System.out.printf("%-30s%-15s%-15s", visitee.email(), visitee.name().firstName(), visitee.name().lastName());
-    }
+
+public class InterviewImporter implements QuestionImporter {
+
+	@Override
+	public Iterable<QuestionDTO> importFrom(final InputStream filename) {
+		// TODO do the actual parsing of the content. for now we will return a mock
+		// object
+		final var r = new ArrayList<QuestionDTO>();
+		List<Answer> answers = Arrays.asList(Answer.valueOf("answer1"), Answer.valueOf("answer2"));
+		new QuestionTypeDTO("type");
+        QuestionDTO question = new QuestionDTO("type", "body", answers);
+		r.add(question);
+		return r;
+	}
+
 }

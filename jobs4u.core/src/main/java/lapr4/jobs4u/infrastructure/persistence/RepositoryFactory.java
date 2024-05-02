@@ -25,7 +25,10 @@ import lapr4.jobs4u.candidatemanagement.repositories.CandidateRepository;
 import lapr4.jobs4u.candidatemanagement.repositories.CandidateUserRepository;
 import lapr4.jobs4u.customermanagement.repositories.CustomerRepository;
 import lapr4.jobs4u.customermanagement.repositories.CustomerUserRepository;
+import lapr4.jobs4u.integration.questions.import_.repositories.QuestionImporterPluginRepository;
 import lapr4.jobs4u.jobopeningmanagement.repositories.JobOpeningRepository;
+import lapr4.jobs4u.questionmanagement.repositories.QuestionRepository;
+import lapr4.jobs4u.questionmanagement.repositories.QuestionTypeRepository;
 import lapr4.jobs4u.recruitmentprocessmanagement.repositories.RecruitmentProcessRepository;
 import eapli.framework.domain.repositories.TransactionalContext;
 import eapli.framework.infrastructure.authz.domain.repositories.UserRepository;
@@ -159,7 +162,53 @@ public interface RepositoryFactory {
     /**
      * repository will be created in auto transaction mode
      *
-     * @return
+     * @returnp
      */
     ApplicationRepository applications();
+
+    /**
+     *
+     * @param autoTx
+     *               the transactional context to enroll
+     * @return
+     */
+    QuestionRepository question(TransactionalContext autoTx);
+
+    /**
+     * repository will be created in auto transaction mode
+     *
+     * @return
+     */
+    QuestionRepository question();
+
+    /**
+     *
+     * @param autoTx
+     *               the transactional context to enroll
+     * @return
+     */
+    QuestionImporterPluginRepository questionImporterPlugins(TransactionalContext autoTx);
+
+    /**
+     * repository will be created in auto transaction mode
+     *
+     * @returnp
+     */
+    QuestionImporterPluginRepository questionImporterPlugins();
+
+    /**
+     *
+     * @param autoTx
+     *               the transactional context to enroll
+     * @return
+     */
+    QuestionTypeRepository questionType(TransactionalContext autoTx);
+
+    /**
+     * repository will be created in auto transaction mode
+     *
+     * @return
+     */
+    QuestionTypeRepository questionType();
+
 }

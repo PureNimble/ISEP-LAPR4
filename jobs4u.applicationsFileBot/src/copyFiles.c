@@ -13,55 +13,59 @@
 #include <sys/wait.h>
 #include "utils.h"
 
-void createMallocString(char** str, char* value);
 /**
  * @brief Copy all files from new Candidates to the output directory.
- * 
+ *
  * @param fd The file descriptor for the pipe.
  * @param config The configuration struct.
  */
-void copyFiles(int* send_work_fd,int* recive_work_fd, Config* config)
+void copyFiles(int *send_work_fd, int *recive_work_fd, Config *config)
 {
-    //close(send_work_fd[1]); // close the write end of the pipe
-    //close(recive_work_fd[0]); // close the read end of the pipe
+    // close(send_work_fd[1]); // close the write end of the pipe
+    // close(recive_work_fd[0]); // close the read end of the pipe
     int candidateID;
 
     while (1)
     {
         read(send_work_fd[0], &candidateID, sizeof(candidateID));
-        printf("Candidate ID: %d PID:%d\n", candidateID,getpid());
+        printf("Candidate ID: %d PID:%d\n", candidateID, getpid());
         Files files;
-
 
         pid_t pid;
         int status;
         char buffer[300];
-        sprintf(buffer, "%s%d-candidate-data.txt",config->inputPath, candidateID);
-        if(isFileOrDirectory(buffer)!= 1){
+        sprintf(buffer, "%s%d-candidate-data.txt", config->inputPath, candidateID);
+        if (isFileOrDirectory(buffer) != 1)
+        {
             sprintf(buffer, "Candidate ID: %d has an invalid format\n", candidateID);
             errorMessages(buffer);
         }
-        else{
+        else
+        {
             files.candidateID = candidateID;
             files.numFiles = 0;
-            char * job;
-            if((job = readFirstLine(buffer, candidateID)) != NULL){
+            char *job;
+            if ((job = readFirstLine(buffer, candidateID)) != NULL)
+            {
                 strcpy(files.jobOffer_dir, job);
                 files.jobOffer_dir[strlen(files.jobOffer_dir) - 1] = '\0';
                 pid = createChildProcess();
-                if (pid == 0){
-                    // create new directory and copy the files  
+                if (pid == 0)
+                {
+                    // create new directory and copy the files
                     sprintf(buffer, "%s%s/%d", config->outputPath, files.jobOffer_dir, candidateID);
                     char command[1024];
-                    snprintf(command, sizeof(command), "mkdir -p %s && /bin/cp -u %s%d-* %s", buffer, config->inputPath, candidateID, buffer);                
+                    snprintf(command, sizeof(command), "mkdir -p %s && /bin/mv -u %s%d-* %s", buffer, config->inputPath, candidateID, buffer);
                     execlp("/bin/sh", "sh", "-c", command, NULL);
-                    exit(EXIT_FAILURE);   
+                    exit(EXIT_FAILURE);
                 }
 
                 wait(&status);
-                
-                if(WIFEXITED(status)){
-                    if(WEXITSTATUS(status) == EXIT_FAILURE){
+
+                if (WIFEXITED(status))
+                {
+                    if (WEXITSTATUS(status) == EXIT_FAILURE)
+                    {
                         errorMessages("Failed to copy files");
                     }
                 }
@@ -70,12 +74,15 @@ void copyFiles(int* send_work_fd,int* recive_work_fd, Config* config)
                 DIR *dir;
                 struct dirent *entry;
 
-                if (!(dir = opendir(buffer))){
+                if (!(dir = opendir(buffer)))
+                {
                     errorMessages("Failed to open directory\n");
-                    return;  // or exit(1), depending on your program structure
+                    return; // or exit(1), depending on your program structure
                 }
-                while ((entry = readdir(dir)) != NULL){
-                    if(entry->d_type == DT_REG){
+                while ((entry = readdir(dir)) != NULL)
+                {
+                    if (entry->d_type == DT_REG)
+                    {
                         strcpy(files.files[files.numFiles], entry->d_name);
                         files.numFiles++;
                     }
@@ -83,6 +90,6 @@ void copyFiles(int* send_work_fd,int* recive_work_fd, Config* config)
                 closedir(dir);
             }
         }
-         write(recive_work_fd[1], &files, sizeof(files));
+        write(recive_work_fd[1], &files, sizeof(files));
     }
 }

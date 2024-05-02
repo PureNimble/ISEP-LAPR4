@@ -20,26 +20,26 @@
  *
  * @param config A pointer to the Config struct containing the configuration settings.
  */
-void reportFile(Config *config,Files * files ,int numberOfCandidates)
+int checkIfCandidateFilesExist(Files *files, int numberOfCandidates, char *buffer);
+void reportFile(Config *config, Files *files, int numberOfCandidates)
 {
-    //get timestamp
-    time_t t = time(NULL);
-    if (t == ((time_t)-1))
-    {
-        fprintf(stderr, "Failure to obtain the current time.\n");
-        exit(EXIT_FAILURE);
-    }
+
     char buffer[3000];
-    sprintf(buffer, "%sreport_%d.txt", config->outputPath,(int) t);    
-    FILE *file = fopen(buffer, "w");
+    sprintf(buffer, "%sreport.txt", config->outputPath);
+    int temp;
+    if ((temp = checkIfCandidateFilesExist(files, numberOfCandidates, buffer)) != -1)
+        numberOfCandidates = temp;
+
+    FILE *file = fopen(buffer, "a");
     if (file == NULL)
     {
-        fprintf(stderr, "Failed to create file.\n");
+        errorMessages("Failed to create file.\n");
         exit(EXIT_FAILURE);
     }
     for (int i = 0; i < numberOfCandidates; i++)
     {
-        if (files[i].numFiles == 0) continue;
+        if (files[i].numFiles == 0)
+            continue;
 
         fprintf(file, "Candidate ID: %d\n", files[i].candidateID);
         fprintf(file, "Job Offer: %s\n", files[i].jobOffer_dir);
@@ -52,4 +52,27 @@ void reportFile(Config *config,Files * files ,int numberOfCandidates)
     }
     fclose(file);
     free(files);
+    printf("Report file has been generated\n\n");
+}
+
+int checkIfCandidateFilesExist(Files *files, int numberOfCandidates, char *buffer)
+{
+    FILE *file = fopen(buffer, "r");
+    if (file == NULL)
+        return -1;
+    int validIndex = 0;
+    for (int i = 0; i < numberOfCandidates; i++)
+    {
+        if (fscanf(file, "Candidate ID: %d\nJob Offer: %s\n", &files[i].candidateID, &files[i].jobOffer_dir) == 2)
+        {
+            if (i != validIndex)
+            {
+                files[validIndex] = files[i];
+            }
+            validIndex++;
+        }
+    }
+    fclose(file);
+    files = createRealloc(files, validIndex * sizeof(Files));
+    return validIndex;
 }

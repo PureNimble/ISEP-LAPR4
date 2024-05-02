@@ -7,7 +7,7 @@ int isInteger(char* str);
 // Utils functions
 void createPipe(int*fd);
 int createChildProcess();
-void createMalloc(void* ptr);
+void createMalloc(void** ptr, size_t size);
 void* createRealloc(void* ptr, size_t size);
 
 int isFileOrDirectory(char *path);

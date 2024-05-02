@@ -15,13 +15,13 @@
 /**
  * @brief Check if there are new files in the directory and send a signal to the
  *        parent process if there are new files.
- * 
- * This function continuously checks for new files in the specified directory 
- *  and sends a signal to the parent process if any new files are found. 
- *  It uses the given configuration to determine the input path and the 
+ *
+ * This function continuously checks for new files in the specified directory
+ *  and sends a signal to the parent process if any new files are found.
+ *  It uses the given configuration to determine the input path and the
  *  frequency at which to check for new files.
- * 
- * @param config A pointer to the configuration struct that contains the input 
+ *
+ * @param config A pointer to the configuration struct that contains the input
  *             path and the frequency of checking for new files.
  */
 void newFileChecker(Config *config)
@@ -36,18 +36,18 @@ void newFileChecker(Config *config)
 
         if (pid == 0)
         {
-            close(exec_fd[0]); 
+            close(exec_fd[0]);
             if (dup2(exec_fd[1], STDOUT_FILENO) == -1)
             {
-                perror("dup2");
+                errorMessages("dup2");
                 exit(EXIT_FAILURE);
             }
             close(exec_fd[1]);
             char command[100];
             int ret = snprintf(command, sizeof(command), "stat -c '%%Y' %s/* 2>&1 | sort -n", config->inputPath);
-            if (ret < 0 || ret >= (int) sizeof(command))
+            if (ret < 0 || ret >= (int)sizeof(command))
             {
-                fprintf(stderr, "snprintf");
+                errorMessages("snprintf");
                 exit(EXIT_FAILURE);
             }
             execlp("/bin/sh", "sh", "-c", command, NULL);
@@ -57,39 +57,36 @@ void newFileChecker(Config *config)
         char buffer[1024];
         ssize_t numRead;
         unsigned int counter = 0;
-        int* files_birth;
+        int *files_birth;
         numRead = read(exec_fd[0], buffer, sizeof(buffer) - 1);
         buffer[numRead] = '\0';
-        char* token = strtok(buffer, "\n");
+        char *token = strtok(buffer, "\n");
 
-        if (token[0] == 's')
+        if (token[0] >= '0' && token[0] <= '9')
         {
-            perror("stat error -> Invalid input path");
-            exit(EXIT_FAILURE);
-        }
-        if ((files_birth = malloc(0)) == NULL)
-        {
-            perror("malloc error -> files_birth");
-            exit(EXIT_FAILURE);
-        }
-        while (token != NULL)
-        {
-            counter++;
-            if ((files_birth = realloc(files_birth, (counter) * sizeof(files_birth))) == NULL) {
-                perror("realloc error -> files_birth");
-                exit(EXIT_FAILURE);
+            createMalloc((void **)&files_birth, 0);
+            while (token != NULL)
+            {
+                counter++;
+                files_birth = createRealloc(files_birth, counter * sizeof(files_birth));
+                files_birth[counter - 1] = atoi(token);
+                token = strtok(NULL, "\n");
             }
-            files_birth[counter - 1] = atoi(token);
-            token = strtok(NULL, "\n");
-        }
-        if (files_birth[counter - 1] > lastFileTime) {
-            kill(getppid(), SIGUSR1);
-        }
-        lastFileTime = files_birth[counter - 1];
+            if (files_birth[counter - 1] > lastFileTime)
+            {
+                kill(getppid(), SIGUSR1);
+            }
+            lastFileTime = files_birth[counter - 1];
 
-        free(files_birth);
+            free(files_birth);
+        }
+        else
+        {
+            printf("No files found\n");
+        }
 
         sleep(config->verifyNewFilesFrequency);
-
+        unsigned time = config->verifyNewFilesFrequency;
+        sleep(time);
     }
 }

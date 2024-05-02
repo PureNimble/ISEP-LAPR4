@@ -83,7 +83,7 @@ public class ImportApplicationsController {
     public List<String> getCandidateInfo(String candidateId, String jobId) {
         String test = "C:\\Users\\pinto\\Desktop\\project\\sem4pi-23-24-2di2\\jobs4u.applicationsFileBot\\resources\\output";
 
-        test += "\\" + jobId + "\\" + candidateId + "\\" + candidateId + "-candidate-data.txt";
+        test += "\\" + jobId + "\\" + candidateId + "\\" + candidateId + "-candidate-data.txt";
 
         try (InputStream inputStream = new FileInputStream(test)) {
             BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
@@ -138,7 +138,7 @@ public class ImportApplicationsController {
             String jobOffer) {
         String test = "C:\\Users\\pinto\\Desktop\\project\\sem4pi-23-24-2di2\\jobs4u.applicationsFileBot\\resources\\output";
 
-        test += "\\" + jobOffer + "\\" + candidateId;
+        test += "\\" + jobOffer + "\\" + candidateId;
 
         List<File> files = new ArrayList<File>();
 

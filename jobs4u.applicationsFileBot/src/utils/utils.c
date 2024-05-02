@@ -19,7 +19,7 @@ void createPipe(int *fd)
 {
     if (pipe(fd) == -1)
     {
-        perror("Pipe failed.");
+        errorMessages("Pipe failed.");
         exit(EXIT_FAILURE);
     }
 }
@@ -35,7 +35,7 @@ pid_t createChildProcess()
     pid = fork();
     if (pid == -1)
     {
-        perror("fork");
+        errorMessages("Fork failed.");
         exit(EXIT_FAILURE);
     }
     return pid;
@@ -46,12 +46,12 @@ pid_t createChildProcess()
  * 
  * @param array A pointer to the memory block to be allocated.
  */
-void createMalloc(void *array)
+void createMalloc(void **array, size_t size)
 {
-    array = malloc(0);
-    if (array == NULL)
+    *array = malloc(size);
+    if (*array == NULL)
     {
-        printf("Memory allocation failed\n");
+        errorMessages("Memory allocation failed\n");
         exit(EXIT_FAILURE);
     }
 }
@@ -68,7 +68,7 @@ void *createRealloc(void *array, size_t size)
     void *newArray = realloc(array, size);
     if (newArray == NULL)
     {
-        printf("Memory allocation failed\n");
+        errorMessages("Memory allocation failed\n");
         return NULL;
     }
     return newArray;
@@ -159,13 +159,9 @@ char* readFirstLine(char* file_path, int candidateID) {
         return NULL;
     }
 
-    char* line = malloc(256 * sizeof(char)); // Allocate memory for the line
-    if (line == NULL) {
-        errorMessages("Failed to allocate memory for the line\n");
-        fclose(file);
-        return NULL;
-    }
-
+    char* line;
+    createMalloc((void**)&line, 256 * sizeof(char));
+    
     if (fgets(line, 256, file) == NULL) { // Read the first line
         sprintf(buffer,"Failed to read the job Opening ID from Candidate:%d\n",candidateID);
         errorMessages(buffer);

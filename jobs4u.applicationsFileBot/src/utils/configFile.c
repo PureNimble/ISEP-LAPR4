@@ -13,32 +13,32 @@ void readConfigFile(Config *config) {
     // Open the configuration file for reading
     FILE *file = fopen(CONFIG_FILE, "r");
     if (file == NULL) {
-        perror("Error opening file!\n");
-        exit(1);
+        errorMessages("Error opening file!\n");
+        exit(EXIT_FAILURE);
     }
 
     // Read and validate the INPUT_PATH
     if(fscanf(file, "INPUT_PATH=%s\n", config->inputPath) == -1 || isFileOrDirectory(config->inputPath) != 2){
-        perror("Invalid format for INPUT_PATH\n");
-        exit(1);
+        errorMessages("Invalid format for INPUT_PATH\n");
+        exit(EXIT_FAILURE);
     }
 
     // Read and validate the OUTPUT_PATH
     if(fscanf(file, "OUTPUT_PATH=%s\n", config->outputPath) == -1 || isFileOrDirectory(config->outputPath) != 2) {
-        perror("Invalid format for OUTPUT_PATH\n");
-        exit(1);
+        errorMessages("Invalid format for OUTPUT_PATH\n");
+        exit(EXIT_FAILURE);
     }
 
     // Read and validate the NUMBER_OF_CHILDREN
     if(fscanf(file, "NUMBER_OF_CHILDREN=%d\n", &(config->numberOfChildren)) == -1 || config->numberOfChildren == 0) {
-        perror("Invalid format for NUMBER_OF_CHILDREN\n");
-        exit(1);
+        errorMessages("Invalid format for NUMBER_OF_CHILDREN\n");
+        exit(EXIT_FAILURE);
     }
 
     // Read and validate the VERIFY_NEW_FILES_FREQUENCY
     if(fscanf(file, "VERIFY_NEW_FILES_FREQUENCY=%d\n", &(config->verifyNewFilesFrequency)) == -1 || config->verifyNewFilesFrequency == 0) {
-        perror("Invalid format for VERIFY_NEW_FILES_FREQUENCY\n");
-        exit(1);
+        errorMessages("Invalid format for VERIFY_NEW_FILES_FREQUENCY\n");
+        exit(EXIT_FAILURE);
     }
 
     // Close the configuration file

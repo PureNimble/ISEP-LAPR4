@@ -6,6 +6,7 @@
 #include "info.h"
 #include "utils.h"
 #include <sys/types.h>
+#include <sys/wait.h>
 #include <dirent.h>
 #include <ctype.h>
 /**
@@ -21,12 +22,18 @@ void setUpSignal()
     memset(&act, 0, sizeof(struct sigaction));
     act.sa_handler = handle_signal;
     act.sa_flags = SA_RESTART;
-    sigaction(SIGUSR1, &act, NULL);
-    sigaction(SIGINT, &act, NULL);
-    //act.sa_handler = handler;
-    act.sa_flags = 0;
-    sigemptyset(&act.sa_mask);
-    sigaction(SIGCHLD, &act, NULL);
+    if (sigaction(SIGUSR1, &act, NULL) == -1) {
+        errorMessages("Error setting up SIGUSR1 handler");
+        exit(EXIT_FAILURE);
+    }
+    if (sigaction(SIGINT, &act, NULL) == -1) {
+        errorMessages("Error setting up SIGINT handler");
+        exit(EXIT_FAILURE);
+    }
+    if (sigaction(SIGCHLD, &act, NULL) == -1) {
+        errorMessages("Error setting up SIGCHLD handler");
+        exit(EXIT_FAILURE);
+    }
 }
 
 /**
@@ -42,8 +49,6 @@ void setUpSignal()
  */
 void handle_signal(int signal)
 {
-    int status;
-    pid_t pid;
     switch (signal)
     {
     case SIGUSR1:
@@ -51,17 +56,16 @@ void handle_signal(int signal)
         break;
     case SIGINT:
         write(1, "SIGINT received. Terminating all child processes...\n", 52);
-        // Kill all child processes
+        // Kill all processes in the same process group
         kill(0, SIGTERM);
         exit(0);
     case SIGCHLD:
-        //FIXME: make sure all children processes are terminated, when a error occurs
-        pid = waitpid(-1, &status, WNOHANG);
-        if (pid > 0) {
-            if (WIFSIGNALED(status)) {
-                write(1, "Child process was killed. Terminating all child processes...\n", 62);
-                kill(0, SIGTERM);
-            }
+        int status;
+        // check if any child died, but don't wait
+        waitpid(-1, &status, WNOHANG); 
+        if (WIFEXITED(status) && WEXITSTATUS(status) == 1) {
+            write(1, "Child process was killed. Terminating all child processes...\n", 62);
+            kill(0, SIGTERM);
         }
         break;
     default:

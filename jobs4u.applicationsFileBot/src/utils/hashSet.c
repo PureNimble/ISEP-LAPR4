@@ -3,6 +3,7 @@
 #include <stddef.h>
 #include <string.h>
 #include <stdio.h>
+#include "utils.h"
 
 /**
  * Calculates the hash value for a given key.
@@ -23,12 +24,8 @@ int hash(int key)
  */
 HashSet *createHashSet()
 {
-    HashSet *set = malloc(sizeof(HashSet));
-    if (set == NULL)
-    {
-        perror("Memory allocation failed\n");
-        exit(EXIT_FAILURE);
-    }
+    HashSet *set;
+    createMalloc((void**)&set,sizeof(HashSet));
     memset(set, 0, sizeof(HashSet));
     return set;
 }
@@ -43,8 +40,8 @@ void add(HashSet *set, int key)
 {
     if (set == NULL)
     {
-        printf("HashSet is NULL\n");
-        return;
+        errorMessages("HashSet is NULL\n");
+        exit(EXIT_FAILURE);
     }
     unsigned int index = hash(key);
     Node *node = set->buckets[index];
@@ -56,11 +53,11 @@ void add(HashSet *set, int key)
         }
         node = node->next;
     }
-    node = malloc(sizeof(Node));
+    createMalloc((void**)&node,sizeof(Node));
     if (node == NULL)
     {
-        printf("Memory allocation failed\n");
-        return;
+        errorMessages("Memory allocation failed\n");
+        exit(EXIT_FAILURE);
     }
     node->key = key;
     node->next = set->buckets[index];

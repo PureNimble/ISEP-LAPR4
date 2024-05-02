@@ -23,7 +23,7 @@ package lapr4.jobs4u.infrastructure.bootstrapers.demo;
 import java.util.HashSet;
 import java.util.Set;
 
-import lapr4.jobs4u.infrastructure.bootstrapers.UsersBootstrapperBase;
+import lapr4.jobs4u.infrastructure.bootstrapers.Jobs4UBootstrapperBase;
 import lapr4.jobs4u.usermanagement.domain.BaseRoles;
 import eapli.framework.actions.Action;
 import eapli.framework.infrastructure.authz.domain.model.Role;
@@ -31,7 +31,7 @@ import eapli.framework.infrastructure.authz.domain.model.Role;
 /**
  * @author Paulo Gandra Sousa
  */
-public class BackofficeUsersBootstrapper extends UsersBootstrapperBase implements Action {
+public class BackofficeUsersBootstrapper extends Jobs4UBootstrapperBase implements Action {
 
     @Override
     public boolean execute() {

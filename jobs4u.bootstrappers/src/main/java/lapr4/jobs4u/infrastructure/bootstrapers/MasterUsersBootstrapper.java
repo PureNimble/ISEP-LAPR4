@@ -30,7 +30,7 @@ import eapli.framework.infrastructure.authz.domain.model.Role;
 /**
  * @author Paulo Gandra Sousa
  */
-public class MasterUsersBootstrapper extends UsersBootstrapperBase implements Action {
+public class MasterUsersBootstrapper extends Jobs4UBootstrapperBase implements Action {
 
     @Override
     public boolean execute() {

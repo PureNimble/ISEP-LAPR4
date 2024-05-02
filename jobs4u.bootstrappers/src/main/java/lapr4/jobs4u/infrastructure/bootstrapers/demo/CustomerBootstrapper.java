@@ -23,7 +23,9 @@ package lapr4.jobs4u.infrastructure.bootstrapers.demo;
 import java.util.HashSet;
 import java.util.Set;
 
-import lapr4.jobs4u.infrastructure.bootstrapers.UsersBootstrapperBase;
+import lapr4.jobs4u.customermanagement.domain.Customer;
+import lapr4.jobs4u.infrastructure.bootstrapers.Jobs4UBootstrapperBase;
+import lapr4.jobs4u.jobopeningmanagement.domain.JobOpening;
 import lapr4.jobs4u.usermanagement.domain.BaseRoles;
 import eapli.framework.actions.Action;
 import eapli.framework.infrastructure.authz.domain.model.Role;
@@ -31,19 +33,28 @@ import eapli.framework.infrastructure.authz.domain.model.Role;
 /**
  * @author Paulo Gandra Sousa
  */
-public class CustomerBootstrapper extends UsersBootstrapperBase implements Action {
+public class CustomerBootstrapper extends Jobs4UBootstrapperBase implements Action {
 
     @Override
     public boolean execute() {
-        registerCustomer("Customer", "Rua do Customer", "customer", "cu@email.local", "912345678", "Customer", "Customer");
+        final Customer c = registerCustomer("Customer", "Rua do Customer", "customer", "cu@email.local", "912345678",
+                "Customer", "Customer");
+        final JobOpening jo = registerJobOpening("JobOpening", "FULL_TIME", "PRESENTIAL", "Rua do Job Opening", c,
+                "Job Opening Description");
         return true;
     }
 
-    private void registerCustomer(final String name, final String address, final String customerCode,
+    private Customer registerCustomer(final String name, final String address, final String customerCode,
             final String email, final String phoneNumber, final String firstName, final String lastName) {
         final Set<Role> roles = new HashSet<>();
         roles.add(BaseRoles.CUSTOMER);
 
-        addCustomer(name, address, customerCode, email, phoneNumber, firstName, lastName, roles);
+        return addCustomer(name, address, customerCode, email, phoneNumber, firstName, lastName, roles);
+    }
+
+    private JobOpening registerJobOpening(final String titleOrFunction, final String contractType,
+            final String mode, final String address, final Customer customer, final String jobDescription) {
+
+        return addJobOpening(titleOrFunction, contractType, mode, address, customer, jobDescription);
     }
 }

@@ -3,12 +3,12 @@ package lapr4.jobs4u.infrastructure.bootstrapers.demo;
 import java.util.HashSet;
 import java.util.Set;
 
-import lapr4.jobs4u.infrastructure.bootstrapers.UsersBootstrapperBase;
+import lapr4.jobs4u.infrastructure.bootstrapers.Jobs4UBootstrapperBase;
 import lapr4.jobs4u.usermanagement.domain.BaseRoles;
 import eapli.framework.actions.Action;
 import eapli.framework.infrastructure.authz.domain.model.Role;
 
-public class CandidateBootstrapper extends UsersBootstrapperBase implements Action {
+public class CandidateBootstrapper extends Jobs4UBootstrapperBase implements Action {
 
     @Override
     public boolean execute() {

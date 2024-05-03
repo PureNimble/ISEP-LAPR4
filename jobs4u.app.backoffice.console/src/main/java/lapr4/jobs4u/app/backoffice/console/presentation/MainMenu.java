@@ -24,17 +24,7 @@
 package lapr4.jobs4u.app.backoffice.console.presentation;
 
 import lapr4.jobs4u.Application;
-import lapr4.jobs4u.app.backoffice.console.presentation.authz.AddBackofficeUserAction;
-import lapr4.jobs4u.app.backoffice.console.presentation.authz.EnableOrDisableBackofficeUserAction;
-import lapr4.jobs4u.app.backoffice.console.presentation.authz.ImportApplicationsAction;
-import lapr4.jobs4u.app.backoffice.console.presentation.authz.ListApplicationsUI;
-import lapr4.jobs4u.app.backoffice.console.presentation.authz.ListJobOpeningsUI;
-import lapr4.jobs4u.app.backoffice.console.presentation.authz.RegisterCandidateAction;
-import lapr4.jobs4u.app.backoffice.console.presentation.authz.ListBackofficeUsersUI;
-import lapr4.jobs4u.app.backoffice.console.presentation.authz.ListCandidatesUI;
-import lapr4.jobs4u.app.backoffice.console.presentation.authz.RegisterCustomerAction;
-import lapr4.jobs4u.app.backoffice.console.presentation.authz.RegisterJobOpeningAction;
-import lapr4.jobs4u.app.backoffice.console.presentation.authz.SetUpRecruitmentProcessAction;
+import lapr4.jobs4u.app.backoffice.console.presentation.authz.*;
 import lapr4.jobs4u.app.common.console.presentation.authz.MyUserMenu;
 import lapr4.jobs4u.usermanagement.domain.BaseRoles;
 import eapli.framework.actions.Actions;
@@ -69,6 +59,7 @@ public class MainMenu extends AbstractUI {
     private static final int LIST_JOB_OPENINGS = 3;
     private static final int SETUP_RECRUITMENT_PROCESS = 4;
     private static final int LIST_APPLICATIONS = 5;
+    private static final int DISPLAY_CANDIDATE_DATA = 6;
 
     // OPERATOR
     private static final int REGISTER_CANDIDATE = 1;
@@ -176,6 +167,7 @@ public class MainMenu extends AbstractUI {
         menu.addItem(LIST_JOB_OPENINGS, "List Job Openings", new ListJobOpeningsUI()::show);
         menu.addItem(SETUP_RECRUITMENT_PROCESS, "SetUp Recruitment Process", new SetUpRecruitmentProcessAction());
         menu.addItem(LIST_APPLICATIONS, "List Applications for a Job Opening", new ListApplicationsUI()::show);
+        menu.addItem(DISPLAY_CANDIDATE_DATA, "Display the personal data of a candidate", new ListCandidatesDataUI()::show);
         menu.addItem(EXIT_OPTION, RETURN_LABEL, Actions.SUCCESS);
 
         return menu;

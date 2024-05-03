@@ -38,7 +38,7 @@ public class Result implements DomainEntity<Long> {
     }
 
     public static Result valueOf() {
-        return new Result(OutcomeValue.PENDING.toString(), "This is a text");
+        return new Result(OutcomeValue.PENDING.toString());
     }
 
     @Override

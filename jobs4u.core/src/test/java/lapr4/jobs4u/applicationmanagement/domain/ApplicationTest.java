@@ -10,6 +10,7 @@ import org.junit.Test;
 
 import eapli.framework.infrastructure.authz.domain.model.SystemUser;
 import eapli.framework.infrastructure.authz.domain.model.SystemUserBuilder;
+import eapli.framework.io.util.Files;
 import eapli.framework.time.util.CurrentTimeCalendars;
 import lapr4.jobs4u.candidatemanagement.domain.Candidate;
 import lapr4.jobs4u.candidatemanagement.domain.CandidateBuilder;
@@ -27,8 +28,11 @@ public class ApplicationTest {
 
     public static Application dummyApplication(final String applicationNumber) {
         List<File> files = new ArrayList<File>();
-        File file1 = File.valueOf("shared/temp");
-        files.add(file1);
+        if (Files.currentDirectory().contains("jobs4u.core")) {
+            files.add(File.valueOf("../jobs4u.applicationsFileBot/resources/input/1-candidate-data.txt"));
+        } else {
+            files.add(File.valueOf("jobs4u.applicationsFileBot/resources/input/1-candidate-data.txt"));
+        }
         // candidateBuilder
         final CandidateBuilder candidateBuilder = new CandidateBuilder();
         final SystemUserBuilder userBuilder = UserBuilderHelper.builder();

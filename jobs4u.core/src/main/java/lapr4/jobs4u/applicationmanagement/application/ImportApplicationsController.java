@@ -117,7 +117,7 @@ public class ImportApplicationsController {
 
         applicationNumber = new ImportApplicationsService(applicationRepository)
                 .nextJobOpeningReference(jobOpening.jobReference());
-        return new ApplicationBuilder().with(applicationNumber, Date.today(), file, jobOpening.get(), candidate)
+        return new ApplicationBuilder().with(applicationNumber, Date.today(), file, jobOpening, candidate)
                 .build();
     }
 

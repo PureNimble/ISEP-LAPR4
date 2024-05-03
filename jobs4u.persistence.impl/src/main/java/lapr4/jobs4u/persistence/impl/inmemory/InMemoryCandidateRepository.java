@@ -19,4 +19,9 @@ public class InMemoryCandidateRepository
     public Optional<Candidate> findByEmail(final EmailAddress email) {
         return Optional.of(data().get(email));
     }
+
+    @Override
+    public Iterable<Candidate> sortedAsc() {
+        return sortedAsc();
+    }
 }

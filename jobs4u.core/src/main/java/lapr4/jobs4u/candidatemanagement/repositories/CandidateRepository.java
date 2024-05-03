@@ -9,4 +9,5 @@ import lapr4.jobs4u.candidatemanagement.domain.Candidate;
 public interface CandidateRepository extends DomainRepository<EmailAddress, Candidate> {
     Iterable<Candidate> findAll();
     Optional<Candidate> findByEmail(final EmailAddress identity);
+    Iterable<Candidate> sortedAsc();
 }

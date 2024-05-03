@@ -7,6 +7,6 @@ public class CandidatePrinter implements Visitor<CandidateDTO> {
 
     @Override
     public void visit(final CandidateDTO visitee) {
-        System.out.printf("%-30s%-30s%-15s", visitee.getName(), visitee.getEmail(), visitee.getPhoneNumber());
+        System.out.printf("%-30s%-30s", visitee.getName(), visitee.getEmail());
     }
 }

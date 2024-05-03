@@ -30,4 +30,9 @@ class JpaCandidateRepository
         params.put("email", email);
         return matchOne("e.emailAddress=:email", params);
     }
+
+    @Override
+    public Iterable<Candidate> sortedAsc() {
+        return createQuery("SELECT c FROM Candidate c ORDER BY c.name", Candidate.class).getResultList();
+    }
 }

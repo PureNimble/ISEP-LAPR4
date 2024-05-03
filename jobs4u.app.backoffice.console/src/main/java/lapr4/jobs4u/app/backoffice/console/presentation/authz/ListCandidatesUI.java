@@ -23,7 +23,7 @@ public class ListCandidatesUI extends AbstractListUI<CandidateDTO> {
 
     @Override
     protected Iterable<CandidateDTO> elements() {
-        return listCandidatesController.allCandidates();
+        return listCandidatesController.allCandidatesSortedAsc();
     }
 
     @Override
@@ -38,6 +38,6 @@ public class ListCandidatesUI extends AbstractListUI<CandidateDTO> {
 
     @Override
     protected String listHeader() {
-        return String.format("#  %-30s%-30s%-15s", "C.NAME", "C.EMAIL", "PHONE NUMBER");
+        return String.format("#  %-30s%-30s", "C.NAME", "C.EMAIL");
     }
 }

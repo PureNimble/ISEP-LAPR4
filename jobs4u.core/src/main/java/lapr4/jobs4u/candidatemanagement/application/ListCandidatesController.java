@@ -3,6 +3,7 @@ package lapr4.jobs4u.candidatemanagement.application;
 import eapli.framework.application.UseCaseController;
 import eapli.framework.infrastructure.authz.application.AuthorizationService;
 import lapr4.jobs4u.candidatemanagement.repositories.CandidateRepository;
+import lapr4.jobs4u.candidatemanagement.domain.Candidate;
 import lapr4.jobs4u.candidatemanagement.dto.CandidateDTO;
 import lapr4.jobs4u.usermanagement.domain.BaseRoles;
 
@@ -20,5 +21,15 @@ public class ListCandidatesController {
     public Iterable<CandidateDTO> allCandidates() {
         authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.OPERATOR);
         return listCandidatesService.allUsers();
+    }
+
+    public Iterable<CandidateDTO> allCandidatesSortedAsc() {
+        authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.OPERATOR);
+        return listCandidatesService.allUsersSortedAsc();
+    }
+
+    public Candidate selectedCandidate(final CandidateDTO candidateDTO) {
+        authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.OPERATOR);
+        return listCandidatesService.selectedCandidate(candidateDTO);
     }
 }

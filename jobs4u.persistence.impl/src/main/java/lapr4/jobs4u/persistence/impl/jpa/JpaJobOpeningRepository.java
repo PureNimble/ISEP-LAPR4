@@ -8,6 +8,7 @@ import java.util.Optional;
 import eapli.framework.domain.repositories.TransactionalContext;
 import eapli.framework.infrastructure.authz.domain.model.Username;
 import eapli.framework.infrastructure.repositories.impl.jpa.JpaAutoTxRepository;
+import jakarta.persistence.Query;
 import lapr4.jobs4u.Application;
 import lapr4.jobs4u.customermanagement.domain.Customer;
 import lapr4.jobs4u.customermanagement.domain.CustomerCode;
@@ -53,15 +54,19 @@ public class JpaJobOpeningRepository extends JpaAutoTxRepository<JobOpening, Job
     @Override
     public Iterable<JobOpening> filterByActive(final boolean active) {
         final Map<String, Object> params = new HashMap<>();
-        params.put("active", active);        
+        params.put("active", active);
         return match("e.active=:active", params);
     }
 
+    @SuppressWarnings("unchecked")
     @Override
-    public Iterable<JobOpening> filterByDate(final Calendar registeredOn) {
-        final Map<String, Object> params = new HashMap<>();
-        params.put("registeredOn", registeredOn);
-        return match("e.registeredOn=:registeredOn", params);
+    public Iterable<JobOpening> filterByPeriode(final Calendar registeredOn) {
+        Query query = createQuery(
+                "SELECT e FROM JobOpening e WHERE MONTH(e.registeredOn) = :month AND YEAR(e.registeredOn) = :year",
+                JobOpening.class);
+        query.setParameter("month", registeredOn.get(Calendar.MONTH) + 1);
+        query.setParameter("year", registeredOn.get(Calendar.YEAR));
+        return query.getResultList();
     }
 
     public Optional<JobOpening> findJobOpeningByReference(final JobReference jobReference) {

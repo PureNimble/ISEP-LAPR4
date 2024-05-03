@@ -70,7 +70,7 @@ public class JobOpening implements AggregateRoot<JobReference>, DTOable<JobOpeni
         this.address = address;
         this.customer = customer;
         this.jobDescription = jobDescription;
-        this.active = true;
+        this.active = false;
 
     }
 
@@ -103,6 +103,20 @@ public class JobOpening implements AggregateRoot<JobReference>, DTOable<JobOpeni
 
     public Calendar registeredOn() {
         return this.registeredOn;
+    }
+
+    public String registeredOnPeriode() {
+        int month = this.registeredOn.get(Calendar.MONTH) + 1;
+        int year = this.registeredOn.get(Calendar.YEAR);
+        return month + "-" + year;
+    }
+
+    public void activate() {
+        if (this.active) {
+            throw new IllegalStateException("Cannot activate an active job opening");
+        } else {
+            this.active = true;
+        }
     }
 
     public void deactivate() {

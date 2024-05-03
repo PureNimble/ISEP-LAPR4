@@ -6,7 +6,11 @@ import lapr4.jobs4u.jobopeningmanagement.dto.JobOpeningDTO;
 import lapr4.jobs4u.jobopeningmanagement.repositories.JobOpeningRepository;
 import lapr4.jobs4u.usermanagement.domain.BaseRoles;
 
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collection;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import eapli.framework.application.UseCaseController;
 import eapli.framework.infrastructure.authz.application.AuthorizationService;
@@ -37,13 +41,22 @@ public class ListJobOpeningsController {
         return jobOpeningsService.filterByActive(active);
     }
 
-    public Iterable<JobOpeningDTO> filterByDate(final Calendar date) {
+    public Iterable<JobOpeningDTO> filterByPeriode(final Calendar date) {
         authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.CUSTOMER_MANAGER);
-        return jobOpeningsService.filterByDate(date);
+        return jobOpeningsService.filterByPeriode(date);
     }
 
     public JobOpening selectedJobOpening(final JobOpeningDTO jobOpeningDTO) {
         authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.CUSTOMER_MANAGER);
         return jobOpeningsService.selectedJobOpening(jobOpeningDTO);
+    }
+
+    public Iterable<JobOpeningDTO> getIntersection(Iterable<JobOpeningDTO> list1) {
+        Collection<JobOpeningDTO> list2 = (Collection<JobOpeningDTO>) filterByCostumerManager();
+        List<JobOpeningDTO> list1AsList = new ArrayList<>();
+        list1.forEach(list1AsList::add);
+        return list1AsList.stream()
+                .filter(list2::contains)
+                .collect(Collectors.toList());
     }
 }

@@ -53,8 +53,8 @@ public class ListJobOpeningsService {
         return jobOpeningsDTO;
     }
 
-    public Iterable<JobOpeningDTO> filterByDate(final Calendar date) {
-        final Iterable<JobOpening> jobOpenings = this.jobOpeningRepository.filterByDate(date);
+    public Iterable<JobOpeningDTO> filterByPeriode(final Calendar date) {
+        final Iterable<JobOpening> jobOpenings = this.jobOpeningRepository.filterByPeriode(date);
         
         List<JobOpeningDTO> jobOpeningsDTO = new ArrayList<>();
         jobOpenings.forEach(jobOpening -> jobOpeningsDTO.add(jobOpening.toDTO()));

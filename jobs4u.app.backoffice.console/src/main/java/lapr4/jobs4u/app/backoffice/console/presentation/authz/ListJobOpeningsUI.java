@@ -104,7 +104,7 @@ public class ListJobOpeningsUI extends AbstractListUI<JobOpeningDTO> {
     }
 
     protected Iterable<JobOpeningDTO> jobOpeningsByDate(final Calendar date) {
-        return listJobOpeningsController.getIntersection(listJobOpeningsController.filterByPeriode(date));
+        return listJobOpeningsController.getIntersection(listJobOpeningsController.filterByPeriod(date));
     }
 
     @Override
@@ -119,6 +119,6 @@ public class ListJobOpeningsUI extends AbstractListUI<JobOpeningDTO> {
 
     @Override
     protected String listHeader() {
-        return String.format("#  %-15s%-20s%-15s", "C. CODE", "C. NAME", "J. REFERENCE");
+        return String.format("#  %-15s%-20s%-15s%-30s", "C. CODE", "C. NAME", "J. REFERENCE", "J. TITLE");
     }
 }

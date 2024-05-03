@@ -60,7 +60,7 @@ public class JpaJobOpeningRepository extends JpaAutoTxRepository<JobOpening, Job
 
     @SuppressWarnings("unchecked")
     @Override
-    public Iterable<JobOpening> filterByPeriode(final Calendar registeredOn) {
+    public Iterable<JobOpening> filterByPeriod(final Calendar registeredOn) {
         Query query = createQuery(
                 "SELECT e FROM JobOpening e WHERE MONTH(e.registeredOn) = :month AND YEAR(e.registeredOn) = :year",
                 JobOpening.class);

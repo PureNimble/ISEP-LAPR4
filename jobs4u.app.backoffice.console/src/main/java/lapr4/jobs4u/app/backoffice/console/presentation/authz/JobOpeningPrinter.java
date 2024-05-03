@@ -7,5 +7,7 @@ public class JobOpeningPrinter implements Visitor<JobOpeningDTO> {
 
     @Override
     public void visit(final JobOpeningDTO visitee) {
-        System.out.printf("%-15s%-20s%-15s", visitee.getCustomerCode(), visitee.getCustomerName(), visitee.getJobReference());    }
+        System.out.printf("%-15s%-20s%-15s%-30s", visitee.getCustomerCode(), visitee.getCustomerName(),
+                visitee.getJobReference(), visitee.getTitleOrFunction());
+    }
 }

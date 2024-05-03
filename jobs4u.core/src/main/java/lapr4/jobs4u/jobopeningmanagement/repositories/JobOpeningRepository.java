@@ -17,5 +17,5 @@ public interface JobOpeningRepository extends DomainRepository<JobReference, Job
     String findHighestSequenceForCustomer(final CustomerCode customerCode);
     Iterable<JobOpening> filterByCostumer(final Customer customer);
     Iterable<JobOpening> filterByActive(final boolean active);
-    Iterable<JobOpening> filterByPeriode(final Calendar date);
+    Iterable<JobOpening> filterByPeriod(final Calendar date);
 }

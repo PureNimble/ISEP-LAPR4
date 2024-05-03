@@ -20,41 +20,66 @@
  */
 package lapr4.jobs4u.infrastructure.bootstrapers.demo;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
 import lapr4.jobs4u.customermanagement.domain.Customer;
 import lapr4.jobs4u.infrastructure.bootstrapers.Jobs4UBootstrapperBase;
 import lapr4.jobs4u.jobopeningmanagement.domain.JobOpening;
+import lapr4.jobs4u.recruitmentprocessmanagement.domain.RecruitmentProcess;
 import lapr4.jobs4u.usermanagement.domain.BaseRoles;
 import eapli.framework.actions.Action;
 import eapli.framework.infrastructure.authz.domain.model.Role;
+import eapli.framework.time.util.CurrentTimeCalendars;
 
 /**
  * @author Paulo Gandra Sousa
  */
 public class CustomerBootstrapper extends Jobs4UBootstrapperBase implements Action {
 
-    @Override
-    public boolean execute() {
-        final Customer c = registerCustomer("Customer", "Rua do Customer", "customer", "cu@email.local", "912345678",
-                "Customer", "Customer");
-        final JobOpening jo = registerJobOpening("JobOpening", "FULL_TIME", "PRESENTIAL", "Rua do Job Opening", c,
-                "Job Opening Description");
-        return true;
-    }
+        @Override
+        public boolean execute() {
+                final Customer c = registerCustomer("Customer", "Rua do Customer", "CUSTOMER", "cu@email.local",
+                                "912345678",
+                                "Customer", "Customer");
+                final JobOpening jo = registerJobOpening("JobOpening", "FULL_TIME", "PRESENTIAL", "Rua do Job Opening",
+                                c,
+                                "Job Opening Description");
 
-    private Customer registerCustomer(final String name, final String address, final String customerCode,
-            final String email, final String phoneNumber, final String firstName, final String lastName) {
-        final Set<Role> roles = new HashSet<>();
-        roles.add(BaseRoles.CUSTOMER);
+                setUpRecruitmentProcess(jo);
+                return true;
+        }
 
-        return addCustomer(name, address, customerCode, email, phoneNumber, firstName, lastName, roles);
-    }
+        private Customer registerCustomer(final String name, final String address, final String customerCode,
+                        final String email, final String phoneNumber, final String firstName, final String lastName) {
+                final Set<Role> roles = new HashSet<>();
+                roles.add(BaseRoles.CUSTOMER);
 
-    private JobOpening registerJobOpening(final String titleOrFunction, final String contractType,
-            final String mode, final String address, final Customer customer, final String jobDescription) {
+                return addCustomer(name, address, customerCode, email, phoneNumber, firstName, lastName, roles);
+        }
 
-        return addJobOpening(titleOrFunction, contractType, mode, address, customer, jobDescription);
-    }
+        private JobOpening registerJobOpening(final String titleOrFunction, final String contractType,
+                        final String mode, final String address, final Customer customer, final String jobDescription) {
+
+                return addJobOpening(titleOrFunction, contractType, mode, address, customer, jobDescription);
+        }
+
+        private RecruitmentProcess setUpRecruitmentProcess(JobOpening jobOpening) {
+
+                SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
+                Calendar calendar = CurrentTimeCalendars.now();
+
+                String[] dates = new String[10];
+                for (int i = 0; i < dates.length; i++) {
+                        calendar.add(Calendar.MONTH, i);
+                        Date date = calendar.getTime();
+                        dates[i] = format.format(date);
+                }
+
+                return addRecruitmentProcess(dates[0], dates[1], dates[2], dates[3], dates[4], dates[5], dates[6],
+                                dates[7], dates[8], dates[9], jobOpening);
+        }
 }

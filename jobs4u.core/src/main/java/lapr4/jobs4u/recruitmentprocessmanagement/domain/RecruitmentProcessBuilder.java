@@ -19,8 +19,9 @@ public class RecruitmentProcessBuilder implements DomainFactory<RecruitmentProce
     public RecruitmentProcessBuilder with(final String applicationInitialDate, final String applicationFinalDate,
             final String screeningInitialDate, final String screeningFinalDate, final String interviewInitialDate,
             final String interviewFinalDate, final String analysisInitialDate, final String analysisFinalDate,
-            final String resultInitialDate, final String resultFinalDate, final JobOpening jobOpening) {
-        this.withApplicationPhase(applicationInitialDate, applicationInitialDate);
+            final String resultInitialDate, final String resultFinalDate, final JobOpening jobOpening,
+            final String minDate) {
+        this.withApplicationPhase(applicationInitialDate, applicationFinalDate, minDate);
         this.withScreeningPhase(screeningInitialDate, screeningFinalDate);
         this.withInterviewPhase(interviewInitialDate, interviewFinalDate);
         this.withAnalysisPhase(analysisInitialDate, analysisFinalDate);
@@ -32,8 +33,8 @@ public class RecruitmentProcessBuilder implements DomainFactory<RecruitmentProce
     public RecruitmentProcessBuilder with(final String applicationInitialDate, final String applicationFinalDate,
             final String screeningInitialDate, final String screeningFinalDate, final String analysisInitialDate,
             final String analysisFinalDate,
-            final String resultInitialDate, final String resultFinalDate, JobOpening jobOpening) {
-        this.withApplicationPhase(applicationInitialDate, applicationInitialDate);
+            final String resultInitialDate, final String resultFinalDate, JobOpening jobOpening, final String minDate) {
+        this.withApplicationPhase(applicationInitialDate, applicationFinalDate, minDate);
         this.withScreeningPhase(screeningInitialDate, screeningFinalDate);
         this.interviewPhase = null;
         this.withAnalysisPhase(analysisInitialDate, analysisFinalDate);
@@ -42,8 +43,9 @@ public class RecruitmentProcessBuilder implements DomainFactory<RecruitmentProce
         return this;
     }
 
-    public RecruitmentProcessBuilder withApplicationPhase(final String initialDate, final String finalDate) {
-        this.applicationPhase = ApplicationPhase.valueOf(initialDate, finalDate);
+    public RecruitmentProcessBuilder withApplicationPhase(final String initialDate, final String finalDate,
+            final String minDate) {
+        this.applicationPhase = ApplicationPhase.valueOf(initialDate, finalDate, minDate);
         return this;
     }
 

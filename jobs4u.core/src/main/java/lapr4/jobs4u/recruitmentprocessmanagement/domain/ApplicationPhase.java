@@ -16,14 +16,14 @@ public class ApplicationPhase extends Phase implements DomainEntity<Long> {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long pk;
 
-    protected ApplicationPhase(final String initialDate, final String finalDate) {
-        super(initialDate, finalDate);
+    protected ApplicationPhase(final String initialDate, final String finalDate, final String minDate) {
+        super(initialDate, finalDate, minDate);
     }
 
     protected ApplicationPhase() {}
 
-    public static ApplicationPhase valueOf(final String initialDate, final String finalDate) {
-        return new ApplicationPhase(initialDate, finalDate);
+    public static ApplicationPhase valueOf(final String initialDate, final String finalDate, final String minDate) {
+        return new ApplicationPhase(initialDate, finalDate, minDate);
     }
 
     @Override

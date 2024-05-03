@@ -6,7 +6,6 @@ import lapr4.jobs4u.applicationmanagement.domain.ApplicationCode;
 import lapr4.jobs4u.applicationmanagement.dto.ApplicationDTO;
 import lapr4.jobs4u.applicationmanagement.repositories.ApplicationRepository;
 import lapr4.jobs4u.candidatemanagement.domain.Candidate;
-import lapr4.jobs4u.jobopeningmanagement.domain.JobOpening;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;

@@ -6,6 +6,7 @@ import eapli.framework.infrastructure.repositories.impl.inmemory.InMemoryDomainR
 import lapr4.jobs4u.applicationmanagement.domain.Application;
 import lapr4.jobs4u.applicationmanagement.domain.ApplicationCode;
 import lapr4.jobs4u.applicationmanagement.repositories.ApplicationRepository;
+import lapr4.jobs4u.candidatemanagement.domain.Candidate;
 import lapr4.jobs4u.jobopeningmanagement.domain.JobOpening;
 import lapr4.jobs4u.jobopeningmanagement.domain.JobReference;
 
@@ -34,5 +35,10 @@ public class InMemoryApplicationRepository
     @Override
     public Iterable<Application> filterByJobOpening(JobOpening jobOpening) {
         return match(e -> e.jobOpening().equals(jobOpening));
+    }
+
+    @Override
+    public Iterable<Application> findApplicationsFromCandidate(Candidate candidate) {
+        return match(e -> e.candidate().equals(candidate));
     }
 }

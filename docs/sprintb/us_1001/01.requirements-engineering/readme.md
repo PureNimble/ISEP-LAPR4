@@ -95,13 +95,19 @@
 >
 > **Answer:** Para essa US faze sentido assumir que o Customer Manager conhece o email a ser suado para esse Customer e pode introduzi-lo. Tal como para outras situações similares podem assumir que a password é gerada pelo sistema e que existe uam forma do utilizador conhecer essa password, mas que está forá do âmbito actual do sistema. Não percebi à referência a CustomerEntity. O que é?
 
+> **Date:** 2024-04-29
+>
+> **Question 135:** Relativamente ao formato do customer code, em todos os exemplos fornecidos, este é uma sigla/acrónimo com letras maiúsculas (ex: "ISEP", "IBM"). Só pode ter este formato ou pode conter números e letras minúsculas?
+>
+> **Answer:** Ver Q22. Em Q22 sugere-se 10 caracteres no máximo. Penso que seria de manter apenas letras maiúsculas podendo ainda ter dígitos (0-9), mas começando sempre por letra.
+
 ### 1.3. Acceptance Criteria
 
 * **AC1:** The system must automatically create a user for the customer that the Customer Manager registers.
 
 * **AC2:** The address of the customer must be registered.
 
-* **AC3:** The customer code must be unique and between 8-10.
+* **AC3:** The customer code must be unique and have a maximum of 10 characters, having only uppercase letters and digits (0-9) and starting with a letter.
 
 ### 1.4. Found out Dependencies
 
@@ -114,11 +120,12 @@ _N/A_
 * Typed data:
 	* company name
 	* customer code
-	* e-mail
+	* customer's e-mail
 	* address
 	* phone number
-	* first name
-	* last name
+	* representative first name
+	* representative last name
+	* representative e-mail
 
 **Output Data:**
 

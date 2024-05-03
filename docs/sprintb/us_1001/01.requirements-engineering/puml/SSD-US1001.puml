@@ -1,4 +1,4 @@
-@startuml
+@startuml SSD-US1001
 skinparam monochrome true
 skinparam packageStyle rectangle
 skinparam shadowing false
@@ -15,7 +15,7 @@ activate CustomerManager
     CustomerManager -> System : Asks to register a customer
     activate System
 
-        System --> CustomerManager : Asks for information (company name, address, customer code, email,\nphone number, first name, last name)
+        System --> CustomerManager : Asks for information (company name, address, customer code, customer email,\nphone number, first name, last name, email)
 
     deactivate System
 

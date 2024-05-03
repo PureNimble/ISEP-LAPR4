@@ -19,13 +19,12 @@ deactivate System
 
 note left of System : By default, the system displays all job openings \nassociated with the customer manager without filters.
 
-opt Optionally applies filters
-    loop While there are filters to apply
-        Manager -> System : Asks to filter the list of job openings
-        activate System
-            System --> Manager : Displays the filter options
-        deactivate System
-        note left of System : The System should display the state \nof each filter (active or not).
+loop While there are filters to apply
+    Manager -> System : Asks to filter the list of job openings
+    activate System
+        System --> Manager : Displays the filter options
+    deactivate System
+    opt Optionally applies filters
         alt "Filter by active status"
             Manager -> System : Inputs active status filter criteria
             activate System

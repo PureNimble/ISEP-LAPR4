@@ -98,36 +98,37 @@ public class ImportApplicationsController {
     }
 
     public Application registerApplication(
-            final List<File> file, final Optional<JobOpening> jobOpening,
+            final List<File> file, final JobOpening jobOpening,
             final Candidate candidate) {
         return createaApplication(file, jobOpening, candidate);
     }
 
     private Application createaApplication(
-            final List<File> file, final Optional<JobOpening> jobOpening,
+            final List<File> file, final JobOpening jobOpening,
             final Candidate candidate) {
         final Application application = doCreateApplication(file, jobOpening, candidate);
-        System.out.println("boas\n\n\n\n\n\n\n\n\n\n\n\n\n");
         return applicationRepository.save(application);
     }
 
     private Application doCreateApplication(
-            final List<File> file, final Optional<JobOpening> jobOpening,
+            final List<File> file, final JobOpening jobOpening,
             final Candidate candidate) {
         String applicationNumber;
 
-        if (jobOpening.isPresent()) {
-            applicationNumber = new ImportApplicationsService(applicationRepository)
-                    .nextJobOpeningReference(jobOpening.get().jobReference());
-            return new ApplicationBuilder().with(applicationNumber, Date.today(), file, jobOpening.get(), candidate)
-                    .build();
-        }
-        return null;
+        applicationNumber = new ImportApplicationsService(applicationRepository)
+                .nextJobOpeningReference(jobOpening.jobReference());
+        return new ApplicationBuilder().with(applicationNumber, Date.today(), file, jobOpening, candidate)
+                .build();
     }
 
-    public Optional<JobOpening> getJobOpennig(JobReference x) {
+    public JobOpening getJobOpennig(JobReference x) {
 
-        return jobOpeningRepository.findJobOpeningByReference(x);
+        Optional<JobOpening> job = jobOpeningRepository.findJobOpeningByReference(x);
+        if (job.isPresent()) {
+            return job.get();
+        }
+        return null;
+
     }
 
     public List<File> getFiles(String folder, String candidateId,
@@ -155,6 +156,10 @@ public class ImportApplicationsController {
             return Collections.emptyList();
         }
 
+    }
+
+    public boolean haveReportFile(String folder) {
+        return Files.exists(Paths.get(folder + "/report.txt"));
     }
 
 }

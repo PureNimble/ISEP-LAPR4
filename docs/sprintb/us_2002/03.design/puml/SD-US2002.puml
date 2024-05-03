@@ -1,4 +1,4 @@
-@startuml SD-US1001
+@startuml
 
 title Sequence Diagram - US1001
 
@@ -6,44 +6,63 @@ skinparam linetype ortho
 skinparam maxmessagesize 150
 skinparam sequenceParticipant underline
 
-actor Operator
+actor "Operator" as operator
 
-participant "RegisterApplicationUI" as UI
-participant "RegisterApplicationController" as ApplicationController
-participant "ImportFileController" as FileController
-participant ApplicationService
-participant Candidate
-participant Application
-participant File
+participant "ImportApplicationUI" as UI
+participant "ImportApplicationController" as ImportApplicationController
+
+participant "RegisterCandidateController" as CandidateController
+participant "RegisterCandidateUserController" as CandidateUserController
+participant "CandidateService" as CandidateService
+participant "ApplicationBuilder" as ApplicationBuilder
+
+participant "Candidate" as Candidate
+
+participant "UserManagementService" as ManagementService
+participant "UserTypesFactory" as Factory
+
+participant "File" as File
+participant "Application" as Application
+
+participant "CandidateRepository" as CandidateRepository
+participant "JpaCandidateRepository" as JpaCandidateRepository
+
+participant "UserRepository" as UserRepository
+participant "JpaUserRepository" as JpaUserRepository
+
+participant "JobOpeningRepository" as JobOpeningRepository
+participant "JpaJobOpeningRepository" as JpaJobOpeningRepository
+
 participant "ApplicationRepository" as ApplicationRepository
-participant FileRepository
-participant JpaApplicationRepository
-participant JpaFileRepository
-participant CandidateRepository
-participant JpaCandidateRepository
+participant "JpaApplicationRepository" as JpaApplicationRepository
+
 database "Database" as DB
 
-activate Operator
+activate operator
 
-Operator -> UI: Asks to import data related to Applications
+operator -> UI : Asks to import data related to candidates applications
 activate UI
-    UI --> Operator: Request the path of the shared folder
+
+UI --> operator : Requests the path of the shared folder
 deactivate UI
 
-Operator -> UI: Provides information
+operator -> UI : Provides information
 
 activate UI
-    loop for each candidateID in the folder
-
-    UI -> ApplicationController: registerApplication()
-        activate ApplicationController
-            ApplicationController -> ApplicationService: addCandidate(firstName,lastName,email,phone)
-        activate ApplicationService
-            ApplicationService -> Candidate: createCandidate(firstName,lastName,email,phone)
+    loop for each application
+        UI -> ImportApplicationController : importCandidateInfo()
+        activate ImportApplicationController
+        ImportApplicationController --> UI : return List<String>
+        deactivate ImportApplicationController
+        UI -> CandidateController: registerCandidate(firstName, lastName,email,phoneNumber)
+        activate CandidateController
+            CandidateController -> CandidateService: registerCandidate(firstName, lastName,email,phoneNumber)
+        activate CandidateService
+            CandidateService -> Candidate: registerCandidate(firstName, lastName,email,phoneNumber)
         activate Candidate
-            Candidate --> ApplicationService: return Candidate
+            Candidate --> CandidateService: return Candidate
         deactivate Candidate
-        ApplicationService -> CandidateRepository: save(Candidate)
+            CandidateService -> CandidateRepository: save(Candidate)
         activate CandidateRepository
             CandidateRepository -> JpaCandidateRepository: save(Candidate)
         activate JpaCandidateRepository
@@ -53,65 +72,101 @@ activate UI
             deactivate DB
             JpaCandidateRepository --> CandidateRepository: return Candidate
         deactivate JpaCandidateRepository
-        CandidateRepository --> ApplicationService: return Candidate
+            CandidateRepository --> CandidateService: return Candidate
         deactivate CandidateRepository
-        ApplicationService --> ApplicationController: return Candidate
-        deactivate ApplicationService
-        ApplicationController -> ApplicationService: addApplication(candidate,applicationID,date)
-        activate ApplicationService
-            ApplicationService -> Application: createApplication(candidate,applicationID,date)
+            CandidateService --> CandidateController: return Candidate
+        deactivate CandidateService
+            CandidateController --> UI: return Candidate
+        deactivate CandidateController
+
+            UI -> CandidateUserController: addCandidateUser(email, password, first name, last name)
+        activate CandidateUserController
+
+        CandidateUserController -> ManagementService: registerNewCandidateUser(email, password, first name, last name)
+
+        activate ManagementService
+            ManagementService -> Factory: withRoleCandidateUser(email, password, first name, last name)
+        activate Factory
+            Factory --> ManagementService : CandidateUser
+        deactivate Factory
+
+        ManagementService -> UserRepository: save(CandidateUser)
+
+        activate UserRepository
+            UserRepository -> JpaUserRepository: save(CandidateUser)
+        activate JpaUserRepository
+            JpaUserRepository -> DB: persist(CandidateUser)
+            activate DB
+                DB --> JpaUserRepository: return boolean
+            deactivate DB
+            JpaUserRepository --> UserRepository: return boolean
+        deactivate JpaUserRepository
+
+        UserRepository --> ManagementService: return boolean
+        deactivate UserRepository
+
+        ManagementService --> CandidateUserController: return boolean
+        deactivate ManagementService
+
+        CandidateUserController --> UI: return boolean
+        deactivate CandidateUserController
+
+        UI -> ImportApplicationController : importJobreference(folder)
+        activate ImportApplicationController
+        ImportApplicationController -> JobOpeningRepository : findJobOpeningByReference(jobReference)
+        activate JobOpeningRepository
+            JobOpeningRepository -> JpaJobOpeningRepository : findJobOpeningByReference(jobReference)
+        activate JpaJobOpeningRepository
+        JpaJobOpeningRepository -> DB : findJobOpeningByReference(jobReference)
+        activate DB
+            DB --> JpaJobOpeningRepository : return JobOpening
+        deactivate DB
+        JpaJobOpeningRepository --> JobOpeningRepository : return JobOpening
+        deactivate JpaJobOpeningRepository
+        JobOpeningRepository --> ImportApplicationController : return JobOpening
+        deactivate JobOpeningRepository
+        ImportApplicationController --> UI : return JobOpening
+        deactivate ImportApplicationController
+        UI -> ImportApplicationController : importFiles(folder)
+        activate ImportApplicationController
+        ImportApplicationController --> UI : return files
+        loop for each file
+            ImportApplicationController -> File : valueOf(file) 
+            activate File 
+            File --> ImportApplicationController : return File
+            deactivate File
+        end
+        ImportApplicationController --> UI : return List<File>
+        deactivate ImportApplicationController
+        UI -> ImportApplicationController : registerApplication(candidate, jobOpening, files)
+        activate ImportApplicationController
+        ImportApplicationController -> ApplicationBuilder : createApplication(candidate, jobOpening, files)
+        activate ApplicationBuilder
+        ApplicationBuilder -> Application : createApplication(candidate, jobOpening, files)
         activate Application
-            Application --> ApplicationService: return (true/false)
+        Application --> ApplicationBuilder : return boolean
         deactivate Application
-            ApplicationService -> ApplicationRepository: save(Application)
+        ApplicationBuilder --> ImportApplicationController : return boolean
+        deactivate ApplicationBuilder
+        ImportApplicationController -> ApplicationRepository : save(Application)
         activate ApplicationRepository
-            ApplicationRepository -> JpaApplicationRepository: save(Application)
+        ApplicationRepository -> JpaApplicationRepository : save(Application)
         activate JpaApplicationRepository
-            JpaApplicationRepository -> DB: persist(Application)
-            activate DB
-                DB --> JpaApplicationRepository: return (true/false)
-            deactivate DB
-            JpaApplicationRepository --> ApplicationRepository: return (true/false)
+        JpaApplicationRepository -> DB : persist(Application)
+        activate DB
+        DB --> JpaApplicationRepository : return boolean
+        deactivate DB
+        JpaApplicationRepository --> ApplicationRepository : return boolean
         deactivate JpaApplicationRepository
-            ApplicationRepository --> ApplicationService: return (true/false)
+        ApplicationRepository --> ImportApplicationController : return boolean
         deactivate ApplicationRepository
-            ApplicationService --> ApplicationController: return (true/false)
-        deactivate ApplicationService
-            ApplicationController --> UI: return (true/false)
-        deactivate ApplicationController  
-    UI -> FileController : importFiles()
-        activate FileController
-            FileController -> ApplicationService: importFiles()
-        activate ApplicationService
-        loop for each file related to the candidateID
-            ApplicationService -> File: createFile()
-        activate File
-            File --> ApplicationService: return File
-        deactivate File
-            ApplicationService -> FileRepository: save(File)
-        activate FileRepository
-            FileRepository -> JpaFileRepository: save(File)
-        activate JpaFileRepository
-            JpaFileRepository -> DB: persist(File)
-            activate DB
-                DB --> JpaFileRepository: return File
-            deactivate DB
-            JpaFileRepository --> FileRepository: return File
-        deactivate JpaFileRepository
-            FileRepository --> ApplicationService: return File
-        deactivate FileRepository
-            ApplicationService --> FileController: return File
-        deactivate ApplicationService
-            FileController --> UI: return File
-        deactivate FileController
-        end loop
-    end loop  
+        ImportApplicationController --> UI : return boolean
+        deactivate ImportApplicationController
+    end
 
-
-
-UI --> Operator: Informs success or failure
+UI --> operator: Informs success or failure
 deactivate UI
 
-deactivate Operator
+deactivate operator
 
 @enduml

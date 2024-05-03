@@ -11,84 +11,129 @@ skinparam class {
     ArrowColor Black
 }
 
-class "RegisterApplicationUI" as UI {}
+class "ImportApplicationUI" as UI {}
 
-class "RegisterApplicationController" as ApplicationController {
-    +addApplication(): void
+class "ImportApplicationController" as ApplicationController {
+    +importCandidateInfo(folder):List<String>
+    +importJobReference(folder):jobReference
+    +importFiles(folder):List<String>
+    +registerApplication(candidate, jobReference, files):boolean
 }
 
-class ImportFilesController{
-    +importFiles(): void
-
+class ApplicationBuilder{
+    +build(candidate, jobOpening, files):Application
 }
 
-class "ApplicationService" as ApplicationService {
-    +addApplication(): Application
+class Application{
+    -candidate:Candidate
+    -jobReference:JobReference
+    -files:List<File>
+    +create(candidate, jobOpening, files):Application
+
+}
+class File{
+    -path:String
+    + valueOf(file):File
+}
+class "Database" as DB <<(D, #8BEBFF)>> {
 }
 
-class "Application" as Application {
+class ApplicationRepository{
+    +save(application):void
+}
+
+class JpaApplicationRepository{
+    +save(application):void
+}
+
+class JobOpeningRepository{
+    +findJobOpeningByJobReference(jobReference):JobOpening
+}
+class JpaJobOpeningRepository{
+    +findJobOpeningByJobReference(jobReference):JobOpening
+}
+
+class "RegisterCandidateController" as CandidateController {
+    +registerCandidate(firstName, lastName,email,phoneNumber):Candidate
+    +registerCandidateUser(candidate, user):void
+}
+
+class "CandidateService" as CandidateService {
+    +addCandidateUser(email, password, first name, last name):SystemUser
+}
+
+class "Candidate" as Candidate {
     -companyName: String
     -address: String
-    -ApplicationCode: String
+    -CandidateCode: String
     -email: String
     -phone: String
-    +createApplication(): Application
+    +createCandidate(companyName: String, address: String, CandidateCode: String, email: String, phone: String): Candidate
 }
 
-class File {
-    -fileName: String
-    -filePath: String
-    +createFile(): File
-}
-
-class Candidate {
-    -firstName: String
-    -lastName: String
-    -phoneNumber: PhoneNumber
-    -email: Email
-    +createCandidate(firstName,lastName,phoneNumber,email): Candidate
-}
-class FileRepository {
-    +save(File: File): File
-}
-class CandidateRepository {
+class "CandidateRepository" as CandidateRepository {
     +save(Candidate: Candidate): Candidate
 }
-class ApplicationRepository {
-    +save(Application: Application): Application
+
+class "JpaCandidateRepository" as JpaCandidateRepository {
+    +save(Candidate: Candidate): Candidate
 }
-class JpaFileRepository {
-    +save(Application: Application): Application
+
+class "RegisterCandidateUserController" as CandidateUserController {
+    +addCandidateUser(email: String, password: String, firstName: String, lastName: String): void
 }
-class JpaCandidateRepository {
-    +save(Application: Application): Application
+
+class "UserManagementService" as ManagementService {
+    +registerNewCandidateUser(email: String, password: String, firstName: String, lastName: String): User
 }
-class JpaApplicationRepository {
-    +save(Application: Application): Application
+
+class "UserTypesFactory" as Factory {
+    +withRoleCandidateUser(email: String, password: String, firstName: String, lastName: String): User
+}
+
+class "UserRepository" as UserRepository {
+    +save(user: User): User
+}
+
+class "JpaUserRepository" as JpaUserRepository {
+    +save(user: User): User
 }
 
 class "Database" as DB <<(D, #8BEBFF)>> {
 }
 
-UI --> ApplicationController
-UI --> ImportFilesController
-
-'Import Files
-ImportFilesController --> File
-ImportFilesController --> FileRepository
-FileRepository --> JpaFileRepository
-JpaFileRepository --> DB
-
-'Register Candidate
-ApplicationService --> Candidate
-ApplicationService --> CandidateRepository
+UI --> CandidateController
+CandidateController --> CandidateService
+CandidateService --> Candidate
+CandidateService --> CandidateRepository
 CandidateRepository --> JpaCandidateRepository
 JpaCandidateRepository --> DB
-'Register Application
-ApplicationController --> ApplicationService
-ApplicationService --> Application
-ApplicationService --> ApplicationRepository
+UI --> CandidateUserController
+CandidateUserController --> ManagementService
+ManagementService --> Factory
+ManagementService --> UserRepository
+UserRepository --> JpaUserRepository
+JpaUserRepository --> DB
+
+
+UI --> ApplicationController
+
+'ApplicationController
+
+ApplicationController --> JobOpeningRepository
+ApplicationController --> ApplicationRepository
+ApplicationController --> File
+ApplicationController --> ApplicationBuilder
+ApplicationBuilder --> Application
+
+
+
+'Repository
+JobOpeningRepository --> JpaJobOpeningRepository
 ApplicationRepository --> JpaApplicationRepository
 JpaApplicationRepository --> DB
+JpaJobOpeningRepository --> DB
+
+
 
 @enduml

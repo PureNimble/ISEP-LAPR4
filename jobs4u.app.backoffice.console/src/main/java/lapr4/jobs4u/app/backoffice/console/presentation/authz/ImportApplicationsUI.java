@@ -18,7 +18,6 @@ import java.util.List;
 import java.util.Set;
 
 import java.util.Map;
-import java.util.Optional;
 
 import eapli.framework.domain.repositories.ConcurrencyException;
 import eapli.framework.domain.repositories.IntegrityViolationException;
@@ -49,16 +48,21 @@ public class ImportApplicationsUI extends AbstractUI {
     @Override
     protected boolean doShow() {
 
-        final String folder;
+        // TODO: If user already exists, skip application
+        // TODO: If candidate already exists, skip application
+        // TODO: If application already exists, skip application
+        // TODO: If job opening does not exist, skip application
+
+        String folder;
         if (Console.readBoolean("Do you want to use the default Path? (Y/N)")) {
             folder = DEFAULT_FOLDER;
         } else {
-            String temp;
-            do {
-                temp = Console.readLine("Shared Folder Path (Insert a valid path):");
-            } while (!Files.exists(Paths.get(temp)));
 
-            folder = temp;
+            folder = Console.readLine("Shared Folder Path (Insert a valid path):");
+            if (!Files.exists(Paths.get(folder)) && haveReportFile(folder)) {
+                System.out.println("Invalid Path");
+                return false;
+            }
         }
 
         Map<String, Set<String>> candidateJobMap = new HashMap<>();
@@ -68,7 +72,11 @@ public class ImportApplicationsUI extends AbstractUI {
         candidateJobMap.forEach((jobOffer, candidateSet) -> {
             candidateSet.forEach(candidateId -> {
                 Candidate candidate = registerCandidates(folder, candidateId, jobOffer);
-                Optional<JobOpening> job = this.theController.getJobOpennig(JobReference.valueOf(jobOffer));
+                JobOpening job = this.theController.getJobOpennig(JobReference.valueOf(jobOffer));
+                if (job == null) {
+                    System.out.println("Job Opening does not exist");
+                    return;
+                }
                 List<File> files = this.theController.getFiles(folder, candidateId, jobOffer);
 
                 registerApplication(files, job, candidate);
@@ -104,10 +112,14 @@ public class ImportApplicationsUI extends AbstractUI {
 
     }
 
-    private void registerApplication(List<File> files, Optional<JobOpening> job,
+    private void registerApplication(List<File> files, JobOpening job,
             Candidate candidate) {
 
         this.theController.registerApplication(files, job, candidate);
+    }
+
+    private boolean haveReportFile(String folder) {
+        return this.theController.haveReportFile(folder);
     }
 
     @Override

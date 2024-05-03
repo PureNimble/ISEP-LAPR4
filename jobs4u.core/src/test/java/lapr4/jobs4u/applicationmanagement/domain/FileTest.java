@@ -5,15 +5,22 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.Test;
 
-public class FileTest {
+import eapli.framework.io.util.Files;
 
-    static final String VALID_FILE = "1-big-file-1.txt";
-    static final String VALID_FILE2 = "1-candidate-data.txt";
+public class FileTest {
+    String valid_format = "jobs4u.applicationsFileBot/resources/input";
+    String VALID_FILE = valid_format + "/1-big-file-1.txt";
+    String VALID_FILE2 = valid_format + "/1-candidate-data.txt";
     static final String INVALID_FILE = "temo/sharedfolder";
 
     public static File dummyFile(final String file) {
+        System.out.println(Files.currentDirectory());
+        String temp = file;
+        if (Files.currentDirectory().contains("jobs4u.core")) {
+            temp = "../" + file;
+        }
 
-        return File.valueOf(file);
+        return File.valueOf(temp);
     }
 
     private File getNewDummyFile(final String file) {

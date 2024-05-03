@@ -35,7 +35,7 @@ public class SetUpRecruitmentProcessController {
                         final String interviewFinalDate, final String analysisInitialDate,
                         final String analysisFinalDate,
                         final String resultInitialDate, final String resultFinalDate, final JobOpening jobOpening) {
-                authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.CUSTOMER_MANAGER);
+                authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.CUSTOMER_MANAGER, BaseRoles.POWERUSER);
                 return registerRecruitmentProcess(applicationInitialDate, applicationFinalDate, screeningInitialDate,
                                 screeningFinalDate, interviewInitialDate, interviewFinalDate, analysisInitialDate,
                                 analysisFinalDate,
@@ -48,7 +48,7 @@ public class SetUpRecruitmentProcessController {
                         final String analysisInitialDate,
                         final String analysisFinalDate,
                         final String resultInitialDate, final String resultFinalDate, final JobOpening jobOpening) {
-                authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.CUSTOMER_MANAGER);
+                authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.CUSTOMER_MANAGER, BaseRoles.POWERUSER);
                 return registerRecruitmentProcess(applicationInitialDate, applicationFinalDate, screeningInitialDate,
                                 screeningFinalDate, analysisInitialDate, analysisFinalDate, resultInitialDate,
                                 resultFinalDate, jobOpening);

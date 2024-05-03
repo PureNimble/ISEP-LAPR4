@@ -46,25 +46,25 @@ public class EnableOrDisableBackofficeUserController {
     private final UserManagementService userSvc = AuthzRegistry.userService();
 
     public Iterable<SystemUser> allUsers() {
-        authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.ADMIN);
+        authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.ADMIN, BaseRoles.POWERUSER);
 
         return userSvc.allUsers();
     }
 
     public Iterable<SystemUser> activeUsers() {
-        authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.ADMIN);
+        authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.ADMIN, BaseRoles.POWERUSER);
 
         return this.backOffice(userSvc.activeUsers());
     }
 
     public Iterable<SystemUser> deactivatedUsers() {
-        authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.ADMIN);
+        authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.ADMIN, BaseRoles.POWERUSER);
 
         return this.backOffice(userSvc.deactivatedUsers());
     }
 
     public Iterable<SystemUser> backOffice(Iterable<SystemUser> systemUsers) {
-        authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.ADMIN);
+        authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.ADMIN, BaseRoles.POWERUSER);
 
         List<SystemUser> userList = new ArrayList<>();
         systemUsers.forEach(userList::add);
@@ -75,7 +75,7 @@ public class EnableOrDisableBackofficeUserController {
     }
 
     public void enableOrDisableUser(SystemUser user, String newStatus) {
-        authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.ADMIN);
+        authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.ADMIN, BaseRoles.POWERUSER);
 
         if (newStatus.equalsIgnoreCase("enable")) {
             userSvc.activateUser(user);

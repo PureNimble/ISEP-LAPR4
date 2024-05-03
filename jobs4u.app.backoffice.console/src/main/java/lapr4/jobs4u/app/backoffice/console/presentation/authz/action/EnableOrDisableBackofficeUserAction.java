@@ -18,18 +18,19 @@
  * DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-package lapr4.jobs4u.app.backoffice.console.presentation.authz;
+package lapr4.jobs4u.app.backoffice.console.presentation.authz.action;
 
 import eapli.framework.actions.Action;
+import lapr4.jobs4u.app.backoffice.console.presentation.authz.EnableOrDisableBackofficeUserUI;
 
 /**
  *
- * @author losa
+ * @author Fernando
  */
-public class ListBackofficeUsersAction implements Action {
+public class EnableOrDisableBackofficeUserAction implements Action {
 
     @Override
     public boolean execute() {
-        return new ListBackofficeUsersUI().show();
+        return new EnableOrDisableBackofficeUserUI().show();
     }
 }

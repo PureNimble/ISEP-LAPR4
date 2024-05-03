@@ -1,6 +1,5 @@
 package lapr4.jobs4u.candidatemanagement.application;
 
-import eapli.framework.infrastructure.authz.application.AuthorizationService;
 import lapr4.jobs4u.applicationmanagement.domain.Application;
 import lapr4.jobs4u.applicationmanagement.domain.ApplicationCode;
 import lapr4.jobs4u.applicationmanagement.dto.ApplicationDTO;
@@ -15,11 +14,9 @@ import java.util.List;
 public class DisplayCandidateApplicationsService {
 
     private final ApplicationRepository applicationRepository;
-    private final AuthorizationService authz;
 
-    public DisplayCandidateApplicationsService(ApplicationRepository applicationRepository, AuthorizationService authz) {
+    public DisplayCandidateApplicationsService(ApplicationRepository applicationRepository) {
         this.applicationRepository = applicationRepository;
-        this.authz = authz;
     }
 
     public Iterable<ApplicationDTO> findApplicationsFromCandidate(final Candidate candidate) {
@@ -31,10 +28,10 @@ public class DisplayCandidateApplicationsService {
     }
 
     public Application selectedApplication(ApplicationDTO applicationDTO) {
-        Application selectedJobOpening = applicationRepository
+        Application selectedCandidate = applicationRepository
                 .ofIdentity(ApplicationCode.valueOf(applicationDTO.getApplicationCode()))
                 .orElseThrow(IllegalArgumentException::new);
-        return selectedJobOpening;
+        return selectedCandidate;
     }
 
 }

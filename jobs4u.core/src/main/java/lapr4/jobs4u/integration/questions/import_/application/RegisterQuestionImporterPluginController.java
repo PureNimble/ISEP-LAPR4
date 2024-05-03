@@ -46,7 +46,7 @@ public class RegisterQuestionImporterPluginController {
 	 */
 	public QuestionImporterPlugin registerQuestionImporterPlugin(final String name, final String description,
 			final String fileExtension, final String fqClassName) {
-		authorizationService.ensureAuthenticatedUserHasAnyOf(BaseRoles.LANGUAGE_ENGINEER);
+		authorizationService.ensureAuthenticatedUserHasAnyOf(BaseRoles.LANGUAGE_ENGINEER, BaseRoles.POWERUSER);
 
 		final var plugin = new QuestionImporterPlugin(name, description, fileExtension, fqClassName);
 		return repository.save(plugin);

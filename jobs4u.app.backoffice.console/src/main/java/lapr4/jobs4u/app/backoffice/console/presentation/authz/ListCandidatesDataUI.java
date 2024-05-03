@@ -3,6 +3,7 @@ package lapr4.jobs4u.app.backoffice.console.presentation.authz;
 import eapli.framework.infrastructure.authz.application.AuthzRegistry;
 import eapli.framework.presentation.console.AbstractUI;
 import eapli.framework.presentation.console.SelectWidget;
+import lapr4.jobs4u.app.backoffice.console.presentation.authz.printer.CandidatePrinter;
 import lapr4.jobs4u.applicationmanagement.dto.ApplicationDTO;
 import lapr4.jobs4u.candidatemanagement.application.DisplayCandidateApplicationsController;
 import lapr4.jobs4u.candidatemanagement.application.ListCandidatesDataController;
@@ -31,6 +32,7 @@ public class ListCandidatesDataUI extends AbstractUI {
     }
 
     private void printCandidateData(CandidateDTO candidate) {
+        System.out.printf("\nCandidate Details:\n");
         System.out.printf("Name: %s\n", candidate.getName());
         System.out.printf("Email: %s\n", candidate.getEmail());
         System.out.printf("Phone Number: %s\n", candidate.getPhoneNumber());
@@ -38,7 +40,7 @@ public class ListCandidatesDataUI extends AbstractUI {
 
     private void printApplications(Iterable<ApplicationDTO> applicationDTOS) {
         for (ApplicationDTO applicationDTO : applicationDTOS) {
-            System.out.println(applicationDTO);
+            System.out.printf("Application Code: %s\n", applicationDTO.getApplicationCode());
         }
     }
 

@@ -26,7 +26,7 @@ public class RegisterJobOpeningController {
 
     public JobOpening SetUpJobOpening(final String titleOrFunction, final String contractType,
             final String mode, final String address, final Customer customer, final String jobDescription) {
-        authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.CUSTOMER_MANAGER);
+        authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.CUSTOMER_MANAGER, BaseRoles.POWERUSER);
         String jobReference = registerJobOpeningService.nextJobOpeningReference(customer.identity());
         return registerJobOpening(jobReference, titleOrFunction, contractType, mode, address, customer, jobDescription);
     }

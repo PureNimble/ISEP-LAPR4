@@ -23,6 +23,7 @@
  */
 package lapr4.jobs4u.app.backoffice.console.presentation.authz;
 
+import lapr4.jobs4u.app.backoffice.console.presentation.authz.printer.SystemUserPrinter;
 import lapr4.jobs4u.infrastructure.persistence.PersistenceContext;
 import lapr4.jobs4u.usermanagement.application.ListUsersController;
 import eapli.framework.infrastructure.authz.domain.model.SystemUser;

@@ -1,4 +1,4 @@
-package lapr4.jobs4u.app.backoffice.console.presentation.authz;
+package lapr4.jobs4u.app.backoffice.console.presentation.authz.printer;
 
 import eapli.framework.visitor.Visitor;
 import lapr4.jobs4u.candidatemanagement.dto.CandidateDTO;

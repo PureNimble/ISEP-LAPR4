@@ -24,7 +24,7 @@ public class RegisterQuestionController {
 
     public Question SetUpQuestion(final QuestionType questionType, final String questionBody,
             final List<Answer> possibleAnswers) {
-        authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.LANGUAGE_ENGINEER);
+        authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.LANGUAGE_ENGINEER, BaseRoles.POWERUSER);
         return registerQuestion(questionType, questionBody, possibleAnswers);
     }
 

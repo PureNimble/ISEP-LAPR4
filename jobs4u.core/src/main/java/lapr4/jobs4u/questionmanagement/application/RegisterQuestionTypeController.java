@@ -20,7 +20,7 @@ public class RegisterQuestionTypeController {
     }
 
     public QuestionType registerQuestionType(final String type) {
-        authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.LANGUAGE_ENGINEER);
+        authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.LANGUAGE_ENGINEER, BaseRoles.POWERUSER);
         final QuestionType newQuestionType = QuestionType.valueOf(type);
         return repository.save(newQuestionType);
     }

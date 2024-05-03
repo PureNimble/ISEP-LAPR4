@@ -68,7 +68,7 @@ public class ImportQuestionsController {
 	 * @throws IOException
 	 */
 	public List<Question> importQuestions(final String filename) throws IOException {
-		authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.LANGUAGE_ENGINEER);
+		authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.LANGUAGE_ENGINEER, BaseRoles.POWERUSER);
 
 		// TODO refactor this method to move logic from the controller into a service
 		// class

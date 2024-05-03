@@ -54,6 +54,10 @@ public final class BaseRoles {
      * Candidate
      */
     public static final Role CANDIDATE = Role.valueOf("CANDIDATE");
+    /**
+     * PowerUser
+     */
+    public static final Role POWERUSER = Role.valueOf("POWER_USER");
     
     /**
      * get available role types for adding new users

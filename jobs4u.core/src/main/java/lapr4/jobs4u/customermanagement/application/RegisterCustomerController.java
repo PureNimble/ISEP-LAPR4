@@ -28,7 +28,7 @@ public class RegisterCustomerController {
 
     public Customer registerCustomer(final String name, final String address, final String customerCode,
             final String email, final String phoneNumber) {
-        authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.CUSTOMER_MANAGER);
+        authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.CUSTOMER_MANAGER, BaseRoles.POWERUSER);
         final UserSession s = authz.session().orElseThrow(IllegalStateException::new);
         final SystemUser manager = s.authenticatedUser();
         return createCustomer(name, address, customerCode, email, phoneNumber, manager);
@@ -36,7 +36,7 @@ public class RegisterCustomerController {
 
     public CustomerUser registerCustomerUser(final Customer customer,
             final SystemUser systemUser) {
-        authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.CUSTOMER_MANAGER);
+        authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.CUSTOMER_MANAGER, BaseRoles.POWERUSER);
         return createCustomerUser(customer, systemUser);
     }
 

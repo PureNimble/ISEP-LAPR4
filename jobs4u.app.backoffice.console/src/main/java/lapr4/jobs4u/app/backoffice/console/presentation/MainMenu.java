@@ -24,10 +24,8 @@
 package lapr4.jobs4u.app.backoffice.console.presentation;
 
 import lapr4.jobs4u.Application;
-import lapr4.jobs4u.app.backoffice.console.presentation.authz.*;
 import lapr4.jobs4u.app.common.console.presentation.authz.MyUserMenu;
 import lapr4.jobs4u.usermanagement.domain.BaseRoles;
-import eapli.framework.actions.Actions;
 import eapli.framework.actions.menu.Menu;
 import eapli.framework.actions.menu.MenuItem;
 import eapli.framework.infrastructure.authz.application.AuthorizationService;
@@ -44,34 +42,15 @@ import eapli.framework.presentation.console.menu.VerticalMenuRenderer;
  */
 public class MainMenu extends AbstractUI {
 
-    private static final String RETURN_LABEL = "Return ";
-
-    private static final int EXIT_OPTION = 0;
-
-    // USERS
-    private static final int ADD_USER_OPTION = 1;
-    private static final int LIST_USERS_OPTION = 2;
-    private static final int ENABLE_DISABLE_USER_OPTION = 3;
-
-    // CUSTOMER MANAGER
-    private static final int REGISTER_CUSTOMER = 1;
-    private static final int REGISTER_JOB_OPENING = 2;
-    private static final int LIST_JOB_OPENINGS = 3;
-    private static final int SETUP_RECRUITMENT_PROCESS = 4;
-    private static final int LIST_APPLICATIONS = 5;
-    private static final int DISPLAY_CANDIDATE_DATA = 6;
-
-    // OPERATOR
-    private static final int REGISTER_CANDIDATE = 1;
-    private static final int LIST_CANDIDATES= 2;
-    private static final int IMPORT_APPLICATIONS_OPTION = 4;
-
     // MAIN MENU
     private static final int MY_USER_OPTION = 1;
     private static final int USERS_OPTION = 2;
-
+    private static final int ADMIN_OPTION = 2;
+    private static final int CUSTOMER_MANAGER_OPTION = 3;
+    private static final int OPERATOR_OPTION = 4;
+    private static final int LANGUAGE_ENGINEER_OPTION = 5;
+    private static final int EXIT_OPTION = 0;
     private static final String SEPARATOR_LABEL = "--------------";
-
     private final AuthorizationService authz = AuthzRegistry.authorizationService();
 
     @Override
@@ -106,7 +85,7 @@ public class MainMenu extends AbstractUI {
         final Menu mainMenu = new Menu();
 
         if (authz.isAuthenticatedUserAuthorizedTo(BaseRoles.ADMIN, BaseRoles.CUSTOMER_MANAGER, BaseRoles.OPERATOR,
-                BaseRoles.LANGUAGE_ENGINEER)) {
+                BaseRoles.LANGUAGE_ENGINEER, BaseRoles.POWERUSER)) {
 
             final Menu myUserMenu = new MyUserMenu();
             mainMenu.addSubMenu(MY_USER_OPTION, myUserMenu);
@@ -116,23 +95,30 @@ public class MainMenu extends AbstractUI {
             }
 
             if (authz.isAuthenticatedUserAuthorizedTo(BaseRoles.ADMIN)) {
-                final Menu usersMenu = buildAdminMenu();
+                final AdminMenu usersMenu = new AdminMenu();
                 mainMenu.addSubMenu(USERS_OPTION, usersMenu);
             }
 
             if (authz.isAuthenticatedUserAuthorizedTo(BaseRoles.CUSTOMER_MANAGER)) {
-                final Menu usersMenu = buildCustomerManagerMenu();
+                final Menu usersMenu = new CustomerManagerMenu();
                 mainMenu.addSubMenu(USERS_OPTION, usersMenu);
             }
 
             if (authz.isAuthenticatedUserAuthorizedTo(BaseRoles.OPERATOR)) {
-                final Menu usersMenu = buildOperatorMenu();
+                final Menu usersMenu = new OperatorMenu();
                 mainMenu.addSubMenu(USERS_OPTION, usersMenu);
             }
 
             if (authz.isAuthenticatedUserAuthorizedTo(BaseRoles.LANGUAGE_ENGINEER)) {
-                final Menu usersMenu = buildLanguageEngineerMenu();
+                final Menu usersMenu = new LanguageEngineerMenu();
                 mainMenu.addSubMenu(USERS_OPTION, usersMenu);
+            }
+
+            if (authz.isAuthenticatedUserAuthorizedTo(BaseRoles.POWERUSER)) {
+                mainMenu.addSubMenu(ADMIN_OPTION, new AdminMenu());
+                mainMenu.addSubMenu(CUSTOMER_MANAGER_OPTION, new CustomerManagerMenu());
+                mainMenu.addSubMenu(OPERATOR_OPTION, new OperatorMenu());
+                mainMenu.addSubMenu(LANGUAGE_ENGINEER_OPTION, new LanguageEngineerMenu());
             }
 
             if (!Application.settings().isMenuLayoutHorizontal()) {
@@ -140,58 +126,11 @@ public class MainMenu extends AbstractUI {
             }
 
         } else {
-            System.out
-                    .println(
-                            "You don't have permission to access this Application. Please contact the Administrator.\n");
+            System.out.println(
+                    "You don't have permission to access this Application. Please contact the Administrator.\n");
         }
-        mainMenu.addItem(EXIT_OPTION, "Exit", new ExitWithMessageAction("Goodbye!"));
+        mainMenu.addItem(EXIT_OPTION, "Exit", new ExitWithMessageAction(""));
         return mainMenu;
-    }
-
-    private Menu buildAdminMenu() {
-        final Menu menu = new Menu("Users >");
-
-        menu.addItem(ADD_USER_OPTION, "Add User", new AddBackofficeUserAction());
-        menu.addItem(LIST_USERS_OPTION, "List all Users", new ListBackofficeUsersUI()::show);
-        menu.addItem(ENABLE_DISABLE_USER_OPTION, "Enable/Disable User", new EnableOrDisableBackofficeUserAction());
-        menu.addItem(EXIT_OPTION, RETURN_LABEL, Actions.SUCCESS);
-
-        return menu;
-    }
-
-    private Menu buildCustomerManagerMenu() {
-        final Menu menu = new Menu("Users >");
-
-        menu.addItem(REGISTER_CUSTOMER, "Register Customer", new RegisterCustomerAction());
-        menu.addItem(REGISTER_JOB_OPENING, "Register Job Opening", new RegisterJobOpeningAction());
-        menu.addItem(LIST_JOB_OPENINGS, "List Job Openings", new ListJobOpeningsUI()::show);
-        menu.addItem(SETUP_RECRUITMENT_PROCESS, "SetUp Recruitment Process", new SetUpRecruitmentProcessAction());
-        menu.addItem(LIST_APPLICATIONS, "List Applications for a Job Opening", new ListApplicationsUI()::show);
-        menu.addItem(DISPLAY_CANDIDATE_DATA, "Display the personal data of a candidate", new ListCandidatesDataUI()::show);
-        menu.addItem(EXIT_OPTION, RETURN_LABEL, Actions.SUCCESS);
-
-        return menu;
-    }
-
-    private Menu buildOperatorMenu() {
-        final Menu menu = new Menu("Users >");
-
-        menu.addItem(REGISTER_CANDIDATE, "Register Candidate", new RegisterCandidateAction());
-        menu.addItem(LIST_CANDIDATES, "List Candidates", new ListCandidatesUI()::show);
-        menu.addItem(IMPORT_APPLICATIONS_OPTION, "Import Applications", new ImportApplicationsAction());
-        menu.addItem(EXIT_OPTION, RETURN_LABEL, Actions.SUCCESS);
-
-        return menu;
-    }
-
-    private Menu buildLanguageEngineerMenu() {
-        final Menu menu = new Menu("Users >");
-
-        menu.addItem(ADD_USER_OPTION, "Add User", new AddBackofficeUserAction());
-        menu.addItem(LIST_USERS_OPTION, "List all Users", new ListBackofficeUsersUI()::show);
-        menu.addItem(EXIT_OPTION, RETURN_LABEL, Actions.SUCCESS);
-
-        return menu;
     }
 
 }

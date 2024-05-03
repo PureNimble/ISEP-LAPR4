@@ -26,17 +26,17 @@ public class ListCustomersController {
 
 
     public Iterable<Customer> allCustomers() {
-        authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.CUSTOMER_MANAGER);
+        authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.CUSTOMER_MANAGER, BaseRoles.POWERUSER);
         return customerService.allUsers();
     }
 
     public Optional<Customer> find(final CustomerCode u) {
-        authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.CUSTOMER_MANAGER);
+        authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.CUSTOMER_MANAGER, BaseRoles.POWERUSER);
         return customerService.findByCustomerCode(u);
     }
 
     public Iterable<Customer> filterByCostumerManager() {
-        authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.CUSTOMER_MANAGER);
+        authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.CUSTOMER_MANAGER, BaseRoles.POWERUSER);
         return customerService.filterByCostumerManager();
     }
 }

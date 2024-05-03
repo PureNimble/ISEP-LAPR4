@@ -27,27 +27,27 @@ public class ListJobOpeningsController {
     }
 
     public Iterable<JobOpeningDTO> filterByCostumerManager() {
-        authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.CUSTOMER_MANAGER);
+        authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.CUSTOMER_MANAGER, BaseRoles.POWERUSER);
         return jobOpeningsService.filterByCostumerManager();
     }
 
     public Iterable<JobOpeningDTO> filterByCustomer(final Customer customer) {
-        authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.CUSTOMER_MANAGER);
+        authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.CUSTOMER_MANAGER, BaseRoles.POWERUSER);
         return jobOpeningsService.filterByCustomer(customer);
     }
 
     public Iterable<JobOpeningDTO> filterByActive(final boolean active) {
-        authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.CUSTOMER_MANAGER);
+        authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.CUSTOMER_MANAGER, BaseRoles.POWERUSER);
         return jobOpeningsService.filterByActive(active);
     }
 
     public Iterable<JobOpeningDTO> filterByPeriod(final Calendar date) {
-        authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.CUSTOMER_MANAGER);
+        authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.CUSTOMER_MANAGER, BaseRoles.POWERUSER);
         return jobOpeningsService.filterByPeriod(date);
     }
 
     public JobOpening selectedJobOpening(final JobOpeningDTO jobOpeningDTO) {
-        authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.CUSTOMER_MANAGER);
+        authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.CUSTOMER_MANAGER, BaseRoles.POWERUSER);
         return jobOpeningsService.selectedJobOpening(jobOpeningDTO);
     }
 

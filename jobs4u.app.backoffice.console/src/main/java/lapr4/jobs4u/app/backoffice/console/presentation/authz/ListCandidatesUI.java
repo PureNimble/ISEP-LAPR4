@@ -3,6 +3,7 @@ package lapr4.jobs4u.app.backoffice.console.presentation.authz;
 import eapli.framework.infrastructure.authz.application.AuthzRegistry;
 import eapli.framework.presentation.console.AbstractListUI;
 import eapli.framework.visitor.Visitor;
+import lapr4.jobs4u.app.backoffice.console.presentation.authz.printer.CandidatePrinter;
 import lapr4.jobs4u.candidatemanagement.application.ListCandidatesController;
 import lapr4.jobs4u.candidatemanagement.dto.CandidateDTO;
 import lapr4.jobs4u.infrastructure.persistence.PersistenceContext;

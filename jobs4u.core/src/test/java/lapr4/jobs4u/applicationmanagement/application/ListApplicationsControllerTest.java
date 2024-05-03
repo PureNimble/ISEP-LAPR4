@@ -32,9 +32,6 @@ class ListApplicationsControllerTest {
     SystemUser mockSystemUser;
 
     @Mock
-    JobOpening mockJobOpening;
-
-    @Mock
     ApplicationDTO mockApplicationDTO;
 
     @Mock

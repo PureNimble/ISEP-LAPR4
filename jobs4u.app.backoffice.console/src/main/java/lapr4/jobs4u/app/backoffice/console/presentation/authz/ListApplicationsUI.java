@@ -1,9 +1,12 @@
 package lapr4.jobs4u.app.backoffice.console.presentation.authz;
 
+import java.util.Collections;
+
 import eapli.framework.infrastructure.authz.application.AuthzRegistry;
 import eapli.framework.presentation.console.AbstractListUI;
 import eapli.framework.presentation.console.SelectWidget;
 import eapli.framework.visitor.Visitor;
+import lapr4.jobs4u.app.backoffice.console.presentation.authz.printer.ApplicationPrinter;
 import lapr4.jobs4u.applicationmanagement.application.ListApplicationsController;
 import lapr4.jobs4u.applicationmanagement.dto.ApplicationDTO;
 import lapr4.jobs4u.infrastructure.persistence.PersistenceContext;
@@ -20,7 +23,7 @@ public class ListApplicationsUI extends AbstractListUI<ApplicationDTO> {
 
     @Override
     public String headline() {
-        return "List Job Openings";
+        return "List Applications";
     }
 
     @Override
@@ -35,6 +38,9 @@ public class ListApplicationsUI extends AbstractListUI<ApplicationDTO> {
                 new JobOpeningPrinter());
         selector.show();
         final JobOpeningDTO theJobOpeningDTO = selector.selectedElement();
+        if (theJobOpeningDTO == null) {
+            return Collections.emptyList();
+        }
         JobOpening theJobOpening = listJobpenincsController.selectedJobOpening(theJobOpeningDTO);
         return applicationsByJobOpening(theJobOpening);
     }
@@ -55,6 +61,6 @@ public class ListApplicationsUI extends AbstractListUI<ApplicationDTO> {
 
     @Override
     protected String listHeader() {
-        return String.format("#  %-15s", "APP. CODE");
+        return String.format("#  %-15s%-40s", "APP. CODE", "CANDIDATE INFO");
     }
 }

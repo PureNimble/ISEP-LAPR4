@@ -18,21 +18,19 @@
  * DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-package lapr4.jobs4u.app.backoffice.console.presentation.authz;
+package lapr4.jobs4u.app.backoffice.console.presentation.authz.action;
 
-import eapli.framework.infrastructure.authz.domain.model.SystemUser;
-import eapli.framework.visitor.Visitor;
+import eapli.framework.actions.Action;
+import lapr4.jobs4u.app.backoffice.console.presentation.authz.AddBackofficeUserUI;
 
 /**
- *
- * @author Paulo Gandra de Sousa
- *
+ * Menu action for adding a new user to the application. Created by nuno on
+ * 22/03/16.
  */
-@SuppressWarnings({ "squid:S106" })
-public class SystemUserPrinter implements Visitor<SystemUser> {
+public class AddBackofficeUserAction implements Action {
 
     @Override
-    public void visit(final SystemUser visitee) {
-        System.out.printf("%-30s%-15s%-15s", visitee.email(), visitee.name().firstName(), visitee.name().lastName());
+    public boolean execute() {
+        return new AddBackofficeUserUI().show();
     }
 }

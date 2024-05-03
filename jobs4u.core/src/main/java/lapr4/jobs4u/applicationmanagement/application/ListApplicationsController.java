@@ -21,12 +21,12 @@ public class ListApplicationsController {
     }
 
     public Iterable<ApplicationDTO> filterByJobOpening(final JobOpening jobOpening) {
-        authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.CUSTOMER_MANAGER);
+        authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.CUSTOMER_MANAGER, BaseRoles.POWERUSER);
         return applicationService.filterByJobOpening(jobOpening);
     }
 
     public Application selectedApplication(final ApplicationDTO applicationDTO) {
-        authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.CUSTOMER_MANAGER);
+        authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.CUSTOMER_MANAGER, BaseRoles.POWERUSER);
         return applicationService.selectedApplication(applicationDTO);
     }
 }

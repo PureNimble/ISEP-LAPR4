@@ -22,6 +22,8 @@ package lapr4.jobs4u.app.backoffice.console.presentation.authz;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import lapr4.jobs4u.app.backoffice.console.presentation.authz.printer.SystemUserPrinter;
 import lapr4.jobs4u.app.common.console.presentation.utils.Utils;
 import lapr4.jobs4u.usermanagement.application.EnableOrDisableBackofficeUserController;
 import eapli.framework.domain.repositories.ConcurrencyException;

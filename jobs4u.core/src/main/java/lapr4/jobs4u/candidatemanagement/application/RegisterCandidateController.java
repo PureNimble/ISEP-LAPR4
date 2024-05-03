@@ -28,7 +28,7 @@ public class RegisterCandidateController {
 
     public Candidate registerCandidate(final String firstName, final String lastName,
             final String email, final String phoneNumber) {
-        authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.OPERATOR);
+        authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.OPERATOR, BaseRoles.POWERUSER);
         final UserSession s = authz.session().orElseThrow(IllegalStateException::new);
         final SystemUser creator = s.authenticatedUser();
         return createCandidate(firstName, lastName, email, phoneNumber, creator);
@@ -36,7 +36,7 @@ public class RegisterCandidateController {
 
     public CandidateUser registerCandidateUser(final Candidate candidate,
             final SystemUser systemUser) {
-        authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.OPERATOR);
+        authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.OPERATOR, BaseRoles.POWERUSER);
         return createCandidateUser(candidate, systemUser);
     }
 

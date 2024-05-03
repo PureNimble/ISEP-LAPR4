@@ -89,7 +89,7 @@ public class Application implements AggregateRoot<ApplicationCode> {
     }
 
     public ApplicationDTO toDTO() {
-        return new ApplicationDTO(applicationCode.toString());
+        return new ApplicationDTO(applicationCode.toString(), candidate.toString());
     }
 
     public void addResult(String outcome) {

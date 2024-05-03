@@ -50,7 +50,7 @@ public class ListUsersController {
     }
 
     public Iterable<SystemUser> allUsers() {
-        authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.ADMIN);
+        authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.ADMIN, BaseRoles.POWERUSER);
 
         return userSvc.allUsers();
     }
@@ -60,7 +60,7 @@ public class ListUsersController {
     }
 
     public Iterable<SystemUser> backofficeUsers() {
-        authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.ADMIN);
+        authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.ADMIN, BaseRoles.POWERUSER);
 
         return listBackofficeUsersService.backofficeUsers();
     }

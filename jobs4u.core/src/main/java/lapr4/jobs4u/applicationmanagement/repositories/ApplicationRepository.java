@@ -13,6 +13,5 @@ public interface ApplicationRepository extends DomainRepository<ApplicationCode,
     Optional<Application> findByApplicationCode(final ApplicationCode code);
     Iterable<Application> filterByJobOpening(final JobOpening jobOpening);
     Iterable<Application> findApplicationsFromCandidate(final Candidate candidate);
-
-    String findHighestSequenceForCustomer(JobReference jobReference);
+    String findHighestSequenceForCustomer(final JobReference jobReference);
 }

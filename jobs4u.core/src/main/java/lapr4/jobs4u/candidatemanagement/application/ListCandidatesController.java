@@ -19,17 +19,17 @@ public class ListCandidatesController {
 
 
     public Iterable<CandidateDTO> allCandidates() {
-        authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.OPERATOR);
+        authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.OPERATOR, BaseRoles.POWERUSER);
         return listCandidatesService.allUsers();
     }
 
     public Iterable<CandidateDTO> allCandidatesSortedAsc() {
-        authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.OPERATOR);
+        authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.OPERATOR, BaseRoles.POWERUSER);
         return listCandidatesService.allUsersSortedAsc();
     }
 
     public Candidate selectedCandidate(final CandidateDTO candidateDTO) {
-        authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.OPERATOR);
+        authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.OPERATOR, BaseRoles.POWERUSER);
         return listCandidatesService.selectedCandidate(candidateDTO);
     }
 }

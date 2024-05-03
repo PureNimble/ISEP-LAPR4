@@ -82,8 +82,7 @@ public class Bootstrapper implements Action {
     private boolean registerPowerUser() {
         final SystemUserBuilder userBuilder = UserBuilderHelper.builder();
         userBuilder.withUsername(POWERUSER).withPassword(POWERUSER_PWD).withName("joe", "power")
-                .withEmail(POWERUSER).withRoles(BaseRoles.ADMIN, BaseRoles.CUSTOMER_MANAGER, BaseRoles.OPERATOR,
-                        BaseRoles.LANGUAGE_ENGINEER);
+                .withEmail(POWERUSER).withRoles(BaseRoles.POWERUSER);
         final SystemUser newUser = userBuilder.build();
 
         SystemUser poweruser;

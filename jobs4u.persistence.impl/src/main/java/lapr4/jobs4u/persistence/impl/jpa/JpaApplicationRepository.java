@@ -39,7 +39,7 @@ class JpaApplicationRepository
     }
 
     @Override
-    public String findHighestSequenceForCustomer(JobReference jobReference) {
+    public String findHighestSequenceForCustomer(final JobReference jobReference) {
 
         Long count = createQuery(
                 "SELECT COUNT(jo) FROM Application jo WHERE jo.jobOpening.jobReference = :jobReference",
@@ -51,7 +51,7 @@ class JpaApplicationRepository
     }
 
     @Override
-    public Iterable<Application> filterByJobOpening(JobOpening jobOpening) {
+    public Iterable<Application> filterByJobOpening(final JobOpening jobOpening) {
         final Map<String, Object> params = new HashMap<>();
         params.put("jobOpening", jobOpening);
         return match("e.jobOpening=:jobOpening", params);

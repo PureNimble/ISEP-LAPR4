@@ -28,17 +28,17 @@ public class InMemoryApplicationRepository
     }
 
     @Override
-    public String findHighestSequenceForCustomer(JobReference jobReference) {
+    public String findHighestSequenceForCustomer(final JobReference jobReference) {
         return findHighestSequenceForCustomer(jobReference);
     }
 
     @Override
-    public Iterable<Application> filterByJobOpening(JobOpening jobOpening) {
+    public Iterable<Application> filterByJobOpening(final JobOpening jobOpening) {
         return match(e -> e.jobOpening().equals(jobOpening));
     }
 
     @Override
-    public Iterable<Application> findApplicationsFromCandidate(Candidate candidate) {
+    public Iterable<Application> findApplicationsFromCandidate(final Candidate candidate) {
         return match(e -> e.candidate().equals(candidate));
     }
 }

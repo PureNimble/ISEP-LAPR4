@@ -22,7 +22,7 @@ public class InMemoryQuestionImporterPluginRepository
     }
 
     @Override
-    public Optional<QuestionImporterPlugin> findByFileExtension(FileExtension fileExtension) {
+    public Optional<QuestionImporterPlugin> findByFileExtension(final FileExtension fileExtension) {
         return matchOne(e -> e.fileExtension().equals(fileExtension));
     }
 }

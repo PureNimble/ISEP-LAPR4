@@ -27,6 +27,7 @@ import lapr4.jobs4u.Application;
 import lapr4.jobs4u.app.backoffice.console.presentation.authz.AddBackofficeUserUI;
 import lapr4.jobs4u.app.backoffice.console.presentation.authz.EnableOrDisableBackofficeUserUI;
 import lapr4.jobs4u.app.backoffice.console.presentation.authz.ImportApplicationsUI;
+import lapr4.jobs4u.app.backoffice.console.presentation.authz.ListApplicationsUI;
 import lapr4.jobs4u.app.backoffice.console.presentation.authz.ListJobOpeningsUI;
 import lapr4.jobs4u.app.backoffice.console.presentation.authz.ListBackofficeUsersUI;
 import lapr4.jobs4u.app.backoffice.console.presentation.authz.RegisterCandidateUI;
@@ -171,7 +172,7 @@ public class MainMenu extends AbstractUI {
         menu.addItem(REGISTER_JOB_OPENING, "Register Job Opening", new RegisterJobOpeningUI()::show);
         menu.addItem(LIST_JOB_OPENINGS, "List Job Openings", new ListJobOpeningsUI()::show);
         menu.addItem(SETUP_RECRUITMENT_PROCESS, "SetUp Recruitment Process", new SetUpRecruitmentProcessUI()::show);
-        menu.addItem(LIST_APPLICATIONS, "List Applications for a Job Opening", new ImportApplicationsUI()::show);
+        menu.addItem(LIST_APPLICATIONS, "List Applications for a Job Opening", new ListApplicationsUI()::show);
         menu.addItem(EXIT_OPTION, RETURN_LABEL, Actions.SUCCESS);
 
         return menu;

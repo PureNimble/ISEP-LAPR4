@@ -18,7 +18,7 @@ public class Result implements DomainEntity<Long> {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long pk;
 
-    @Column(nullable = true)
+    @Column(nullable = false)
     Outcome outcome;
 
     @Column(nullable = true)
@@ -38,7 +38,7 @@ public class Result implements DomainEntity<Long> {
     }
 
     public static Result valueOf() {
-        return new Result(OutcomeValue.PENDING.toString());
+        return new Result(OutcomeValue.PENDING.toString(), "This is a text");
     }
 
     @Override

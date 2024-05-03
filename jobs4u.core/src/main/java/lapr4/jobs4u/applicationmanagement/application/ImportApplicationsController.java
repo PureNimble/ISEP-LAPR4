@@ -57,7 +57,6 @@ public class ImportApplicationsController {
             while (matcher.find()) {
                 String candidateId = matcher.group(1);
                 String jobOffer = matcher.group(2);
-                System.out.println("Candidate ID: " + candidateId + ", Job Offer: " + jobOffer);
 
                 if (candidateJobMap.containsKey(jobOffer)) {
                     candidateJobMap.get(jobOffer).add(candidateId);
@@ -108,6 +107,7 @@ public class ImportApplicationsController {
             final List<File> file, final Optional<JobOpening> jobOpening,
             final Candidate candidate) {
         final Application application = doCreateApplication(file, jobOpening, candidate);
+        System.out.println("boas\n\n\n\n\n\n\n\n\n\n\n\n\n");
         return applicationRepository.save(application);
     }
 
@@ -121,9 +121,8 @@ public class ImportApplicationsController {
                     .nextJobOpeningReference(jobOpening.get().jobReference());
             return new ApplicationBuilder().with(applicationNumber, Date.today(), file, jobOpening.get(), candidate)
                     .build();
-        } else {
-            return null;
         }
+        return null;
     }
 
     public Optional<JobOpening> getJobOpennig(JobReference x) {
@@ -146,7 +145,6 @@ public class ImportApplicationsController {
 
             filesString.forEach(file -> {
                 file = temp + "/" + file;
-                System.out.println(file);
                 if (!file.contains("candidate-data"))
                     files.add(File.valueOf(file));
             });

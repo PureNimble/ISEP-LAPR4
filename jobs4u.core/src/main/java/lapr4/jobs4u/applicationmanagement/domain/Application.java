@@ -5,6 +5,7 @@ import java.util.List;
 import eapli.framework.domain.model.AggregateRoot;
 import eapli.framework.domain.model.DomainEntities;
 import eapli.framework.validations.Preconditions;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.ElementCollection;
 import jakarta.persistence.EmbeddedId;
@@ -17,7 +18,6 @@ import jakarta.persistence.Version;
 import lapr4.jobs4u.applicationmanagement.dto.ApplicationDTO;
 import lapr4.jobs4u.candidatemanagement.domain.Candidate;
 import lapr4.jobs4u.jobopeningmanagement.domain.JobOpening;
-import lapr4.jobs4u.jobopeningmanagement.dto.JobOpeningDTO;
 import lapr4.jobs4u.recruitmentprocessmanagement.domain.Date;
 
 @Entity
@@ -35,7 +35,7 @@ public class Application implements AggregateRoot<ApplicationCode> {
     @Column(nullable = false)
     private Date date;
 
-    @OneToOne()
+    @OneToOne(cascade = CascadeType.ALL)
     private Result result;
 
     @ElementCollection
@@ -58,7 +58,7 @@ public class Application implements AggregateRoot<ApplicationCode> {
         this.file = file;
         this.jobOpening = jobOpening;
         this.candidate = candidate;
-        this.result = result;
+        // this.result = result;
     }
 
     protected Application() {
@@ -89,11 +89,11 @@ public class Application implements AggregateRoot<ApplicationCode> {
     }
 
     public void addResult(String outcome) {
-        this.result.addOutcome(outcome);
+        // this.result.addOutcome(outcome);
     }
 
     public void addResult(String outcome, String justification) {
-        this.result.addOutcome(outcome, justification);
+        // this.result.addOutcome(outcome, justification);
     }
 
     @Override
@@ -104,6 +104,5 @@ public class Application implements AggregateRoot<ApplicationCode> {
     public Object jobOpening() {
         return this.jobOpening;
     }
-
 
 }

@@ -2,8 +2,6 @@ package lapr4.jobs4u.applicationmanagement.domain;
 
 import jakarta.persistence.Embeddable;
 
-import java.util.regex.Pattern;
-
 import eapli.framework.domain.model.ValueObject;
 import eapli.framework.validations.Preconditions;
 
@@ -13,11 +11,9 @@ public class Justification implements ValueObject, Comparable<Justification> {
     private static final long serialVersionUID = 1L;
 
     private final String text;
-    private static final Pattern VALID_PATTERN = Pattern.compile("^[a-zA-Z0-9_/\\.\\-]+$");
 
     protected Justification(final String justification) {
         Preconditions.nonEmpty(justification, "Justification should neither be null nor empty");
-        Preconditions.matches(VALID_PATTERN, justification, "Invalid Justification: " + justification);
         this.text = justification;
     }
 

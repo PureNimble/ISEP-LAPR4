@@ -22,19 +22,19 @@ class JpaApplicationRepository
         implements ApplicationRepository {
 
     public JpaApplicationRepository(final TransactionalContext autoTx) {
-        super(autoTx, "applicationNumber");
+        super(autoTx, "applicationcode");
     }
 
     public JpaApplicationRepository(final String puname) {
         super(puname, lapr4.jobs4u.Application.settings().getExtendedPersistenceProperties(),
-                "applicationNumber");
+                "applicationcode");
     }
 
     @Override
     public Optional<Application> findByApplicationCode(final ApplicationCode number) {
         final Map<String, Object> params = new HashMap<>();
         params.put("number", number);
-        return matchOne("e.applicationNumber=:number", params);
+        return matchOne("e.applicationcode=:number", params);
     }
 
     @Override

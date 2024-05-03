@@ -27,8 +27,8 @@ As part of the LEI ([Licenciatura Engenharia Informática](https://www.isep.ipp.
 
 ### For linux/unix/macos
 > ⚠️ _Before building on linux/unix/macos, ensure that you have the following prerequisites:_
-> - _Make (If not installed, you can install it by running `sudo apt-get install make`)_
-> - _GCC (If not installed, you can install it by running `sudo apt-get install gcc`)_
+> - _Make (If not installed, you can install it by running `sudo apt install build-essential`)_
+> - _GCC (If not installed, you can install it by running `sudo apt install valgrind`)_
 ```
 ./bin/build-all.sh
 ```

@@ -9,8 +9,8 @@ skinparam sequenceParticipant underline
 actor "Customer Manager" as customerManager
 
 participant "ListJobOpeningUI" as UI
-participant "JobOpeningController" as ListJobOpeningController
-participant "JobOpeningService" as JobOpeningService
+participant "ListJobOpeningController" as ListJobOpeningController
+participant "ListJobOpeningService" as JobOpeningService
 participant "JobOpeningRepository" as JobOpeningRepository
 participant "JpaJobOpeningRepository" as JpaJobOpeningRepository
 participant "JobOpening" as JobOpening
@@ -22,13 +22,13 @@ activate customerManager
 customerManager -> UI: Asks for a list of job openings
 
 activate UI
-    UI --> ListJobOpeningController: allJobOpenings()
+    UI --> ListJobOpeningController: filterByCostumerManager()
     activate ListJobOpeningController
-        ListJobOpeningController -> JobOpeningService: allJobOpenings()
+        ListJobOpeningController -> JobOpeningService: filterByCostumerManager()
         activate JobOpeningService
-            JobOpeningService -> JobOpeningRepository: findAll()
+            JobOpeningService -> JobOpeningRepository: filterByCostumerManager(username)
             activate JobOpeningRepository
-                JobOpeningRepository -> JpaJobOpeningRepository: findAll()
+                JobOpeningRepository -> JpaJobOpeningRepository: filterByCostumerManager()
                 activate JpaJobOpeningRepository
                     JpaJobOpeningRepository -> DB: createQuery("SELECT * FROM JobOpening", JobOpening.class)
                     activate DB
@@ -61,13 +61,44 @@ opt Optionally applies filters
     loop While there are filters to apply
         customerManager -> UI : Asks to filter the list of job openings
         activate UI
-            UI --> ListJobOpeningController : applyFilter(filterCriteria)
+        alt Filter by active
+            UI --> ListJobOpeningController : filterByActive(active)
             activate ListJobOpeningController
-                ListJobOpeningController -> JobOpeningService : applyFilter(filterCriteria)
+                ListJobOpeningController -> JobOpeningService : filterByActive(active)
                 activate JobOpeningService
-                    JobOpeningService -> JobOpeningRepository : findByCriteria(filterCriteria)
+                    JobOpeningService -> JobOpeningRepository : filterByActive(active)
                     activate JobOpeningRepository
-                        JobOpeningRepository -> JpaJobOpeningRepository : findByCriteria(filterCriteria)
+                        JobOpeningRepository -> JpaJobOpeningRepository : filterByActive(active)
+                        activate JpaJobOpeningRepository
+                            JpaJobOpeningRepository -> DB : createQuery("SELECT * FROM JobOpening WHERE ...", JobOpening.class)
+                            activate DB
+                                DB --> JpaJobOpeningRepository : Iterable<JobOpening>
+                            deactivate DB
+                            JobOpeningRepository <-- JpaJobOpeningRepository : Iterable<JobOpening>
+                        deactivate JpaJobOpeningRepository
+                        JobOpeningService <-- JobOpeningRepository : Iterable<JobOpening>
+                    deactivate JobOpeningRepository
+        else Filter by customer
+            UI --> ListJobOpeningController : filterByCustomer(customer)
+                ListJobOpeningController -> JobOpeningService : filterByCustomer(customer)
+                    JobOpeningService -> JobOpeningRepository : filterByCustomer(customer)
+                    activate JobOpeningRepository
+                        JobOpeningRepository -> JpaJobOpeningRepository : filterByCustomer(customer)
+                        activate JpaJobOpeningRepository
+                            JpaJobOpeningRepository -> DB : createQuery("SELECT * FROM JobOpening WHERE ...", JobOpening.class)
+                            activate DB
+                                DB --> JpaJobOpeningRepository : Iterable<JobOpening>
+                            deactivate DB
+                            JobOpeningRepository <-- JpaJobOpeningRepository : Iterable<JobOpening>
+                        deactivate JpaJobOpeningRepository
+                        JobOpeningService <-- JobOpeningRepository : Iterable<JobOpening>
+                    deactivate JobOpeningRepository
+        else Filter by periode
+            UI --> ListJobOpeningController : filterByPeriode(date)
+                ListJobOpeningController -> JobOpeningService : filterByPeriode(date)
+                    JobOpeningService -> JobOpeningRepository : filterByPeriode(date)
+                    activate JobOpeningRepository
+                        JobOpeningRepository -> JpaJobOpeningRepository : filterByPeriode(date)
                         activate JpaJobOpeningRepository
                             JpaJobOpeningRepository -> DB : createQuery("SELECT * FROM JobOpening WHERE ...", JobOpening.class)
                             activate DB
@@ -93,6 +124,7 @@ opt Optionally applies filters
             ListJobOpeningController --> UI : Iterable<JobOpeningDTO>
         deactivate ListJobOpeningController
         UI --> customerManager : List of job openings
+        end
     end
 end
 deactivate UI

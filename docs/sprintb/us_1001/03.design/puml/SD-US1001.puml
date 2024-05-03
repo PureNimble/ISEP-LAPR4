@@ -6,19 +6,22 @@ skinparam linetype ortho
 skinparam maxmessagesize 150
 skinparam sequenceParticipant underline
 
-actor "Customer Manager" as customerManager
+actor "CustomerBuilder Manager" as customerManager
 
 participant "RegisterCustomerUI" as UI
 participant "RegisterCustomerController" as CustomerController
-participant "CustomerService" as CustomerService
-participant "Customer" as Customer
+participant "CustomerBuilder" as CustomerBuilder
 participant "CustomerRepository" as CustomerRepository
 participant "JpaCustomerRepository" as JpaCustomerRepository
-participant "RegisterCustomerUserController" as CustomerUserController
+participant "AddUserController" as AddUserController
 participant "UserManagementService" as ManagementService
 participant "UserTypesFactory" as Factory
 participant "UserRepository" as UserRepository
 participant "JpaUserRepository" as JpaUserRepository
+participant "RegisterCustomerUserController" as CustomerUserController
+participant "CustomerUserBuilder" as CustomerUserBuilder
+participant "CustomerUserRepository" as CustomerUserRepository
+participant "JpaCustomerUserRepository" as JpaCustomerUserRepository
 database "Database" as DB
 
 activate customerManager
@@ -26,7 +29,7 @@ activate customerManager
 customerManager -> UI: Asks to register a customer
 
 activate UI
-    UI --> customerManager: Asks for information (company name, address, customer code, email, phone number, first name, last name)
+    UI --> customerManager: Asks for information (company name, address, customer code, customer email, phone number, first name, last name, email)
 deactivate UI
 
 customerManager -> UI: Provides information
@@ -34,60 +37,76 @@ customerManager -> UI: Provides information
 activate UI
     UI -> CustomerController: addCustomer(companyName, address, customerCode, email, phone)
         activate CustomerController
-            CustomerController -> CustomerService: addCustomer(companyName, address, customerCode, email, phone)
-        activate CustomerService
-            CustomerService -> Customer: createCustomer(companyName, address, customerCode, email, phone)
-        activate Customer
-            Customer --> CustomerService: return Customer
-        deactivate Customer
-            CustomerService -> CustomerRepository: save(customer)
-        activate CustomerRepository
-            CustomerRepository -> JpaCustomerRepository: save(customer)
-        activate JpaCustomerRepository
-            JpaCustomerRepository -> DB: persist(customer)
-            activate DB
-                DB --> JpaCustomerRepository: return Customer
-            deactivate DB
-            JpaCustomerRepository --> CustomerRepository: return Customer
-        deactivate JpaCustomerRepository
-            CustomerRepository --> CustomerService: return Customer
-        deactivate CustomerRepository
-            CustomerService --> CustomerController: return Customer
-        deactivate CustomerService
-            CustomerController --> UI: return Customer
-        deactivate CustomerController    
-    UI -> CustomerUserController: addCustomerUser(email, password, first name, last name)
-activate CustomerUserController
+        CustomerController -> CustomerBuilder: with(companyName, address, customerCode, email, phone)
+        activate CustomerBuilder
+            CustomerBuilder --> CustomerController: Customer
+        deactivate CustomerBuilder
+        CustomerController --> CustomerRepository: save(customer)
+            activate CustomerRepository
+                CustomerRepository --> JpaCustomerRepository: save(customer)
+                activate JpaCustomerRepository
+                    JpaCustomerRepository -> DB: persist(customer)
+                    activate DB
+                        DB --> JpaCustomerRepository: Customer
+                    deactivate DB
+                    JpaCustomerRepository --> CustomerRepository: Customer
+                deactivate JpaCustomerRepository
+                CustomerRepository --> CustomerController: Customer
+            deactivate CustomerRepository
+            CustomerController --> UI: Customer
+        deactivate CustomerController
+    UI -> AddUserController: addUser(email, password, first name, last name)
+activate AddUserController
 
-CustomerUserController -> ManagementService: registerNewCustomerUser(email, password, first name, last name)
+AddUserController -> ManagementService: registerNewUser(email, password, first name, last name, role)
 
 activate ManagementService
-    ManagementService -> Factory: withRoleCustomerUser(email, password, first name, last name)
+    ManagementService -> Factory: registerNewUser(email, password, first name, last name, role)
 activate Factory
-    Factory --> ManagementService : customerUser
+    Factory --> ManagementService : user
 deactivate Factory
 
-ManagementService -> UserRepository: save(customerUser)
+ManagementService -> UserRepository: save(user)
 
 activate UserRepository
-    UserRepository -> JpaUserRepository: save(customerUser)
+    UserRepository -> JpaUserRepository: save(user)
 activate JpaUserRepository
-    JpaUserRepository -> DB: persist(customerUser)
+    JpaUserRepository -> DB: persist(user)
     activate DB
-        DB --> JpaUserRepository: return User
+        DB --> JpaUserRepository: User
     deactivate DB
-    JpaUserRepository --> UserRepository: return User
+    JpaUserRepository --> UserRepository: User
 deactivate JpaUserRepository
 
-UserRepository --> ManagementService: return User
+UserRepository --> ManagementService: User
 deactivate UserRepository
 
-ManagementService --> CustomerUserController: return User
+ManagementService --> AddUserController: User
 deactivate ManagementService
 
-CustomerUserController --> UI: return User
-deactivate CustomerUserController
+AddUserController --> UI: User
+deactivate AddUserController
 
+UI -> CustomerUserController: registerCustomerUser(customer, user)
+activate CustomerUserController
+    CustomerUserController -> CustomerUserBuilder: with(customer, user)
+    activate CustomerUserBuilder
+        CustomerUserBuilder --> CustomerUserController: CustomerUser
+    deactivate CustomerUserBuilder
+    CustomerUserController -> CustomerUserRepository: save(customerUser)
+    activate CustomerUserRepository
+        CustomerUserRepository -> JpaCustomerUserRepository: save(customerUser)
+        activate JpaCustomerUserRepository
+            JpaCustomerUserRepository -> DB: persist(customerUser)
+            activate DB
+                DB --> JpaCustomerUserRepository: CustomerUser
+            deactivate DB
+            JpaCustomerUserRepository --> CustomerUserRepository: CustomerUser
+        deactivate JpaCustomerUserRepository
+        CustomerUserRepository --> CustomerUserController: CustomerUser
+    deactivate CustomerUserRepository
+    CustomerUserController --> UI: CustomerUser
+deactivate CustomerUserController
 UI --> customerManager: Informs success or failure
 deactivate UI
 

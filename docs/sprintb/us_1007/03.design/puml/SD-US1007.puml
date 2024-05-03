@@ -10,8 +10,7 @@ actor "Customer Manager" as customerManager
 
 participant "SetUpRecruitmentProcessUI" as UI
 participant "SetUpRecruitmentProcessController" as SetUpRecruitmentProcessController
-participant "RecruitmentProcessService" as RecruitmentProcessService
-participant "RecruitmentProcessFactory" as RecruitmentProcessFactory
+participant "RecruitmentProcessBuilder" as RecruitmentProcessFactory
 participant "RecruitmentProcessRepository" as RecruitmentProcessRepository
 participant "JpaRecruitmentProcessRepository" as JpaRecruitmentProcessRepository
 database "Database" as DB
@@ -28,85 +27,28 @@ activate customerManager
             alt phase is "Application"
                 UI --> customerManager : Asks for information (initial date and final date)
                 customerManager -> UI : Provides information
-                UI -> SetUpRecruitmentProcessController : createApplicationPhase(initialDate, finalDate)
-                activate SetUpRecruitmentProcessController
-                    SetUpRecruitmentProcessController -> RecruitmentProcessService : createApplicationPhase(initialDate, finalDate)
-                activate RecruitmentProcessService
-                    RecruitmentProcessService -> RecruitmentProcessFactory : createApplicationPhase(initialDate, finalDate)
-                    activate RecruitmentProcessFactory
-                        RecruitmentProcessFactory --> RecruitmentProcessService : phase
-                    deactivate RecruitmentProcessFactory
-                    RecruitmentProcessService --> SetUpRecruitmentProcessController : phase
-                deactivate RecruitmentProcessService
-            else phase is "Screening"
-                UI --> customerManager : Asks for information (initial date and final date)
-                customerManager -> UI : Provides information
-                UI -> SetUpRecruitmentProcessController : createScreeningPhase(initialDate, finalDate)
-                SetUpRecruitmentProcessController -> RecruitmentProcessService : createScreeningPhase(initialDate, finalDate)
-                activate RecruitmentProcessService
-                    RecruitmentProcessService -> RecruitmentProcessFactory : createScreeningPhase(initialDate, finalDate)
-                    activate RecruitmentProcessFactory
-                        RecruitmentProcessFactory --> RecruitmentProcessService : phase
-                    deactivate RecruitmentProcessFactory
-                    RecruitmentProcessService --> SetUpRecruitmentProcessController : phase
-                deactivate RecruitmentProcessService
             else phase is "Interview"
                 UI --> customerManager : Asks if the interview phase is needed
                 customerManager -> UI : Responds (y/n)
                 alt response is "y"
                     UI --> customerManager : Asks for information (initial date and final date)
                     customerManager -> UI : Provides information
-                    UI -> SetUpRecruitmentProcessController : createInterviewPhase(initialDate, finalDate)
-                    SetUpRecruitmentProcessController -> RecruitmentProcessService : createInterviewPhase(initialDate, finalDate)
-                    activate RecruitmentProcessService
-                        RecruitmentProcessService -> RecruitmentProcessFactory : createInterviewPhase(initialDate, finalDate)
-                        activate RecruitmentProcessFactory
-                            RecruitmentProcessFactory --> RecruitmentProcessService : phase
-                        deactivate RecruitmentProcessFactory
-                        RecruitmentProcessService --> SetUpRecruitmentProcessController : phase
-                    deactivate RecruitmentProcessService
                 end
-            else phase is "Analysis"
-                UI --> customerManager : Asks for information (initial date and final date)
-                customerManager -> UI : Provides information
-                UI -> SetUpRecruitmentProcessController : createAnalysisPhase(initialDate, finalDate)
-                SetUpRecruitmentProcessController -> RecruitmentProcessService : createAnalysisPhase(initialDate, finalDate)
-                activate RecruitmentProcessService
-                    RecruitmentProcessService -> RecruitmentProcessFactory : createAnalysisPhase(initialDate, finalDate)
-                    activate RecruitmentProcessFactory
-                        RecruitmentProcessFactory --> RecruitmentProcessService : phase
-                    deactivate RecruitmentProcessFactory
-                    RecruitmentProcessService --> SetUpRecruitmentProcessController : phase
-                deactivate RecruitmentProcessService
-            else phase is "Result"
-                UI --> customerManager : Asks for information (initial date and final date)
-                customerManager -> UI : Provides information
-                UI -> SetUpRecruitmentProcessController : createResultPhase(initialDate, finalDate)
-                SetUpRecruitmentProcessController -> RecruitmentProcessService : createResultPhase(initialDate, finalDate)
-                activate RecruitmentProcessService
-                    RecruitmentProcessService -> RecruitmentProcessFactory : createResultPhase(initialDate, finalDate)
-                    activate RecruitmentProcessFactory
-                        RecruitmentProcessFactory --> RecruitmentProcessService : phase
-                    deactivate RecruitmentProcessFactory
-                    RecruitmentProcessService --> SetUpRecruitmentProcessController : phase
-                deactivate RecruitmentProcessService
             end
         end
         alt all phases were created
             activate SetUpRecruitmentProcessController
-            SetUpRecruitmentProcessController -> RecruitmentProcessFactory : createRecruitmentProcess(ApplicationPhase, ScreeningPhase, InterviewPhase, AnalysisPhase, ResultPhase)
+            SetUpRecruitmentProcessController -> RecruitmentProcessFactory : setUpRecruitmentProcess(ApplicationInitialDate, ApplicationFinalDate, ScreeningInitialDate, ScreeningFinalDate, InterviewInitialDate, InterviewFinalDate, AnalysisInitialDate, AnalysisFinalDate, ResultInitialDate, ResultFinalDate)
             activate RecruitmentProcessFactory
                 RecruitmentProcessFactory --> SetUpRecruitmentProcessController : recruitmentProcess
             deactivate RecruitmentProcessFactory
         else "Interview" phase was not created
-            SetUpRecruitmentProcessController -> RecruitmentProcessFactory : createRecruitmentProcess(ApplicationPhase, ScreeningPhase, AnalysisPhase, ResultPhase)
-            activate RecruitmentProcessFactory
+            SetUpRecruitmentProcessController -> RecruitmentProcessFactory : SetUpRecruitmentProcessController -> RecruitmentProcessFactory : setUpRecruitmentProcess(ApplicationInitialDate, ApplicationFinalDate, ScreeningInitialDate, ScreeningFinalDate, AnalysisInitialDate, AnalysisFinalDate, ResultInitialDate, ResultFinalDate)
+            activate RecruitmentProcessFactory    
                 RecruitmentProcessFactory --> SetUpRecruitmentProcessController : recruitmentProcess
             deactivate RecruitmentProcessFactory
         end
-        SetUpRecruitmentProcessController -> RecruitmentProcessService : save(recruitmentProcess)
-        activate RecruitmentProcessService
-            RecruitmentProcessService -> RecruitmentProcessRepository : save(recruitmentProcess)
+        SetUpRecruitmentProcessController -> RecruitmentProcessRepository : save(recruitmentProcess)
         activate RecruitmentProcessRepository
             RecruitmentProcessRepository -> JpaRecruitmentProcessRepository : save(recruitmentProcess)
             activate JpaRecruitmentProcessRepository
@@ -116,10 +58,8 @@ activate customerManager
                 deactivate DB
                 JpaRecruitmentProcessRepository --> RecruitmentProcessRepository :  recruitmentProcess
             deactivate JpaRecruitmentProcessRepository
-            RecruitmentProcessRepository --> RecruitmentProcessService :  recruitmentProcess
+            RecruitmentProcessRepository --> SetUpRecruitmentProcessController : recruitmentProcess
         deactivate RecruitmentProcessRepository
-            RecruitmentProcessService --> SetUpRecruitmentProcessController :  recruitmentProcess
-        deactivate RecruitmentProcessService
         SetUpRecruitmentProcessController --> UI : recruitmentProcess
     deactivate SetUpRecruitmentProcessController
     UI --> customerManager : Informs success or failure

@@ -1,0 +1,74 @@
+@startuml CD-US1001
+
+title Class Diagram - US1001
+
+skinparam class {
+    skinparam classAttributeIconSize 0
+    skinparam packageStyle rectangle
+    skinparam shadowing false
+    skinparam linetype polyline
+    BackgroundColor #FEF9E7
+    ArrowColor Black
+}
+
+class "RegisterCandidateAndCreateUserUI" as UI {}
+
+class "RegisterCandidateController" as CandidateController {
+    +addCandidate(name: String, email: String): void
+}
+
+class "CandidateService" as CandidateService {
+    +addCandidate(name: String, email: String ): Candidate
+}
+
+class "Candidate" as Candidate {
+    -name: String
+    -email: String
+    +createCandidate(name: String, email: String): Customer
+}
+
+class "CustomerRepository" as CustomerRepository {
+    +save(customer: Customer): Customer
+}
+
+class "JpaCustomerRepository" as JpaCustomerRepository {
+    +save(customer: Customer): Customer
+}
+
+class "RegisterCandidateUserController" as CandidateUserController {
+    +addCustomerUser(email: String, password: String, firstName: String, lastName: String): void
+}
+
+class "UserManagementService" as ManagementService {
+    +registerNewCustomerUser(email: String, password: String, firstName: String, lastName: String): User
+}
+
+class "UserTypesFactory" as Factory {
+    +withRoleCustomerUser(email: String, password: String, firstName: String, lastName: String): User
+}
+
+class "UserRepository" as UserRepository {
+    +save(user: User): User
+}
+
+class "JpaUserRepository" as JpaUserRepository {
+    +save(user: User): User
+}
+
+class "Database" as DB <<(D, #8BEBFF)>> {
+}
+
+UI --> CustomerController
+CustomerController --> CustomerService
+CustomerService --> Customer
+CustomerService --> CustomerRepository
+CustomerRepository --> JpaCustomerRepository
+JpaCustomerRepository --> DB
+UI --> CustomerUserController
+CustomerUserController --> ManagementService
+ManagementService --> Factory
+ManagementService --> UserRepository
+UserRepository --> JpaUserRepository
+JpaUserRepository --> DB
+
+@enduml

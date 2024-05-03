@@ -18,7 +18,7 @@ public class File implements ValueObject, Comparable<File> {
 
     protected File(final String file) {
         Preconditions.nonEmpty(file, "File should neither be null nor empty");
-        Preconditions.ensure(isFileValid(file), "File does not exist");
+        //Preconditions.ensure(isFileValid(file), "File does not exist");
         this.path = Files.ensureExtension(file, EXTENSION);
     }
 

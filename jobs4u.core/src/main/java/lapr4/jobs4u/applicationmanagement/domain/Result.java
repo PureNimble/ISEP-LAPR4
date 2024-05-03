@@ -37,8 +37,8 @@ public class Result implements DomainEntity<Long> {
         // for ORM
     }
 
-    public static Result valueOf() {
-        return new Result(OutcomeValue.PENDING.toString());
+    public static Result valueOf(String outcome) {
+        return new Result(outcome);
     }
 
     @Override

@@ -58,7 +58,7 @@ public class Application implements AggregateRoot<ApplicationCode> {
         this.file = file;
         this.jobOpening = jobOpening;
         this.candidate = candidate;
-        // this.result = result;
+        this.result = result;
     }
 
     protected Application() {
@@ -84,16 +84,20 @@ public class Application implements AggregateRoot<ApplicationCode> {
         return identity();
     }
 
+    public Candidate candidate() {
+        return this.candidate;
+    }
+
     public ApplicationDTO toDTO() {
         return new ApplicationDTO(applicationCode.toString());
     }
 
     public void addResult(String outcome) {
-        // this.result.addOutcome(outcome);
+        this.result.addOutcome(outcome);
     }
 
     public void addResult(String outcome, String justification) {
-        // this.result.addOutcome(outcome, justification);
+        this.result.addOutcome(outcome, justification);
     }
 
     @Override

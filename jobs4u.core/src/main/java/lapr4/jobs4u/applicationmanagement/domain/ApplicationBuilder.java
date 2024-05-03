@@ -58,7 +58,7 @@ public class ApplicationBuilder implements DomainFactory<Application> {
     }
 
     public ApplicationBuilder withResult() {
-        this.result = Result.valueOf();
+        this.result = Result.valueOf(OutcomeValue.PENDING.toString());
         return this;
     }
 

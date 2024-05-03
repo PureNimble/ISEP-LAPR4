@@ -17,6 +17,10 @@ public class Outcome implements ValueObject, Comparable<Outcome> {
         this.outComeValue = outComeValue;
     }
 
+    protected Outcome() {
+        this.outComeValue = "";
+    }
+
     public static Outcome valueOf(final String OutComeValue) {
         return new Outcome(OutComeValue);
     }

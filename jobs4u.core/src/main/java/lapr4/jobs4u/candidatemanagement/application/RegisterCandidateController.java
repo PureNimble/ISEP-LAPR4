@@ -2,7 +2,6 @@ package lapr4.jobs4u.candidatemanagement.application;
 
 import eapli.framework.application.UseCaseController;
 import eapli.framework.infrastructure.authz.application.AuthorizationService;
-import eapli.framework.infrastructure.authz.application.AuthzRegistry;
 import eapli.framework.infrastructure.authz.application.UserSession;
 import eapli.framework.infrastructure.authz.domain.model.SystemUser;
 import lapr4.jobs4u.candidatemanagement.domain.Candidate;
@@ -16,14 +15,15 @@ import lapr4.jobs4u.usermanagement.domain.BaseRoles;
 @UseCaseController
 public class RegisterCandidateController {
 
-    private final AuthorizationService authz = AuthzRegistry.authorizationService();
+    private final AuthorizationService authz;
     private final CandidateRepository candidateRepository;
     private final CandidateUserRepository candidateUserRepository;
 
     public RegisterCandidateController(final CandidateRepository candidateRepository,
-            final CandidateUserRepository candidateUserRepository) {
+            final CandidateUserRepository candidateUserRepository, AuthorizationService authz) {
         this.candidateRepository = candidateRepository;
         this.candidateUserRepository = candidateUserRepository;
+        this.authz = authz;
     }
 
     public Candidate registerCandidate(final String firstName, final String lastName,

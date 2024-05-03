@@ -2,7 +2,6 @@ package lapr4.jobs4u.customermanagement.application;
 
 import eapli.framework.application.UseCaseController;
 import eapli.framework.infrastructure.authz.application.AuthorizationService;
-import eapli.framework.infrastructure.authz.application.AuthzRegistry;
 import eapli.framework.infrastructure.authz.application.UserSession;
 import eapli.framework.infrastructure.authz.domain.model.SystemUser;
 import lapr4.jobs4u.customermanagement.domain.Customer;
@@ -16,14 +15,15 @@ import lapr4.jobs4u.usermanagement.domain.BaseRoles;
 @UseCaseController
 public class RegisterCustomerController {
 
-    private final AuthorizationService authz = AuthzRegistry.authorizationService();
+    private final AuthorizationService authz;
     private final CustomerRepository customerRepository;
     private final CustomerUserRepository customerUserRepository;
 
     public RegisterCustomerController(final CustomerRepository customerRepository,
-            final CustomerUserRepository customerUserRepository) {
+            final CustomerUserRepository customerUserRepository, final AuthorizationService authz) {
         this.customerRepository = customerRepository;
         this.customerUserRepository = customerUserRepository;
+        this.authz = authz;
     }
 
     public Customer registerCustomer(final String name, final String address, final String customerCode,

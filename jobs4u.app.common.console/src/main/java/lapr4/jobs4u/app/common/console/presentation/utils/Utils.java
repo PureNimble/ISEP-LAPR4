@@ -2,11 +2,35 @@ package lapr4.jobs4u.app.common.console.presentation.utils;
 
 import eapli.framework.io.util.Console;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
 public class Utils {
+
+    static public Calendar readDateFromConsole(String prompt, String dateFormat, String regex) {
+        String errorMessage = "Invalid date format. Please enter date in " + dateFormat + " format.";
+        Pattern pattern = Pattern.compile(regex);
+        while (true) {
+            try {
+                String strDate = Console.readLine(prompt);
+                if (!pattern.matcher(strDate).matches()) {
+                    throw new Exception(errorMessage);
+                }
+                SimpleDateFormat df = new SimpleDateFormat(dateFormat);
+                Date date = df.parse(strDate);
+                Calendar calendar = Calendar.getInstance();
+                calendar.setTime(date);
+                return calendar;
+            } catch (Exception ex) {
+                System.out.println(ex.getMessage());
+            }
+        }
+    }
 
     static public boolean confirm(String message) {
         String input;

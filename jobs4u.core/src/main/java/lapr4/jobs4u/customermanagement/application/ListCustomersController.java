@@ -4,10 +4,10 @@ import java.util.Optional;
 
 import lapr4.jobs4u.customermanagement.domain.Customer;
 import lapr4.jobs4u.customermanagement.domain.CustomerCode;
+import lapr4.jobs4u.customermanagement.repositories.CustomerRepository;
 import lapr4.jobs4u.usermanagement.domain.BaseRoles;
 import eapli.framework.application.UseCaseController;
 import eapli.framework.infrastructure.authz.application.AuthorizationService;
-import eapli.framework.infrastructure.authz.application.AuthzRegistry;
 
 /**
  *
@@ -16,8 +16,14 @@ import eapli.framework.infrastructure.authz.application.AuthzRegistry;
 @UseCaseController
 public class ListCustomersController {
 
-    private final AuthorizationService authz = AuthzRegistry.authorizationService();
-    private final ListCustomersService customerService = new ListCustomersService();
+    private final AuthorizationService authz;
+    private final ListCustomersService customerService;
+
+    public ListCustomersController(CustomerRepository customerRepository, AuthorizationService authz) {
+        this.customerService = new ListCustomersService(customerRepository, authz);
+        this.authz = authz;
+    }
+
 
     public Iterable<Customer> allCustomers() {
         authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.CUSTOMER_MANAGER);

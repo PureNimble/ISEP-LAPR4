@@ -18,7 +18,8 @@ public class RegisterJobOpeningUI extends AbstractUI {
     private final RegisterJobOpeningController registerJobOpeningController = new RegisterJobOpeningController(
             PersistenceContext.repositories().jobOpenings(), AuthzRegistry.authorizationService());
 
-    private final ListCustomersController listCustomersController = new ListCustomersController();
+    private final ListCustomersController listCustomersController = new ListCustomersController(
+            PersistenceContext.repositories().customers(), AuthzRegistry.authorizationService());
 
     @Override
     protected boolean doShow() {

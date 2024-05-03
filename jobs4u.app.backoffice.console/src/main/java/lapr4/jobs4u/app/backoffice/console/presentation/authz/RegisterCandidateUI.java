@@ -4,6 +4,7 @@ import java.util.HashSet;
 import java.util.Set;
 import eapli.framework.domain.repositories.ConcurrencyException;
 import eapli.framework.domain.repositories.IntegrityViolationException;
+import eapli.framework.infrastructure.authz.application.AuthzRegistry;
 import eapli.framework.infrastructure.authz.domain.model.Role;
 import eapli.framework.infrastructure.authz.domain.model.SystemUser;
 import eapli.framework.io.util.Console;
@@ -17,7 +18,8 @@ import lapr4.jobs4u.usermanagement.domain.BaseRoles;
 public class RegisterCandidateUI extends AbstractUI {
 
     private final RegisterCandidateController registerCandidateController = new RegisterCandidateController(
-            PersistenceContext.repositories().candidates(), PersistenceContext.repositories().candidateUsers());
+            PersistenceContext.repositories().candidates(), PersistenceContext.repositories().candidateUsers(),
+            AuthzRegistry.authorizationService());
 
     private final AddUserController addUserController = new AddUserController();
 

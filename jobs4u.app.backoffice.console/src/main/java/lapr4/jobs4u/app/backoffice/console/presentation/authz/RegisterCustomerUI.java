@@ -4,6 +4,7 @@ import java.util.HashSet;
 import java.util.Set;
 import eapli.framework.domain.repositories.ConcurrencyException;
 import eapli.framework.domain.repositories.IntegrityViolationException;
+import eapli.framework.infrastructure.authz.application.AuthzRegistry;
 import eapli.framework.infrastructure.authz.domain.model.Role;
 import eapli.framework.infrastructure.authz.domain.model.SystemUser;
 import eapli.framework.io.util.Console;
@@ -17,7 +18,8 @@ import lapr4.jobs4u.usermanagement.domain.BaseRoles;
 public class RegisterCustomerUI extends AbstractUI {
 
     private final RegisterCustomerController registerCustomerController = new RegisterCustomerController(
-            PersistenceContext.repositories().customers(), PersistenceContext.repositories().customerUsers());
+            PersistenceContext.repositories().customers(), PersistenceContext.repositories().customerUsers(),
+            AuthzRegistry.authorizationService());
 
     private final AddUserController addUserController = new AddUserController();
 
@@ -38,8 +40,10 @@ public class RegisterCustomerUI extends AbstractUI {
         try {
             final Set<Role> roleTypes = new HashSet<>();
             roleTypes.add(BaseRoles.CUSTOMER);
-            final Customer customer = this.registerCustomerController.registerCustomer(companyName, companyAddress, companyCode, companyEmail, companyPhoneNumber);
-            final SystemUser user = this.addUserController.addUser(representativeEmail, representativefirstName, representativelastName, roleTypes);
+            final Customer customer = this.registerCustomerController.registerCustomer(companyName, companyAddress,
+                    companyCode, companyEmail, companyPhoneNumber);
+            final SystemUser user = this.addUserController.addUser(representativeEmail, representativefirstName,
+                    representativelastName, roleTypes);
             this.registerCustomerController.registerCustomerUser(customer, user);
         } catch (final IntegrityViolationException | ConcurrencyException e) {
             System.out.println("That E-mail is already registered.");

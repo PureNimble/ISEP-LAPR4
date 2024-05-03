@@ -15,7 +15,8 @@ import lapr4.jobs4u.recruitmentprocessmanagement.application.SetUpRecruitmentPro
 
 public class SetUpRecruitmentProcessUI extends AbstractUI {
     private final SetUpRecruitmentProcessController registerCustomerController = new SetUpRecruitmentProcessController(
-            PersistenceContext.repositories().recruitmentProcesses());
+            PersistenceContext.repositories().recruitmentProcesses(), PersistenceContext.repositories().jobOpenings(),
+            AuthzRegistry.authorizationService());
 
     private final ListJobOpeningsController listJobOpeningsController = new ListJobOpeningsController(
             PersistenceContext.repositories().jobOpenings(), AuthzRegistry.authorizationService());
@@ -23,7 +24,8 @@ public class SetUpRecruitmentProcessUI extends AbstractUI {
     @Override
     protected boolean doShow() {
 
-        Iterable<JobOpeningDTO> jobOpeningList = this.listJobOpeningsController.filterByCostumerManager();
+        Iterable<JobOpeningDTO> jobOpeningList = this.listJobOpeningsController
+                .getIntersection(listJobOpeningsController.filterByActive(false));
         final SelectWidget<JobOpeningDTO> selector = new SelectWidget<>("Job Openings:", jobOpeningList,
                 new JobOpeningPrinter());
         selector.show();
@@ -72,6 +74,7 @@ public class SetUpRecruitmentProcessUI extends AbstractUI {
                         screeningInitialDate, screeningFinalDate,
                         analysisInitialDate, analysisFinalDate, resultInitialDate, resultFinalDate, jobOpening);
             }
+
         } catch (final IntegrityViolationException | ConcurrencyException e) {
             System.out.println("That Job Reference is already registered.");
         }

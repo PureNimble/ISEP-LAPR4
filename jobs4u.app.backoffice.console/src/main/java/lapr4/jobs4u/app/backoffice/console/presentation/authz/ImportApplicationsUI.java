@@ -22,6 +22,7 @@ import java.util.Optional;
 
 import eapli.framework.domain.repositories.ConcurrencyException;
 import eapli.framework.domain.repositories.IntegrityViolationException;
+import eapli.framework.infrastructure.authz.application.AuthzRegistry;
 import eapli.framework.infrastructure.authz.domain.model.Role;
 import eapli.framework.infrastructure.authz.domain.model.SystemUser;
 import eapli.framework.io.util.Console;
@@ -35,7 +36,8 @@ import eapli.framework.presentation.console.AbstractUI;
 public class ImportApplicationsUI extends AbstractUI {
 
     private final RegisterCandidateController registerCandidateController = new RegisterCandidateController(
-            PersistenceContext.repositories().candidates(), PersistenceContext.repositories().candidateUsers());
+            PersistenceContext.repositories().candidates(), PersistenceContext.repositories().candidateUsers(),
+            AuthzRegistry.authorizationService());
 
     private final AddUserController addUserController = new AddUserController();
 

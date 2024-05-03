@@ -8,6 +8,7 @@ import java.util.Optional;
 import lapr4.jobs4u.applicationmanagement.domain.Application;
 import lapr4.jobs4u.applicationmanagement.domain.ApplicationCode;
 import lapr4.jobs4u.applicationmanagement.repositories.ApplicationRepository;
+import lapr4.jobs4u.candidatemanagement.domain.Candidate;
 import lapr4.jobs4u.jobopeningmanagement.domain.JobOpening;
 import lapr4.jobs4u.jobopeningmanagement.domain.JobReference;
 import eapli.framework.domain.repositories.TransactionalContext;
@@ -54,5 +55,12 @@ class JpaApplicationRepository
         final Map<String, Object> params = new HashMap<>();
         params.put("jobOpening", jobOpening);
         return match("e.jobOpening=:jobOpening", params);
+    }
+
+    @Override
+    public Iterable<Application> findApplicationsFromCandidate(final Candidate candidate){
+        final Map<String, Object> params = new HashMap<>();
+        params.put("candidate", candidate);
+        return match("e.candidate=:candidate", params);
     }
 }

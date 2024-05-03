@@ -8,11 +8,10 @@ import org.junit.Test;
 public class ResultTest {
 
     @Test
-    public void testResult() {
-        String justificationString = "100";
-        final String outcome = OutcomeValue.REJECTED.toString();
-        Result result = Result.valueOf(outcome);
-        Result result1 = Result.valueOf(outcome);
+    public void testResultWhenBuildingApplication() {
+
+        Result result = Result.valueOf(OutcomeValue.PENDING.toString());
+        Result result1 = Result.valueOf(OutcomeValue.PENDING.toString());
         assertEquals(result1, result);
     }
 
@@ -20,16 +19,40 @@ public class ResultTest {
     public void testResultCreationWithInvalidValue() {
         assertThrows(IllegalArgumentException.class, () -> {
             Result result = Result.valueOf("boas");
+        });
+    }
+
+    @Test
+    public void testResultCreationUpdate() {
+        Result result = Result.valueOf(OutcomeValue.PENDING.toString());
+        Result result1 = Result.valueOf(OutcomeValue.APPROVED.toString());
+
+        result.addOutcome(OutcomeValue.APPROVED.toString());
+        assertEquals(result1, result);
+    }
+
+    @Test
+    public void testResultCreationWithNullValue() {
+        Result result = Result.valueOf(OutcomeValue.PENDING.toString());
+        assertThrows(IllegalArgumentException.class, () -> {
+            result.addOutcome(null);
+        });
+    }
+
+    @Test
+    public void testResultCreationWithoutJustification() {
+        Result result = Result.valueOf(OutcomeValue.PENDING.toString());
+        assertThrows(IllegalArgumentException.class, () -> {
             result.addOutcome(OutcomeValue.REJECTED.toString());
         });
     }
 
     @Test
-    public void testAddressCreationWithNullValue() {
+    public void testResultCreationWithJustification() {
         Result result = Result.valueOf(OutcomeValue.PENDING.toString());
-        assertThrows(IllegalArgumentException.class, () -> {
-            result.addOutcome("invalidOutcome");
-        });
+        Result result1 = Result.valueOf(OutcomeValue.REJECTED.toString());
+        result.addOutcome(OutcomeValue.REJECTED.toString(), "This is a justification");
+        assertEquals(result1, result);
     }
 
 }

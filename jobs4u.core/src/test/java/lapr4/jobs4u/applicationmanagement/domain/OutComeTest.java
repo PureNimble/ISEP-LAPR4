@@ -29,4 +29,11 @@ public class OutComeTest {
             Outcome.valueOf(invalidJustification);
         });
     }
+
+    @Test
+    public void testOutcomeCreationInvalidOutcome() {
+        assertThrows(IllegalArgumentException.class, () -> {
+            Outcome.valueOf("invalidOutcome");
+        });
+    }
 }

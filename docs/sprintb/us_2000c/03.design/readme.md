@@ -38,7 +38,8 @@ These classes are responsible for the user interface, controlling the use cases,
 
 ## 3.2. Sequence Diagram (SD)
 
-![SD](svg/SD-US2000c.svg)
+![SD-US2000c](svg/SD-US2000c-listCandidates.svg)
+
 
 ## 3.3. Class Diagram (CD)
 

@@ -112,7 +112,7 @@ _N/A_
 
 ### 1.6. System Sequence Diagram (SSD)
 
-![SSD -> Register Job Openings](svg/SSD-US1005-listApplicationsOfJobOpening.svg)
+![SSD -> Register Job Openings](svg/SSD-US2000a-registerCandidatesAndCreateUser.svg)
 
 
 <img width=100% src="https://capsule-render.vercel.app/api?type=waving&height=120&color=4E1764&section=footer"/>

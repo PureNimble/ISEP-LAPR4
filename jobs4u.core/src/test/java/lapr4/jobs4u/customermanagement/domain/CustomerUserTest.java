@@ -10,7 +10,7 @@ import lapr4.jobs4u.usermanagement.domain.UserBuilderHelper;
 
 public class CustomerUserTest {
 
-    private final String aCustomerCode = "abcdefghij";
+    private final String aCustomerCode = "ABC123";
 
     public static CustomerUser dummyCustomerUser(final String code) {
         // should we load from spring context?

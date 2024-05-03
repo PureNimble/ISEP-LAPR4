@@ -15,8 +15,8 @@ import lapr4.jobs4u.usermanagement.domain.BaseRoles;
 import lapr4.jobs4u.usermanagement.domain.UserBuilderHelper;
 
 public class CustomerTest {
-    private final String aCustomerCode = "abcdefghij";
-    private final String anotherCustomerCode = "qrstuvwxyz";
+    private final String aCustomerCode = "ABC123";
+    private final String anotherCustomerCode = "ZYX123";
 
     public static Customer dummyCustomer(final String code) {
         // should we load from spring context?

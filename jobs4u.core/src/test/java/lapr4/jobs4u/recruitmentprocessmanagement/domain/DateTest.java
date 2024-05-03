@@ -25,7 +25,7 @@ public class DateTest {
 
     @Test
     public void testDateCreationWithInvalidNonExistingDate() {
-        String invalidDate = "88-02-2023";
+        String invalidDate = "80-02-2023";
         assertThrows(IllegalArgumentException.class, () -> {
             Date.valueOf(invalidDate);
         });

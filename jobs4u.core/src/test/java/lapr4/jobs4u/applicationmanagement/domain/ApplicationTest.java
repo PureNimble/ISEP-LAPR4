@@ -44,7 +44,7 @@ public class ApplicationTest {
         final SystemUser aSu = userBuilder
                 .with("username@email.local", "Pass123", "firstName", "lastName", "email@email.local").build();
         final Customer aCustomer = customerBuilder
-                .with("Fnac", "R. Sara Afonso 105, 4460-841 Sra. da Hora", "abcdefghij",
+                .with("Fnac", "R. Sara Afonso 105, 4460-841 Sra. da Hora", "ABC123",
                         "fnac@email.local", "910000000", aSu)
                 .build();
         ;

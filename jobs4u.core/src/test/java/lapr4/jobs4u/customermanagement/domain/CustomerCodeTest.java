@@ -8,13 +8,13 @@ public class CustomerCodeTest {
 
     @Test
     public void testCustomerCodeCreation() {
-        String validCustomerCode = "ISEPFEUP";
+        String validCustomerCode = "ISEP";
         CustomerCode customerCode = CustomerCode.valueOf(validCustomerCode);
         assertEquals(customerCode.toString(), validCustomerCode);
     }
 
     @Test
-    public void testCustomerCodeCreationWithInvalidNumberOfDigits() {
+    public void testCustomerCodeCreationWithInvalid() {
         String invalidCustomerCode = "123";
         assertThrows(IllegalArgumentException.class, () -> {
             CustomerCode.valueOf(invalidCustomerCode);

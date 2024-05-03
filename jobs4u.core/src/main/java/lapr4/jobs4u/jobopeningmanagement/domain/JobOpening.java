@@ -96,7 +96,7 @@ public class JobOpening implements AggregateRoot<JobReference>, DTOable<JobOpeni
     public boolean sameAs(final Object other) {
         return DomainEntities.areEqual(this, other);
     }
-    
+
     public boolean isActive() {
         return this.active;
     }
@@ -128,9 +128,10 @@ public class JobOpening implements AggregateRoot<JobReference>, DTOable<JobOpeni
     }
 
     public JobOpeningDTO toDTO() {
-        return new JobOpeningDTO(jobReference.toString(), titleOrFunction.toString(), contractType.toString(),
-                mode.toString(), address.toString(), customer.customerCode().toString(),
-                customer.companyName().toString(), jobDescription.toString());
+        return new JobOpeningDTO(this.jobReference.toString(), this.titleOrFunction.toString(),
+                this.contractType.toString(), this.mode.toString(), this.address.toString(),
+                this.customer.customerCode().toString(), this.customer.companyName().toString(),
+                this.jobDescription.toString());
     }
 
     public JobReference jobReference() {

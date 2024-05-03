@@ -24,16 +24,17 @@
 package lapr4.jobs4u.app.backoffice.console.presentation;
 
 import lapr4.jobs4u.Application;
-import lapr4.jobs4u.app.backoffice.console.presentation.authz.AddBackofficeUserUI;
-import lapr4.jobs4u.app.backoffice.console.presentation.authz.EnableOrDisableBackofficeUserUI;
-import lapr4.jobs4u.app.backoffice.console.presentation.authz.ImportApplicationsUI;
+import lapr4.jobs4u.app.backoffice.console.presentation.authz.AddBackofficeUserAction;
+import lapr4.jobs4u.app.backoffice.console.presentation.authz.EnableOrDisableBackofficeUserAction;
+import lapr4.jobs4u.app.backoffice.console.presentation.authz.ImportApplicationsAction;
 import lapr4.jobs4u.app.backoffice.console.presentation.authz.ListApplicationsUI;
 import lapr4.jobs4u.app.backoffice.console.presentation.authz.ListJobOpeningsUI;
+import lapr4.jobs4u.app.backoffice.console.presentation.authz.RegisterCandidateAction;
 import lapr4.jobs4u.app.backoffice.console.presentation.authz.ListBackofficeUsersUI;
-import lapr4.jobs4u.app.backoffice.console.presentation.authz.RegisterCandidateUI;
-import lapr4.jobs4u.app.backoffice.console.presentation.authz.RegisterCustomerUI;
-import lapr4.jobs4u.app.backoffice.console.presentation.authz.RegisterJobOpeningUI;
-import lapr4.jobs4u.app.backoffice.console.presentation.authz.SetUpRecruitmentProcessUI;
+import lapr4.jobs4u.app.backoffice.console.presentation.authz.ListCandidatesUI;
+import lapr4.jobs4u.app.backoffice.console.presentation.authz.RegisterCustomerAction;
+import lapr4.jobs4u.app.backoffice.console.presentation.authz.RegisterJobOpeningAction;
+import lapr4.jobs4u.app.backoffice.console.presentation.authz.SetUpRecruitmentProcessAction;
 import lapr4.jobs4u.app.common.console.presentation.authz.MyUserMenu;
 import lapr4.jobs4u.usermanagement.domain.BaseRoles;
 import eapli.framework.actions.Actions;
@@ -70,6 +71,8 @@ public class MainMenu extends AbstractUI {
     private static final int LIST_APPLICATIONS = 5;
 
     // OPERATOR
+    private static final int REGISTER_CANDIDATE = 1;
+    private static final int LIST_CANDIDATES= 2;
     private static final int IMPORT_APPLICATIONS_OPTION = 4;
 
     // MAIN MENU
@@ -157,9 +160,9 @@ public class MainMenu extends AbstractUI {
     private Menu buildAdminMenu() {
         final Menu menu = new Menu("Users >");
 
-        menu.addItem(ADD_USER_OPTION, "Add User", new AddBackofficeUserUI()::show);
+        menu.addItem(ADD_USER_OPTION, "Add User", new AddBackofficeUserAction());
         menu.addItem(LIST_USERS_OPTION, "List all Users", new ListBackofficeUsersUI()::show);
-        menu.addItem(ENABLE_DISABLE_USER_OPTION, "Enable/Disable User", new EnableOrDisableBackofficeUserUI()::show);
+        menu.addItem(ENABLE_DISABLE_USER_OPTION, "Enable/Disable User", new EnableOrDisableBackofficeUserAction());
         menu.addItem(EXIT_OPTION, RETURN_LABEL, Actions.SUCCESS);
 
         return menu;
@@ -168,10 +171,10 @@ public class MainMenu extends AbstractUI {
     private Menu buildCustomerManagerMenu() {
         final Menu menu = new Menu("Users >");
 
-        menu.addItem(REGISTER_CUSTOMER, "Register Customer", new RegisterCustomerUI()::show);
-        menu.addItem(REGISTER_JOB_OPENING, "Register Job Opening", new RegisterJobOpeningUI()::show);
+        menu.addItem(REGISTER_CUSTOMER, "Register Customer", new RegisterCustomerAction());
+        menu.addItem(REGISTER_JOB_OPENING, "Register Job Opening", new RegisterJobOpeningAction());
         menu.addItem(LIST_JOB_OPENINGS, "List Job Openings", new ListJobOpeningsUI()::show);
-        menu.addItem(SETUP_RECRUITMENT_PROCESS, "SetUp Recruitment Process", new SetUpRecruitmentProcessUI()::show);
+        menu.addItem(SETUP_RECRUITMENT_PROCESS, "SetUp Recruitment Process", new SetUpRecruitmentProcessAction());
         menu.addItem(LIST_APPLICATIONS, "List Applications for a Job Opening", new ListApplicationsUI()::show);
         menu.addItem(EXIT_OPTION, RETURN_LABEL, Actions.SUCCESS);
 
@@ -181,9 +184,9 @@ public class MainMenu extends AbstractUI {
     private Menu buildOperatorMenu() {
         final Menu menu = new Menu("Users >");
 
-        menu.addItem(ADD_USER_OPTION, "Register Candidate", new RegisterCandidateUI()::show);
-        menu.addItem(LIST_USERS_OPTION, "List all Users", new ListBackofficeUsersUI()::show);
-        menu.addItem(IMPORT_APPLICATIONS_OPTION, "Import Applications", new ImportApplicationsUI()::show);
+        menu.addItem(REGISTER_CANDIDATE, "Register Candidate", new RegisterCandidateAction());
+        menu.addItem(LIST_CANDIDATES, "List Candidates", new ListCandidatesUI()::show);
+        menu.addItem(IMPORT_APPLICATIONS_OPTION, "Import Applications", new ImportApplicationsAction());
         menu.addItem(EXIT_OPTION, RETURN_LABEL, Actions.SUCCESS);
 
         return menu;
@@ -192,7 +195,7 @@ public class MainMenu extends AbstractUI {
     private Menu buildLanguageEngineerMenu() {
         final Menu menu = new Menu("Users >");
 
-        menu.addItem(ADD_USER_OPTION, "Add User", new AddBackofficeUserUI()::show);
+        menu.addItem(ADD_USER_OPTION, "Add User", new AddBackofficeUserAction());
         menu.addItem(LIST_USERS_OPTION, "List all Users", new ListBackofficeUsersUI()::show);
         menu.addItem(EXIT_OPTION, RETURN_LABEL, Actions.SUCCESS);
 

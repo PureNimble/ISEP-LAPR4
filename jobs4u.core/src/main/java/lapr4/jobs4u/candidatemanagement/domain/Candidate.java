@@ -7,8 +7,9 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.Version;
+import lapr4.jobs4u.candidatemanagement.dto.CandidateDTO;
 import lapr4.jobs4u.customermanagement.domain.PhoneNumber;
-
+import lapr4.jobs4u.jobopeningmanagement.dto.JobOpeningDTO;
 import eapli.framework.domain.model.AggregateRoot;
 import eapli.framework.domain.model.DomainEntities;
 import eapli.framework.general.domain.model.EmailAddress;
@@ -68,8 +69,12 @@ public class Candidate implements AggregateRoot<EmailAddress> {
         return DomainEntities.areEqual(this, other);
     }
 
-    public EmailAddress customerCode() {
+    public EmailAddress emailAddress() {
         return identity();
+    }
+
+    public CandidateDTO toDTO() {
+        return new CandidateDTO(this.email.toString(), this.name.toString(), this.phoneNumber.toString());
     }
 
     @Override

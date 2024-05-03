@@ -3,7 +3,7 @@ skinparam monochrome true
 skinparam packageStyle rectangle
 skinparam shadowing false
 
-title System Sequence Diagram (SSD) - List all applications for a Job Opening
+title System Sequence Diagram (SSD) - Register a candidate and create the corresponding user
 
 autonumber
 

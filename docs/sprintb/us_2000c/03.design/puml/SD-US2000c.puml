@@ -1,0 +1,60 @@
+@startuml
+
+title Sequence Diagram - US2000c
+
+skinparam linetype ortho
+skinparam maxmessagesize 150
+skinparam sequenceParticipant underline
+
+actor "Operator" as Operator
+
+participant "ListCandidatesUI" as UI
+participant "ListCandidatesController" as ListCandidatesController
+participant "ListCandidatesService" as ListCandidatesService
+participant "CandidatesRepository" as CandidatesRepository
+participant "JpaCandidatesRepository" as JpaCandidatesRepository
+participant "Candidate" as Candidate
+participant "CandidateDTO" as CandidateDTO
+database "Database" as DB
+
+activate Operator
+
+Operator -> UI: Asks for a list of candidates
+
+activate UI
+    UI --> ListCandidatesController: allCandidates()
+    activate ListCandidatesController
+        ListCandidatesController -> ListCandidatesService: findAll()
+        activate ListCandidatesService
+            ListCandidatesService -> CandidatesRepository: findAll()
+            activate CandidatesRepository
+                CandidatesRepository -> JpaCandidatesRepository: findAll()
+                activate JpaCandidatesRepository
+                    JpaCandidatesRepository -> DB: createQuery("SELECT * FROM Candidate", Candidate.class)
+                    activate DB
+                        DB --> JpaCandidatesRepository: Iterable<Candidate>
+                    deactivate DB
+                    CandidatesRepository <-- JpaCandidatesRepository: Iterable<Candidate>
+                deactivate JpaCandidatesRepository
+                ListCandidatesService <-- CandidatesRepository: Iterable<Candidate>
+                deactivate CandidatesRepository
+                loop for each job opening
+                    ListCandidatesService -> Candidate: toDTO()
+                    activate Candidate
+                        Candidate --> CandidateDTO: create
+                        activate CandidateDTO
+                        Candidate <-- CandidateDTO: CandidateDTO
+                        deactivate CandidateDTO
+                        ListCandidatesService <-- Candidate: CandidateDTO
+                    deactivate Candidate
+                end
+            deactivate CandidatesRepository
+            ListCandidatesController <-- ListCandidatesService: Iterable<CandidateDTO>
+        deactivate ListCandidatesService
+        ListCandidatesController --> UI: Iterable<CandidateDTO>
+    deactivate ListCandidatesController
+    UI --> Operator: List of all candidates
+deactivate UI
+deactivate Operator
+
+@enduml

@@ -41,9 +41,14 @@ public class StandardQuestionImporterPluginsBootstrapper implements Action {
 	public boolean execute() {
 
 		// just to showcase two plugins
-		
+
 		register("Standard", "Standard question format", "csv",
 				"lapr4.jobs4u.integrations.plugins.question.interview.InterviewImporter", "INTERVIEW");
+		register("JsonFile", "JsonFile question format", "json",
+				"lapr4.jobs4u.integrations.plugins.question.interview.InterviewImporter", "INTERVIEW");
+
+		register("XmlFile", "XmlFile standard question format", "xml",
+				"lapr4.jobs4u.integrations.plugins.question.requirement.RequirementImporter", "REQUIREMENT");
 		register("Alternate", "Alternate standard question format", "csv",
 				"lapr4.jobs4u.integrations.plugins.question.requirement.RequirementImporter", "REQUIREMENT");
 		return true;
@@ -52,7 +57,8 @@ public class StandardQuestionImporterPluginsBootstrapper implements Action {
 	private void register(final String name, final String description, final String fileExtension,
 			final String fqClassName, final String pluginType) {
 		try {
-			registerQuestionImporterPluginController.registerQuestionImporterPlugin(name, description, fileExtension, fqClassName, pluginType);
+			registerQuestionImporterPluginController.registerQuestionImporterPlugin(name, description, fileExtension,
+					fqClassName, pluginType);
 			LOGGER.info(name);
 		} catch (final IntegrityViolationException | ConcurrencyException e) {
 			// ignoring exception. assuming it is just a primary key violation

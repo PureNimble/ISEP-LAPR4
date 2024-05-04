@@ -23,6 +23,8 @@ public class QuestionExportSmokeTester implements Action {
 	@Override
 	public boolean execute() {
 		testExportTo(FileFormat.INTERVIEW, "Standard");
+		testExportTo(FileFormat.INTERVIEW, "JsonFile");
+		testExportTo(FileFormat.REQUIREMENT, "XmlFile");
 		testExportTo(FileFormat.REQUIREMENT, "Alternate");
 
 		// nothing else to do

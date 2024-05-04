@@ -54,8 +54,10 @@ public class QuestionImportThruPluginSmokeTester implements Action {
 	public boolean execute() {
 		// import one file in standard format
 		testImportFrom("Standard.csv");
+		testImportFrom("JsonFile.json");
 		// import one file in alternate format
 		testImportFrom("Alternate.csv");
+		testImportFrom("XmlFile.xml");
 
 		// nothing else to do
 		return true;

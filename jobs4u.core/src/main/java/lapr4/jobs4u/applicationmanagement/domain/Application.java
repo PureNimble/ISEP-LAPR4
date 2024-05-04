@@ -6,6 +6,7 @@ import eapli.framework.domain.model.AggregateRoot;
 import eapli.framework.domain.model.DomainEntities;
 import eapli.framework.validations.Preconditions;
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.CollectionTable;
 import jakarta.persistence.Column;
 import jakarta.persistence.ElementCollection;
 import jakarta.persistence.EmbeddedId;
@@ -38,6 +39,7 @@ public class Application implements AggregateRoot<ApplicationCode> {
     @OneToOne(cascade = CascadeType.ALL)
     private Result result;
 
+    @CollectionTable(name = "T_APPLICATION_FILE")
     @ElementCollection
     private List<File> file;
 

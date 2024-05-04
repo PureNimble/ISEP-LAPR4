@@ -1,5 +1,6 @@
 package lapr4.jobs4u.questionmanagement.domain;
 
+import jakarta.persistence.CollectionTable;
 import jakarta.persistence.Column;
 import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
@@ -51,6 +52,7 @@ public class Question implements AggregateRoot<Long>, DTOable<QuestionDTO> {
     @XmlElementWrapper(name = "possibleAnswersList")
     @XmlElement(name = "possibleAnswers")
     @JsonProperty
+    @CollectionTable(name = "T_QUESTION_POSSIBLE_ANSWERS")
     @ElementCollection
     private List<Answer> possibleAnswers;
 

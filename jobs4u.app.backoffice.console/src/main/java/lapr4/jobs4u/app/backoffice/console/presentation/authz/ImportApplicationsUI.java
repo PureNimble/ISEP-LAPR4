@@ -48,11 +48,6 @@ public class ImportApplicationsUI extends AbstractUI {
     @Override
     protected boolean doShow() {
 
-        // TODO: If user already exists, skip application
-        // TODO: If candidate already exists, skip application
-        // TODO: If application already exists, skip application
-        // TODO: If job opening does not exist, skip application
-
         String folder;
         if (Console.readBoolean("Do you want to use the default Path? (Y/N)")) {
             folder = DEFAULT_FOLDER;
@@ -71,7 +66,6 @@ public class ImportApplicationsUI extends AbstractUI {
 
         candidateJobMap.forEach((jobOffer, candidateSet) -> {
             candidateSet.forEach(candidateId -> {
-                Candidate candidate = registerCandidates(folder, candidateId, jobOffer);
                 JobOpening job = this.theController.getJobOpennig(JobReference.valueOf(jobOffer));
                 if (job == null) {
                     System.out.println("Job Opening does not exist");
@@ -79,6 +73,7 @@ public class ImportApplicationsUI extends AbstractUI {
                 }
                 List<File> files = this.theController.getFiles(folder, candidateId, jobOffer);
 
+                Candidate candidate = registerCandidates(folder, candidateId, jobOffer);
                 registerApplication(files, job, candidate);
             });
         });

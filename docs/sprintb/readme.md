@@ -30,6 +30,8 @@ This folder contains all the functional requirements for your project, split by 
 
 [_`US 1009 - Select the requirements specification to be used for a job opening`_](us_1009/readme.md)
 
+[_`US 1011 - Select the interview model to use for the interviews of a job opening`_](us_1011/readme.md)
+
 [_`US 1012 - Generate and export a template text file to help collect the candidate answers during the interviews`_](us_1012/readme.md)
 
 [_`US 2000a - Register a candidate and create a corresponding use`_](us_2000a/readme.md)

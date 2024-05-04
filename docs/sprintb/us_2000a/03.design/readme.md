@@ -46,6 +46,6 @@ These classes are responsible for the user interface, controlling the use cases,
 
 ## 3.3. Class Diagram (CD)
 
-![Squence Diagram](svg/SD-US2000a-registerCandidateAndCreateUser.svg)
+![Squence Diagram](svg/SD-US2000a.svg)
 
 <img width=100% src="https://capsule-render.vercel.app/api?type=waving&height=120&color=4E1764&section=footer"/>

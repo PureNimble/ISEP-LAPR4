@@ -67,7 +67,7 @@ Na US 2000c, existem politicas de negócio em relação a listar os candidatos?
 
 ### 1.6. System Sequence Diagram (SSD)
 
-![SSD -> Register Job Openings](svg/SSD-US2000c-listCandidates.svg)
+![SSD -> Register Job Openings](svg/SSD-US2000c.svg)
 
 
 <img width=100% src="https://capsule-render.vercel.app/api?type=waving&height=120&color=4E1764&section=footer"/>

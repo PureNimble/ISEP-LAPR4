@@ -38,11 +38,11 @@ These classes are responsible for the user interface, controlling the use cases,
 
 ## 3.2. Sequence Diagram (SD)
 
-![SD-US2000c](svg/SD-US2000c-listCandidates.svg)
-
+![SD-US2000c](svg/SD-US2000c.svg)
 
 ## 3.3. Class Diagram (CD)
 
-_N/A_
+![CD-US2000c](svg/CD-US2000c.svg)
+
 
 <img width=100% src="https://capsule-render.vercel.app/api?type=waving&height=120&color=4E1764&section=footer"/>

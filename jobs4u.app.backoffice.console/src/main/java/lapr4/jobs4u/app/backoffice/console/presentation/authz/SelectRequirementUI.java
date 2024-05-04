@@ -45,7 +45,7 @@ public class SelectRequirementUI extends AbstractUI {
                         return false;
                 }
                 Iterable<QuestionImporterPlugin> questionImporterPlugins = interviewController
-                                .filterByType(FileFormat.INTERVIEW.toString());
+                                .filterByType(FileFormat.REQUIREMENT.toString());
 
                 final QuestionImporterPlugin questionImporterPlugin = (QuestionImporterPlugin) Utils
                                 .showAndSelectOne(questionImporterPlugins, "Plugins");

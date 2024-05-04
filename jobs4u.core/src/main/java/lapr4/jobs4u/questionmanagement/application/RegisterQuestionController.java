@@ -9,6 +9,7 @@ import lapr4.jobs4u.questionmanagement.domain.QuestionBuilder;
 import lapr4.jobs4u.questionmanagement.domain.QuestionType;
 import lapr4.jobs4u.questionmanagement.repositories.QuestionRepository;
 import lapr4.jobs4u.usermanagement.domain.BaseRoles;
+import lapr4.jobs4u.integration.questions.import_.domain.QuestionImporterPlugin;
 import lapr4.jobs4u.questionmanagement.domain.Answer;
 
 @UseCaseController
@@ -23,19 +24,20 @@ public class RegisterQuestionController {
     }
 
     public Question SetUpQuestion(final QuestionType questionType, final String questionBody,
-            final List<Answer> possibleAnswers) {
+            final List<Answer> possibleAnswers, final QuestionImporterPlugin importerPlugin) {
         authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.LANGUAGE_ENGINEER, BaseRoles.POWERUSER);
-        return registerQuestion(questionType, questionBody, possibleAnswers);
+        return registerQuestion(questionType, questionBody, possibleAnswers, importerPlugin);
     }
 
     private Question registerQuestion(final QuestionType questionType, final String questionBody,
-        final List<Answer> possibleAnswers) {
-        final Question question = doSetUpQuestion(questionType, questionBody, possibleAnswers);
+            final List<Answer> possibleAnswers, final QuestionImporterPlugin importerPlugin) {
+        final Question question = doSetUpQuestion(questionType, questionBody, possibleAnswers, importerPlugin);
         return questionRepository.save(question);
     }
 
     private Question doSetUpQuestion(final QuestionType questionType, final String questionBody,
-        final List<Answer> possibleAnswers) {
-        return new QuestionBuilder().with(questionType, questionBody, possibleAnswers).build();
+            final List<Answer> possibleAnswers, final QuestionImporterPlugin importerPlugin) {
+        return new QuestionBuilder()
+                .with(questionType, questionBody, possibleAnswers, importerPlugin.identity().toString()).build();
     }
 }

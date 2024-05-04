@@ -45,10 +45,10 @@ public class RegisterQuestionImporterPluginController {
 	 * @return
 	 */
 	public QuestionImporterPlugin registerQuestionImporterPlugin(final String name, final String description,
-			final String fileExtension, final String fqClassName) {
+			final String fileExtension, final String fqClassName, final String pluginType) {
 		authorizationService.ensureAuthenticatedUserHasAnyOf(BaseRoles.LANGUAGE_ENGINEER, BaseRoles.POWERUSER);
 
-		final var plugin = new QuestionImporterPlugin(name, description, fileExtension, fqClassName);
+		final var plugin = new QuestionImporterPlugin(name, description, fileExtension, fqClassName, pluginType);
 		return repository.save(plugin);
 	}
 }

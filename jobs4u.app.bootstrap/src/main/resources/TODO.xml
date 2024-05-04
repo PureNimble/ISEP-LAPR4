@@ -1,0 +1,25 @@
+<Questions>
+    <Question>
+        <type>Choice, with single answer</type>
+        <body>What is the capital of France? 1. London 2. Paris 3. Berlin</body>
+        <possibleAnswersList>
+            <possibleAnswers>Paris</possibleAnswers>
+        </possibleAnswersList>
+    </Question>
+    <Question>
+        <type>Choice, with multiple answers</type>
+        <body>Which of the following are colors? 1. Red 2. Car 3. Blue 4. Green</body>
+        <possibleAnswersList>
+            <possibleAnswers>Red</possibleAnswers>
+            <possibleAnswers>Blue</possibleAnswers>
+            <possibleAnswers>Green</possibleAnswers>
+        </possibleAnswersList>
+    </Question>
+    <Question>
+        <type>True/False</type>
+        <body>Is the sky blue?</body>
+        <possibleAnswersList>
+            <possibleAnswers>True</possibleAnswers>
+        </possibleAnswersList>
+    </Question>
+</Questions>

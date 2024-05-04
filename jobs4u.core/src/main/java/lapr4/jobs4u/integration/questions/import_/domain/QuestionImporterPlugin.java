@@ -58,28 +58,36 @@ public class QuestionImporterPlugin implements AggregateRoot<Designation> {
 	@Column(nullable = false, unique = true)
 	private final Designation name;
 
+	@Column(nullable = false)
 	private final Description description;
 
+	@Column(nullable = false)
 	private final FileExtension fileExtension;
 
+	@Column(nullable = false)
 	private final FQClassName className;
+
+	@Column(nullable = false)
+	private final PluginType pluginType;
 
 	protected QuestionImporterPlugin() {
 		// for ORM only
-		name = null;
-		description = null;
-		fileExtension = null;
-		className = null;
+		this.name = null;
+		this.description = null;
+		this.fileExtension = null;
+		this.className = null;
+		this.pluginType = null;
 	}
 
-	public QuestionImporterPlugin(final String name2, final String description2, final String fileExtension2,
-			final String fqClassName) {
-		Preconditions.noneNull(name2, description2, fileExtension2, fqClassName);
+	public QuestionImporterPlugin(final String name, final String description, final String fileExtension,
+			final String fqClassName, final String pluginType) {
+		Preconditions.noneNull(name, description, fileExtension, fqClassName, pluginType);
 
-		name = Designation.valueOf(name2);
-		description = Description.valueOf(description2);
-		fileExtension = FileExtension.valueOf(fileExtension2);
-		className = FQClassName.valueOf(fqClassName);
+		this.name = Designation.valueOf(name);
+		this.description = Description.valueOf(description);
+		this.fileExtension = FileExtension.valueOf(fileExtension);
+		this.className = FQClassName.valueOf(fqClassName);
+		this.pluginType = PluginType.valueOf(pluginType);
 	}
 
 	@Override
@@ -97,6 +105,10 @@ public class QuestionImporterPlugin implements AggregateRoot<Designation> {
 		return fileExtension;
 	}
 
+	public PluginType pluginType() {
+		return pluginType;
+	}
+
 	/**
 	 * Dynamically loads and builds the plugin importer.
 	 * 
@@ -110,5 +122,10 @@ public class QuestionImporterPlugin implements AggregateRoot<Designation> {
 			LOGGER.error("Unable to dynamically load the Plugin", ex);
 			throw new IllegalStateException("Unable to dynamically load the Plugin: " + className.toString(), ex);
 		}
+	}
+
+	@Override
+	public String toString() {
+		return name.toString();
 	}
 }

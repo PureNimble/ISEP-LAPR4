@@ -28,6 +28,7 @@ import java.util.Optional;
 import eapli.framework.domain.repositories.DomainRepository;
 import eapli.framework.general.domain.model.Designation;
 import lapr4.jobs4u.integration.questions.import_.domain.FileExtension;
+import lapr4.jobs4u.integration.questions.import_.domain.PluginType;
 import lapr4.jobs4u.integration.questions.import_.domain.QuestionImporterPlugin;
 
 /**
@@ -36,5 +37,6 @@ import lapr4.jobs4u.integration.questions.import_.domain.QuestionImporterPlugin;
  */
 public interface QuestionImporterPluginRepository extends DomainRepository<Designation, QuestionImporterPlugin> {
 
-	Optional<QuestionImporterPlugin> findByFileExtension(FileExtension fileExt);
+	Optional<QuestionImporterPlugin> findByFileExtension(final FileExtension fileExt);
+	Iterable<QuestionImporterPlugin> findByPluginType(final PluginType pluginType);
 }

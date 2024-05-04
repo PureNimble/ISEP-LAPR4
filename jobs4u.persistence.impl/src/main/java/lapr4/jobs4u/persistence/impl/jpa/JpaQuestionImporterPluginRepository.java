@@ -29,6 +29,7 @@ import eapli.framework.general.domain.model.Designation;
 import eapli.framework.infrastructure.repositories.impl.jpa.JpaAutoTxRepository;
 import lapr4.jobs4u.Application;
 import lapr4.jobs4u.integration.questions.import_.domain.FileExtension;
+import lapr4.jobs4u.integration.questions.import_.domain.PluginType;
 import lapr4.jobs4u.integration.questions.import_.domain.QuestionImporterPlugin;
 import lapr4.jobs4u.integration.questions.import_.repositories.QuestionImporterPluginRepository;
 
@@ -53,4 +54,11 @@ public class JpaQuestionImporterPluginRepository extends JpaAutoTxRepository<Que
 		params.put("fileExt", fileExt);
 		return matchOne("e.fileExtension=:fileExt", params);
 	}
+
+	@Override
+    public Iterable<QuestionImporterPlugin> findByPluginType(PluginType pluginType) {
+        final Map<String, Object> params = new HashMap<>();
+		params.put("pluginType", pluginType);
+		return match("e.pluginType=:pluginType", params);
+    }
 }

@@ -20,7 +20,6 @@
  */
 package lapr4.jobs4u.integration.questions.import_.application;
 
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -53,7 +52,8 @@ public class ImportQuestionsController {
 	private static final Logger LOGGER = LogManager.getLogger(ImportQuestionsController.class);
 
 	private final AuthorizationService authz = AuthzRegistry.authorizationService();
-	private final QuestionImporterPluginRepository pluginRepo = PersistenceContext.repositories().questionImporterPlugins();
+	private final QuestionImporterPluginRepository pluginRepo = PersistenceContext.repositories()
+			.questionImporterPlugins();
 	private final QuestionRepository questionRepository = PersistenceContext.repositories().question();
 	private final QuestionTypeRepository questionTypeRepository = PersistenceContext.repositories().questionType();
 
@@ -86,12 +86,10 @@ public class ImportQuestionsController {
 			final var fileExt = FilenameUtils.getExtension(filename);
 			final var plugin = pluginRepo.findByFileExtension(FileExtension.valueOf(fileExt)).orElseThrow(
 					() -> new IllegalStateException("There is no plugin associated with that file extension"));
-
 			// load the plugin
 			final var importer = plugin.buildImporter();
-
 			// parse the content
-			final var questionsToRegister = importer.importFrom(content);
+			final var questionsToRegister = importer.importFrom(content, plugin);
 
 			// do the import
 			questions = doTheImport(questionsToRegister);
@@ -113,7 +111,8 @@ public class ImportQuestionsController {
 		final List<Question> questions = new ArrayList<>();
 		for (final var dto : questionsToRegister) {
 			final var newQuestion = new QuestionDTOParser(questionTypeRepository).valueOf(dto);
-			// TODO check what should be done if we are trying to import a question that already
+			// TODO check what should be done if we are trying to import a question that
+			// already
 			// exists
 			final var savedQuestion = questionRepository.save(newQuestion);
 			questions.add(savedQuestion);
@@ -125,11 +124,8 @@ public class ImportQuestionsController {
 	private InputStream inputStreamFromResourceOrFile(final String filename) throws FileNotFoundException {
 		InputStream content;
 		final var classLoader = this.getClass().getClassLoader();
-		final var resource = classLoader.getResource(filename);
-		if (resource != null) {
-			final var file = new File(resource.getFile());
-			content = new FileInputStream(file);
-		} else {
+		content = classLoader.getResourceAsStream(filename);
+		if (content == null) {
 			content = new FileInputStream(filename);
 		}
 		return content;

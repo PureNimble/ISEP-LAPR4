@@ -22,8 +22,9 @@ package lapr4.jobs4u.integration.questions.import_.application;
 import java.io.IOException;
 import java.io.InputStream;
 
+import lapr4.jobs4u.integration.questions.import_.domain.QuestionImporterPlugin;
 import lapr4.jobs4u.questionmanagement.dto.QuestionDTO;
 
 public interface QuestionImporter {
-	Iterable<QuestionDTO> importFrom(InputStream filename) throws IOException;
+	Iterable<QuestionDTO> importFrom(InputStream filename, final QuestionImporterPlugin plugin) throws IOException;
 }

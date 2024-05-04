@@ -61,7 +61,7 @@ public class Bootstrapper implements Action {
     @Override
     public boolean execute() {
         // declare bootstrap actions
-        final Action[] actions = { new MasterUsersBootstrapper() };
+        final Action[] actions = { new MasterUsersBootstrapper(), new QuestionTypeBootstrapper(), new StandardQuestionImporterPluginsBootstrapper() };
 
         registerPowerUser();
         authenticateForBootstrapping();

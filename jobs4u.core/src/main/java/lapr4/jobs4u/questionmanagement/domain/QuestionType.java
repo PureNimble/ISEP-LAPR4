@@ -1,5 +1,7 @@
 package lapr4.jobs4u.questionmanagement.domain;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import eapli.framework.domain.model.AggregateRoot;
 import eapli.framework.domain.model.DomainEntities;
 import eapli.framework.representations.dto.DTOable;
@@ -11,8 +13,11 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.persistence.Version;
+import jakarta.xml.bind.annotation.XmlElement;
+import jakarta.xml.bind.annotation.XmlRootElement;
 import lapr4.jobs4u.questionmanagement.dto.QuestionTypeDTO;
 
+@XmlRootElement
 @Entity
 @Table(name = "T_QUESTION_TYPE")
 public class QuestionType implements AggregateRoot<String>, DTOable<QuestionTypeDTO> {
@@ -26,14 +31,17 @@ public class QuestionType implements AggregateRoot<String>, DTOable<QuestionType
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long pk;
 
+    @XmlElement
+    @JsonProperty
     @Column(nullable = false, unique = true)
     private String type;
-
+    
     @Column(nullable = false)
     private boolean active;
 
     QuestionType(final String type) {
         Preconditions.nonEmpty(type);
+        this.type = type;
         this.active = true;
     }
 

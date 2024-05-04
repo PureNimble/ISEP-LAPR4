@@ -21,6 +21,7 @@
 package lapr4.jobs4u.infrastructure.smoketests;
 
 import eapli.framework.actions.Action;
+import eapli.framework.actions.ChainedAction;
 
 /**
  * execute simple smoke tests on the application layer. we are assuming that the
@@ -34,7 +35,6 @@ public class Jobs4UDemoSmokeTester implements Action {
 
     @Override
     public boolean execute() {
-        // TODO: Add your smoke test execute here
-        return true;
+        return ChainedAction.first(new QuestionImportThruPluginSmokeTester()).execute();
     }
 }

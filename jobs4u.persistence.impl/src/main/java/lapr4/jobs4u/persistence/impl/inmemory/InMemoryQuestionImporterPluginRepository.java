@@ -5,6 +5,7 @@ import java.util.Optional;
 import eapli.framework.general.domain.model.Designation;
 import eapli.framework.infrastructure.repositories.impl.inmemory.InMemoryDomainRepository;
 import lapr4.jobs4u.integration.questions.import_.domain.FileExtension;
+import lapr4.jobs4u.integration.questions.import_.domain.PluginType;
 import lapr4.jobs4u.integration.questions.import_.domain.QuestionImporterPlugin;
 import lapr4.jobs4u.integration.questions.import_.repositories.QuestionImporterPluginRepository;
 
@@ -24,5 +25,10 @@ public class InMemoryQuestionImporterPluginRepository
     @Override
     public Optional<QuestionImporterPlugin> findByFileExtension(final FileExtension fileExtension) {
         return matchOne(e -> e.fileExtension().equals(fileExtension));
+    }
+
+    @Override
+    public Iterable<QuestionImporterPlugin> findByPluginType(final PluginType pluginType) {
+        return match(e -> e.pluginType().equals(pluginType));
     }
 }

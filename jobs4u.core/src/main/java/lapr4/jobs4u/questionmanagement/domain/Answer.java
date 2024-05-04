@@ -1,14 +1,19 @@
 package lapr4.jobs4u.questionmanagement.domain;
 
 import jakarta.persistence.Embeddable;
+import jakarta.xml.bind.annotation.XmlAccessorType;
+import jakarta.xml.bind.annotation.XmlValue;
 import eapli.framework.domain.model.ValueObject;
 import eapli.framework.validations.Preconditions;
+import jakarta.xml.bind.annotation.XmlAccessType;
 
 @Embeddable
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Answer implements ValueObject, Comparable<Answer> {
 
     private static final long serialVersionUID = 1L;
 
+    @XmlValue
     private final String text;
 
     protected Answer(final String text) {

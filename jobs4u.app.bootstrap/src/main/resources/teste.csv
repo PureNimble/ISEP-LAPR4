@@ -1,0 +1,3 @@
+"Choice, with single answer";"What is the capital of France? 1. London 2. Paris 3. Berlin";"Paris"
+"Choice, with multiple answers";"Which of the following are colors? 1. Red 2. Car 3. Blue 4. Green";"Red/Blue/Green"
+"True/False";"Is the sky blue?";"True"

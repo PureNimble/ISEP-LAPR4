@@ -1,0 +1,21 @@
+[
+    {
+        "Type": "Choice, with single answer",
+        "QuestionBody": "What is the capital of France? 1. London 2. Paris 3. Berlin",
+        "Answer": "Paris"
+    },
+    {
+        "Type": "Choice, with multiple answers",
+        "QuestionBody": "Which of the following are colors? 1. Red 2. Car 3. Blue 4. Green",
+        "Answer": [
+            "Red",
+            "Blue",
+            "Green"
+        ]
+    },
+    {
+        "Type": "True/False",
+        "QuestionBody": "Is the Sky blue?",
+        "Answer": "True"
+    }
+]

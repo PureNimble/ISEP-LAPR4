@@ -34,16 +34,11 @@ import lapr4.jobs4u.questionmanagement.repositories.QuestionTypeRepository;
  */
 public class QuestionDTOParser implements DTOParser<QuestionDTO, Question> {
 
-	private final QuestionTypeRepository questionTypeRepository;
+    private final QuestionTypeRepository questionTypeRepository;
 
-	/**
-	 * Configure the parser by injecting the necessary dependency.
-	 *
-	 * @param dishTypeRepository the dish type repository
-	 */
-	public QuestionDTOParser(final QuestionTypeRepository questionTypeRepository) {
-		this.questionTypeRepository = questionTypeRepository;
-	}
+    public QuestionDTOParser(final QuestionTypeRepository questionTypeRepository) {
+        this.questionTypeRepository = questionTypeRepository;
+    }
 
     @Override
     public Question valueOf(final QuestionDTO dto) {
@@ -51,9 +46,6 @@ public class QuestionDTOParser implements DTOParser<QuestionDTO, Question> {
                 .orElseThrow(() -> new IllegalArgumentException("Unknown question type: " + dto.getType()));
 
         return new QuestionBuilder()
-                .withType(type)
-                .withBody(dto.getBody().toString())
-                .withPossibleAnswers(dto.getPossibleAnswers())
-                .build();
+                .with(type, dto.getBody().toString(), dto.getPossibleAnswers(), dto.getQuestionImporterPlugin()).build();
     }
 }

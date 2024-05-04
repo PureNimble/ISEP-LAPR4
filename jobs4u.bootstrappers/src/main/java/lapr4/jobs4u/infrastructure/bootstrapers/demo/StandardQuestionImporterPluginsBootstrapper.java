@@ -44,8 +44,8 @@ public class StandardQuestionImporterPluginsBootstrapper implements Action {
 		
 		register("Standard", "Standard question format", "csv",
 				"lapr4.jobs4u.integrations.plugins.question.interview.InterviewImporter", "INTERVIEW");
-		register("Alternate", "Alternate standard question format", "test",
-				"lapr4.jobs4u.integrations.plugins.question.interview.InterviewImporter", "INTERVIEW");
+		register("Alternate", "Alternate standard question format", "csv",
+				"lapr4.jobs4u.integrations.plugins.question.requirement.RequirementImporter", "REQUIREMENT");
 		return true;
 	}
 

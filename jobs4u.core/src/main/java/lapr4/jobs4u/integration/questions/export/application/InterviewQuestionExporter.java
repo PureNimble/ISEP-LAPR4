@@ -12,7 +12,7 @@ public class InterviewQuestionExporter implements QuestionExporter {
     @Override
     public void begin(final String filename) throws IOException {
         stream = new PrintWriter(new FileWriter(filename));
-        stream.println("INTERVIEW\nNAME:\nGRADE");
+        stream.println("INTERVIEW\nNAME:\nGRADE:\n");
     }
 
     @Override

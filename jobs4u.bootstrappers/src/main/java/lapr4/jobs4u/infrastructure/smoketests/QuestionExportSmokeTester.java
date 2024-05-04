@@ -22,18 +22,15 @@ public class QuestionExportSmokeTester implements Action {
 
 	@Override
 	public boolean execute() {
-		testExportTo(FileFormat.XML, "Standard");
-		testExportTo(FileFormat.CSV, "Standard");
-		testExportTo(FileFormat.JSON, "Standard");
 		testExportTo(FileFormat.INTERVIEW, "Standard");
-		//testExportTo(FileFormat.REQUIREMENT, "Alternate");
+		testExportTo(FileFormat.REQUIREMENT, "Alternate");
 
 		// nothing else to do
 		return true;
 	}
 
 	private void testExportTo(final FileFormat format, final String plugin) {
-		final var filename = "jobs4u.bootstrappers/target/export-questions." + format.toString();
+		final var filename = "jobs4u.bootstrappers/target/" + plugin + ".txt";
 		try {
 			questionExporterController.export(filename, format, plugin);
 			outputExportedContent(format, filename, plugin);

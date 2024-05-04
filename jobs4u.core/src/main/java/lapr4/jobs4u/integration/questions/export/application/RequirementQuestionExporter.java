@@ -12,14 +12,14 @@ public class RequirementQuestionExporter implements QuestionExporter {
     @Override
     public void begin(final String filename) throws IOException {
         stream = new PrintWriter(new FileWriter(filename));
-        stream.println("REQUIREMENT");
+        stream.println("REQUIREMENT\nNAME:\n");
     }
 
     @Override
     public void element(final Question e) {
         stream.printf("QUESTION TYPE: %s\n", e.questionType());
         stream.println("QUESTION: " + e.questionBody());
-        stream.println("ANSWER:");
+        stream.println("ANSWER:\n");
     }
 
     @Override

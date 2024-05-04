@@ -84,10 +84,15 @@ public class ImportQuestionsController {
 			content = inputStreamFromResourceOrFile(filename);
 
 			// get the right plugin for the file
-			final var fileExt = FilenameUtils.getExtension(filename);
+			//final var fileExt = FilenameUtils.getExtension(filename);
 
-			final var plugin = pluginRepo.findByFileExtension(FileExtension.valueOf(fileExt)).orElseThrow(
+			final var fileName = FilenameUtils.getBaseName(filename);
+
+			final var plugin = pluginRepo.findByName(Designation.valueOf(fileName)).orElseThrow(
 					() -> new IllegalStateException("There is no plugin associated with that file extension"));
+
+			/* final var plugin = pluginRepo.findByFileExtension(FileExtension.valueOf(fileExt)).orElseThrow(
+					() -> new IllegalStateException("There is no plugin associated with that file extension")); */
 
 			// load the plugin
 			final var importer = plugin.buildImporter();

@@ -55,7 +55,7 @@ public class QuestionImportThruPluginSmokeTester implements Action {
 		// import one file in standard format
 		testImportFrom("Standard.csv");
 		// import one file in alternate format
-		//testImportFrom("Alternate.csv");
+		testImportFrom("Alternate.csv");
 
 		// nothing else to do
 		return true;

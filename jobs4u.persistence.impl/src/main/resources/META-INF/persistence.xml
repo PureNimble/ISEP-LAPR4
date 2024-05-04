@@ -21,6 +21,8 @@
     <class>lapr4.jobs4u.recruitmentprocessmanagement.domain.AnalysisPhase</class>
     <class>lapr4.jobs4u.recruitmentprocessmanagement.domain.ResultPhase</class>
     <class>lapr4.jobs4u.jobopeningmanagement.domain.JobOpening</class>
+    <class>lapr4.jobs4u.jobopeningmanagement.domain.JobOpeningInterview</class>
+    <class>lapr4.jobs4u.jobopeningmanagement.domain.JobOpeningRequirement</class>
     <class>lapr4.jobs4u.applicationmanagement.domain.Application</class>
     <class>lapr4.jobs4u.applicationmanagement.domain.Result</class>
     <class>lapr4.jobs4u.integration.questions.import_.domain.QuestionImporterPlugin</class>

@@ -26,7 +26,9 @@ import lapr4.jobs4u.candidatemanagement.repositories.CandidateUserRepository;
 import lapr4.jobs4u.customermanagement.repositories.CustomerRepository;
 import lapr4.jobs4u.customermanagement.repositories.CustomerUserRepository;
 import lapr4.jobs4u.integration.questions.import_.repositories.QuestionImporterPluginRepository;
+import lapr4.jobs4u.jobopeningmanagement.repositories.JobOpeningInterviewRepository;
 import lapr4.jobs4u.jobopeningmanagement.repositories.JobOpeningRepository;
+import lapr4.jobs4u.jobopeningmanagement.repositories.JobOpeningRequirementRepository;
 import lapr4.jobs4u.questionmanagement.repositories.QuestionRepository;
 import lapr4.jobs4u.questionmanagement.repositories.QuestionTypeRepository;
 import lapr4.jobs4u.recruitmentprocessmanagement.repositories.RecruitmentProcessRepository;
@@ -210,5 +212,19 @@ public interface RepositoryFactory {
      * @return
      */
     QuestionTypeRepository questionType();
+
+    /**
+     * repository will be created in auto transaction mode
+     *
+     * @return
+     */
+    JobOpeningInterviewRepository jobOpeningInterviews();
+
+    /**
+     * repository will be created in auto transaction mode
+     *
+     * @return
+     */
+    JobOpeningRequirementRepository jobOpeningRequirements();
 
 }

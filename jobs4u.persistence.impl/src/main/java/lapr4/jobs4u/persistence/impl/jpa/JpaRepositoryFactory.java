@@ -22,6 +22,8 @@ package lapr4.jobs4u.persistence.impl.jpa;
 
 import lapr4.jobs4u.Application;
 import lapr4.jobs4u.infrastructure.persistence.RepositoryFactory;
+import lapr4.jobs4u.jobopeningmanagement.repositories.JobOpeningInterviewRepository;
+import lapr4.jobs4u.jobopeningmanagement.repositories.JobOpeningRequirementRepository;
 import eapli.framework.domain.repositories.TransactionalContext;
 import eapli.framework.infrastructure.authz.domain.repositories.UserRepository;
 import eapli.framework.infrastructure.authz.repositories.impl.jpa.JpaAutoTxUserRepository;
@@ -125,15 +127,15 @@ public class JpaRepositoryFactory implements RepositoryFactory {
         return new JpaQuestionRepository(Application.settings().getPersistenceUnitName());
     }
 
-    @Override 
+    @Override
     public JpaQuestionRepository question(final TransactionalContext autoTx) {
         return new JpaQuestionRepository(autoTx);
     }
 
     @Override
-	public JpaQuestionImporterPluginRepository questionImporterPlugins() {
-		return new JpaQuestionImporterPluginRepository(Application.settings().getPersistenceUnitName());
-	}
+    public JpaQuestionImporterPluginRepository questionImporterPlugins() {
+        return new JpaQuestionImporterPluginRepository(Application.settings().getPersistenceUnitName());
+    }
 
     @Override
     public JpaQuestionImporterPluginRepository questionImporterPlugins(final TransactionalContext autoTx) {
@@ -148,5 +150,15 @@ public class JpaRepositoryFactory implements RepositoryFactory {
     @Override
     public JpaQuestionTypeRepository questionType(final TransactionalContext autoTx) {
         return new JpaQuestionTypeRepository(autoTx);
+    }
+
+    @Override
+    public JobOpeningInterviewRepository jobOpeningInterviews() {
+        return new JpaJobOpeningInterviewRepository(Application.settings().getPersistenceUnitName());
+    }
+
+    @Override
+    public JobOpeningRequirementRepository jobOpeningRequirements() {
+        return new JpaJobOpeningRequirementRepository(Application.settings().getPersistenceUnitName());
     }
 }

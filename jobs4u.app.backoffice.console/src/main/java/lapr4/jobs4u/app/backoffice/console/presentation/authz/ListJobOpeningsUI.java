@@ -9,6 +9,7 @@ import eapli.framework.infrastructure.authz.application.AuthzRegistry;
 import eapli.framework.presentation.console.AbstractListUI;
 import eapli.framework.presentation.console.ListWidget;
 import eapli.framework.visitor.Visitor;
+import lapr4.jobs4u.app.backoffice.console.presentation.authz.printer.JobOpeningPrinter;
 import lapr4.jobs4u.app.common.console.presentation.utils.Utils;
 import lapr4.jobs4u.customermanagement.application.ListCustomersController;
 import lapr4.jobs4u.customermanagement.domain.Customer;

@@ -20,25 +20,38 @@
  */
 package lapr4.jobs4u.integrations.plugins.question.requirement;
 
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import lapr4.jobs4u.integration.questions.import_.application.QuestionImporter;
 import lapr4.jobs4u.integration.questions.import_.domain.QuestionImporterPlugin;
+import lapr4.jobs4u.questionmanagement.domain.Answer;
 import lapr4.jobs4u.questionmanagement.dto.QuestionDTO;
-import lapr4.jobs4u.questionmanagement.dto.QuestionTypeDTO;
-
 
 public class RequirementImporter implements QuestionImporter {
 
 	@Override
-	public Iterable<QuestionDTO> importFrom(final InputStream filename, final QuestionImporterPlugin plugin) throws IOException {
-		// TODO do the actual parsing of the content. for now we will return a mock
-		// object
-		return null;
+	public Iterable<QuestionDTO> importFrom(final InputStream filename, final QuestionImporterPlugin plugin)
+			throws IOException {
+		var result = new ArrayList<QuestionDTO>();
+		try (BufferedReader br = new BufferedReader(new InputStreamReader(filename))) {
+			String line;
+			while ((line = br.readLine()) != null) {
+				String[] values = line.replace("\"", "").split(";");
+				String[] answerStrings = values[values.length - 1].split("/");
+				List<Answer> answers = new ArrayList<>();
+				for (String answerString : answerStrings) {
+					Answer answer = Answer.valueOf(answerString);
+					answers.add(answer);
+				}
+				result.add(new QuestionDTO(values[0], values[1], answers, plugin.identity().toString()));
+			}
+		}
+		return result;
 	}
 
 }

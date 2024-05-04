@@ -8,4 +8,5 @@ public interface QuestionRepository extends DomainRepository<Long, Question>{
 
 	Iterable<Question> findAll();
 	Iterable<Question> findActiveQuestions();
+	Iterable<Question> findQuestionsByPlugin(final String plugin);
 }

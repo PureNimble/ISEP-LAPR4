@@ -26,4 +26,9 @@ class JpaQuestionRepository extends JpaAutoTxRepository<Question, Long, Long> im
     public Iterable<Question> findActiveQuestions() {
         return match("e.active=true");
     }
+
+    @Override
+    public Iterable<Question> findQuestionsByPlugin(String plugin) {
+        return match("e.importerPlugin=:plugin", "plugin", plugin);
+    }
 }

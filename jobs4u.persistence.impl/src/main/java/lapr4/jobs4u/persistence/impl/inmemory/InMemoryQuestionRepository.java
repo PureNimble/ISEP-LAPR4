@@ -21,4 +21,9 @@ public class InMemoryQuestionRepository
     public Iterable<Question> findActiveQuestions() {
         return match(e -> e.isActive());
     }
+
+    @Override
+    public Iterable<Question> findQuestionsByPlugin(String plugin) {
+        return match(e -> e.importerPlugin().equals(plugin));
+    }
 }

@@ -61,4 +61,11 @@ public class JpaQuestionImporterPluginRepository extends JpaAutoTxRepository<Que
 		params.put("pluginType", pluginType);
 		return match("e.pluginType=:pluginType", params);
     }
+
+	@Override
+	public Optional<QuestionImporterPlugin> findByName(final Designation name) {
+		final Map<String, Object> params = new HashMap<>();
+		params.put("name", name);
+		return matchOne("e.name=:name", params);
+	}
 }

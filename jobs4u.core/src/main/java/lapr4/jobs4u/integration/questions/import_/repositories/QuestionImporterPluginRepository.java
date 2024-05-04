@@ -38,5 +38,6 @@ import lapr4.jobs4u.integration.questions.import_.domain.QuestionImporterPlugin;
 public interface QuestionImporterPluginRepository extends DomainRepository<Designation, QuestionImporterPlugin> {
 
 	Optional<QuestionImporterPlugin> findByFileExtension(final FileExtension fileExt);
+	Optional<QuestionImporterPlugin> findByName(final Designation name);
 	Iterable<QuestionImporterPlugin> findByPluginType(final PluginType pluginType);
 }

@@ -109,9 +109,21 @@ public class Question implements AggregateRoot<Long>, DTOable<QuestionDTO> {
         return this.importerPlugin;
     }
 
+    public QuestionType questionType() {
+        return this.type;
+    }
+
+    public QuestionBody questionBody() {
+        return this.body;
+    }
+
+    public List<Answer> possibleAnswers() {
+        return this.possibleAnswers;
+    }
+
     @Override
     public String toString() {
-        return id.toString() + " - " + body.toString();
+        return body.toString();
     }
 
     @Override

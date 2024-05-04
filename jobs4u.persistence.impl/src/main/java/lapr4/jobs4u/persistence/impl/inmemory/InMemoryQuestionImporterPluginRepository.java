@@ -31,4 +31,9 @@ public class InMemoryQuestionImporterPluginRepository
     public Iterable<QuestionImporterPlugin> findByPluginType(final PluginType pluginType) {
         return match(e -> e.pluginType().equals(pluginType));
     }
+
+    @Override
+    public Optional<QuestionImporterPlugin> findByName(final Designation name) {
+        return matchOne(e -> e.identity().equals(name));
+    }
 }

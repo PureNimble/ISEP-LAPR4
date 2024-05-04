@@ -26,6 +26,8 @@ package lapr4.jobs4u.infrastructure.bootstrapers;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import lapr4.jobs4u.infrastructure.bootstrapers.demo.QuestionTypeBootstrapper;
+import lapr4.jobs4u.infrastructure.bootstrapers.demo.StandardQuestionImporterPluginsBootstrapper;
 import lapr4.jobs4u.infrastructure.persistence.PersistenceContext;
 import lapr4.jobs4u.usermanagement.domain.BaseRoles;
 import lapr4.jobs4u.usermanagement.domain.UserBuilderHelper;
@@ -61,7 +63,7 @@ public class Bootstrapper implements Action {
     @Override
     public boolean execute() {
         // declare bootstrap actions
-        final Action[] actions = { new MasterUsersBootstrapper(), new QuestionTypeBootstrapper(), new StandardQuestionImporterPluginsBootstrapper() };
+        final Action[] actions = { new MasterUsersBootstrapper() };
 
         registerPowerUser();
         authenticateForBootstrapping();

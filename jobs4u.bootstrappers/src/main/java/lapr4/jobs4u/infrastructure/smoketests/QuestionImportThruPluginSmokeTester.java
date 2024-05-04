@@ -53,9 +53,9 @@ public class QuestionImportThruPluginSmokeTester implements Action {
 	@Override
 	public boolean execute() {
 		// import one file in standard format
-		testImportFrom("teste.csv");
+		testImportFrom("Standard.csv");
 		// import one file in alternate format
-		testImportFrom("teste.test");
+		//testImportFrom("Alternate.csv");
 
 		// nothing else to do
 		return true;

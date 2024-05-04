@@ -1,4 +1,4 @@
-package lapr4.jobs4u.infrastructure.bootstrapers;
+package lapr4.jobs4u.infrastructure.bootstrapers.demo;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

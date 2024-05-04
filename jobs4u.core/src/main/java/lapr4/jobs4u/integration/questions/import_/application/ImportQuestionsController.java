@@ -32,6 +32,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import eapli.framework.application.UseCaseController;
+import eapli.framework.general.domain.model.Designation;
 import eapli.framework.infrastructure.authz.application.AuthorizationService;
 import eapli.framework.infrastructure.authz.application.AuthzRegistry;
 import lapr4.jobs4u.infrastructure.persistence.PersistenceContext;
@@ -84,8 +85,10 @@ public class ImportQuestionsController {
 
 			// get the right plugin for the file
 			final var fileExt = FilenameUtils.getExtension(filename);
+
 			final var plugin = pluginRepo.findByFileExtension(FileExtension.valueOf(fileExt)).orElseThrow(
 					() -> new IllegalStateException("There is no plugin associated with that file extension"));
+
 			// load the plugin
 			final var importer = plugin.buildImporter();
 			// parse the content

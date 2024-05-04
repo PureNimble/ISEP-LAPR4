@@ -7,6 +7,7 @@ import eapli.framework.presentation.console.AbstractListUI;
 import eapli.framework.presentation.console.SelectWidget;
 import eapli.framework.visitor.Visitor;
 import lapr4.jobs4u.app.backoffice.console.presentation.authz.printer.ApplicationPrinter;
+import lapr4.jobs4u.app.backoffice.console.presentation.authz.printer.JobOpeningPrinter;
 import lapr4.jobs4u.applicationmanagement.application.ListApplicationsController;
 import lapr4.jobs4u.applicationmanagement.dto.ApplicationDTO;
 import lapr4.jobs4u.infrastructure.persistence.PersistenceContext;

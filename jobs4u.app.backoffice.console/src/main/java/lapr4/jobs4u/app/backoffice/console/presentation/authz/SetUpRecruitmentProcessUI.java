@@ -6,6 +6,7 @@ import eapli.framework.infrastructure.authz.application.AuthzRegistry;
 import eapli.framework.io.util.Console;
 import eapli.framework.presentation.console.AbstractUI;
 import eapli.framework.presentation.console.SelectWidget;
+import lapr4.jobs4u.app.backoffice.console.presentation.authz.printer.JobOpeningPrinter;
 import lapr4.jobs4u.app.common.console.presentation.utils.Utils;
 import lapr4.jobs4u.infrastructure.persistence.PersistenceContext;
 import lapr4.jobs4u.jobopeningmanagement.application.ListJobOpeningsController;

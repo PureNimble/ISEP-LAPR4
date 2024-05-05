@@ -65,9 +65,9 @@
         return jobOpeningsService.filterByActive(active);
     }
 
-    public Iterable<JobOpeningDTO> filterByPeriod(final Calendar date) {
+    public Iterable<JobOpeningDTO> filterByPeriod(final Calendar initialDate, final Calendar finalDate) {
         authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.CUSTOMER_MANAGER, BaseRoles.POWERUSER);
-        return jobOpeningsService.filterByPeriod(date);
+        return jobOpeningsService.filterByPeriod(initialDate, finalDate);
     }
 
     public JobOpening selectedJobOpening(final JobOpeningDTO jobOpeningDTO) {
@@ -113,8 +113,13 @@
         return jobOpeningsDTO;
     }
 
-    public Iterable<JobOpeningDTO> filterByPeriod(final Calendar date) {
-        final Iterable<JobOpening> jobOpenings = this.jobOpeningRepository.filterByPeriod(date);
+    public Iterable<JobOpeningDTO> filterByPeriod(final Calendar initialDate, final Calendar finalDate) {
+        finalDate.set(Calendar.DAY_OF_MONTH, finalDate.getActualMaximum(Calendar.DAY_OF_MONTH));
+        finalDate.set(Calendar.HOUR_OF_DAY, 23);
+        finalDate.set(Calendar.MINUTE, 59);
+        finalDate.set(Calendar.SECOND, 59);
+        finalDate.set(Calendar.MILLISECOND, 999);
+        final Iterable<JobOpening> jobOpenings = this.jobOpeningRepository.filterByPeriod(initialDate, finalDate);
         
         List<JobOpeningDTO> jobOpeningsDTO = new ArrayList<>();
         jobOpenings.forEach(jobOpening -> jobOpeningsDTO.add(jobOpening.toDTO()));

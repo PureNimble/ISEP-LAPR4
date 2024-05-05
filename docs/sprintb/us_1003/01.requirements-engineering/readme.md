@@ -80,6 +80,9 @@ _N/A_
     * active
     * customer
     * date
+* Inserted data:
+  * initial date
+  * final date
 
 **Output Data:**
 

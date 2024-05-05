@@ -70,9 +70,7 @@ for this functionality must follow specific technical requirements, specified in
 ### 1.6. System Sequence Diagram (SSD)
 
 #### 1.6.1. Register Users
-![SSD -> Register Users](svg/SSD-US2003-generateTemplateFile.svg)
 
-
-
+_N/A_
 
 <img width=100% src="https://capsule-render.vercel.app/api?type=waving&height=120&color=4E1764&section=footer"/>

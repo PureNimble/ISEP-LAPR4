@@ -105,6 +105,17 @@ These classes are responsible for the user interface, controlling the use case, 
 
 ## 3.3. Class Diagram (CD)
 
-_N/A_
+#### 3.2.1. Register Users
+![CD -> Register Users](svg/addUser.png)
+
+---
+
+#### 3.2.2. Enable/Disable Users
+![CD -> Enable/Disable Users](svg/EnableOrDisableBackofficeUserAction.png)
+
+---
+
+#### 3.2.3. List Users
+![CD -> List Users](svg/listbackofficeusers.png)
 
 <img width=100% src="https://capsule-render.vercel.app/api?type=waving&height=120&color=4E1764&section=footer"/>

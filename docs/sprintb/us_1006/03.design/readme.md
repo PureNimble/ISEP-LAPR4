@@ -29,6 +29,6 @@ These classes are responsible for the user interface.
 
 ## 3.3. Class Diagram (CD)
 
-_N/A_
+![CD -> Display Candidate Data](svg/1006,1006b.png)
 
 <img width=100% src="https://capsule-render.vercel.app/api?type=waving&height=120&color=4E1764&section=footer"/>

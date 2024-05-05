@@ -10,7 +10,7 @@ actor "Customer Manager" as customerManager
 
 participant "ListApplicationUI" as UI
 participant "ListApplicationController" as ListApplicationController
-participant "ApplicationService" as ApplicationService
+participant "ListApplicationService" as ApplicationService
 participant "ApplicationRepository" as ApplicationRepository
 participant "JpaApplicationRepository" as JpaApplicationRepository
 participant "Application" as Application

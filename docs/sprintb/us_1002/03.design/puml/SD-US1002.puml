@@ -10,8 +10,8 @@ actor "Customer Manager" as customerManager
 
 participant "RegisterJobOpeningUI" as UI
 participant "RegisterJobOpeningController" as RegisterJobOpeningController
-participant "JobOpeningService" as JobOpeningService
-participant "JobOpening" as JobOpening
+participant "RegisterJobOpeningService" as JobOpeningService
+participant "JobOpeningBuilder" as JobOpening
 participant "JobOpeningRepository" as JobOpeningRepository
 participant "JpaJobOpeningRepository" as JpaJobOpeningRepository
 database "Database" as DB

@@ -9,17 +9,14 @@ import lapr4.jobs4u.applicationmanagement.domain.ApplicationCode;
 import lapr4.jobs4u.applicationmanagement.dto.ApplicationDTO;
 import lapr4.jobs4u.applicationmanagement.repositories.ApplicationRepository;
 import lapr4.jobs4u.jobopeningmanagement.domain.JobOpening;
-import eapli.framework.infrastructure.authz.application.AuthorizationService;
 
 @Component
 public class ListApplicationsService {
 
     private final ApplicationRepository applicationRepository;
-    private final AuthorizationService authz;
 
-    public ListApplicationsService(ApplicationRepository applicationRepository, AuthorizationService authz) {
+    public ListApplicationsService(ApplicationRepository applicationRepository) {
         this.applicationRepository = applicationRepository;
-        this.authz = authz;
     }
 
     public Iterable<ApplicationDTO> filterByJobOpening(final JobOpening jobOpening) {

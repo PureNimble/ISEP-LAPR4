@@ -23,7 +23,6 @@ package lapr4.jobs4u.persistence.impl.jpa;
 import lapr4.jobs4u.Application;
 
 import lapr4.jobs4u.jobopeningmanagement.domain.JobOpeningRequirement;
-import lapr4.jobs4u.jobopeningmanagement.repositories.JobOpeningInterviewRepository;
 import lapr4.jobs4u.jobopeningmanagement.repositories.JobOpeningRequirementRepository;
 import eapli.framework.domain.repositories.TransactionalContext;
 import eapli.framework.infrastructure.repositories.impl.jpa.JpaAutoTxRepository;

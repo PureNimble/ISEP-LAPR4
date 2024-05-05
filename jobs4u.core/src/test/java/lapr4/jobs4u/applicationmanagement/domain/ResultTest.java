@@ -18,7 +18,7 @@ public class ResultTest {
     @Test
     public void testResultCreationWithInvalidValue() {
         assertThrows(IllegalArgumentException.class, () -> {
-            Result result = Result.valueOf("boas");
+            Result.valueOf("boas");
         });
     }
 

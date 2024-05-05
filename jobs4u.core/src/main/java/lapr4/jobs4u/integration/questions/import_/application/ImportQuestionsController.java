@@ -36,7 +36,6 @@ import eapli.framework.general.domain.model.Designation;
 import eapli.framework.infrastructure.authz.application.AuthorizationService;
 import eapli.framework.infrastructure.authz.application.AuthzRegistry;
 import lapr4.jobs4u.infrastructure.persistence.PersistenceContext;
-import lapr4.jobs4u.integration.questions.import_.domain.FileExtension;
 import lapr4.jobs4u.integration.questions.import_.repositories.QuestionImporterPluginRepository;
 import lapr4.jobs4u.questionmanagement.application.viadto.QuestionDTOParser;
 import lapr4.jobs4u.questionmanagement.domain.Question;

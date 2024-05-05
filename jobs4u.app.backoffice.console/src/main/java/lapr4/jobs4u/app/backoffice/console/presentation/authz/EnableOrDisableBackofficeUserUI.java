@@ -64,7 +64,7 @@ public class EnableOrDisableBackofficeUserUI extends AbstractUI {
             if(Utils.confirm("Do you want to deactivate the user: " + theBackofficeUser.name() + "?")) {
                 try {
                     theController.enableOrDisableUser(theBackofficeUser, "disable");
-                } catch (@SuppressWarnings("unused") final ConcurrencyException ex) {
+                } catch (final ConcurrencyException ex) {
                     System.out.println(
                             "WARNING: That entity has already been changed or deleted since you last read it");
                 }
@@ -83,7 +83,7 @@ public class EnableOrDisableBackofficeUserUI extends AbstractUI {
             if(Utils.confirm("Do you want to activate the user: " + theBackofficeUser.name() + "?")) {
                 try {
                     theController.enableOrDisableUser(theBackofficeUser, "enable");
-                } catch (@SuppressWarnings("unused") final ConcurrencyException ex) {
+                } catch (final ConcurrencyException ex) {
                     System.out.println(
                             "WARNING: That entity has already been changed or deleted since you last read it");
                 }

@@ -58,9 +58,9 @@ public class File implements ValueObject, Comparable<File> {
         return path.compareTo(arg0.path);
     }
 
-    private static boolean isFileValid(final String file) {
+    /* private static boolean isFileValid(final String file) {
         return java.nio.file.Files.exists(java.nio.file.Paths.get(file));
-    }
+    } */
 
     /**
      * Gets the full content of an input stream as a single String encoded as UTF-8.

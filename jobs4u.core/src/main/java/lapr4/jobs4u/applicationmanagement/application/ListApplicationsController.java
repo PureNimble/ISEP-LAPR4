@@ -16,7 +16,7 @@ public class ListApplicationsController {
     private final AuthorizationService authz;
 
     public ListApplicationsController(ApplicationRepository applicationRepository, AuthorizationService authz) {
-        this.applicationService = new ListApplicationsService(applicationRepository, authz);
+        this.applicationService = new ListApplicationsService(applicationRepository);
         this.authz = authz;
     }
 

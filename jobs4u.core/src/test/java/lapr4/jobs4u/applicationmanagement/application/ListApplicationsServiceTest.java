@@ -46,7 +46,7 @@ class ListApplicationsServiceTest {
         when(mockApplicationDTO.getApplicationCode()).thenReturn("testReference");
         applicationCode = ApplicationCode.valueOf("testReference");
         when(mockRepo.ofIdentity(applicationCode)).thenReturn(Optional.of(mockApplication));
-        service = new ListApplicationsService(mockRepo, mockAuthz);
+        service = new ListApplicationsService(mockRepo);
     }
 
     @Test

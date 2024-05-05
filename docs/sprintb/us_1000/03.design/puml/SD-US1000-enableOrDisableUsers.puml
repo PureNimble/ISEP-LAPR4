@@ -8,7 +8,7 @@ actor "Admin" as admin
 
 participant "EnableDisableUserUI" as UI
 participant "EnableDisableUserController" as C
-participant "BackofficeUserRepository" as R
+participant "UserRepository" as R
 participant "JpaBaseRepository" as RJPA
 participant "User" as U
 database "H2Database" as DB

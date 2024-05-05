@@ -122,11 +122,12 @@ public class Jobs4UBootstrapperBase {
     }
 
     protected JobOpening addJobOpening(final String titleOrFunction, final String contractType,
-            final String mode, final String address, final Customer customer, final String jobDescription) {
+            final String mode, final String address, final Customer customer, final String jobDescription,
+            final String numberOfVacancies) {
         JobOpening jo = null;
         try {
             jo = registerJobOpeningController.SetUpJobOpening(titleOrFunction, contractType,
-                    mode, address, customer, jobDescription);
+                    mode, address, customer, jobDescription, numberOfVacancies);
             LOGGER.debug("»»» {}", titleOrFunction);
         } catch (final IntegrityViolationException | ConcurrencyException e) {
             // assuming it is just a primary key violation due to the tentative

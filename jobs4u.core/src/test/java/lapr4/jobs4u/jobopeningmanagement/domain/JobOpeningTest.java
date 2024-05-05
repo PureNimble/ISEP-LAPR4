@@ -35,7 +35,7 @@ public class JobOpeningTest {
         ;
 
         return jobOpeningBuilder.with(jobReference, "titleOrFunction", "VOLUNTEER",
-                "HYBRID", "address", aCustomer, "jobDescription", CurrentTimeCalendars.now()).build();
+                "HYBRID", "address", aCustomer, "jobDescription", CurrentTimeCalendars.now(), "23").build();
     }
 
     private JobOpening getNewDummyJobOpening(final String jobReference) {

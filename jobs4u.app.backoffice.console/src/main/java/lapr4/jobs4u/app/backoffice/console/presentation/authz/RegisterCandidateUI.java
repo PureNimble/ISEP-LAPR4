@@ -49,6 +49,6 @@ public class RegisterCandidateUI extends AbstractUI {
 
     @Override
     public String headline() {
-        return "Add Customer";
+        return "Add Candidate";
     }
 }

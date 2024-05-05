@@ -25,25 +25,28 @@ public class RegisterJobOpeningController {
     }
 
     public JobOpening SetUpJobOpening(final String titleOrFunction, final String contractType,
-            final String mode, final String address, final Customer customer, final String jobDescription) {
+            final String mode, final String address, final Customer customer, final String jobDescription,
+            final String numberOfVacancies) {
         authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.CUSTOMER_MANAGER, BaseRoles.POWERUSER);
         String jobReference = registerJobOpeningService.nextJobOpeningReference(customer.identity());
-        return registerJobOpening(jobReference, titleOrFunction, contractType, mode, address, customer, jobDescription);
+        return registerJobOpening(jobReference, titleOrFunction, contractType, mode, address, customer, jobDescription,
+                numberOfVacancies);
     }
 
     private JobOpening registerJobOpening(final String jobReference, final String titleOrFunction,
-            final String contractType,
-            final String mode, final String address, final Customer customer, final String jobDescription) {
+            final String contractType, final String mode, final String address, final Customer customer,
+            final String jobDescription, final String numberOfVacancies) {
         final JobOpening jobOpening = doSetUpJobOpening(jobReference, titleOrFunction, contractType, mode, address,
-                customer, jobDescription, CurrentTimeCalendars.now());
+                customer, jobDescription, CurrentTimeCalendars.now(), numberOfVacancies);
         return jobOpeningRepository.save(jobOpening);
     }
 
     private JobOpening doSetUpJobOpening(final String jobReference, final String titleOrFunction,
-            final String contractType,
-            final String mode, final String address, final Customer customer, final String jobDescription, Calendar createdOn) {
+            final String contractType, final String mode, final String address, final Customer customer,
+            final String jobDescription, Calendar createdOn, final String numberOfVacancies) {
         return new JobOpeningBuilder()
-                .with(jobReference, titleOrFunction, contractType, mode, address, customer, jobDescription, createdOn)
+                .with(jobReference, titleOrFunction, contractType, mode, address, customer, jobDescription, createdOn,
+                        numberOfVacancies)
                 .build();
     }
 }

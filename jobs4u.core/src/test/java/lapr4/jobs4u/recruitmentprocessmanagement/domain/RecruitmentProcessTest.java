@@ -36,7 +36,7 @@ public class RecruitmentProcessTest {
                         "fnac@email.local", "910000000", aSu)
                 .build();
         JobOpening jo = jobOpeningBuilder.with("abcdefghij", "titleOrFunction", "VOLUNTEER",
-                "HYBRID", "address", aCustomer, "jobDescription", calendar).build();
+                "HYBRID", "address", aCustomer, "jobDescription", calendar, "34").build();
 
         return recruitmentProcessBuilder
                 .with(applicationInitialDate, applicationFinalDate, screeningInitialDate, screeningFinalDate,

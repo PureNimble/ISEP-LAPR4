@@ -54,7 +54,7 @@ public class ApplicationTest {
         ;
 
         JobOpening jobOpening = jobOpeningBuilder.with("12", "titleOrFunction", "VOLUNTEER",
-                "HYBRID", "address", aCustomer, "jobDescription", CurrentTimeCalendars.now()).build();
+                "HYBRID", "address", aCustomer, "jobDescription", CurrentTimeCalendars.now(), "24").build();
 
         return new ApplicationBuilder()
                 .with(applicationNumber, Date.today(), files, jobOpening, candidate).build();

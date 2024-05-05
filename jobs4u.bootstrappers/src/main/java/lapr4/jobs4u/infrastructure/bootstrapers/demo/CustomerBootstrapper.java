@@ -46,8 +46,7 @@ public class CustomerBootstrapper extends Jobs4UBootstrapperBase implements Acti
                                 "912345678",
                                 "Customer", "Customer");
                 final JobOpening jo = registerJobOpening("JobOpening", "FULL_TIME", "PRESENTIAL", "Rua do Job Opening",
-                                c,
-                                "Job Opening Description");
+                                c, "Job Opening Description", "26");
 
                 setUpRecruitmentProcess(jo);
                 return true;
@@ -62,9 +61,11 @@ public class CustomerBootstrapper extends Jobs4UBootstrapperBase implements Acti
         }
 
         private JobOpening registerJobOpening(final String titleOrFunction, final String contractType,
-                        final String mode, final String address, final Customer customer, final String jobDescription) {
+                        final String mode, final String address, final Customer customer, final String jobDescription,
+                        final String numberOfVacancies) {
 
-                return addJobOpening(titleOrFunction, contractType, mode, address, customer, jobDescription);
+                return addJobOpening(titleOrFunction, contractType, mode, address, customer, jobDescription,
+                                numberOfVacancies);
         }
 
         private RecruitmentProcess setUpRecruitmentProcess(JobOpening jobOpening) {

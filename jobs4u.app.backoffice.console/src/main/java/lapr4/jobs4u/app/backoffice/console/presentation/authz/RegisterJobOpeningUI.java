@@ -26,16 +26,17 @@ public class RegisterJobOpeningUI extends AbstractUI {
 
         final String titleOrFunction = Console.readLine("Title or Function:");
         final String contractType = Utils
-                .showAndSelectOne(Arrays.asList(TypesOfContract.values()), "Select the contract type:").toString();
-        final String mode = Utils.showAndSelectOne(Arrays.asList(ModeTypes.values()), "Select the mode:").toString();
-        final String address = Console.readLine("Address:");
-        final String jobDescription = Console.readLine("Job Description:");
+                .showAndSelectOne(Arrays.asList(TypesOfContract.values()), "\nSelect the contract type:").toString();
+        final String mode = Utils.showAndSelectOne(Arrays.asList(ModeTypes.values()), "\nSelect the mode:").toString();
+        final String address = Console.readLine("\nAddress:");
+        final String jobDescription = Console.readLine("\nJob Description:");
+        final String numberOfVacancies = Console.readLine("\nNumber of vacancies:");
 
         try {
             Iterable<Customer> customerList = this.listCustomersController.filterByCostumerManager();
-            Customer customer = (Customer) Utils.showAndSelectOne(customerList, "Select the customer:");
+            Customer customer = (Customer) Utils.showAndSelectOne(customerList, "\nSelect the customer:");
             this.registerJobOpeningController.SetUpJobOpening(titleOrFunction, contractType, mode,
-                    address, customer, jobDescription);
+                    address, customer, jobDescription, numberOfVacancies);
         } catch (final IntegrityViolationException | ConcurrencyException e) {
             System.out.println("There is already a job opening with that job reference. Please try again.");
         }

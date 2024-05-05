@@ -18,8 +18,6 @@ for this functionality must follow specific technical requirements, specified in
 - The ANTLR tool should be used (https://www.antlr.org/).
 
 
-
-
 **From the client clarifications:**
 
 > **Date:** 2024-03-16

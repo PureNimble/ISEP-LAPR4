@@ -94,6 +94,6 @@ public class EnableOrDisableBackofficeUserUI extends AbstractUI {
 
     @Override
     public String headline() {
-        return "Deactivate User";
+        return "Enable/Disable User";
     }
 }

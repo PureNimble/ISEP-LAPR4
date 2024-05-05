@@ -1,6 +1,6 @@
 <img width=100% src="https://capsule-render.vercel.app/api?type=waving&height=120&color=4E1764"/>
 
-# US 2000c - List all candidates.
+# US 1006 - Display all the personal data of a candidate.
 
 # 4. Tests 
 
@@ -48,26 +48,35 @@
 
 # 5. Construction (Implementation)
 
-**ListCandidatesController**
+**ListCandidateController**
 ```java
     public Iterable<CandidateDTO> allCandidates() {
-        authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.OPERATOR, BaseRoles.POWERUSER);
+        authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.CUSTOMER_MANAGER, BaseRoles.POWERUSER);
         return listCandidatesService.allUsers();
     }
 
     public Iterable<CandidateDTO> allCandidatesSortedAsc() {
-        authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.OPERATOR, BaseRoles.POWERUSER);
+        authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.CUSTOMER_MANAGER, BaseRoles.POWERUSER);
         return listCandidatesService.allUsersSortedAsc();
     }
 
     public Candidate selectedCandidate(final CandidateDTO candidateDTO) {
-        authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.OPERATOR, BaseRoles.POWERUSER);
+        authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.CUSTOMER_MANAGER, BaseRoles.POWERUSER);
         return listCandidatesService.selectedCandidate(candidateDTO);
     }
 ```
 
 **ListCandidatesService**
 ```java
+    public Iterable<CandidateDTO> allUsers() {
+        final Iterable<Candidate> candidates = this.candidateRepository.findAll();
+
+        List<CandidateDTO> CandidatesDTO = new ArrayList<>();
+        candidates.forEach(candidate -> CandidatesDTO.add(candidate.toDTO()));
+
+        return CandidatesDTO;
+    }
+
     public Iterable<CandidateDTO> allUsersSortedAsc() {
         final Iterable<Candidate> candidates = this.candidateRepository.sortedAsc();
         List<CandidateDTO> CandidatesDTO = new ArrayList<>();
@@ -86,14 +95,14 @@
 
 # 6. Integration and Demo 
 
-In the following image, we can see a demonstration of listing all candidates.
+In the following image, we can see a demonstration of displaying all the personal data of a candidate.
 
-<p align="center">Listing all candidates</p>
+<p align="center">Displaying all the personal data of a candidate</p>
 
-![listing](resources/listing.png)
+![displaying](resources/displaying.png)
 
 # 7. Observations
 
-The implementation of listing all candidates was completed.
+The implementation of displaying all the personal data of a candidate was completed.
 
 <img width=100% src="https://capsule-render.vercel.app/api?type=waving&height=120&color=4E1764&section=footer"/>

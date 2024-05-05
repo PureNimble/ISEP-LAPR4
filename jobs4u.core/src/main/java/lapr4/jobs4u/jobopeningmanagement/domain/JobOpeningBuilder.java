@@ -19,11 +19,12 @@ public class JobOpeningBuilder implements DomainFactory<JobOpening> {
     private Address address;
     private Customer customer;
     private JobDescription jobDescription;
+    private NumberOfVacancies numberOfVacancies;
     private Calendar createdOn;
 
     public JobOpeningBuilder with(final String jobReference, final String titleOrFunction, final String contractType,
             final String mode, final String address, final Customer customer, final String jobDescription,
-            final Calendar createdOn) {
+            final Calendar createdOn, final String numberOfVacancies) {
         this.withJobReference(jobReference);
         this.withTitleOrFunction(titleOrFunction);
         this.withContractType(contractType);
@@ -31,6 +32,7 @@ public class JobOpeningBuilder implements DomainFactory<JobOpening> {
         this.withAddress(address);
         this.withCustomer(customer);
         this.withJobDescription(jobDescription);
+        this.withNumberOfVacancies(numberOfVacancies);
         this.createdOn = createdOn;
         return this;
     }
@@ -70,14 +72,19 @@ public class JobOpeningBuilder implements DomainFactory<JobOpening> {
         return this;
     }
 
+    public JobOpeningBuilder withNumberOfVacancies(final String numberOfVacancies) {
+        this.numberOfVacancies = NumberOfVacancies.valueOf(numberOfVacancies);
+        return this;
+    }
+
     @Override
     public JobOpening build() {
         final JobOpening jobOpening = new JobOpening(this.jobReference, this.titleOrFunction, this.contractType,
-                this.mode, this.address, this.customer, this.jobDescription, this.createdOn);
+                this.mode, this.address, this.customer, this.jobDescription, this.createdOn, this.numberOfVacancies);
         if (LOGGER.isInfoEnabled()) {
-            LOGGER.info("Registering new Job Opening [{}] {} {} {} {} {} {} {} {}", jobOpening, this.jobReference,
+            LOGGER.info("Registering new Job Opening [{}] {} {} {} {} {} {} {} {} {}", jobOpening, this.jobReference,
                     this.titleOrFunction, this.contractType, this.mode, this.address, this.customer,
-                    this.jobDescription, this.createdOn);
+                    this.jobDescription, this.createdOn, this.numberOfVacancies);
         }
         return jobOpening;
     }

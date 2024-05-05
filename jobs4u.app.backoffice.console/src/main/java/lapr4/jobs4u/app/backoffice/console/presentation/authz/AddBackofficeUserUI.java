@@ -53,6 +53,8 @@ public class AddBackofficeUserUI extends AbstractUI {
         final String lastName = Console.readLine("Last Name");
         final String email = Console.readLine("E-Mail");
 
+        System.out.println("\nPlease choose the role for this user:");
+
         final Set<Role> roleTypes = new HashSet<>();
         boolean show;
         do {

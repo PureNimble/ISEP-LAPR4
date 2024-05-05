@@ -44,6 +44,9 @@ public class JobOpening implements AggregateRoot<JobReference>, DTOable<JobOpeni
     @Column(nullable = false)
     private Address address;
 
+    @Column(nullable = false)
+    private NumberOfVacancies numberOfVacancies;
+
     private boolean active;
 
     @Temporal(TemporalType.DATE)
@@ -60,7 +63,7 @@ public class JobOpening implements AggregateRoot<JobReference>, DTOable<JobOpeni
 
     JobOpening(final JobReference jobReference, final TitleOrFunction titleOrFunction, final ContractType contractType,
             final Mode mode, final Address address, final Customer customer, final JobDescription jobDescription,
-            final Calendar createdOn) {
+            final Calendar createdOn, final NumberOfVacancies numberOfVacancies) {
         Preconditions.noneNull(jobReference, titleOrFunction, contractType, mode, address, customer, jobDescription);
         this.registeredOn = createdOn == null ? CurrentTimeCalendars.now() : createdOn;
         this.jobReference = jobReference;
@@ -70,6 +73,7 @@ public class JobOpening implements AggregateRoot<JobReference>, DTOable<JobOpeni
         this.address = address;
         this.customer = customer;
         this.jobDescription = jobDescription;
+        this.numberOfVacancies = numberOfVacancies;
         this.active = false;
 
     }

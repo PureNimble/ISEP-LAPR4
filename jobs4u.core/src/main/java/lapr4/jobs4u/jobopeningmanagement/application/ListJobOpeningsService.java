@@ -28,7 +28,7 @@ public class ListJobOpeningsService {
     }
 
     public Iterable<JobOpeningDTO> filterByCostumerManager() {
-        final SystemUser manager = authz.loggedinUserWithPermissions(BaseRoles.CUSTOMER_MANAGER)
+        final SystemUser manager = authz.loggedinUserWithPermissions(BaseRoles.CUSTOMER_MANAGER, BaseRoles.POWERUSER)
                 .orElseThrow(IllegalStateException::new);
         final Iterable<JobOpening> jobOpenings = this.jobOpeningRepository.filterByCostumerManager(manager.username());
 

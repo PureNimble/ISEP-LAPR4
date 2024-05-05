@@ -11,6 +11,7 @@ import org.mockito.MockitoAnnotations;
 
 import eapli.framework.io.util.Files;
 import lapr4.jobs4u.applicationmanagement.repositories.ApplicationRepository;
+import lapr4.jobs4u.jobopeningmanagement.domain.JobOpening;
 import lapr4.jobs4u.jobopeningmanagement.domain.JobReference;
 import lapr4.jobs4u.jobopeningmanagement.repositories.JobOpeningRepository;
 
@@ -61,7 +62,7 @@ public class ImportApplicationsControllerTest {
     @Test
     public void testGetJobOpennig() {
         testGetCandidates();
-        controller.getJobOpennig(JobReference.valueOf(candidates.keySet().iterator().next()));
+        JobOpening job = controller.getJobOpening(JobReference.valueOf(candidates.keySet().iterator().next()));
 
     }
 

@@ -27,63 +27,71 @@ import eapli.framework.infrastructure.authz.domain.model.SystemUser;
 import eapli.framework.io.util.Console;
 import eapli.framework.presentation.console.AbstractUI;
 
-/**
- * UI for adding a user to the application.
- *
- * Created by nuno on 22/03/16.
- */
 public class ImportApplicationsUI extends AbstractUI {
 
-    private final RegisterCandidateController registerCandidateController = new RegisterCandidateController(
-            PersistenceContext.repositories().candidates(), PersistenceContext.repositories().candidateUsers(),
-            AuthzRegistry.authorizationService());
+    private static final String DEFAULT_FOLDER = "jobs4u.applicationsFileBot/resources/output";
+    private static final String EMAIL_ALREADY_REGISTERED = "That E-mail is already registered.";
+    private static final String JOB_OPENING_DOES_NOT_EXIST = "Job Opening does not exist";
+    private static final String INVALID_PATH = "Invalid Path";
 
-    private final AddUserController addUserController = new AddUserController();
+    private final RegisterCandidateController registerCandidateController;
+    private final AddUserController addUserController;
+    private final ImportApplicationsController theController;
 
-    private final ImportApplicationsController theController = new ImportApplicationsController(
-            PersistenceContext.repositories().applications(), PersistenceContext.repositories().jobOpenings());
+    public ImportApplicationsUI() {
+        registerCandidateController = new RegisterCandidateController(
+                PersistenceContext.repositories().candidates(), PersistenceContext.repositories().candidateUsers(),
+                AuthzRegistry.authorizationService());
 
-    private final static String DEFAULT_FOLDER = "jobs4u.applicationsFileBot/resources/output";
+        addUserController = new AddUserController();
+
+        theController = new ImportApplicationsController(
+                PersistenceContext.repositories().applications(), PersistenceContext.repositories().jobOpenings());
+    }
 
     @Override
     protected boolean doShow() {
-
-        String folder;
-        if (Console.readBoolean("Do you want to use the default Path? (Y/N)")) {
-            folder = DEFAULT_FOLDER;
-        } else {
-
-            folder = Console.readLine("Shared Folder Path (Insert a valid path):");
-            if (!Files.exists(Paths.get(folder)) && haveReportFile(folder)) {
-                System.out.println("Invalid Path");
-                return false;
-            }
+        String folder = getFolderPath();
+        if (folder == null) {
+            return false;
         }
 
-        Map<String, Set<String>> candidateJobMap = new HashMap<>();
-
-        candidateJobMap = this.theController.getCandidates(folder);
-
-        candidateJobMap.forEach((jobOffer, candidateSet) -> {
-            candidateSet.forEach(candidateId -> {
-                JobOpening job = this.theController.getJobOpennig(JobReference.valueOf(jobOffer));
-                if (job == null) {
-                    System.out.println("Job Opening does not exist");
-                    return;
-                }
-                List<File> files = this.theController.getFiles(folder, candidateId, jobOffer);
-
-                Candidate candidate = registerCandidates(folder, candidateId, jobOffer);
-                registerApplication(files, job, candidate);
-            });
-        });
+        Map<String, Set<String>> candidateJobMap = theController.getCandidates(folder);
+        processCandidates(candidateJobMap, folder);
 
         return false;
     }
 
-    private Candidate registerCandidates(String folder, String candidateId, String jobOffer) {
+    private String getFolderPath() {
+        if (Console.readBoolean("Do you want to use the default Path? (Y/N)")) {
+            return DEFAULT_FOLDER;
+        } else {
+            String folder = Console.readLine("Shared Folder Path (Insert a valid path):");
+            if (!Files.exists(Paths.get(folder)) && haveReportFile(folder)) {
+                System.out.println(INVALID_PATH);
+                return null;
+            }
+            return folder;
+        }
+    }
 
-        List<String> output = this.theController.getCandidateInfo(folder, candidateId, jobOffer);
+    private void processCandidates(Map<String, Set<String>> candidateJobMap, String folder) {
+        candidateJobMap.forEach((jobOffer, candidateSet) -> {
+            candidateSet.forEach(candidateId -> {
+                JobOpening job = theController.getJobOpening(JobReference.valueOf(jobOffer));
+                if (job == null) {
+                    System.out.println(JOB_OPENING_DOES_NOT_EXIST);
+                    return;
+                }
+                List<File> files = theController.getFiles(folder, candidateId, jobOffer);
+                Candidate candidate = registerCandidates(folder, candidateId, jobOffer);
+                registerApplication(files, job, candidate);
+            });
+        });
+    }
+
+    private Candidate registerCandidates(String folder, String candidateId, String jobOffer) {
+        List<String> output = theController.getCandidateInfo(folder, candidateId, jobOffer);
         String email = output.get(0);
         String phoneNumber = output.get(1);
         String firstName = output.get(2);
@@ -92,29 +100,26 @@ public class ImportApplicationsUI extends AbstractUI {
         try {
             final Set<Role> roleTypes = new HashSet<>();
             roleTypes.add(BaseRoles.CANDIDATE);
-            final Candidate candidate = this.registerCandidateController.registerCandidate(firstName, lastName,
+            final Candidate candidate = registerCandidateController.registerCandidate(firstName, lastName,
                     email,
                     phoneNumber);
-            final SystemUser user = this.addUserController.addUser(email, firstName,
+            final SystemUser user = addUserController.addUser(email, firstName,
                     lastName, roleTypes);
-            this.registerCandidateController.registerCandidateUser(candidate, user);
+            registerCandidateController.registerCandidateUser(candidate, user);
 
             return candidate;
         } catch (final IntegrityViolationException | ConcurrencyException e) {
-            System.out.println("That E-mail is already registered.");
+            System.out.println(EMAIL_ALREADY_REGISTERED);
         }
         return null;
-
     }
 
-    private void registerApplication(List<File> files, JobOpening job,
-            Candidate candidate) {
-
-        this.theController.registerApplication(files, job, candidate);
+    private void registerApplication(List<File> files, JobOpening job, Candidate candidate) {
+        theController.registerApplication(files, job, candidate);
     }
 
     private boolean haveReportFile(String folder) {
-        return this.theController.haveReportFile(folder);
+        return theController.haveReportFile(folder);
     }
 
     @Override

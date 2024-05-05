@@ -34,6 +34,10 @@ import lapr4.jobs4u.recruitmentprocessmanagement.domain.Date;
 @UseCaseController
 public class ImportApplicationsController {
 
+    private static final String REPORT_FILE_NAME = "/report.txt";
+    private static final String CANDIDATE_DATA_FILE_SUFFIX = "-candidate-data.txt";
+    private static final String CANDIDATE_ID_REGEX = "Candidate ID: (\\d+)Job Offer: (\\w+-\\d+)";
+
     private final ApplicationRepository applicationRepository;
     private final JobOpeningRepository jobOpeningRepository;
 
@@ -41,135 +45,116 @@ public class ImportApplicationsController {
             final JobOpeningRepository jobOpeningRepository) {
         this.applicationRepository = applicationRepository;
         this.jobOpeningRepository = jobOpeningRepository;
-
     }
 
     public Map<String, Set<String>> getCandidates(String folder) {
-
-        try (InputStream inputStream = new FileInputStream(folder + "/report.txt")) {
-            String output = eapli.framework.io.util.Files.textFrom(inputStream);
-
-            Map<String, Set<String>> candidateJobMap = new HashMap<>();
-
-            Pattern pattern = Pattern.compile("Candidate ID: (\\d+)Job Offer: (\\w+-\\d+)");
-            Matcher matcher = pattern.matcher(output);
-
-            while (matcher.find()) {
-                String candidateId = matcher.group(1);
-                String jobOffer = matcher.group(2);
-
-                if (candidateJobMap.containsKey(jobOffer)) {
-                    candidateJobMap.get(jobOffer).add(candidateId);
-                } else {
-                    Set<String> candidateSet = new HashSet<>();
-                    candidateSet.add(candidateId);
-                    candidateJobMap.put(jobOffer, candidateSet);
-                }
-
-            }
-
-            return candidateJobMap;
-
+        String reportFilePath = folder + REPORT_FILE_NAME;
+        try (InputStream inputStream = new FileInputStream(reportFilePath)) {
+            return extractCandidatesFromReport(inputStream);
         } catch (IOException e) {
             e.printStackTrace();
             return null;
         }
+    }
 
+    private Map<String, Set<String>> extractCandidatesFromReport(InputStream inputStream) throws IOException {
+        String output = eapli.framework.io.util.Files.textFrom(inputStream);
+        Map<String, Set<String>> candidateJobMap = new HashMap<>();
+        Pattern pattern = Pattern.compile(CANDIDATE_ID_REGEX);
+        Matcher matcher = pattern.matcher(output);
+
+        while (matcher.find()) {
+            String candidateId = matcher.group(1);
+            String jobOffer = matcher.group(2);
+            candidateJobMap.computeIfAbsent(jobOffer, k -> new HashSet<>()).add(candidateId);
+        }
+
+        return candidateJobMap;
     }
 
     public List<String> getCandidateInfo(String folder, String candidateId, String jobId) {
-
-        // check if folder exists
-        if (Files.exists(Paths.get(folder + "/" + jobId + "/" + candidateId))) {
-
-            // rename folder to match the folder name
-            java.io.File oldDirectory = new java.io.File(folder + "/" + jobId + "/");
-            java.io.File newDirectory = new java.io.File(folder + "/" + jobId + "/");
-            oldDirectory.renameTo(newDirectory);
-
-        }
-
-        folder += "/" + jobId + "/" + candidateId + "/" + candidateId + "-candidate-data.txt";
-
-        try (InputStream inputStream = new FileInputStream(folder)) {
-            BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
-            List<String> output = reader.lines().collect(Collectors.toList());
-            output.remove(0);
-            // split index 1 to get first and last name
-            String[] names = output.get(1).split(" ");
-            output.remove(1);
-            output.add(names[0]);
-            output.add(names[1]);
-            return output;
+        String candidateDataFilePath = constructCandidateDataFilePath(folder, candidateId, jobId);
+        try (InputStream inputStream = new FileInputStream(candidateDataFilePath)) {
+            return extractCandidateInfo(inputStream);
         } catch (IOException e) {
             e.printStackTrace();
+            return null;
         }
-        return null;
     }
 
-    public Application registerApplication(
-            final List<File> file, final JobOpening jobOpening,
+    private String constructCandidateDataFilePath(String folder, String candidateId, String jobId) {
+        String candidateFolder = folder + "/" + jobId + "/" + candidateId;
+        if (!Files.exists(Paths.get(candidateFolder))) {
+            renameFolder(folder, jobId);
+        }
+        return candidateFolder + "/" + candidateId + CANDIDATE_DATA_FILE_SUFFIX;
+    }
+
+    private void renameFolder(String folder, String jobId) {
+        java.io.File oldDirectory = new java.io.File(folder + "/" + jobId + "/");
+        java.io.File newDirectory = new java.io.File(folder + "/" + jobId + "/");
+        oldDirectory.renameTo(newDirectory);
+    }
+
+    private List<String> extractCandidateInfo(InputStream inputStream) throws IOException {
+        BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
+        List<String> output = reader.lines().collect(Collectors.toList());
+        output.remove(0);
+        String[] names = output.get(1).split(" ");
+        output.remove(1);
+        output.add(names[0]);
+        output.add(names[1]);
+        return output;
+    }
+
+    public Application registerApplication(final List<File> file, final JobOpening jobOpening,
             final Candidate candidate) {
-        return createaApplication(file, jobOpening, candidate);
+        return createApplication(file, jobOpening, candidate);
     }
 
-    private Application createaApplication(
-            final List<File> file, final JobOpening jobOpening,
+    private Application createApplication(final List<File> file, final JobOpening jobOpening,
             final Candidate candidate) {
         final Application application = doCreateApplication(file, jobOpening, candidate);
         return applicationRepository.save(application);
     }
 
-    private Application doCreateApplication(
-            final List<File> file, final JobOpening jobOpening,
+    private Application doCreateApplication(final List<File> file, final JobOpening jobOpening,
             final Candidate candidate) {
-        String applicationNumber;
-
-        applicationNumber = new ImportApplicationsService(applicationRepository)
+        String applicationNumber = new ImportApplicationsService(applicationRepository)
                 .nextJobOpeningReference(jobOpening.jobReference());
-        return new ApplicationBuilder().with(applicationNumber, Date.today(), file, jobOpening, candidate)
-                .build();
+        return new ApplicationBuilder().with(applicationNumber, Date.today(), file, jobOpening, candidate).build();
     }
 
-    public JobOpening getJobOpennig(JobReference x) {
-
-        Optional<JobOpening> job = jobOpeningRepository.findJobOpeningByReference(x);
-        if (job.isPresent()) {
-            return job.get();
-        }
-        return null;
-
+    public JobOpening getJobOpening(JobReference x) {
+        return jobOpeningRepository.findJobOpeningByReference(x).orElse(null);
     }
 
-    public List<File> getFiles(String folder, String candidateId,
-            String jobOffer) {
-
-        final String temp = folder + "/" + jobOffer + "/" + candidateId;
-
-        List<File> files = new ArrayList<File>();
-
+    public List<File> getFiles(String folder, String candidateId, String jobOffer) {
+        String candidateFolder = folder + "/" + jobOffer + "/" + candidateId;
         try {
-            List<String> filesString = Files.list(Paths.get(temp))
-                    .map(Path::getFileName)
-                    .map(Path::toString)
-                    .collect(Collectors.toList());
-
-            filesString.forEach(file -> {
-                file = temp + "/" + file;
-                if (!file.contains("candidate-data"))
-                    files.add(File.valueOf(file));
-            });
-            return files;
-
+            return extractFiles(candidateFolder);
         } catch (IOException e) {
             e.printStackTrace();
             return Collections.emptyList();
         }
+    }
 
+    private List<File> extractFiles(String candidateFolder) throws IOException {
+        List<File> files = new ArrayList<>();
+        List<String> filesString = Files.list(Paths.get(candidateFolder))
+                .map(Path::getFileName)
+                .map(Path::toString)
+                .collect(Collectors.toList());
+
+        filesString.forEach(file -> {
+            file = candidateFolder + "/" + file;
+            if (!file.contains("candidate-data"))
+                files.add(File.valueOf(file));
+        });
+        return files;
     }
 
     public boolean haveReportFile(String folder) {
-        return Files.exists(Paths.get(folder + "/report.txt"));
+        return Files.exists(Paths.get(folder + REPORT_FILE_NAME));
     }
-
 }

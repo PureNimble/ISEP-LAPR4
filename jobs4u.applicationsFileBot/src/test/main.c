@@ -16,22 +16,9 @@ int main()
 {
     setUpSignal();
 
-    if ((mkdir(SHARED_FOLDER, 0777) == -1) && (errno != EEXIST))
-    {
-        errorMessages("Failed to create directory.\n");
-        exit(EXIT_FAILURE);
-    }
-
-    if ((mkdir(TEST_INPUT, 0777) == -1) && (errno != EEXIST))
-    {
-        errorMessages("Failed to create directory.\n");
-        exit(EXIT_FAILURE);
-    }
-    if ((mkdir(TEST_OUTPUT, 0777) == -1) && (errno != EEXIST))
-    {
-        errorMessages("Failed to create directory.\n");
-        exit(EXIT_FAILURE);
-    }
+    create_directory(SHARED_FOLDER);
+    create_directory(TEST_INPUT);
+    create_directory(TEST_OUTPUT);
 
     Config config;
     strcpy(config.inputPath, TEST_INPUT);
@@ -42,14 +29,15 @@ int main()
     char *file_path = newFileChecker_test(config);
     Files file = copyFiles_test(config);
     reportFile_test(config, file);
-    //  delete folder
+
+    // delete folder
     printf("-> Deleting test folders in 5 seconds\n");
     sleep(DELETE_FOLDER_TIME);
-    char command[1024];
-    snprintf(command, sizeof(command), "rm -r %s", TEST_INPUT);
-    system(command);
-    snprintf(command, sizeof(command), "rm -r %s", TEST_OUTPUT);
-    system(command);
+    delete_directory(TEST_INPUT);
+    delete_directory(TEST_OUTPUT);
+
+    free(file_path);
+
     return 0;
 }
 
@@ -61,7 +49,7 @@ char *newFileChecker_test(Config config)
         newFileChecker(&config);
 
     // create new file in input folder
-    char *file_path = malloc(200);
+    char *file_path = malloc(FILE_PATH_SIZE);
     strcpy(file_path, TEST_INPUT);
     strcat(file_path, "1-candidate-data.txt");
     FILE *file = fopen(file_path, "w");
@@ -74,8 +62,6 @@ char *newFileChecker_test(Config config)
     pause();
     kill(pid, SIGTERM);
     fclose(file);
-
-    free(file_path);
 
     printf("-> newFileChecker test passed\n\n\n");
 

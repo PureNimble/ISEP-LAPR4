@@ -80,10 +80,6 @@ void newFileChecker(Config *config)
 
             free(files_birth);
         }
-        else
-        {
-            printf("No files found\n");
-        }
 
         sleep(config->verifyNewFilesFrequency);
         unsigned time = config->verifyNewFilesFrequency;

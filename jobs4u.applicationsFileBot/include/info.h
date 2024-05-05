@@ -12,6 +12,10 @@ typedef struct Files
     char files[MAX_FILES][100];
 
 } Files;
+
+// main.c
+void createWorkers(Config *config, int *send_work_fd, int *recive_work);
+void handleCandidates(Config *config, int *send_work_fd, int *recive_work);
 // Singal setup (setupSignal.c)
 void handle_signal(int signal);
 void setUpSignal();

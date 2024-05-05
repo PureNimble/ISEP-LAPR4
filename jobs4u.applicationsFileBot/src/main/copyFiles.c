@@ -26,7 +26,7 @@ void copyFiles(int *send_work_fd, int *recive_work_fd, Config *config)
     while (1)
     {
         read(send_work_fd[0], &candidateID, sizeof(candidateID));
-        printf("Candidate ID: %d PID:%d\n", candidateID, getpid());
+        printf("-> Candidate ID: %d PID:%d\n", candidateID, getpid());
         Files files;
 
         pid_t pid;

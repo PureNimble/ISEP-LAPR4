@@ -52,7 +52,7 @@ void reportFile(Config *config, Files *files, int numberOfCandidates)
     }
     fclose(file);
     free(files);
-    printf("Report file has been generated\n\n");
+    printf("-> Report file has been generated\n\n");
 }
 
 int checkIfCandidateFilesExist(Files *files, int numberOfCandidates, char *buffer)

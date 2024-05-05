@@ -9,6 +9,7 @@ import eapli.framework.domain.repositories.TransactionalContext;
 import eapli.framework.infrastructure.authz.domain.model.Username;
 import eapli.framework.infrastructure.repositories.impl.jpa.JpaAutoTxRepository;
 import jakarta.persistence.Query;
+import jakarta.persistence.TemporalType;
 import lapr4.jobs4u.Application;
 import lapr4.jobs4u.customermanagement.domain.Customer;
 import lapr4.jobs4u.customermanagement.domain.CustomerCode;
@@ -60,12 +61,12 @@ public class JpaJobOpeningRepository extends JpaAutoTxRepository<JobOpening, Job
 
     @SuppressWarnings("unchecked")
     @Override
-    public Iterable<JobOpening> filterByPeriod(final Calendar registeredOn) {
+    public Iterable<JobOpening> filterByPeriod(final Calendar initialDate, final Calendar finalDate) {
         Query query = createQuery(
-                "SELECT e FROM JobOpening e WHERE MONTH(e.registeredOn) = :month AND YEAR(e.registeredOn) = :year",
-                JobOpening.class);
-        query.setParameter("month", registeredOn.get(Calendar.MONTH) + 1);
-        query.setParameter("year", registeredOn.get(Calendar.YEAR));
+            "SELECT e FROM JobOpening e WHERE e.registeredOn BETWEEN :startDate AND :endDate",
+            JobOpening.class);
+        query.setParameter("startDate", initialDate, TemporalType.TIMESTAMP);
+        query.setParameter("endDate", finalDate, TemporalType.TIMESTAMP);
         return query.getResultList();
     }
 

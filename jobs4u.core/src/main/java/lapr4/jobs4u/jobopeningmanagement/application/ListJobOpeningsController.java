@@ -41,9 +41,9 @@ public class ListJobOpeningsController {
         return jobOpeningsService.filterByActive(active);
     }
 
-    public Iterable<JobOpeningDTO> filterByPeriod(final Calendar date) {
+    public Iterable<JobOpeningDTO> filterByPeriod(final Calendar initialDate, final Calendar finalDate) {
         authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.CUSTOMER_MANAGER, BaseRoles.POWERUSER);
-        return jobOpeningsService.filterByPeriod(date);
+        return jobOpeningsService.filterByPeriod(initialDate, finalDate);
     }
 
     public JobOpening selectedJobOpening(final JobOpeningDTO jobOpeningDTO) {

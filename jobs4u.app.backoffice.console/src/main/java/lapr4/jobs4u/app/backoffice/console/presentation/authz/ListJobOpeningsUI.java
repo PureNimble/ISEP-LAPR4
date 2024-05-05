@@ -50,9 +50,20 @@ public class ListJobOpeningsUI extends AbstractListUI<JobOpeningDTO> {
                         elems = this.jobOpeningsByActive(activeOption == 0);
                         break;
                     case 2:
-                        final Calendar day = Utils.readDateFromConsole("Enter a date (MM-yyyy): ", "MM-yyyy",
+                        final Calendar initialDate = Utils.readDateFromConsole("Enter a initial date (MM-yyyy): ",
+                                "MM-yyyy",
                                 "^(0[1-9]|1[012])-((19|20)\\d\\d)$");
-                        elems = this.jobOpeningsByDate(day);
+
+                        Calendar finalDate;
+                        do {
+                            finalDate = Utils.readDateFromConsole("Enter a final date (MM-yyyy): ",
+                                    "MM-yyyy",
+                                    "^(0[1-9]|1[012])-((19|20)\\d\\d)$");
+                            if (finalDate.before(initialDate) || finalDate.equals(initialDate)) {
+                                System.out.println("Final date must be after the initial date. Please enter again.");
+                            }
+                        } while (finalDate.before(initialDate) || finalDate.equals(initialDate));
+                        elems = this.jobOpeningsByDate(initialDate, finalDate);
                         break;
                     case 3:
                         elems = this.elements();
@@ -104,8 +115,9 @@ public class ListJobOpeningsUI extends AbstractListUI<JobOpeningDTO> {
         return listJobOpeningsController.getIntersection(listJobOpeningsController.filterByActive(active));
     }
 
-    protected Iterable<JobOpeningDTO> jobOpeningsByDate(final Calendar date) {
-        return listJobOpeningsController.getIntersection(listJobOpeningsController.filterByPeriod(date));
+    protected Iterable<JobOpeningDTO> jobOpeningsByDate(final Calendar initialDate, final Calendar finalDate) {
+        return listJobOpeningsController
+                .getIntersection(listJobOpeningsController.filterByPeriod(initialDate, finalDate));
     }
 
     @Override

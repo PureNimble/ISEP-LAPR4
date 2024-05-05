@@ -39,8 +39,10 @@ public class InMemoryJobOpeningRepository extends InMemoryDomainRepository<JobOp
     }
 
     @Override
-    public Iterable<JobOpening> filterByPeriod(final Calendar date) {
-        return match(e -> e.registeredOnPeriode().equals(date.toString()));
+    public Iterable<JobOpening> filterByPeriod(final Calendar initialDate, final Calendar finalDate) {
+        return match(e -> {
+            return e.registeredOn().after(initialDate) && e.registeredOn().before(finalDate);
+        });
     }
     
     public Optional<JobOpening> findJobOpeningByReference(final JobReference jobReference) {

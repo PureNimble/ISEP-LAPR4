@@ -36,6 +36,5 @@ These classes are responsible for the user interface, controlling the use case, 
 
 ## 3.3. Class Diagram (CD)
 
-![CD -> Display Candidate Data](svg/CD-US1006b.svg)
-
+![CD -> Display Candidate Data](svg/1006,1006b.png)
 <img width=100% src="https://capsule-render.vercel.app/api?type=waving&height=120&color=4E1764&section=footer"/>

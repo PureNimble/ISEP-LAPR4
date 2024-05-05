@@ -8,7 +8,7 @@ actor "Admin" as admin
 
 participant "ListBackofficeUsersUI" as UI
 participant "ListBackofficeUsersController" as C
-participant "BackofficeUserRepository" as R
+participant "UserRepository" as R
 participant "JpaBaseRepository" as RJPA
 database "H2Database" as DB
 

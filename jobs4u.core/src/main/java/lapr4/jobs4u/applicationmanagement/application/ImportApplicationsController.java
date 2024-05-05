@@ -79,7 +79,17 @@ public class ImportApplicationsController {
 
     public List<String> getCandidateInfo(String folder, String candidateId, String jobId) {
 
-        folder += "/" + jobId + "/" + candidateId + "/" + candidateId + "-candidate-data.txt";
+        // check if folder exists
+        if (Files.exists(Paths.get(folder + "/" + jobId + "/" + candidateId))) {
+
+            // rename folder to match the folder name
+            java.io.File oldDirectory = new java.io.File(folder + "/" + jobId + "/");
+            java.io.File newDirectory = new java.io.File(folder + "/" + jobId + "/");
+            oldDirectory.renameTo(newDirectory);
+
+        }
+
+        folder += "/" + jobId + "/" + candidateId + "/" + candidateId + "-candidate-data.txt";
 
         try (InputStream inputStream = new FileInputStream(folder)) {
             BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
@@ -134,7 +144,7 @@ public class ImportApplicationsController {
     public List<File> getFiles(String folder, String candidateId,
             String jobOffer) {
 
-        final String temp = folder + "/" + jobOffer + "/" + candidateId;
+        final String temp = folder + "/" + jobOffer + "/" + candidateId;
 
         List<File> files = new ArrayList<File>();
 

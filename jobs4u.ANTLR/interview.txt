@@ -1,0 +1,36 @@
+TITLE: Software Engineer Interview
+NAME:
+GRADE:
+
+COTATION: 30%
+QUESTION TYPE: Choice, with single answer
+QUESTION: What is the capital of France?
+1. London
+2. Paris
+3. Berlin
+ANSWER:
+GRADE:
+
+COTATION: 30%
+QUESTION TYPE: True/False
+QUESTION: Python is a statically typed language.
+ANSWER:
+GRADE:
+
+COTATION: 40%
+QUESTION TYPE: Short text answer
+QUESTION: What is the name of the process to find bugs in software?
+ANSWER:
+GRADE:
+
+COTATION: 30 POINTS
+QUESTION TYPE: Choice, with single answer
+QUESTION: What is the capital of France?
+ANSWER:
+GRADE:
+
+COTATION: 30 BOAS
+QUESTION TYPE: True/False
+QUESTION: Python is a statically typed language.
+ANSWER:
+GRADE:

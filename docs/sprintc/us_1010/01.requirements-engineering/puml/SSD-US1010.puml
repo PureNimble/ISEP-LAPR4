@@ -1,0 +1,45 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+title System Sequence Diagram (SSD) - Open or Close phases of a job opening
+
+autonumber
+
+actor "Customer Manager" as Manager
+participant ":System" as System
+
+activate Manager
+
+    Manager -> System : Asks to change the status of a phase of a job opening
+    activate System
+
+        System --> Manager : Provides a list of job openings and asks to choose one
+
+    deactivate System
+
+    Manager -> System : Selects a job opening
+    activate System
+
+        System --> Manager : Displays the different phases of the job opening and asks to choose one
+
+    deactivate System
+
+    Manager -> System : Selects a phase
+    activate System
+
+        System --> Manager : Asks to confirm the change of status of the phase
+        note left System : The System will change the status \nof the phase to the opposite of the \ncurrent status
+
+
+    deactivate System
+
+    Manager -> System : Confirms the change of status of the phase
+    activate System
+
+        System --> Manager : Informs success or failure
+
+    deactivate System
+
+@enduml

@@ -1,0 +1,36 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+title System Sequence Diagram (SSD) - Enable/Disable a Candidate
+
+autonumber
+
+actor "Operator" as Operator
+participant ":System" as System
+
+activate Operator
+
+    Operator -> System : Asks to enable/disable a candidate
+    activate System
+
+        System --> Operator : Provides a list of candidates
+
+    deactivate System
+
+    Operator -> System : Selects a candidate
+    activate System
+
+        System --> Operator : Asks to confirm the change of status of the candidate
+
+    deactivate System
+
+    Operator -> System : Confirms the change of status of the candidate
+    activate System
+
+        System --> Operator : Informs success or failure
+
+    deactivate System
+
+@enduml

@@ -17,5 +17,9 @@
 | **B**  | [_`US 2001`_](../../sprintb/us_2001/readme.md) |
 | **B**  | [_`US 2002`_](../../sprintb/us_2002/readme.md) |
 | **B**  | [_`US 2003`_](../../sprintb/us_2003/readme.md) |
+| **C**  | [_`US 1014`_](../../sprintc/us_1014/readme.md) |
+| **C**  | [_`US 1017`_](../../sprintc/us_1017/readme.md) |
+| **C**  | [_`US 2001b`_](../../sprintc/us_2001b/readme.md) |
+| **C**  | [_`US 4000`_](../../sprintc/us_4000/readme.md) |
 
 <img width=100% src="https://capsule-render.vercel.app/api?type=waving&height=120&color=4E1764&section=footer"/>

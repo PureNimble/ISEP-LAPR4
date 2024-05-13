@@ -33,7 +33,7 @@ public class ExportRequirementUI extends AbstractUI {
 
         try {
             final String filename = "jobs4u.core/target/" + questionImporterPlugin.identity().toString() + ".txt";
-            this.questionExporterController.export(filename, FileFormat.INTERVIEW,
+            this.questionExporterController.export(filename, FileFormat.REQUIREMENT,
                     questionImporterPlugin.identity().toString());
         } catch (final IntegrityViolationException | IOException | ConcurrencyException e) {
             System.out.println("Something went wrong.");

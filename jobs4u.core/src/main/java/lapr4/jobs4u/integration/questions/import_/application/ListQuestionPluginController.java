@@ -19,7 +19,7 @@ public class ListQuestionPluginController  {
     }
 
     public Iterable<QuestionImporterPlugin> filterByType(final String plugin) {
-        authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.CUSTOMER_MANAGER, BaseRoles.LANGUAGE_ENGINEER, BaseRoles.POWERUSER);
+        authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.CUSTOMER_MANAGER, BaseRoles.POWERUSER, BaseRoles.OPERATOR);
         return listQuestionPluginService.filterByType(PluginType.valueOf(plugin));
     }
 }

@@ -18,7 +18,7 @@ public class QuestionExporterController {
 
     public void export(final String filename, final FileFormat format, final String plugin) throws IOException {
         final QuestionExporter exporter = builder.build(format);
-        authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.POWERUSER, BaseRoles.CUSTOMER_MANAGER, BaseRoles.LANGUAGE_ENGINEER);
+        authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.POWERUSER, BaseRoles.CUSTOMER_MANAGER, BaseRoles.OPERATOR);
 
         // Note that we are fetching all the data from the database. This of course will only work
         // for a small amount of data. To export a large volume of data we should be using some kind

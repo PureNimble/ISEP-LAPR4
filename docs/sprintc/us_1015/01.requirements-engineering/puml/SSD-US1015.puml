@@ -1,0 +1,29 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+title System Sequence Diagram (SSD) - Execute the process of verification of requirements of applications for a job opening.
+
+autonumber
+
+actor "Customer Manager" as Manager
+participant ":System" as System
+
+activate Manager
+
+    Manager -> System : Asks to execute the process of verification of requirements of applications for a job opening
+    activate System
+
+        System --> Manager : Provides a list of job openings and asks to choose one
+
+    deactivate System
+
+    Manager -> System : Selects a job opening
+    activate System
+
+        System --> Manager : Informs success or failure
+
+    deactivate System
+
+@enduml

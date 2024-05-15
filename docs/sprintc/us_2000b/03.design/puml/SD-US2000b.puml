@@ -5,11 +5,12 @@ skinparam sequenceParticipant underline
 
 actor "Operator" as OP
 
-participant "OpenOrClosePhaseUI" as UI
-participant "OpenOrClosePhaseController" as C
-participant "IterableCandidatesService" as S
-participant "RecruitmentProcessRepository" as R
-participant "JpaRecruitmentProcessRepository" as RJPA
+participant "EnableOrDisableCandidateUI" as UI
+participant "EnableOrDisableCandidateController" as C
+participant "ListCandidatesService" as S
+participant "CandidateRepository" as R
+participant "JpaCandidateRepository" as RJPA
+participant "JpaCandidateUserRepository" as RJPAU
 participant "CandidateUser" as U
 participant "Candidate" as CD
 participant "CandidateDTO" as DTO
@@ -32,7 +33,7 @@ alt preference = active
     activate R
     R -> RJPA : findActive()
     activate RJPA
-    RJPA -> DB : createQuery("SELECT u FROM T_CANDIDATE_USER u WHERE u.isActive = true", CandidateUser.class)
+    RJPA -> DB : createQuery("SELECT c.* FROM T_CANDIDATE c, T_CANDIDATE_USER u, T_SYSTEMUSER s WHERE c.email = u.account_email AND u.account_email = s.email AND s.active = true", Candidate.class)
     DB --> RJPA : returns Iterable<Candidate>
     RJPA --> R : returns Iterable<Candidate>
     deactivate RJPA
@@ -61,7 +62,7 @@ else preference = inactive
     activate R
     R -> RJPA : findInactive()
     activate RJPA
-    RJPA -> DB : createQuery("SELECT u FROM T_CANDIDATE_USER u WHERE u.isActive = false", CandidateUser.class)
+    RJPA -> DB : createQuery("SELECT c.* FROM T_CANDIDATE c, T_CANDIDATE_USER u, T_SYSTEMUSER s WHERE c.email = u.account_email AND u.account_email = s.email AND s.active = false", Candidate.class)
     DB --> RJPA : returns Iterable<Candidate>
     RJPA --> R : returns Iterable<Candidate>
     deactivate RJPA
@@ -91,12 +92,14 @@ UI -> C : toggleCandidateStatus(email)
 activate C
 C -> R : findByEmail(email)
 activate R
-R -> RJPA : findByEmail(email)
-activate RJPA
-RJPA -> DB : createQuery("SELECT u FROM T_CANDIDATE_USER u WHERE u.email = :value", CandidateCandidateUser.class)
-DB --> RJPA : returns CandidateUser
-RJPA --> R : returns CandidateUser
+R -> RJPAU : findByEmail(email)
+activate RJPAU
+RJPAU -> DB : createQuery("SELECT u FROM T_CANDIDATE_USER u WHERE u.email = :value", CandidateUser.class)
+DB --> RJPAU : returns CandidateUser
+RJPAU --> R : returns CandidateUser
+deactivate RJPAU
 R --> C : returns CandidateUser
+deactivate R
 C -> U : toggleStatus()
 activate U
 alt CandidateUser.isActive = true
@@ -108,19 +111,20 @@ U --> C : returns boolean
 deactivate U
 alt boolean = true
     C -> R : save(CandidateUser)
-    R -> RJPA : save(CandidateUser)
-    RJPA -> DB : merge(CandidateUser)
-    DB --> RJPA : returns CandidateUser
-    RJPA --> R : returns CandidateUser
+    activate R
+    R -> RJPAU : save(CandidateUser)
+    activate RJPAU
+    RJPAU -> DB : merge(CandidateUser)
+    DB --> RJPAU : returns CandidateUser
+    RJPAU --> R : returns CandidateUser
+    deactivate RJPAU
     R --> C : returns CandidateUser
+    deactivate R
     C --> UI : return true
 else boolean = false
     C --> UI : return false
 end
 deactivate C
-deactivate R
-deactivate RJPA
-deactivate U
 UI --> OP : Informs success or failure
 deactivate OP
 @enduml

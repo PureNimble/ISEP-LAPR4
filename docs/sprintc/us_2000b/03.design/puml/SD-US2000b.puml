@@ -1,0 +1,90 @@
+@startuml
+skinparam linetype ortho
+skinparam maxmessagesize 150
+skinparam sequenceParticipant underline
+
+actor "Operator" as OP
+
+participant "EnableDisableCandidateUI" as UI
+participant "EnableDisableCandidateController" as C
+participant "CandidateUserRepository" as R
+participant "JpaCandidateUserRepository" as RJPA
+participant "CandidateUser" as U
+database "H2Database" as DB
+
+activate OP
+OP -> UI : Asks to disable or enable a candidate
+activate UI
+UI --> OP : Asks for list preference (active or inactive)
+deactivate UI
+
+OP -> UI : Provides list preference
+activate UI
+alt preference = active
+    UI -> C : getActiveCandidates()
+    activate C
+    C -> R : findActive()
+    activate R
+    R -> RJPA : findActive()
+    activate RJPA
+    RJPA -> DB : createQuery("SELECT u FROM T_CANDIDATE_USER u WHERE u.isActive = true", User.class)
+    DB --> RJPA : returns List<User>
+    RJPA --> R : returns List<User>
+    R --> C : returns List<User>
+    C --> UI : return List<User>
+    UI --> OP : Provides a list of active candidates
+else preference = inactive
+    UI -> C : getInactiveCandidates()
+    C -> R : findInactive()
+    R -> RJPA : findInactive()
+    RJPA -> DB : createQuery("SELECT u FROM T_CANDIDATE_USER u WHERE u.isActive = false", User.class)
+    DB --> RJPA : returns List<User>
+    RJPA --> R : returns List<User>
+    R --> C : returns List<User>
+    C --> UI : return List<User>
+    UI --> OP : Provides a list of inactive candidates
+end
+deactivate C
+deactivate R
+deactivate RJPA
+deactivate UI
+
+OP -> UI : Selects a candidate
+activate UI
+UI -> C : toggleCandidateStatus(user)
+activate C
+C -> R : findByEmail(new email(user))
+activate R
+R -> RJPA : findByEmail(new email(user))
+activate RJPA
+RJPA -> DB : createQuery("SELECT u FROM T_CANDIDATE_USER u WHERE u.email = :value", User.class)
+DB --> RJPA : returns User
+RJPA --> R : returns User
+R --> C : returns User
+C -> U : toggleStatus()
+activate U
+alt User.isActive = true
+   U -> U : disable()
+else User.isActive = false
+   U -> U : enable()
+end
+U --> C : returns boolean
+deactivate U
+alt boolean = true
+   C -> R : save(User)
+   R -> RJPA : save(User)
+   RJPA -> DB : merge(User)
+   DB --> RJPA : returns User
+   RJPA --> R : returns User
+   R --> C : returns User
+   C --> UI : return true
+else boolean = false
+    C --> UI : return false
+end
+deactivate C
+deactivate R
+deactivate RJPA
+deactivate U
+UI --> OP : Informs success or failure
+deactivate OP
+@enduml

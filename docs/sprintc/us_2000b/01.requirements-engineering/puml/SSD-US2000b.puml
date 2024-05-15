@@ -22,13 +22,6 @@ activate Operator
     Operator -> System : Selects a candidate
     activate System
 
-        System --> Operator : Asks to confirm the change of status of the candidate
-
-    deactivate System
-
-    Operator -> System : Confirms the change of status of the candidate
-    activate System
-
         System --> Operator : Informs success or failure
 
     deactivate System

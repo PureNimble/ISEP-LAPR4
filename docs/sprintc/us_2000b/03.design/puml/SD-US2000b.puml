@@ -5,11 +5,14 @@ skinparam sequenceParticipant underline
 
 actor "Operator" as OP
 
-participant "EnableDisableCandidateUI" as UI
-participant "EnableDisableCandidateController" as C
-participant "CandidateUserRepository" as R
-participant "JpaCandidateUserRepository" as RJPA
+participant "OpenOrClosePhaseUI" as UI
+participant "OpenOrClosePhaseController" as C
+participant "IterableCandidatesService" as S
+participant "RecruitmentProcessRepository" as R
+participant "JpaRecruitmentProcessRepository" as RJPA
 participant "CandidateUser" as U
+participant "Candidate" as CD
+participant "CandidateDTO" as DTO
 database "H2Database" as DB
 
 activate OP
@@ -23,61 +26,94 @@ activate UI
 alt preference = active
     UI -> C : getActiveCandidates()
     activate C
-    C -> R : findActive()
+    C -> S : findActive()
+    activate S
+    S -> R : findActive()
     activate R
     R -> RJPA : findActive()
     activate RJPA
-    RJPA -> DB : createQuery("SELECT u FROM T_CANDIDATE_USER u WHERE u.isActive = true", User.class)
-    DB --> RJPA : returns List<User>
-    RJPA --> R : returns List<User>
-    R --> C : returns List<User>
-    C --> UI : return List<User>
-    UI --> OP : Provides a list of active candidates
+    RJPA -> DB : createQuery("SELECT u FROM T_CANDIDATE_USER u WHERE u.isActive = true", CandidateUser.class)
+    DB --> RJPA : returns Iterable<Candidate>
+    RJPA --> R : returns Iterable<Candidate>
+    deactivate RJPA
+    R --> S : returns Iterable<Candidate>
+    deactivate R
+    loop for each candidate
+        S -> CD: toDTO()
+        activate CD
+        CD --> DTO: create
+        activate DTO
+        CD <-- DTO: CandidateDTO
+        deactivate DTO
+        S <-- CD: CandidateDTO
+        deactivate CD
+    end
+    S --> C : returns Iterable<CandidateDTO>
+    deactivate S
+    C --> UI : return Iterable<CandidateDTO>
+    deactivate C
 else preference = inactive
     UI -> C : getInactiveCandidates()
-    C -> R : findInactive()
+    activate C
+    C -> S : findInactive()
+    activate S
+    S -> R : findInactive()
+    activate R
     R -> RJPA : findInactive()
-    RJPA -> DB : createQuery("SELECT u FROM T_CANDIDATE_USER u WHERE u.isActive = false", User.class)
-    DB --> RJPA : returns List<User>
-    RJPA --> R : returns List<User>
-    R --> C : returns List<User>
-    C --> UI : return List<User>
-    UI --> OP : Provides a list of inactive candidates
+    activate RJPA
+    RJPA -> DB : createQuery("SELECT u FROM T_CANDIDATE_USER u WHERE u.isActive = false", CandidateUser.class)
+    DB --> RJPA : returns Iterable<Candidate>
+    RJPA --> R : returns Iterable<Candidate>
+    deactivate RJPA
+    R --> S : returns Iterable<Candidate>
+    deactivate R
+    loop for each candidate
+        S -> CD: toDTO()
+        activate CD
+        CD --> DTO: create
+        activate DTO
+        CD <-- DTO: CandidateDTO
+        deactivate DTO
+        S <-- CD: CandidateDTO
+        deactivate CD
+    end
+    S --> C : returns Iterable<CandidateDTO>
+    deactivate S
+    C --> UI : return Iterable<CandidateDTO>
+    deactivate C
 end
-deactivate C
-deactivate R
-deactivate RJPA
+UI --> OP : Provides the preferenced list of candidates
 deactivate UI
 
 OP -> UI : Selects a candidate
 activate UI
-UI -> C : toggleCandidateStatus(user)
+UI -> C : toggleCandidateStatus(email)
 activate C
-C -> R : findByEmail(new email(user))
+C -> R : findByEmail(email)
 activate R
-R -> RJPA : findByEmail(new email(user))
+R -> RJPA : findByEmail(email)
 activate RJPA
-RJPA -> DB : createQuery("SELECT u FROM T_CANDIDATE_USER u WHERE u.email = :value", User.class)
-DB --> RJPA : returns User
-RJPA --> R : returns User
-R --> C : returns User
+RJPA -> DB : createQuery("SELECT u FROM T_CANDIDATE_USER u WHERE u.email = :value", CandidateCandidateUser.class)
+DB --> RJPA : returns CandidateUser
+RJPA --> R : returns CandidateUser
+R --> C : returns CandidateUser
 C -> U : toggleStatus()
 activate U
-alt User.isActive = true
-   U -> U : disable()
-else User.isActive = false
-   U -> U : enable()
+alt CandidateUser.isActive = true
+    U -> U : disable()
+else CandidateUser.isActive = false
+    U -> U : enable()
 end
 U --> C : returns boolean
 deactivate U
 alt boolean = true
-   C -> R : save(User)
-   R -> RJPA : save(User)
-   RJPA -> DB : merge(User)
-   DB --> RJPA : returns User
-   RJPA --> R : returns User
-   R --> C : returns User
-   C --> UI : return true
+    C -> R : save(CandidateUser)
+    R -> RJPA : save(CandidateUser)
+    RJPA -> DB : merge(CandidateUser)
+    DB --> RJPA : returns CandidateUser
+    RJPA --> R : returns CandidateUser
+    R --> C : returns CandidateUser
+    C --> UI : return true
 else boolean = false
     C --> UI : return false
 end

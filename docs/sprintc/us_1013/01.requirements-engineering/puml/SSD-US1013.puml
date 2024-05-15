@@ -1,0 +1,37 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+title System Sequence Diagram (SSD) - Rank the candidates for a job opening
+
+autonumber
+
+actor "Customer Manager" as Manager
+participant ":System" as System
+
+activate Manager
+
+    Manager -> System : Asks to show/edit the ranking of the candidates for a job opening
+    activate System
+
+        System --> Manager : Provides a list of job openings and asks to choose one
+
+    deactivate System
+
+    Manager -> System : Selects a job opening
+    activate System
+    alt if there's already a ranking in the system
+        System --> Manager : Displays the current ranking and asks if the CM wants to edit it
+    deactivate System
+    Manager -> System : asks to redo the ranking
+    activate System
+    end alt
+        System --> Manager : displays a list of candidates
+    deactivate System
+    Manager -> System : selects candidates in order
+    activate System
+        System --> Manager : show operation success
+    deactivate System
+
+@enduml

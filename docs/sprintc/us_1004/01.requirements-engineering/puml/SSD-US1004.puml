@@ -1,0 +1,48 @@
+@startuml SSD-US1004
+
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+title System Sequence Diagram (SSD) - Edit a Job Opening.
+
+autonumber
+
+actor "Customer Manager" as CustomerManager
+participant ":System" as System
+
+activate CustomerManager
+
+CustomerManager -> System : Asks to edit a job opening
+activate System
+
+System --> CustomerManager : Shows list of job openings
+deactivate System
+
+CustomerManager -> System : Chooses a job opening to edit
+activate System
+
+loop until the Customer Manager is satisfied with the changes
+    System --> CustomerManager : Shows list of job opening attributes
+
+    note right of CustomerManager : Attributes are: Title or function, Contract Type, Mode, Address,\nNumber of vacancies, Description and Requirement Specification\ndepending on the phase that the recruitment process is in.
+
+    CustomerManager -> System : Chooses an attribute to edit
+
+    System --> CustomerManager : Shows current value of chosen attribute and asks for new value
+
+    CustomerManager -> System : Provides new value for chosen attribute
+end
+
+System --> CustomerManager : Asks to confirm changes
+deactivate System
+
+CustomerManager -> System : Confirms changes
+activate System
+
+System --> CustomerManager : Informs success or failure of update
+deactivate System
+
+deactivate CustomerManager
+
+@enduml

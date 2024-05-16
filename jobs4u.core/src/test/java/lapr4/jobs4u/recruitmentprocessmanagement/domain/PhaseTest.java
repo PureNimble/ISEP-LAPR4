@@ -1,5 +1,6 @@
 package lapr4.jobs4u.recruitmentprocessmanagement.domain;
 
+import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import org.junit.Test;
 
@@ -27,4 +28,35 @@ public class PhaseTest {
         });
     }
 
+    @Test
+    public void testOpeningPhase() throws Exception {
+        Phase phase = getNewPhase(aInitialDate, aFinalDate);
+        phase.open();
+        assertTrue(phase.state().equals(State.valueOf(ActivityState.OPEN.toString())));
+    }
+
+    @Test
+    public void testClosingPhase() throws Exception {
+        Phase phase = getNewPhase(aInitialDate, aFinalDate);
+        phase.open();
+        phase.close();
+        assertTrue(phase.state().equals(State.valueOf(ActivityState.CLOSED.toString())));
+    }
+
+    @Test
+    public void testOpeningPhaseAlreadyOpened() throws Exception {
+        Phase phase = getNewPhase(aInitialDate, aFinalDate);
+        phase.open();
+        assertThrows(IllegalStateException.class, () -> {
+            phase.open();
+        });
+    }
+
+    @Test
+    public void testClosingPhaseAlreadyClosed() throws Exception {
+        Phase phase = getNewPhase(aInitialDate, aFinalDate);
+        assertThrows(IllegalStateException.class, () -> {
+            phase.close();
+        });
+    }
 }

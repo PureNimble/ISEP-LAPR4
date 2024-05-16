@@ -58,4 +58,26 @@ public abstract class Phase {
     public Date finalDate() {
         return finalDate;
     }
+
+    public State state() {
+        return state;
+    }
+
+    public void open() {
+        if (this.state.equals(State.valueOf(ActivityState.CLOSED.toString()))) {
+            this.state = State.valueOf(ActivityState.OPEN.toString());
+        }
+        else {
+            throw new IllegalStateException("Phase is already open");
+        }
+    }
+
+    public void close() {
+        if (this.state.equals(State.valueOf(ActivityState.OPEN.toString()))) {
+            this.state = State.valueOf(ActivityState.CLOSED.toString());
+        }
+        else {
+            throw new IllegalStateException("Phase is already closed");
+        }
+    }
 }

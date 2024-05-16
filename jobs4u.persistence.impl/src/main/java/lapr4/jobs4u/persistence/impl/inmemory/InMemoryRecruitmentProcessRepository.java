@@ -1,6 +1,9 @@
 package lapr4.jobs4u.persistence.impl.inmemory;
 
+import java.util.Optional;
+
 import eapli.framework.infrastructure.repositories.impl.inmemory.InMemoryDomainRepository;
+import lapr4.jobs4u.jobopeningmanagement.domain.JobOpening;
 import lapr4.jobs4u.recruitmentprocessmanagement.domain.RecruitmentProcess;
 import lapr4.jobs4u.recruitmentprocessmanagement.repositories.RecruitmentProcessRepository;
 
@@ -10,9 +13,13 @@ public class InMemoryRecruitmentProcessRepository extends InMemoryDomainReposito
         InMemoryInitializer.init();
     }
 
-    /* @Override
-    public Iterable<RecruitmentProcess> findAllActive() {
-        return match(e -> e.isActive());
-    } */
+    @Override
+    public Optional<String> currentPhase(JobOpening jobOpening) {
+        return currentPhase(jobOpening);
+    }
 
+    @Override
+    public Optional<RecruitmentProcess> findByJobOpening(JobOpening theJobOpening) {
+        return matchOne(e -> e.jobOpening().equals(theJobOpening));
+    }
 }

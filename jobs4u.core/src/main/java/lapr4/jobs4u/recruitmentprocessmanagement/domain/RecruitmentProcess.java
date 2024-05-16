@@ -110,4 +110,27 @@ public class RecruitmentProcess implements AggregateRoot<Long> {
         return this.pk;
     }
 
+    public ApplicationPhase applicationPhase() {
+        return this.applicationPhase;
+    }
+
+    public ScreeningPhase screeningPhase() {
+        return this.screeningPhase;
+    }
+
+    public InterviewPhase interviewPhase() {
+        return this.interviewPhase;
+    }
+
+    public AnalysisPhase analysisPhase() {
+        return this.analysisPhase;
+    }
+
+    public ResultPhase resultPhase() {
+        return this.resultPhase;
+    }
+
+    public JobOpening jobOpening() {
+        return this.jobOpening;
+    }
 }

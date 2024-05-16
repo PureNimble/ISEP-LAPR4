@@ -75,4 +75,8 @@ public class JobOpeningRequirement implements AggregateRoot<Long> {
     public Long identity() {
         return this.pk;
     }
+
+    public JobOpening jobOpening() {
+        return this.jobOpening;
+    }
 }

@@ -1,6 +1,9 @@
 package lapr4.jobs4u.candidatemanagement.domain;
 
+import static org.junit.Assert.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import java.util.Calendar;
 
 import org.junit.Test;
 
@@ -55,4 +58,44 @@ public class CandidateUserTest {
         assertTrue(expected);
     }
 
+    @Test
+    public void ensureCandidateIsActivated() throws Exception {
+        final CandidateUser aCandidate = dummyCustomerUser(aEmail);
+
+        aCandidate.user().activate();
+
+        assertTrue(aCandidate.user().isActive());
+    }
+
+    @Test
+    public void ensureCandidateIsDeactivated() throws Exception {
+        final CandidateUser aCandidate = dummyCustomerUser(aEmail);
+
+        aCandidate.user().deactivate(Calendar.getInstance());
+        assertTrue(!aCandidate.user().isActive());
+    }
+
+    @Test
+    public void ensureCandidateIsDeactivatedAndActivated() throws Exception {
+        final CandidateUser aCandidate = dummyCustomerUser(aEmail);
+
+        aCandidate.user().deactivate(Calendar.getInstance());
+        assertTrue(!aCandidate.user().isActive());
+
+        aCandidate.user().activate();
+        assertTrue(aCandidate.user().isActive());
+    }
+
+    @Test
+    public void ensureCanNotDeactivateAnAlreadyDeactivatedCandidate() throws Exception {
+        final CandidateUser aCandidate = dummyCustomerUser(aEmail);
+
+        aCandidate.user().deactivate(Calendar.getInstance());
+        assertTrue(!aCandidate.user().isActive());
+
+        assertThrows(IllegalStateException.class, () -> {
+            aCandidate.user().deactivate(Calendar.getInstance());
+        });
+
+    }
 }

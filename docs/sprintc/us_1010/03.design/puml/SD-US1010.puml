@@ -64,7 +64,28 @@ activate UI
 
 UI -> C : changePhase(phase)
 activate C
-alt phase == "ApplicationPhase"
+alt phase == null
+    C -> AP : open()
+    activate AP
+    AP -> AP : open()
+    AP -> C : return applicationBoolean
+    deactivate AP
+    alt applicationBoolean == true
+        C -> R : save(applicationPhase)
+        activate R
+        R -> RJPA : save(applicationPhase)
+        activate RJPA
+        RJPA -> DB : merge(applicationPhase)
+        DB --> RJPA : return true
+        RJPA --> R : return true
+        deactivate RJPA
+        R --> C : return true
+        deactivate R
+        C -> UI : return true
+    else
+        C -> UI : return false
+    end
+else if phase == "ApplicationPhase"
     C -> AP : close()
     activate AP
     AP -> AP : close()

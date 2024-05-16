@@ -10,14 +10,14 @@ public class InterviewQuestionExporter implements QuestionExporter {
     private PrintWriter stream;
 
     @Override
-    public void begin(final String filename) throws IOException {
+    public void begin(final String filename, final String plugin) throws IOException {
         stream = new PrintWriter(new FileWriter(filename));
-        stream.println("INTERVIEW\nNAME:\nGRADE:\n");
+        stream.printf("TITLE: %s\nNAME:\nGRADE:\n", plugin);
     }
 
     @Override
     public void element(final Question e) {
-        stream.printf("QUESTION TYPE: %s\n", e.questionType());
+        stream.printf("\nQUESTION TYPE: %s\n", e.questionType());
         if (e.questionType().identity().contains("Choice")) {
             stream.print("QUESTION: ");
             String[] parts = e.questionBody().toString().split(" (?=\\d\\. )");
@@ -30,7 +30,7 @@ public class InterviewQuestionExporter implements QuestionExporter {
             stream.println("QUESTION: " + e.questionBody());
 
         stream.println("ANSWER:");
-        stream.println("GRADE:\n");
+        stream.println("GRADE:");
     }
 
     @Override
@@ -48,5 +48,10 @@ public class InterviewQuestionExporter implements QuestionExporter {
         if (stream != null) {
             stream.close();
         }
+    }
+
+    @Override
+    public void begin(String filename) throws IOException {
+        throw new UnsupportedOperationException("Unimplemented method 'begin'");
     }
 }

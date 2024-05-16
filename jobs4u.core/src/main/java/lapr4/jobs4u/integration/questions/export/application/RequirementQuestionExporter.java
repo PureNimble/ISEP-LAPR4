@@ -10,16 +10,16 @@ public class RequirementQuestionExporter implements QuestionExporter {
     private PrintWriter stream;
 
     @Override
-    public void begin(final String filename) throws IOException {
+    public void begin(final String filename, final String plugin) throws IOException {
         stream = new PrintWriter(new FileWriter(filename));
-        stream.println("REQUIREMENT\nNAME:\n");
+        stream.printf("TITLE: %s\nNAME:\n", plugin);
     }
 
     @Override
     public void element(final Question e) {
-        stream.printf("QUESTION TYPE: %s\n", e.questionType());
-        stream.println("QUESTION: " + e.questionBody());
-        stream.println("ANSWER:\n");
+        stream.printf("\nQUESTION TYPE: %s\n", e.questionType());
+        stream.println("# " + e.questionBody());
+        stream.println("ANSWER:");
     }
 
     @Override
@@ -37,5 +37,10 @@ public class RequirementQuestionExporter implements QuestionExporter {
         if (stream != null) {
             stream.close();
         }
+    }
+
+    @Override
+    public void begin(String filename) throws IOException {
+        throw new UnsupportedOperationException("Unimplemented method 'begin'");
     }
 }

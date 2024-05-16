@@ -1,0 +1,130 @@
+@startuml
+skinparam linetype ortho
+skinparam maxmessagesize 150
+skinparam sequenceParticipant underline
+
+actor "Operator" as OP
+
+participant "EnableOrDisableCandidateUI" as UI
+participant "EnableOrDisableCandidateController" as C
+participant "ListCandidatesService" as S
+participant "CandidateRepository" as R
+participant "JpaCandidateRepository" as RJPA
+participant "JpaCandidateUserRepository" as RJPAU
+participant "CandidateUser" as U
+participant "Candidate" as CD
+participant "CandidateDTO" as DTO
+database "H2Database" as DB
+
+activate OP
+OP -> UI : Asks to disable or enable a candidate
+activate UI
+UI --> OP : Asks for list preference (active or inactive)
+deactivate UI
+
+OP -> UI : Provides list preference
+activate UI
+alt preference = active
+    UI -> C : getActiveCandidates()
+    activate C
+    C -> S : findActive()
+    activate S
+    S -> R : findActive()
+    activate R
+    R -> RJPA : findActive()
+    activate RJPA
+    RJPA -> DB : createQuery("SELECT c.* FROM T_CANDIDATE c, T_CANDIDATE_USER u, T_SYSTEMUSER s WHERE c.email = u.account_email AND u.account_email = s.email AND s.active = true", Candidate.class)
+    DB --> RJPA : returns Iterable<Candidate>
+    RJPA --> R : returns Iterable<Candidate>
+    deactivate RJPA
+    R --> S : returns Iterable<Candidate>
+    deactivate R
+    loop for each candidate
+        S -> CD: toDTO()
+        activate CD
+        CD --> DTO: create
+        activate DTO
+        CD <-- DTO: CandidateDTO
+        deactivate DTO
+        S <-- CD: CandidateDTO
+        deactivate CD
+    end
+    S --> C : returns Iterable<CandidateDTO>
+    deactivate S
+    C --> UI : return Iterable<CandidateDTO>
+    deactivate C
+else preference = inactive
+    UI -> C : getInactiveCandidates()
+    activate C
+    C -> S : findInactive()
+    activate S
+    S -> R : findInactive()
+    activate R
+    R -> RJPA : findInactive()
+    activate RJPA
+    RJPA -> DB : createQuery("SELECT c.* FROM T_CANDIDATE c, T_CANDIDATE_USER u, T_SYSTEMUSER s WHERE c.email = u.account_email AND u.account_email = s.email AND s.active = false", Candidate.class)
+    DB --> RJPA : returns Iterable<Candidate>
+    RJPA --> R : returns Iterable<Candidate>
+    deactivate RJPA
+    R --> S : returns Iterable<Candidate>
+    deactivate R
+    loop for each candidate
+        S -> CD: toDTO()
+        activate CD
+        CD --> DTO: create
+        activate DTO
+        CD <-- DTO: CandidateDTO
+        deactivate DTO
+        S <-- CD: CandidateDTO
+        deactivate CD
+    end
+    S --> C : returns Iterable<CandidateDTO>
+    deactivate S
+    C --> UI : return Iterable<CandidateDTO>
+    deactivate C
+end
+UI --> OP : Provides the preferenced list of candidates
+deactivate UI
+
+OP -> UI : Selects a candidate
+activate UI
+UI -> C : toggleCandidateStatus(email)
+activate C
+C -> R : findByEmail(email)
+activate R
+R -> RJPAU : findByEmail(email)
+activate RJPAU
+RJPAU -> DB : createQuery("SELECT u FROM T_CANDIDATE_USER u WHERE u.email = :value", CandidateUser.class)
+DB --> RJPAU : returns CandidateUser
+RJPAU --> R : returns CandidateUser
+deactivate RJPAU
+R --> C : returns CandidateUser
+deactivate R
+C -> U : toggleStatus()
+activate U
+alt CandidateUser.isActive = true
+    U -> U : disable()
+else CandidateUser.isActive = false
+    U -> U : enable()
+end
+U --> C : returns boolean
+deactivate U
+alt boolean = true
+    C -> R : save(CandidateUser)
+    activate R
+    R -> RJPAU : save(CandidateUser)
+    activate RJPAU
+    RJPAU -> DB : merge(CandidateUser)
+    DB --> RJPAU : returns CandidateUser
+    RJPAU --> R : returns CandidateUser
+    deactivate RJPAU
+    R --> C : returns CandidateUser
+    deactivate R
+    C --> UI : return true
+else boolean = false
+    C --> UI : return false
+end
+deactivate C
+UI --> OP : Informs success or failure
+deactivate OP
+@enduml

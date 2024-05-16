@@ -167,8 +167,8 @@ JobOpening "1" -down--> "1" Interview : can have
 
 ' Plugin relationships
 Plugin "1" --> "1" Description : has
-Plugin -down-* InterviewModel
-Plugin -down-* RequirementModel
+Plugin <-down- InterviewModel
+Plugin <-down- RequirementModel
 
 ' Interview relationships
 Interview "1" --> "1" InterviewDate : has

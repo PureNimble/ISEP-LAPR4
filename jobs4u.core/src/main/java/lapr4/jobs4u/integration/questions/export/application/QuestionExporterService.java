@@ -27,10 +27,10 @@ public class QuestionExporterService  {
      * @throws IOException
      */
     @TemplateMethod
-    public void export(final Iterable<Question> questions, final String filename, final QuestionExporter exporter)
+    public void export(final Iterable<Question> questions, final String filename, final QuestionExporter exporter, final String plugin)
             throws IOException {
         try {
-            exporter.begin(filename);
+            exporter.begin(filename, plugin);
 
             boolean hasPrevious = false;
             for (final Question e : questions) {

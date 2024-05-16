@@ -1,0 +1,88 @@
+@startuml DM-US1004
+
+title Domain Model - US1004
+
+hide empty members
+'skinparam Linetype ortho
+
+skinparam class {
+    BackgroundColor<<valueObject>> #D6EAF8
+    BackgroundColor<<root>> #FDEBD0
+    BackgroundColor<<service>> #D1F2EB
+    BackgroundColor #FEF9E7
+    ArrowColor Black
+}
+
+skinparam package {
+    BackgroundColor #EBF5FB
+}
+
+' Job Opening Aggregate
+package "<<aggregate>> Job Opening" {
+    entity JobOpening <<entity>> <<root>> {}
+
+    class JobReference <<valueObject>> <<(V, #FF8B40)>> {}
+    class TitleOrFunction <<valueObject>> <<(V, #FF8B40)>> {}
+    class ContractType <<valueObject>> <<(V, #FF8B40)>> {}
+    class Mode <<valueObject>> <<(V, #FF8B40)>> {}
+    class Company <<valueObject>> <<(V, #FF8B40)>> {}
+    class NumberOfVacancies <<valueObject>> <<(V, #FF8B40)>> {}
+    class JobDescription <<valueObject>> <<(V, #FF8B40)>> {}
+    entity RequirementSpecification <<entity>> {}
+}
+
+' Customer Aggregate
+package "<<aggregate>> Customer" {
+    entity Customer <<entity>> <<root>> {}
+
+    class CompanyName <<valueObject>> <<(V, #FF8B40)>> {}
+    class CustomerCode <<valueObject>> <<(V, #FF8B40)>> {}
+}
+
+
+' Plugin Aggregate
+package "<<aggregate>> Plugin" {
+    entity Plugin <<entity>> <<root>> {}
+    entity RequirementModel <<entity>> {}
+    entity InterviewModel <<entity>> {}
+        
+    class Description <<valueObject>> <<(V, #FF8B40)>> {}
+}
+
+class Address <<valueObject>> <<(V, #FF8B40)>> {}
+
+class PhoneNumber <<valueObject>> <<(V, #FF8B40)>> {}
+class Email <<valueObject>> <<(V, #FF8B40)>> {}
+
+
+' Job Opening relationships
+JobOpening "1" --> "1" JobReference : has
+JobOpening "1" --> "1" TitleOrFunction : has
+JobOpening "1" --> "1" ContractType : has
+JobOpening "1" --> "1" Mode : has
+JobOpening "1" --> "1" Address : has
+JobOpening "1" --> "1" Company : has
+JobOpening "1" --> "1" NumberOfVacancies : has
+JobOpening "1" --> "1" JobDescription : has
+JobOpening "1" --> "1" RequirementSpecification: has
+
+
+' Plugin relationships
+Plugin "1" --> "1" Description : has
+Plugin -down-* InterviewModel
+Plugin -down-* RequirementModel
+
+' Job Opening relationships
+JobOpening "1" --> "1" Customer : has
+
+' Requirement Specification relationships
+RequirementSpecification "1" --> "1" Plugin: uses
+
+' Customer relationships
+Customer "1" --> "1" CustomerCode : has
+Customer "1" --> "1" CompanyName : has
+Customer "1" --> "1" Address : has
+Customer "1" --> "1" Email : has
+Customer "1" --> "1" PhoneNumber : has
+
+@enduml

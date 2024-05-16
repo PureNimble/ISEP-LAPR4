@@ -1,0 +1,14 @@
+Delivered-To: applications@jobs4u.com
+From: <janedoe@email.com>
+To: "applications@jobs4u.com" <applications@jobs4u.com>
+Subject: Application to job reference IBM-000123
+Date: Tue, 12 Mar 2024 14:24:03 +0000
+Content-Type: text/plain; charset="iso-8859-1"
+
+Hello.
+
+My name is Jane Doe and I am applying for the job reference IBM-000123
+
+Please find attached to the message the required documents.
+
+Regards

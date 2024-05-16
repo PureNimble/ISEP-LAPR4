@@ -1,4 +1,0 @@
-CUSTOMER-1
-janedoe@email.com
-Jane Doe
-967654321

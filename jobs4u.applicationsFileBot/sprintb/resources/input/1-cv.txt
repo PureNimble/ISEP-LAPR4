@@ -1,0 +1,71 @@
+---
+
+**John Doe**
+
+1234 Fake Avenue, City, State, 67891 | 961234567 | johndoe@email.com
+
+---
+
+**Objective**
+
+Highly motivated and detail-oriented individual seeking a position in software development. Strong problem-solving skills and the ability to work well in a team environment.
+
+---
+
+**Education**
+
+**Bachelor of Science in Computer Science**
+
+XYZ University, City, State
+
+September 2014 - May 2019
+
+---
+
+**Skills**
+
+- Proficient in Python
+- Strong knowledge of data structures and algorithms
+- Excellent communication and teamwork skills
+
+---
+
+**Work Experience**
+
+**Software Development Intern**
+
+ABC Company, City, State
+
+June 2020 - August 2022
+
+- Assisted in the development of a new feature for the company's main product
+- Collaborated with a team of developers to fix bugs and improve software performance
+- Gained experience with version control systems
+
+---
+
+**Projects**
+
+**Personal Finance Tracker**
+
+- Developed a web application that allows users to track their income and expenses
+- Implemented features such as data visualization and budget planning
+- Used technologies: React, Node.js, MongoDB
+
+---
+
+**Certifications**
+
+**Oracle Certified Associate, Java SE 8 Programmer**
+
+Oracle Corporation
+
+June 2019
+
+---
+
+**References**
+
+Available upon request
+
+---

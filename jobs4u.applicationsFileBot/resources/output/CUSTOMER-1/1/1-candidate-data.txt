@@ -1,4 +1,0 @@
-CUSTOMER-1
-johndoe@email.com
-John Doe
-961234567

@@ -1,0 +1,4 @@
+INPUT_PATH=../sprinta/resources/input/
+OUTPUT_PATH=../sprinta/resources/output/
+NUMBER_OF_CHILDREN=5
+VERIFY_NEW_FILES_FREQUENCY=5

@@ -40,6 +40,7 @@
 		<module>jobs4u.infrastructure.application</module>
 		<module>jobs4u.persistence.impl</module>
 		<module>jobs4u.integrations.plugins.standard</module>
+		<module>jobs4u.applicationProtocol</module>
 	</modules>
 	<dependencies>
 		<dependency>

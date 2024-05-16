@@ -11,23 +11,28 @@
 | Interaction ID | Question: Which class is responsible for... | Answer               | Justification (with patterns)                                                                                 |
 |:-------------  |:--------------------- |:---------------------|:--------------------------------------------------------------------------------------------------------------|
 | Step 1  		 |	... interacting with the actor? | EnableDisableCandidateUI          | Pure Fabrication: there is no reason to assign this responsibility to any existing class in the Domain Model. |
-| Step 2  		 |	... coordinating the US? | EnableDisableCandidateController | Controller: The controller is responsible for handling the user's request and coordinating the use case.Controller                                                                                                    |
-| Step 3		 |	... finding the active or inactive users?						 | CandidateUserRepository	         | Information Expert: The repository knows how to find users based on their active status.                                                                       |
-| Step 4		 |	... querying the database?						 | JpaCandidateUserRepository         | Information Expert: The JpaCandidateUserRepository knows how to interact with the database.                                                                             |
-| Step 5		 |	... enabling or disabling the user?						 | CandidateUser         | 	Information Expert: The Candidate User class knows how to enable or disable itself.                                                                               |
-| Step 6		 |	... saving the updated user?						 | CandidateUserRepository	         | Information Expert: The repository knows how to save a user.                                                                               |
+| Step 2  		 |	... coordinating the US? | EnableDisableCandidateController | Controller: The controller is responsible for handling the user's request and coordinating the use case.Controller       |
+| Step 3		 |	... listing the active or inactive candidates?							 | ListCandidatesService		         |  Information Expert: The service knows how to find candidates based on their active status.             |
+| Step 4		 |	... querying the database for candidates?						 | JpaCandidateRepository         | nformation Expert: The JpaCandidateRepository knows how to interact with the database to find candidates.     |
+| Step 5		 |	... querying the database for candidate users?					 | JpaCandidateUserRepository	         | 	Information Expert: The JpaCandidateUserRepository knows how to interact with the database to find candidate users.     |
+| Step 6		 |	.. converting candidates to DTOs?						 | CandidateUser		         | Information Expert: The Candidate class knows its own data and how to convert it to a DTO.    |
+| Step 7		 |	... toggling the status of a candidate user?	 | CandidateUser		         | 	Information Expert: The CandidateUser class knows how to toggle its own status.       |
+| Step 8		 |	... saving the updated candidate user?			 | CandidateRepository			         | Information Expert: The repository knows how to save a candidate user.       |
 
 
 Systematization
 According to the taken rationale, the conceptual classes promoted to software classes are:
 
+* Candidate
 * CandidateUser
 
 Other software classes (i.e. Pure Fabrication) identified:
 
 * EnableDisableCandidateUI
 * EnableDisableCandidateController
-* CandidateUserRepository
+* ListCandidatesService
+* CandidateRepository
+* JpaCandidateRepository
 * JpaCandidateUserRepository
 
 These classes are responsible for the user interface, controlling the use case, and interacting with the database, respectively.

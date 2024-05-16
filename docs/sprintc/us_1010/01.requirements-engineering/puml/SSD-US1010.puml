@@ -12,8 +12,7 @@ participant ":System" as System
 
 activate Manager
 
-    Manager -> System : Asks to change the status of a phase of a job opening
-    activate System
+    Manager -> System : Asks to change the phase status of a job opening
 
         System --> Manager : Provides a list of job openings and asks to choose one
 
@@ -22,20 +21,11 @@ activate Manager
     Manager -> System : Selects a job opening
     activate System
 
-        System --> Manager : Displays the different phases of the job opening and asks to choose one
+        System --> Manager : Displays the current phase status of the job opening and asks if the manager wants to go to the next phase
 
     deactivate System
 
-    Manager -> System : Selects a phase
-    activate System
-
-        System --> Manager : Asks to confirm the change of status of the phase
-        note left System : The System will change the status \nof the phase to the opposite of the \ncurrent status
-
-
-    deactivate System
-
-    Manager -> System : Confirms the change of status of the phase
+    Manager -> System : Confirms the decision to change the phase status
     activate System
 
         System --> Manager : Informs success or failure

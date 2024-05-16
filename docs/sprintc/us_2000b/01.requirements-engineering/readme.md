@@ -36,6 +36,12 @@ _N/A_
 >
 > **Answer:** Yes.
 
+> **Date:** 13/05/2024
+>
+> **Question 146:** US 2000b – for the use case 2000b which states "As Operator, I want to enable/disable a candidate". I would like to know if the client would like two different menus to be created, with each menu responsible for either activating or deactivating candidates.
+>
+> **Answer:** I have no specific requirements for the UX/UI but I want you to follow best practices.
+
 ### 1.3. Acceptance Criteria
 
 * **AC 1:** It must be possible to enable/disable a candidate multiple times.

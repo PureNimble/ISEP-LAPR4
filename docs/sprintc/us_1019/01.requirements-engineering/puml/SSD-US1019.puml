@@ -1,0 +1,45 @@
+@startuml SSD-US1019
+
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+title System Sequence Diagram (SSD) - List of candidates, using the job interview points
+
+autonumber
+
+actor "Customer Manager" as CustomerManager
+participant ":System" as System
+
+activate CustomerManager
+
+CustomerManager -> System : Asks for a list of candidates by job interview points
+activate System
+
+System --> CustomerManager : Displays list of candidates and provides sorting options
+deactivate System
+
+note right of CustomerManager: The list of candidates is ordered by points in ascending\norder by default
+
+loop until Customer Manager decides to exit
+    opt sorts list
+        CustomerManager -> System : Asks to sort the list of candidates
+        activate System
+
+        System --> CustomerManager : Provides sorting options
+        deactivate System
+
+        alt by ascending order
+            CustomerManager -> System : Asks to sort list by ascending order
+            activate System
+        else by descending order
+            CustomerManager -> System : Asks to sort list by descending order
+        end
+    end
+    System --> CustomerManager : Displays sorted list of candidates and provides sorting options
+    deactivate System
+end
+
+deactivate CustomerManager
+
+@enduml

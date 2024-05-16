@@ -3,8 +3,8 @@ package lapr4.jobs4u.message;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
-import java.util.EventListener;
 
+import lapr4.jobs4u.EventListener;
 import lapr4.jobs4u.protocol.ProtocolMessage;
 
 public class ErrMessage extends Message {
@@ -15,6 +15,6 @@ public class ErrMessage extends Message {
 
     @Override
     public void handle() throws IOException {
-        // ignore for now
+
     }
 }

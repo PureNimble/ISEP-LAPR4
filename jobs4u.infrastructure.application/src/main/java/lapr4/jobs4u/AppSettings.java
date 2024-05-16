@@ -43,6 +43,9 @@ public class AppSettings {
     private static final String UI_MENU_LAYOUT_KEY = "ui.menu.layout";
     private static final String PERSISTENCE_UNIT_KEY = "persistence.persistenceUnit";
     private static final String SCHEMA_GENERATION_KEY = "jakarta.persistence.schema-generation.database.action";
+    private static final String SSL_ENABLE_KEY = "jobs4u.ssl.enabled";
+    private static final String SERVER_HOST_KEY = "jobs4u.server.host";
+    private static final String SERVER_PORT_KEY = "jobs4u.server.port";
 
     private final Properties applicationProperties = new Properties();
 
@@ -98,4 +101,16 @@ public class AppSettings {
     public String getProperty(final String prop) {
         return this.applicationProperties.getProperty(prop);
     }
+
+    public boolean isSSLEnabled() {
+        return applicationProperties.getProperty(SSL_ENABLE_KEY).equals("true");
+      }
+    
+      public String boardServerHost() {
+        return applicationProperties.getProperty(SERVER_HOST_KEY);
+      }
+    
+      public Integer boardServerPort() {
+        return Integer.parseInt(applicationProperties.getProperty(SERVER_PORT_KEY));
+      }
 }

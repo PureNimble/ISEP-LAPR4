@@ -17,8 +17,7 @@ public class RequirementQuestionExporter implements QuestionExporter {
 
     @Override
     public void element(final Question e) {
-        stream.printf("\nQUESTION TYPE: %s\n", e.questionType());
-        stream.println("# " + e.questionBody());
+        stream.println("\n# " + e.questionBody());
         stream.println("ANSWER:");
     }
 

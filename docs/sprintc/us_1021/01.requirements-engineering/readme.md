@@ -1,6 +1,6 @@
 <img width=100% src="https://capsule-render.vercel.app/api?type=waving&height=120&color=4E1764"/>
 
-# US 1021 - listDataOfAnApplication.
+# US 1021 - Display all the data of an application.
 
 ## 1. Requirements Engineering
 
@@ -116,6 +116,7 @@ A19 No âmbito da US 2000a o Operator cria utilizadores do sistema para candidat
 * **US 2001 - Continuously process files produced by the Applications Email Bot :** Produces the information for the applications.
 * **US 1005 - List all applications for a job opening :** Allows the listing of applications.
 * **US 1003 -  List job openings :** Is necessary to properly list all applications through US 1005.
+
 ### 1.5 Input and Output Data
 
 **Input Data:**

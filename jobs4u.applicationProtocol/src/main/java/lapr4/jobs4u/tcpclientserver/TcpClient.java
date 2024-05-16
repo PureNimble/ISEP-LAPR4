@@ -1,34 +1,67 @@
 package lapr4.jobs4u.tcpclientserver;
 
 import java.io.IOException;
-import java.net.InetAddress;
+import java.net.ServerSocket;
 import java.net.Socket;
-import java.net.UnknownHostException;
+
+import javax.net.ssl.SSLServerSocket;
+import javax.net.ssl.SSLServerSocketFactory;
+
+import lapr4.jobs4u.EventListener;
 
 public class TcpClient {
 
-    private static InetAddress serverIP;
-	private static Socket socket;
+    private int port;
+    private Class<? extends Runnable> handlerClass;
+    private boolean secure;
+    private EventListener eventListener;
 
-    public static void main(String[] args) throws Exception {
-        
-        if (args.length != 1) {
-            System.out.println("Server IPv4/IPv6 address or DNS name is required as argument");
-            System.exit(1);
+    public TcpClient(int port, Class<? extends Runnable> handler, boolean secure) {
+        this.port = port;
+        this.handlerClass = handler;
+        this.secure = secure;
+        this.eventListener = new EventListener();
+    }
+
+    public void run() {
+
+        ServerSocket tcpSocket;
+        Socket socket;
+
+        try {
+            if (this.secure) {
+                tcpSocket = SSLServerSocketFactory.getDefault().createServerSocket(port);
+                SSLServerSocket sslListener = (SSLServerSocket) tcpSocket;
+                sslListener.setNeedClientAuth(true);
+            } else
+                tcpSocket = new ServerSocket(port);
+        } catch (IOException e) {
+            System.out.println("Error creating the tcp socket");
+            e.printStackTrace();
+            return;
+        }
+
+        System.out.printf("[TCP%s Server] Listening on port %d!\n", this.secure ? " SSL" : "", port);
+
+        while (!tcpSocket.isClosed()) {
+            try {
+                socket = tcpSocket.accept();
+                Runnable handler = handlerClass.getConstructor(Socket.class, EventListener.class)
+                        .newInstance(socket, this.eventListener);
+                Thread clientHandler = new Thread(handler);
+
+                clientHandler.start();
+            } catch (Exception e) {
+                System.out.println("Error creating the client handler thread");
+                e.printStackTrace();
+            }
         }
 
         try {
-            serverIP = InetAddress.getByName(args[0]);
-        } catch (UnknownHostException ex) {
-            System.out.println("Invalid server specified: " + args[0]);
-            System.exit(1);
-        }
-
-        try {
-            socket = new Socket(serverIP, 9999);
-        } catch (IOException ex) {
-            System.out.println("Failed to establish TCP connection");
-            System.exit(1);
+            tcpSocket.close();
+        } catch (IOException e) {
+            System.out.println("Error closing the tcp socket");
+            e.printStackTrace();
         }
     }
 }

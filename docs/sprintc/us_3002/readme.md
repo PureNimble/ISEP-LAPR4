@@ -1,30 +1,29 @@
 <img width=100% src="https://capsule-render.vercel.app/api?type=waving&height=120&color=4E1764"/>
 
-# US 2000a -  Register a candidate and create a corresponding user.
+# US 3002 - List all job openings from a customer
 
 ## 1. Context
 
-- `Description:`  As Operator, I want to register a candidate and create a corresponding user
+- `Description:`  As Customer, I want to list all my job openings, including job reference, position, active since, number of applicants.
 
-- `Sprint:` This US makes part of the intermediary stage of development of the integrative project of this semester, Sprint B.
+- `Sprint:` This US makes part of the final stage of development of the integrative project of this semester, Sprint C.
 
-- `Objectives:` The team must make sure that the system can list all applications for a job opening.
-
+- `Objectives:` The team must make sure that the customer app supports the listing of all job openings of a customer.
 ## 2. Requirements
 
 [_`Requirements Engineering`_](01.requirements-engineering/readme.md)
 
 ## 3. Analysis
 
-[_`Analysis`_](02.analysis/readme.md)
+N/A
 
 ## 4. Design
 
-[_`Design`_](03.design/readme.md)
+N/A
 
 ## 5. Tests & Implementation
 
-[_`Tests & Implementation`_](04.tests-and-implementation/readme.md)
+N/A
 
 ## 6. Integration/Demonstration
 

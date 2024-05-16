@@ -37,9 +37,9 @@ N/A
 
 ### 1.4. Found out Dependencies
 
-* **US 1001:** The Candidate should first be registered in the database in order to list their applications.
+* **US 2000a:** The Candidate should first be registered in the database in order to list their applications.
 
-* **US 2001:** Applications should first be registered in the database, so they can be listed.
+* **US 2002:** Applications should first be registered in the database, so they can be listed.
 
 ### 1.5 Input and Output Data
 

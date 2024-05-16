@@ -1,0 +1,20 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+title System Sequence Diagram (SSD) - List all job\nopenings from a customer and their data
+
+autonumber
+
+actor "Customer" as Manager
+participant ":System" as System
+
+activate Manager
+
+    Manager -> System : Asks to list their job openings
+    activate System
+        System --> Manager : Provides a list of the Customer's job openings, \nincluding job reference, position,\nactive since, and number of applicants
+    deactivate System
+
+@enduml

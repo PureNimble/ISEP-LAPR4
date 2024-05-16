@@ -1,0 +1,209 @@
+@startuml
+skinparam linetype ortho
+skinparam maxmessagesize 200
+skinparam sequenceParticipant underline
+
+actor "Customer Manager" as Manager
+
+participant "OpenOrClosePhaseUI" as UI
+participant "OpenOrClosePhaseController" as C
+participant "RecruitmentProcessRepository" as R
+participant "JpaRecruitmentProcessRepository" as RJPA
+participant "RecruitmentProcess" as RP
+participant "ApplicationPhase" as AP
+participant "ScreeningPhase" as SP
+participant "InterviewPhase" as IP
+participant "AnalysisPhase" as ANP
+participant "ResultPhase" as REP
+database "H2Database" as DB
+
+activate Manager
+
+Manager -> UI : Asks to change the phase status of a job opening
+
+ref over UI : US-1003 - List Job Openings
+UI --> Manager : Provides a list of job openings and asks to choose one
+
+deactivate UI
+
+Manager -> UI : Selects a job opening
+activate UI
+
+UI -> C : findById(jobReference)
+activate C
+C -> R : findById(jobReference)
+activate R
+R -> RJPA : findById(jobReference)
+activate RJPA
+RJPA -> DB : createQuery("SELECT * FROM T_RECRUITMENT_PROCESS WHERE JOBOPENING_JOBREFERENCE = jobReference")
+DB --> RJPA : return recruitmentProcess
+RJPA --> R : return recruitmentProcess
+deactivate RJPA
+R --> C : return recruitmentProcess
+deactivate R
+
+C -> R : getCurrentPhase(recruitmentProcess)
+activate R
+R -> RJPA : getCurrentPhase(recruitmentProcess)
+activate RJPA
+RJPA -> DB : createQuery("SELECT 'AnalysisPhase' AS phase FROM T_ANALYSIS_PHASE a JOIN T_RECRUITMENT_PROCESS r ON a.PK = r.ANALYSISPHASE_PK WHERE r.JOBOPENING_JOBREFERENCE = 'CUSTOMER-1' AND a.STATENAME = 'OPEN' UNION ALL ...")
+DB --> RJPA : return phase
+RJPA --> R : return phase
+deactivate RJPA
+R --> C : return phase
+deactivate R
+C -> UI : return phase
+deactivate C
+
+UI --> Manager : Displays the current phase status of the job opening and asks if the manager wants to go to the next phase
+
+deactivate UI
+
+Manager -> UI : Confirms the decision to change the phase status
+activate UI
+
+UI -> C : changePhase(phase)
+activate C
+alt phase == "ApplicationPhase"
+    C -> AP : close()
+    activate AP
+    AP -> AP : close()
+    AP -> C : return applicationBoolean
+    deactivate AP
+    C -> SP : open()
+    activate SP
+    SP -> SP : open()
+    SP -> C : return screeningBoolean
+    deactivate SP
+    alt applicationBoolean == true && screeningBoolean == true
+        C -> R : save(applicationPhase, screeningPhase)
+        activate R
+        R -> RJPA : save(applicationPhase, screeningPhase)
+        activate RJPA
+        RJPA -> DB : merge(applicationPhase, screeningPhase)
+        DB --> RJPA : return true
+        RJPA --> R : return true
+        deactivate RJPA
+        R --> C : return true
+        deactivate R
+        C -> UI : return true
+    else
+        C -> UI : return false
+    end
+else if phase == "ScreeningPhase"
+    C -> SP : close()
+    activate SP
+    SP -> SP : close()
+    SP -> C : return screeningBoolean
+    deactivate SP
+    alt recruitmentProcess.InterviewPhase == null
+        C -> ANP : open()
+        activate ANP
+        ANP -> ANP : open()
+        ANP -> C : return analysisBoolean
+        deactivate ANP
+        alt screeningBoolean == true && analysisBoolean == true
+            C -> R : save(screeningPhase, analysisPhase)
+            activate R
+            R -> RJPA : save(screeningPhase, analysisPhase)
+            activate RJPA
+            RJPA -> DB : merge(screeningPhase, analysisPhase)
+            DB --> RJPA : return true
+            RJPA --> R : return true
+            deactivate RJPA
+            R --> C : return true
+            deactivate R
+            C -> UI : return true
+        else
+            C -> UI : return false
+        end
+    else
+        C -> IP : open()
+        activate IP
+        IP -> IP : open()
+        IP -> C : return interviewBoolean
+        deactivate IP
+        alt screeningBoolean == true && interviewBoolean == true
+            C -> R : save(screeningPhase, interviewPhase)
+            activate R
+            R -> RJPA : save(screeningPhase, interviewPhase)
+            activate RJPA
+            RJPA -> DB : merge(screeningPhase, interviewPhase)
+            DB --> RJPA : return true
+            RJPA --> R : return true
+            deactivate RJPA
+            R --> C : return true
+            deactivate R
+            C -> UI : return true
+        else
+            C -> UI : return false
+        end
+    end
+else if phase == "InterviewPhase"
+    C -> IP : close()
+    activate IP
+    IP -> IP : close()
+    IP -> C : return interviewBoolean
+    deactivate IP
+    C -> ANP : open()
+    activate ANP
+    ANP -> ANP : open()
+    ANP -> C : return analysisBoolean
+    deactivate ANP
+    alt interviewBoolean == true && analysisBoolean == true
+        C -> R : save(interviewPhase, analysisPhase)
+        activate R
+        R -> RJPA : save(interviewPhase, analysisPhase)
+        activate RJPA
+        RJPA -> DB : merge(interviewPhase, analysisPhase)
+        DB --> RJPA : return true
+        RJPA --> R : return true
+        deactivate RJPA
+        R --> C : return true
+        deactivate R
+        C -> UI : return true
+    else
+        C -> UI : return false
+    end
+else if phase == "AnalysisPhase"
+    C -> ANP : close()
+    activate ANP
+    ANP -> ANP : close()
+    ANP -> C : return analysisBoolean
+    deactivate ANP
+    C -> REP : open()
+    activate REP
+    REP -> REP : open()
+    REP -> C : return resultBoolean
+    deactivate REP
+    alt analysisBoolean == true && resultBoolean == true
+        C -> R : save(analysisPhase, resultPhase)
+        activate R
+        R -> RJPA : save(analysisPhase, resultPhase)
+        activate RJPA
+        RJPA -> DB : merge(analysisPhase, resultPhase)
+        DB --> RJPA : return true
+        RJPA --> R : return true
+        deactivate RJPA
+        R --> C : return true
+        deactivate R
+        C -> UI : return true
+    else
+        C -> UI : return false
+    end
+else if phase == "ResultPhase"
+    C -> REP : close()
+    activate REP
+    REP -> REP : close()
+    REP -> C : return resultBoolean
+    deactivate REP
+    C -> UI : return resultBoolean
+else
+    C -> UI : return false
+end
+
+
+    UI --> Manager : Informs success or failure
+
+    deactivate UI
+    @enduml

@@ -1,0 +1,49 @@
+@startuml
+
+title Domain Model - US1013
+
+hide empty members
+'skinparam Linetype ortho
+
+skinparam class {
+    BackgroundColor<<valueObject>> #D6EAF8
+    BackgroundColor<<root>> #FDEBD0
+    BackgroundColor<<service>> #D1F2EB
+    BackgroundColor #FEF9E7
+    ArrowColor Black
+}
+
+skinparam package {
+    BackgroundColor #EBF5FB
+}
+
+
+' Rank Aggregate
+package "<<aggregate>> Rank" {
+    entity Rank <<entity>> <<root>> {}
+}
+
+
+' Candidate Aggregate
+package "<<aggregate>> Candidate" {
+    entity Candidate <<entity>> <<root>> {}
+}
+
+' Application Aggregate
+package "<<aggregate>> Application" {
+    entity Application <<entity>> <<root>> {}
+}
+
+' Job Opening Aggregate
+package "<<aggregate>> Job Opening" {
+    entity JobOpening <<entity>> <<root>> {}
+
+
+}
+
+Application "1" --> "1" JobOpening : for
+Application "1" --> "1" Candidate : from
+Rank "1" --> "1" JobOpening : for
+
+
+@enduml

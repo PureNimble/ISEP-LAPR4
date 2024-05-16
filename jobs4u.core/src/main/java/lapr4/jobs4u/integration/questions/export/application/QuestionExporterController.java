@@ -24,6 +24,6 @@ public class QuestionExporterController {
         // for a small amount of data. To export a large volume of data we should be using some kind
         // of cursor-based iterable and not a pure in-memory collection.
         final Iterable<Question> questions = listSvc.findQuestionsByPlugin(plugin);
-        exportSvc.export(questions, filename, exporter);
+        exportSvc.export(questions, filename, exporter, plugin);
     }
 }

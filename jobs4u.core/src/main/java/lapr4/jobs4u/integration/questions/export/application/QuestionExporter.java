@@ -12,6 +12,7 @@ public interface QuestionExporter {
      *
      * @param filename
      */
+    void begin(String filename, String plugin) throws IOException;
     void begin(String filename) throws IOException;
 
     /**

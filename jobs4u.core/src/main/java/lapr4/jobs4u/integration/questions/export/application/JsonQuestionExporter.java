@@ -49,4 +49,9 @@ public class JsonQuestionExporter implements QuestionExporter {
             stream.close();
         }
     }
+
+    @Override
+    public void begin(String filename, String plugin) throws IOException {
+        throw new UnsupportedOperationException("Unimplemented method 'begin'");
+    }
 }

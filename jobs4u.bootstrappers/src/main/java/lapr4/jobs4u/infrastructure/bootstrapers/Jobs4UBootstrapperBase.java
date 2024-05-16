@@ -138,17 +138,34 @@ public class Jobs4UBootstrapperBase {
     }
 
     protected RecruitmentProcess addRecruitmentProcess(final String applicationInitialDate,
-            final String applicationFinalDate,
-            final String screeningInitialDate, final String screeningFinalDate,
-            final String interviewInitialDate,
-            final String interviewFinalDate, final String analysisInitialDate,
-            final String analysisFinalDate,
-            final String resultInitialDate, final String resultFinalDate, final JobOpening jobOpening) {
+            final String applicationFinalDate, final String screeningInitialDate, final String screeningFinalDate,
+            final String interviewInitialDate, final String interviewFinalDate, final String analysisInitialDate,
+            final String analysisFinalDate, final String resultInitialDate, final String resultFinalDate,
+            final JobOpening jobOpening) {
         RecruitmentProcess re = null;
         try {
             re = setUpRecruitmentProcessController.SetUpRecruitmentProcess(applicationInitialDate,
                     applicationFinalDate, screeningInitialDate, screeningFinalDate, interviewInitialDate,
                     interviewFinalDate, analysisInitialDate, analysisFinalDate, resultInitialDate,
+                    resultFinalDate, jobOpening);
+            LOGGER.debug("»»» {}", jobOpening);
+        } catch (final IntegrityViolationException | ConcurrencyException e) {
+            // assuming it is just a primary key violation due to the tentative
+            // of inserting a duplicated user. let's just lookup that user
+            // cu = listUserController.find(Username.valueOf(email)).orElseThrow(() -> e);
+        }
+        return re;
+    }
+
+    protected RecruitmentProcess addRecruitmentProcess(final String applicationInitialDate,
+            final String applicationFinalDate, final String screeningInitialDate, final String screeningFinalDate,
+            final String analysisInitialDate, final String analysisFinalDate, final String resultInitialDate,
+            final String resultFinalDate, final JobOpening jobOpening) {
+        RecruitmentProcess re = null;
+        try {
+            re = setUpRecruitmentProcessController.SetUpRecruitmentProcess(applicationInitialDate,
+                    applicationFinalDate, screeningInitialDate, screeningFinalDate, analysisInitialDate,
+                    analysisFinalDate, resultInitialDate,
                     resultFinalDate, jobOpening);
             LOGGER.debug("»»» {}", jobOpening);
         } catch (final IntegrityViolationException | ConcurrencyException e) {

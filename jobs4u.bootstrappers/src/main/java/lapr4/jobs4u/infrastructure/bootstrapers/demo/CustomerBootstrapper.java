@@ -43,12 +43,31 @@ public class CustomerBootstrapper extends Jobs4UBootstrapperBase implements Acti
         @Override
         public boolean execute() {
                 final Customer c = registerCustomer("Customer", "Rua do Customer", "CUSTOMER", "cu@email.local",
+                                "912345678", "Customer", "Customer");
+                final Customer m = registerCustomer("Microsoft", "1 Microsoft Way", "MICROSOFT",
+                                "billgates@microsoft.local", "912345678",
+                                "Bill", "Gates");
+                final Customer a = registerCustomer("Amazon", "410 Terry Ave N", "AMAZON", "jeffbezos@amazon.local",
                                 "912345678",
-                                "Customer", "Customer");
-                final JobOpening jo = registerJobOpening("JobOpening", "FULL_TIME", "PRESENTIAL", "Rua do Job Opening",
-                                c, "Job Opening Description", "26");
+                                "Jeff", "Bezos");
 
-                setUpRecruitmentProcess(jo);
+                registerJobOpening("Project Manager", "FULL_TIME", "PRESENTIAL",
+                                "789 Project Parkway", c, "Manage and oversee project execution", "35");
+                registerJobOpening("Community Outreach Volunteer", "VOLUNTEER", "PRESENTIAL",
+                                "123 Volunteer Street", c, "Help organize and run community events", "8");
+                registerJobOpening("Data Scientist", "INTERNSHIP", "REMOTE",
+                                "123 Data Drive", m, "Analyze and interpret complex data sets", "30");
+                registerJobOpening("Cloud Solutions Architect", "FULL_TIME", "HYBRID",
+                                "410 Terry Ave N", a, "Design and manage solutions on Amazon Web Services", "10");
+                final JobOpening activeMJO = registerJobOpening("Frontend Developer", "PART_TIME", "HYBRID",
+                                "456 Frontend Street", m, "Develop user-friendly web interfaces", "15");
+                final JobOpening activeCJO = registerJobOpening("Software Engineer", "FULL_TIME", "REMOTE",
+                                "123 Software Street", c, "Develop and maintain software applications", "26");
+                final JobOpening anotherActiveMJO = registerJobOpening("Data Analyst", "INTERNSHIP", "HYBRID",
+                                "456 Data Drive", m, "Analyze and interpret complex data sets", "30");
+                setUpRecruitmentProcess(activeMJO, true);
+                setUpRecruitmentProcess(activeCJO, true);
+                setUpRecruitmentProcess(anotherActiveMJO, false);
                 return true;
         }
 
@@ -68,7 +87,7 @@ public class CustomerBootstrapper extends Jobs4UBootstrapperBase implements Acti
                                 numberOfVacancies);
         }
 
-        private RecruitmentProcess setUpRecruitmentProcess(JobOpening jobOpening) {
+        private RecruitmentProcess setUpRecruitmentProcess(final JobOpening jobOpening, final boolean interview) {
 
                 SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
                 Calendar calendar = CurrentTimeCalendars.now();
@@ -79,8 +98,11 @@ public class CustomerBootstrapper extends Jobs4UBootstrapperBase implements Acti
                         Date date = calendar.getTime();
                         dates[i] = format.format(date);
                 }
-
-                return addRecruitmentProcess(dates[0], dates[1], dates[2], dates[3], dates[4], dates[5], dates[6],
-                                dates[7], dates[8], dates[9], jobOpening);
+                if (interview)
+                        return addRecruitmentProcess(dates[0], dates[1], dates[2], dates[3], dates[4], dates[5],
+                                        dates[6], dates[7], dates[8], dates[9], jobOpening);
+                else
+                        return addRecruitmentProcess(dates[0], dates[1], dates[2], dates[3], dates[4], dates[5],
+                                        dates[6], dates[7], jobOpening);
         }
 }

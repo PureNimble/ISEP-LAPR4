@@ -28,7 +28,7 @@ import eapli.framework.presentation.console.AbstractUI;
 
 public class ImportApplicationsUI extends AbstractUI {
 
-    private static final String DEFAULT_FOLDER = "jobs4u.applicationsFileBot/resources/output";
+    private static final String DEFAULT_FOLDER = "jobs4u.applicationsFileBot/sprintb/resources/output";
     private static final String EMAIL_ALREADY_REGISTERED = "That E-mail is already registered.";
     private static final String JOB_OPENING_DOES_NOT_EXIST = "Job Opening does not exist";
     private static final String INVALID_PATH = "Invalid Path";

@@ -1,6 +1,6 @@
 grammar requirements;
 
-start: 'TITLE:' text+ content+;
+start: 'TITLE:' text+ 'NAME:' content+;
 
 text: (WORD | NUMBER | MEMBER);
 

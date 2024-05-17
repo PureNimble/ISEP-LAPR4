@@ -1,0 +1,99 @@
+@startuml
+title US1006b - SD - Display Candidate Data and Applications
+skinparam linetype ortho
+skinparam maxmessagesize 150
+skinparam sequenceParticipant underline
+
+actor "Customer Manager" as CM
+
+participant "RankCandidatesUI" as UI
+participant "RankCandidatesController" as C
+participant "RankCandidatesService" as S
+participant "ApplicationRepository" as R
+participant "JpaApplicationRepository" as RJPA
+participant "Candidate" as A
+participant "CandidateDTO" as ADTO
+participant "RankBuilder" as RB
+participant "RankRepository" as RR
+participant "JpaRankRepository" as JRR
+database "Database" as DB
+
+
+
+
+activate CM
+    CM -> UI : Asks to display the personal data of a candidate
+    activate UI
+        ref over DB , CM: List Job Openings\n(US 1003)
+            UI -> CM : Shows list of Job Openings and asks to select one
+    deactivate UI
+    CM -> UI : Selects a Job Opening
+    activate UI
+        UI --> C : getCandidatesForJob(JobOpening jobOpening)
+        activate C
+            C -> S : getCandidatesForJob(JobOpening jobOpening)
+            activate S
+                S -> R : getCandidatesForJob(JobOpening jobOpening)
+                activate R
+                    R -> RJPA : getCandidatesForJob(JobOpening jobOpening)
+                    activate RJPA
+                        RJPA -> DB : createQuery(SELECT a.Candidate FROM Application a WHERE a.jobOpening = :jobOpening", candidate.class)
+                        activate DB
+                            RJPA -> DB : setParameter("jobOpening", jobOpening)
+                            DB --> RJPA : Iterable<Candidate>
+                        deactivate DB
+                        RJPA --> R : Iterable<Candidate>
+                    deactivate RJPA
+                    R --> S : Iterable<Candidate>
+                deactivate R
+
+                    loop for each Candidate
+                        S -> A: toDTO()
+                    activate A
+                        A --> ADTO: create
+                        activate ADTO
+                        A <-- ADTO: CandidateDTO
+                        deactivate ADTO
+                        S <-- A: CandidateDTO
+                    deactivate A
+                end
+                S --> C : Iterable<CandidateDTO>
+            deactivate S
+            C --> UI : Iterable<CandidateDTO>
+        deactivate C
+        UI --> CM : Displays Candidate List and asks to order it
+    deactivate UI
+    loop for every candidate
+        CM -> UI : Selects a candidate
+        activate UI
+            UI --> UI : saveToList(CandidateDTO candidateDTO)
+            UI --> CM : Asks for the next candidate in the rank
+    end loop
+    UI --> C : addRank(Iterable<CandidateDTO> rankedList, JobOpening jobOpening)
+    activate C
+        C -> S : addRank(Iterable<CandidateDTO> rankedList, JobOpening jobOpening)
+        activate S
+            S -> RB : createRank(Iterable<CandidateDTO> rankedList, JobOpening jobOpening)
+            activate RB
+                RB --> S : rank
+            deactivate RB
+            S -> RR : save(rank)
+            activate RR
+                RR -> JRR : save(Rank)
+                activate JRR
+                    JRR -> DB : persist(rank)
+                    activate DB
+                        DB --> JRR : rank
+                    deactivate DB
+                    JRR --> RR : rank
+                deactivate JRR
+                RR --> S : rank
+            deactivate RR
+            S --> C : rank
+        deactivate S
+        C --> UI : rank
+    deactivate C
+    UI --> CM : Show operation success
+deactivate CM
+
+@enduml

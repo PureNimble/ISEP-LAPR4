@@ -1,4 +1,0 @@
-INPUT_PATH=./resources/input/
-OUTPUT_PATH=./resources/output/
-NUMBER_OF_CHILDREN=5
-VERIFY_NEW_FILES_FREQUENCY=5

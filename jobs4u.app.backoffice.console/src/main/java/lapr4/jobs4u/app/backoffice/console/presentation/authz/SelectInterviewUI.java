@@ -35,7 +35,7 @@ public class SelectInterviewUI extends AbstractUI {
         protected boolean doShow() {
 
                 Iterable<JobOpeningDTO> jobs = jobOpeningController
-                                .getIntersection(jobOpeningController.filterByCostumerManager());
+                                .getIntersection(jobOpeningController.filterWithInterview());
 
                 final SelectWidget<JobOpeningDTO> selector = new SelectWidget<>("Job Openings:", jobs,
                                 new JobOpeningPrinter());

@@ -58,13 +58,13 @@ public class ImportQuestionsController {
 	private final QuestionTypeRepository questionTypeRepository = PersistenceContext.repositories().questionType();
 
 	/**
-	 * Import dishes from a file. It uses the file extension to determine which
+	 * Import questions from a file. It uses the file extension to determine which
 	 * import plugin to activate.
 	 * <p>
 	 * If there is an error parsing the file no dish will be imported.
 	 * 
 	 * @param filename
-	 * @return the list of imported dishes
+	 * @return the list of imported questions
 	 * @throws IOException
 	 */
 	public List<Question> importQuestions(final String filename) throws IOException {
@@ -88,7 +88,7 @@ public class ImportQuestionsController {
 			final var fileName = FilenameUtils.getBaseName(filename);
 
 			final var plugin = pluginRepo.findByName(Designation.valueOf(fileName)).orElseThrow(
-					() -> new IllegalStateException("There is no plugin associated with that file extension"));
+					() -> new IllegalStateException("There is no plugin associated with that name"));
 
 			/* final var plugin = pluginRepo.findByFileExtension(FileExtension.valueOf(fileExt)).orElseThrow(
 					() -> new IllegalStateException("There is no plugin associated with that file extension")); */

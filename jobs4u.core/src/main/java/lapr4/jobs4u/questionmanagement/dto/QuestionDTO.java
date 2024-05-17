@@ -26,6 +26,10 @@ public class QuestionDTO {
 
     @XmlElement
     @JsonProperty
+    private String cotation;
+
+    @XmlElement
+    @JsonProperty
     private String body;
 
     @XmlElementWrapper(name = "possibleAnswersList")

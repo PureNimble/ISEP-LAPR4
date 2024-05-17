@@ -46,6 +46,10 @@ public class Question implements AggregateRoot<Long>, DTOable<QuestionDTO> {
 
     @XmlElement
     @JsonProperty
+    private Cotation cotation;
+
+    @XmlElement
+    @JsonProperty
     @Column(nullable = false)
     private QuestionBody body;
 
@@ -62,7 +66,7 @@ public class Question implements AggregateRoot<Long>, DTOable<QuestionDTO> {
     @Column(nullable = false)
     private String importerPlugin;
 
-    Question(final QuestionType type, final QuestionBody body, final List<Answer> possibleAnswers,
+    Question(final QuestionType type, final Cotation cotation, final QuestionBody body, final List<Answer> possibleAnswers,
             final String importerPlugin) {
         Preconditions.noneNull(new Object[] { type, body, possibleAnswers, importerPlugin });
         this.type = type;
@@ -70,6 +74,7 @@ public class Question implements AggregateRoot<Long>, DTOable<QuestionDTO> {
         this.possibleAnswers = possibleAnswers;
         this.active = true;
         this.importerPlugin = importerPlugin;
+        this.cotation = cotation;
     }
 
     protected Question() {
@@ -115,6 +120,10 @@ public class Question implements AggregateRoot<Long>, DTOable<QuestionDTO> {
         return this.type;
     }
 
+    public Cotation cotation() {
+        return this.cotation;
+    }
+
     public QuestionBody questionBody() {
         return this.body;
     }
@@ -130,7 +139,7 @@ public class Question implements AggregateRoot<Long>, DTOable<QuestionDTO> {
 
     @Override
     public QuestionDTO toDTO() {
-        return new QuestionDTO(this.type.toString(), this.body.toString(), this.possibleAnswers,
+        return new QuestionDTO(this.type.toString(), this.cotation.toString(), this.body.toString(), this.possibleAnswers,
                 this.importerPlugin.toString());
     }
 }

@@ -1,11 +1,13 @@
 [
     {
         "type": "Choice, with single answer",
+        "cotation": "40",
         "body": "What is the capital of Spain? 1. Madrid 2. Barcelona 3. Valencia",
         "possibleAnswers": ["Madrid"]
     },
     {
         "type": "Choice, with multiple answers",
+        "cotation": "30",
         "body": "Which of the following are fruits? 1. Apple 2. Carrot 3. Banana 4. Pear",
         "possibleAnswers": [
             "Apple",
@@ -15,6 +17,7 @@
     },
     {
         "type": "True/False",
+        "cotation": "30",
         "body": "Is the Earth round?",
         "possibleAnswers": ["True"]
     }

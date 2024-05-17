@@ -34,8 +34,7 @@ public class SelectRequirementUI extends AbstractUI {
         @Override
         protected boolean doShow() {
 
-                Iterable<JobOpeningDTO> jobs = jobOpeningController
-                                .getIntersection(jobOpeningController.filterByCostumerManager());
+                Iterable<JobOpeningDTO> jobs = jobOpeningController.filterByCostumerManager();
 
                 final SelectWidget<JobOpeningDTO> selector = new SelectWidget<>("Job Openings:", jobs,
                                 new JobOpeningPrinter());

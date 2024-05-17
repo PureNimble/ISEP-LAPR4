@@ -63,8 +63,8 @@ public class JpaJobOpeningRepository extends JpaAutoTxRepository<JobOpening, Job
     @Override
     public Iterable<JobOpening> filterByPeriod(final Calendar initialDate, final Calendar finalDate) {
         Query query = createQuery(
-            "SELECT e FROM JobOpening e WHERE e.registeredOn BETWEEN :startDate AND :endDate",
-            JobOpening.class);
+                "SELECT e FROM JobOpening e WHERE e.registeredOn BETWEEN :startDate AND :endDate",
+                JobOpening.class);
         query.setParameter("startDate", initialDate, TemporalType.TIMESTAMP);
         query.setParameter("endDate", finalDate, TemporalType.TIMESTAMP);
         return query.getResultList();
@@ -74,6 +74,15 @@ public class JpaJobOpeningRepository extends JpaAutoTxRepository<JobOpening, Job
         final Map<String, Object> params = new HashMap<>();
         params.put("jobReference", jobReference);
         return matchOne("e.jobReference=:jobReference", params);
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public Iterable<JobOpening> filterWithInterview() {
+        Query query = createQuery(
+                "SELECT e FROM JobOpening e, RecruitmentProcess RP WHERE e.jobReference = RP.jobOpening.jobReference AND RP.interviewPhase IS NOT NULL",
+                JobOpening.class);
+        return query.getResultList();
     }
 
 }

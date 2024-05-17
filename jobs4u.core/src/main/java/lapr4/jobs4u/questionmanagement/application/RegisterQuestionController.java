@@ -23,21 +23,21 @@ public class RegisterQuestionController {
         this.authz = authz;
     }
 
-    public Question SetUpQuestion(final QuestionType questionType, final String questionBody,
+    public Question SetUpQuestion(final QuestionType questionType, final String cotation, final String questionBody,
             final List<Answer> possibleAnswers, final QuestionImporterPlugin importerPlugin) {
         authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.LANGUAGE_ENGINEER, BaseRoles.POWERUSER);
-        return registerQuestion(questionType, questionBody, possibleAnswers, importerPlugin);
+        return registerQuestion(questionType, cotation, questionBody, possibleAnswers, importerPlugin);
     }
 
-    private Question registerQuestion(final QuestionType questionType, final String questionBody,
+    private Question registerQuestion(final QuestionType questionType, final String cotation, final String questionBody,
             final List<Answer> possibleAnswers, final QuestionImporterPlugin importerPlugin) {
-        final Question question = doSetUpQuestion(questionType, questionBody, possibleAnswers, importerPlugin);
+        final Question question = doSetUpQuestion(questionType, cotation, questionBody, possibleAnswers, importerPlugin);
         return questionRepository.save(question);
     }
 
-    private Question doSetUpQuestion(final QuestionType questionType, final String questionBody,
+    private Question doSetUpQuestion(final QuestionType questionType, final String cotation, final String questionBody,
             final List<Answer> possibleAnswers, final QuestionImporterPlugin importerPlugin) {
         return new QuestionBuilder()
-                .with(questionType, questionBody, possibleAnswers, importerPlugin.identity().toString()).build();
+                .with(questionType, cotation, questionBody, possibleAnswers, importerPlugin.identity().toString()).build();
     }
 }

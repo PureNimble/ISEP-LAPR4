@@ -70,6 +70,14 @@ public class ListJobOpeningsService {
         Optional<JobOpening> jobOpening = jobOpeningRepository.findJobOpeningByReference(jobReference);
         return jobOpening;
     }
+
+    public Iterable<JobOpeningDTO> filterWithInterview() {
+        final Iterable<JobOpening> jobOpenings = this.jobOpeningRepository.filterWithInterview();
+        
+        List<JobOpeningDTO> jobOpeningsDTO = new ArrayList<>();
+        jobOpenings.forEach(jobOpening -> jobOpeningsDTO.add(jobOpening.toDTO()));
+        return jobOpeningsDTO;
+    }
     
     public JobOpening selectedJobOpening(final JobOpeningDTO jobOpeningDTO) {
         JobOpening selectedJobOpening = jobOpeningRepository

@@ -81,7 +81,7 @@ public class RequirementImporter implements QuestionImporter {
 					Answer answer = Answer.valueOf(answerString);
 					answers.add(answer);
 				}
-				result.add(new QuestionDTO(values[0], values[1], answers, plugin.identity().toString()));
+				result.add(new QuestionDTO(values[0], null,values[1], answers, plugin.identity().toString()));
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -101,6 +101,7 @@ public class RequirementImporter implements QuestionImporter {
 			for (QuestionDTO questionDTO : questionDTOs) {
 				QuestionDTO newQuestionDTO = new QuestionDTO(
 						questionDTO.getType(),
+						null,
 						questionDTO.getBody(),
 						questionDTO.getPossibleAnswers(),
 						plugin.identity().toString());
@@ -133,7 +134,7 @@ public class RequirementImporter implements QuestionImporter {
 					Answer answer = Answer.valueOf(answerElement.getTextContent());
 					possibleAnswers.add(answer);
 				}
-				QuestionDTO newQuestionDTO = new QuestionDTO(type, body, possibleAnswers, plugin.identity().toString());
+				QuestionDTO newQuestionDTO = new QuestionDTO(type, null,body, possibleAnswers, plugin.identity().toString());
 				result.add(newQuestionDTO);
 			}
 		} catch (IOException | SAXException | ParserConfigurationException e) {

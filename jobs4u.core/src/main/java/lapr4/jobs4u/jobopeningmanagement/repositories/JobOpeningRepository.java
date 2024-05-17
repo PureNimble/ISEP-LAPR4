@@ -18,4 +18,5 @@ public interface JobOpeningRepository extends DomainRepository<JobReference, Job
     Iterable<JobOpening> filterByCostumer(final Customer customer);
     Iterable<JobOpening> filterByActive(final boolean active);
     Iterable<JobOpening> filterByPeriod(final Calendar initialDate, final Calendar finalDate);
+    Iterable<JobOpening> filterWithInterview();
 }

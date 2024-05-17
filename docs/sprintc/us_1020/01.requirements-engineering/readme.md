@@ -20,6 +20,10 @@
 
 _N/A_
 
+### 1.3. Acceptance Criteria
+
+* **AC1:** The system must be deployed using several network nodes. It is expected that, at least, the relational database server and the Follow Up Server be deployed in nodes different from localhost, preferably in the cloud. The e-mail notification tasks must be executed in background by the Follow Up Server.
+
 ### 1.4. Found out Dependencies
 
 _N/A_

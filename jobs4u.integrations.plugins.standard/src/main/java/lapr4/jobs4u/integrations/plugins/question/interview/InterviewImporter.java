@@ -80,7 +80,7 @@ public class InterviewImporter implements QuestionImporter {
 					Answer answer = Answer.valueOf(answerString);
 					answers.add(answer);
 				}
-				result.add(new QuestionDTO(values[0], values[1], answers, plugin.identity().toString()));
+				result.add(new QuestionDTO(values[0], values[1], values[2], answers, plugin.identity().toString()));
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -100,6 +100,7 @@ public class InterviewImporter implements QuestionImporter {
 			for (QuestionDTO questionDTO : questionDTOs) {
 				QuestionDTO newQuestionDTO = new QuestionDTO(
 						questionDTO.getType(),
+						questionDTO.getCotation(),
 						questionDTO.getBody(),
 						questionDTO.getPossibleAnswers(),
 						plugin.identity().toString());
@@ -123,6 +124,7 @@ public class InterviewImporter implements QuestionImporter {
 				Element questionElement = (Element) questionNodes.item(i);
 				String type = questionElement.getElementsByTagName("type").item(0).getTextContent();
 				String body = questionElement.getElementsByTagName("body").item(0).getTextContent();
+				String cotation = questionElement.getElementsByTagName("cotation").item(0).getTextContent();
 				Element possibleAnswersElement = (Element) questionElement.getElementsByTagName("possibleAnswersList")
 						.item(0);
 				NodeList answerNodes = possibleAnswersElement.getElementsByTagName("possibleAnswers");
@@ -132,7 +134,7 @@ public class InterviewImporter implements QuestionImporter {
 					Answer answer = Answer.valueOf(answerElement.getTextContent());
 					possibleAnswers.add(answer);
 				}
-				QuestionDTO newQuestionDTO = new QuestionDTO(type, body, possibleAnswers, plugin.identity().toString());
+				QuestionDTO newQuestionDTO = new QuestionDTO(type, cotation, body, possibleAnswers, plugin.identity().toString());
 				result.add(newQuestionDTO);
 			}
 		} catch (IOException | SAXException | ParserConfigurationException e) {

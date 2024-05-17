@@ -46,6 +46,11 @@ public class ListJobOpeningsController {
         return jobOpeningsService.filterByPeriod(initialDate, finalDate);
     }
 
+    public Iterable<JobOpeningDTO> filterWithInterview() {
+        authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.CUSTOMER_MANAGER, BaseRoles.POWERUSER);
+        return jobOpeningsService.filterWithInterview();
+    }
+
     public JobOpening selectedJobOpening(final JobOpeningDTO jobOpeningDTO) {
         authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.CUSTOMER_MANAGER, BaseRoles.POWERUSER);
         return jobOpeningsService.selectedJobOpening(jobOpeningDTO);

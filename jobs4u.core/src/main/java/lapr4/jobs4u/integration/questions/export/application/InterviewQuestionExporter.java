@@ -17,7 +17,12 @@ public class InterviewQuestionExporter implements QuestionExporter {
 
     @Override
     public void element(final Question e) {
-        stream.printf("\nQUESTION TYPE: %s\n", e.questionType());
+        if (e.cotation().value() == Math.floor(e.cotation().value())) {
+            stream.printf("\nCOTATION: %d%%\n", (int) e.cotation().value().doubleValue());
+        } else {
+            stream.printf("\nCOTATION: %.2f%%\n", e.cotation().value());
+        }
+        stream.printf("QUESTION TYPE: %s\n", e.questionType());
         if (e.questionType().identity().contains("Choice")) {
             stream.print("QUESTION: ");
             String[] parts = e.questionBody().toString().split(" (?=\\d\\. )");

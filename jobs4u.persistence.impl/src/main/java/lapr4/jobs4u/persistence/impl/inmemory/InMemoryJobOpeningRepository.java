@@ -48,4 +48,8 @@ public class InMemoryJobOpeningRepository extends InMemoryDomainRepository<JobOp
     public Optional<JobOpening> findJobOpeningByReference(final JobReference jobReference) {
         return Optional.ofNullable(matchOne(e -> e.identity().equals(jobReference)).orElse(null));
     }
+
+    public Iterable<JobOpening> filterWithInterview() {
+        return filterWithInterview();
+    }
 }

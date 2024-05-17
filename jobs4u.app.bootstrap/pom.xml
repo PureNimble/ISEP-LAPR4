@@ -44,5 +44,11 @@
         	<artifactId>jobs4u.app.common.console</artifactId>
         	<version>${project.parent.version}</version>
         </dependency>
+        <dependency>
+            <groupId>lapr4</groupId>
+            <artifactId>jobs4u.integrations.plugins.standard</artifactId>
+            <version>${project.parent.version}</version>
+            <scope>runtime</scope>
+        </dependency>
     </dependencies>
 </project>

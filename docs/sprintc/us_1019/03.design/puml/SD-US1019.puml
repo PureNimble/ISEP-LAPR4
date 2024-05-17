@@ -1,0 +1,24 @@
+@startuml SD-US1019
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+title System Sequence Diagram (SSD) - Get an ordered list of candidates, using the job interview points
+
+autonumber
+
+actor "Operator" as Manager
+participant "RegisterCandidateCreateUserUI" as System
+participant "RegisterCandidateCreateUserController" as Controller
+participant "Candidate" as candidate
+participant "CandidateRepository" as repository
+participant "JpaCandidateRepository" as jpa
+participant "CustomerUserController" as CustomerUserController
+participant "ManagementService" as ManagementService
+participant "Factory" as Factory
+participant "UserRepository" as UserRepository
+participant "JpaUserRepository" as JpaUserRepository
+database "Database" as DB
+
+    
+@enduml

@@ -1,4 +1,4 @@
- Operating System Files
+Operating System Files
 
 *.DS_Store
 Thumbs.db
@@ -41,4 +41,3 @@ obj/
 jobs4u.applicationsFileBot/bin/
 doubts.txt
 output/
-main

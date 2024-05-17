@@ -31,7 +31,7 @@ public class ExportInterviewUI extends AbstractUI {
         }
 
         try {
-            final String filename = "jobs4u.core/target/" + questionImporterPlugin.identity().toString() + ".txt";
+            final String filename = "jobs4u.ANTLR/resources/" + questionImporterPlugin.identity().toString() + ".txt";
             this.questionExporterController.export(filename, FileFormat.INTERVIEW,
                     questionImporterPlugin.identity().toString());
         } catch (final IntegrityViolationException | IOException | ConcurrencyException e) {

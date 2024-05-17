@@ -1,0 +1,20 @@
+TITLE: Alternate
+NAME:
+
+# What is the largest ocean on Earth? 1. Atlantic 2. Pacific 3. Indian
+ANSWER:
+
+# Which of the following are programming languages? 1. Python 2. Java 3. Blue 4. Green
+ANSWER:
+
+# Is Python a snake?
+ANSWER:
+
+# Who is the current CEO of Microsoft? 1. Bill Gates 2. Satya Nadella 3. Steve Jobs
+ANSWER:
+
+# Which of the following are fruits? 1. Apple 2. Banana 3. Carrot 4. Pear
+ANSWER:
+
+# Is Java a type of coffee?
+ANSWER:

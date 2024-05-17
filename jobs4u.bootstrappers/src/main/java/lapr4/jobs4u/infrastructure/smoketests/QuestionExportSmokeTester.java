@@ -32,7 +32,7 @@ public class QuestionExportSmokeTester implements Action {
 	}
 
 	private void testExportTo(final FileFormat format, final String plugin) {
-		final var filename = "jobs4u.bootstrappers/target/" + plugin + ".txt";
+		final var filename = "jobs4u.ANTLR/resources/" + plugin + ".txt";
 		try {
 			questionExporterController.export(filename, format, plugin);
 			outputExportedContent(format, filename, plugin);

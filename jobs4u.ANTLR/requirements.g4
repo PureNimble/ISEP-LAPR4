@@ -9,5 +9,5 @@ content:'#' (text MEMBER?)*
 
 NUMBER: [0-9]+;
 WORD: [a-zA-Z.]+;
-MEMBER: [.,;:!?)(-];
+MEMBER: [.,;:!?)(-] | '\'';
 WS: [ \t\r\n]+ -> skip;

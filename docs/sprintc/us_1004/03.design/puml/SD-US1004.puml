@@ -1,0 +1,23 @@
+@startuml SD-US1004
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+title System Sequence Diagram (SSD) - Edit a Job Opening
+
+autonumber
+
+actor "Customer Manager" as Manager
+participant "EditJobOpeningUI" as EditJobOpeningUI
+participant "EditJobOpeningController" as EditJobOpeningController
+participant "JobOpening" as JobOpening
+participant "JobOpeningRepository" as JobOpeningRepository
+participant "JpaJobOpeningRepository" as JpaJobOpeningRepository
+participant "OpenOrClosePhaseController" as OpenOrClosePhaseController
+participant "RecruitmentProcess" as RecruitmentProcess
+participant "RecruitmentProcessRepository" as RecruitmentProcessRepository
+participant "JpaRecruitmentProcessRepository" as JpaRecruitmentProcessRepository
+database "Database" as DB
+
+
+@enduml

@@ -2,7 +2,6 @@ package lapr4.jobs4u;
 
 import eapli.framework.infrastructure.authz.application.AuthzRegistry;
 import eapli.framework.infrastructure.authz.domain.model.PlainTextEncoder;
-import lapr4.jobs4u.tcpclientserver.TcpClient;
 import lapr4.jobs4u.usermanagement.domain.BasePasswordPolicy;
 import lapr4.jobs4u.infrastructure.persistence.PersistenceContext;
 

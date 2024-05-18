@@ -10,6 +10,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import lapr4.jobs4u.message.AckMessage;
+import lapr4.jobs4u.message.AuthMessage;
 import lapr4.jobs4u.message.CommTestMessage;
 import lapr4.jobs4u.message.DisconnMessage;
 import lapr4.jobs4u.message.ErrMessage;
@@ -26,7 +27,7 @@ public class ClientHandler implements Runnable {
             put(MessageCode.COMMTEST, CommTestMessage.class);
             put(MessageCode.DISCONN, DisconnMessage.class);
             put(MessageCode.ERR, ErrMessage.class);
-            // put(MessageCode.AUTH, AuthMessage.class);
+            put(MessageCode.AUTH, AuthMessage.class);
         }
     };
 

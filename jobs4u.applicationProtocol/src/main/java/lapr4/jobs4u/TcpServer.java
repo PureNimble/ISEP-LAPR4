@@ -1,4 +1,4 @@
-package lapr4.jobs4u.tcpclientserver;
+package lapr4.jobs4u;
 
 import java.io.IOException;
 import java.net.ServerSocket;
@@ -7,16 +7,14 @@ import java.net.Socket;
 import javax.net.ssl.SSLServerSocket;
 import javax.net.ssl.SSLServerSocketFactory;
 
-import lapr4.jobs4u.EventListener;
-
-public class TcpClient {
+public class TcpServer {
 
     private int port;
     private Class<? extends Runnable> handlerClass;
     private boolean secure;
     private EventListener eventListener;
 
-    public TcpClient(int port, Class<? extends Runnable> handler, boolean secure) {
+    public TcpServer(int port, Class<? extends Runnable> handler, boolean secure) {
         this.port = port;
         this.handlerClass = handler;
         this.secure = secure;
@@ -45,9 +43,12 @@ public class TcpClient {
 
         while (!tcpSocket.isClosed()) {
             try {
+
                 socket = tcpSocket.accept();
-                Runnable handler = handlerClass.getConstructor(Socket.class, EventListener.class)
-                        .newInstance(socket, this.eventListener);
+
+                Runnable handler = handlerClass.getConstructor(Socket.class, EventListener.class).newInstance(socket,
+                        this.eventListener);
+
                 Thread clientHandler = new Thread(handler);
 
                 clientHandler.start();

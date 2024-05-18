@@ -14,7 +14,5 @@ public class ErrMessage extends Message {
     }
 
     @Override
-    public void handle() throws IOException {
-
-    }
+    public void handle() throws IOException {}
 }

@@ -23,13 +23,11 @@ int listCandidatesID(int *fd, Config *config)
     DIR *d;
     struct dirent *dir;
     d = opendir(config->inputPath);
-    int *files = NULL;
     if (d == NULL)
     {
         errorMessages("Error opening directory\n");
         exit(EXIT_FAILURE);
     }
-    createMalloc((void **)&files, 0);
 
     HashSet *set = createHashSet();
 
@@ -47,7 +45,6 @@ int listCandidatesID(int *fd, Config *config)
         }
     }
     closedir(d);
-    free(files);
     int array[20];
 
     int b = getArray(set, array);

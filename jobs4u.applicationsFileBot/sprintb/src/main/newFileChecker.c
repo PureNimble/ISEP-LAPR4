@@ -7,10 +7,12 @@
 #include <dirent.h>
 // signal libraries
 #include <signal.h>
+// sys libraries
+#include <sys/types.h>
+#include <sys/wait.h>
 // info about this project
 #include "info.h"
 #include "utils.h"
-#include <sys/types.h>
 
 /**
  * @brief Check if there are new files in the directory and send a signal to the

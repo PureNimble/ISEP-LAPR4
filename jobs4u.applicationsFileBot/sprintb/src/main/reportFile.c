@@ -63,7 +63,7 @@ int checkIfCandidateFilesExist(Files *files, int numberOfCandidates, char *buffe
     int validIndex = 0;
     for (int i = 0; i < numberOfCandidates; i++)
     {
-        if (fscanf(file, "Candidate ID: %d\nJob Offer: %s\n", &files[i].candidateID, &files[i].jobOffer_dir) == 2)
+        if (fscanf(file, "Candidate ID: %d\nJob Offer: %s\n", &files[i].candidateID, files[i].jobOffer_dir) == 2)
         {
             if (i != validIndex)
             {

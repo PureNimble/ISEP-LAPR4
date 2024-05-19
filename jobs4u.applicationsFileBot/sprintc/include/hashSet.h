@@ -1,28 +1,25 @@
 #ifndef HASH_SET_H
 #define HASH_SET_H
 #define HASH_SET_SIZE 20
-#include <stdbool.h>
 
 // HashSet struct
-typedef struct
+typedef struct Node
 {
     int key;
-    bool isOccupied;
+    struct Node *next;
 } Node;
 
 typedef struct HashSet
 {
-    Node buckets[HASH_SET_SIZE];
-    // for barrier synchronization
-    unsigned int barrierCount;
-    unsigned int barrierSize;
+    Node *buckets[HASH_SET_SIZE];
 } HashSet;
 
 // HashSet functions
-bool add(HashSet *set, int key);
-bool contains(HashSet *set, int key);
-int removeValue(HashSet *set);
-int size(HashSet *set);
-void printHashSet(HashSet *set);
+int hash(int key);
+HashSet *createHashSet();
+void add(HashSet *set, int key);
+int contains(HashSet *set, int key);
+int getArray(HashSet *set, int *array);
+void freeHashSet(HashSet *set);
 
 #endif // HASH_SET_H

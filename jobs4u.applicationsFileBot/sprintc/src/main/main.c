@@ -4,14 +4,13 @@
 #include <sys/wait.h>
 #include <fcntl.h>
 #include <string.h>
-#include "info.h"
 #include "utils.h"
 #include <semaphore.h>
 int main()
 {
     Config config;
-    sem_t *sem_newFile, *sem_barrier, *sem_barrier_mutex;
-    Files *sharedData;
+    sem_t *sem_newFile, *sem_shared_memory, *sem_barrier, *sem_barrier_mutex;
+    CircularBuffer *sharedMemory;
     int fd;
 
     readConfigFile(&config);
@@ -22,20 +21,21 @@ int main()
     if (createChildProcess() == 0)
         newFileChecker(&config, sem_newFile);
 
-    sharedData = createSharedMemory(SHARED_MEMORY, &fd);
-    sem_barrier_mutex = createSemaphore(SEM_BARRIER_MUTEX, 0);
-    sem_barrier = createSemaphore(SEM_BARRIER, 0);
+    sharedMemory = createSharedMemory(SHARED_MEMORY, &fd);     // Comunication between workers and main process
+    sem_shared_memory = createSemaphore(SEM_SHARED_MEMORY, 0); // for shared memory acess
+    sem_barrier_mutex = createSemaphore(SEM_BARRIER_MUTEX, 1); // To protect the barrier counter
+    sem_barrier = createSemaphore(SEM_BARRIER, 0);             // To wait for all workers to finish
 
-    createWorkers(&config, sharedData, sem_barrier, sem_barrier_mutex);
+    createWorkers(&config, sharedMemory, sem_shared_memory, sem_barrier, sem_barrier_mutex);
     while (1)
     {
         sem_wait(sem_newFile);
         printf("New file detected\n");
-        listCandidatesID(&config, sharedData, sem_barrier_mutex);
+        listCandidatesID(&config, sharedMemory, sem_shared_memory);
         sem_wait(sem_barrier);
-        sharedData->barrierCount = 0;
-        printf("All workers have finished\n");
+        reportFile(&config, sharedMemory);
     }
+
     return 0;
 }
 
@@ -46,12 +46,12 @@ int main()
  * @param send_work_fd Pointer to the send_work_fd pipe.
  * @param recive_work Pointer to the recive_work pipe.
  */
-void createWorkers(Config *config, HashSet *shared_data, sem_t *sem_barrier, sem_t *sem_barrier_mutex)
+void createWorkers(Config *config, CircularBuffer *shared_data, sem_t *sem_shared_memory, sem_t *sem_barrier, sem_t *sem_barrier_mutex)
 {
     unsigned int i;
     for (i = 0; i < config->numberOfChildren; i++)
     {
         if (createChildProcess() == 0)
-            copyFiles(config, shared_data, sem_barrier, sem_barrier_mutex);
+            copyFiles(config, shared_data, sem_shared_memory, sem_barrier, sem_barrier_mutex);
     }
 }

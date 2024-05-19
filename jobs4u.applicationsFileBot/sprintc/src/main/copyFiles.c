@@ -19,16 +19,22 @@
  * @param fd The file descriptor for the pipe.
  * @param config The configuration struct.
  */
-void copyFiles(int *send_work_fd, int *recive_work_fd, Config *config)
+void copyFiles(Config *config, CircularBuffer *shared_data, sem_t *sem_shared_memory, sem_t *sem_barrier, sem_t *sem_barrier_mutex)
 {
     int candidateID;
+    Files files;
 
     while (1)
     {
-        // TODO: semaphore mutex
-        read(send_work_fd[0], &candidateID, sizeof(candidateID));
+        sem_wait(sem_shared_memory); // acess shared memory
+        if (isEmpty(shared_data))
+            continue;
+
+        files = readFromBuffer(shared_data);
+        sem_post(sem_shared_memory); // release shared memory
+
+        candidateID = files.candidateID;
         printf("-> Candidate ID: %d PID:%d\n", candidateID, getpid());
-        Files files;
 
         pid_t pid;
         int status;
@@ -89,7 +95,14 @@ void copyFiles(int *send_work_fd, int *recive_work_fd, Config *config)
                 closedir(dir);
             }
         }
-        // barrier semaphores
-        write(recive_work_fd[1], &files, sizeof(files));
+        sem_wait(sem_barrier_mutex); // protect the barrier counter
+        addToBuffer(shared_data, files);
+        shared_data->barrierCounter--;
+        sem_post(sem_barrier_mutex); // release the barrier counter
+        if (shared_data->barrierCounter == 0)
+        {
+            printf("\n-> All files have been copied\n");
+            sem_post(sem_barrier);
+        }
     }
 }

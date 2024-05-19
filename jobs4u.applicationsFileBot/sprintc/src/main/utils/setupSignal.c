@@ -52,10 +52,7 @@ void handle_signal(int signal)
     case SIGINT:
         write(1, "SIGINT received. Terminating all child processes...\n", 52);
         // Kill all processes in the same process group
-        removeSemaphore(SEM_NEW_FILE_CHECKER);
-        removeSemaphore(SEM_BARRIER);
-        removeSemaphore(SEM_BARRIER_MUTEX);
-        removeSharedMemory(SHARED_MEMORY);
+        removeShmFiles();
         kill(0, SIGTERM);
         exit(0);
     case SIGCHLD:
@@ -65,14 +62,20 @@ void handle_signal(int signal)
         if (WIFEXITED(status) && WEXITSTATUS(status) == 1)
         {
             write(1, "Child process was killed. Terminating all child processes...\n", 62);
-            removeSemaphore(SEM_NEW_FILE_CHECKER);
-            removeSemaphore(SEM_BARRIER);
-            removeSemaphore(SEM_BARRIER_MUTEX);
-            removeSharedMemory(SHARED_MEMORY);
+            removeShmFiles();
             kill(0, SIGTERM);
         }
         break;
     default:
         break;
     }
+}
+
+void removeShmFiles()
+{
+    removeSemaphore(SEM_NEW_FILE_CHECKER);
+    removeSemaphore(SEM_SHARED_MEMORY);
+    removeSemaphore(SEM_BARRIER);
+    removeSemaphore(SEM_BARRIER_MUTEX);
+    removeSharedMemory(SHARED_MEMORY);
 }

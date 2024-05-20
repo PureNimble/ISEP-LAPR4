@@ -3,7 +3,7 @@ skinparam monochrome true
 skinparam packageStyle rectangle
 skinparam shadowing false
 
-title System Sequence Diagram (SSD) - Edit a Job Opening
+title EditJobOpeningUI Sequence Diagram (SSD) - Edit a Job Opening
 
 autonumber
 
@@ -14,10 +14,111 @@ participant "JobOpening" as JobOpening
 participant "JobOpeningRepository" as JobOpeningRepository
 participant "JpaJobOpeningRepository" as JpaJobOpeningRepository
 participant "OpenOrClosePhaseController" as OpenOrClosePhaseController
-participant "RecruitmentProcess" as RecruitmentProcess
-participant "RecruitmentProcessRepository" as RecruitmentProcessRepository
-participant "JpaRecruitmentProcessRepository" as JpaRecruitmentProcessRepository
+participant "JobOpeningInterview" as JobOpeningInterview
+participant "JobOpeningInterviewRepository" as JobOpeningInterviewRepository
+participant "JpaJobOpeningInterviewRepository" as JpaJobOpeningInterviewRepository
+participant "JobOpeningRequirement" as JobOpeningRequirement
+participant "JobOpeningRequirementRepository" as JobOpeningRequirementRepository
+participant "JpaJobOpeningRequirementRepository" as JpaJobOpeningRequirementRepository
 database "Database" as DB
 
+activate Manager
+
+    Manager -> EditJobOpeningUI : Asks to edit a job opening
+activate EditJobOpeningUI
+
+EditJobOpeningUI --> Manager : Shows list of job openings
+deactivate EditJobOpeningUI
+
+Manager -> EditJobOpeningUI : Chooses a job opening to edit
+activate EditJobOpeningUI
+
+loop until the Customer Manager is satisfied with the changes
+    EditJobOpeningUI --> Manager : Shows list of job opening attributes
+
+    note right of Manager : Attributes are: Title or function, Contract Type, Mode, Address,\nNumber of vacancies, Description and Requirement Specification\ndepending on the phase that the recruitment process is in.
+
+    Manager -> EditJobOpeningUI : Chooses an attribute to edit
+
+    EditJobOpeningUI --> Manager : Shows current value of chosen attribute and asks for new value
+
+    Manager -> EditJobOpeningUI : Provides new value for chosen attribute
+end
+
+EditJobOpeningUI --> Manager : Asks to confirm changes
+deactivate EditJobOpeningUI
+
+Manager -> EditJobOpeningUI : Confirms changes
+activate EditJobOpeningUI
+
+EditJobOpeningUI -> EditJobOpeningController : editJobOpening(titleOrFunction, contractType, mode, address,\njobDescription, numberOfVacancies, theJobOpening)
+activate EditJobOpeningController
+    alt Title or function is updated
+        EditJobOpeningController -> JobOpening : editTitleOrFunction(titleOrFunction)
+    else Contract Type is updated
+        EditJobOpeningController -> JobOpening : editContractType(contractType)
+    else Mode is updated
+        EditJobOpeningController -> JobOpening : editMode(mode)
+    else Address is updated
+        EditJobOpeningController -> JobOpening : editAddress(address)
+    else Job Description is updated
+        EditJobOpeningController -> JobOpening : editJobDescription(jobDescription)
+    else Number of vacancies is updated
+        EditJobOpeningController -> JobOpening : editNumberOfVacancies(numberOfVacancies)
+    else Description is updated
+        EditJobOpeningController -> JobOpening : editDescription(description)
+    end
+    EditJobOpeningController -> JobOpeningRepository : save(jobOpening)
+    activate JobOpeningRepository
+        JobOpeningRepository -> JpaJobOpeningRepository : save(jobOpening)
+        activate JpaJobOpeningRepository
+            JpaJobOpeningRepository -> DB : save(jobOpening)
+            activate DB
+                DB --> JpaJobOpeningRepository : JobOpening
+            deactivate DB
+            JpaJobOpeningRepository --> JobOpeningRepository : jobOpening
+        deactivate JpaJobOpeningRepository
+        JobOpeningRepository --> EditJobOpeningController : jobOpening
+    deactivate JobOpeningRepository
+    EditJobOpeningController --> EditJobOpeningUI : jobOpening
+deactivate EditJobOpeningController
+alt Job Opening has Interview Phase
+    EditJobOpeningUI -> EditJobOpeningController : editJobOpeningInterview(jobOpeningInterview, interview)
+    activate EditJobOpeningController
+        EditJobOpeningController -> JobOpeningInterview : editPlugin(interview)
+        EditJobOpeningController -> JobOpeningInterviewRepository : save(jobOpeningInterview)
+        activate JobOpeningInterviewRepository
+            JobOpeningInterviewRepository -> JpaJobOpeningInterviewRepository : save(jobOpeningInterview)
+            activate JpaJobOpeningInterviewRepository
+                JpaJobOpeningInterviewRepository -> DB : save(jobOpeningInterview)
+                activate DB
+                    DB --> JpaJobOpeningInterviewRepository : JobOpeningInterview
+                deactivate DB
+                JpaJobOpeningInterviewRepository --> JobOpeningInterviewRepository : jobOpeningInterview
+            deactivate JpaJobOpeningInterviewRepository
+            JobOpeningInterviewRepository --> EditJobOpeningController : jobOpeningInterview
+        deactivate JobOpeningInterviewRepository
+        EditJobOpeningController --> EditJobOpeningUI : jobOpeningInterview
+    deactivate EditJobOpeningController
+end
+EditJobOpeningUI -> EditJobOpeningController : editJobOpeningRequirement(jobOpeningRequirement, requirement)
+activate EditJobOpeningController
+    EditJobOpeningController -> JobOpeningRequirement : editPlugin(requirement)
+    EditJobOpeningController -> JobOpeningRequirementRepository : save(jobOpeningRequirement)
+    activate JobOpeningRequirementRepository
+        JobOpeningRequirementRepository -> JpaJobOpeningRequirementRepository : save(jobOpeningRequirement)
+        activate JpaJobOpeningRequirementRepository
+            JpaJobOpeningRequirementRepository -> DB : save(jobOpeningRequirement)
+            activate DB
+                DB --> JpaJobOpeningRequirementRepository : JobOpeningRequirement
+            deactivate DB
+            JpaJobOpeningRequirementRepository --> JobOpeningRequirementRepository : jobOpeningRequirement
+        deactivate JpaJobOpeningRequirementRepository
+        JobOpeningRequirementRepository --> EditJobOpeningController : jobOpeningRequirement
+    deactivate JobOpeningRequirementRepository
+    EditJobOpeningController --> EditJobOpeningUI : jobOpeningRequirement
+
+EditJobOpeningUI --> Manager : Informs success or failure of update
+deactivate EditJobOpeningUI
 
 @enduml

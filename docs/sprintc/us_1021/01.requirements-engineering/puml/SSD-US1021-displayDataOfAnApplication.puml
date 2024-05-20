@@ -3,7 +3,7 @@ skinparam monochrome true
 skinparam packageStyle rectangle
 skinparam shadowing false
 
-title System Sequence Diagram (SSD) - List all applications for a Job Opening
+title System Sequence Diagram (SSD) - Displayes all data of an application
 
 autonumber
 
@@ -15,12 +15,20 @@ activate Manager
     Manager -> System : Asks to register display all the data of an application
     activate System
 
-     System -> Manager : displays list of applications and asks to choose one
+     System -> Manager : displays list of job openings and asks to choose of which the application belongs to
 
     deactivate System
 
-    Manager -> System : selects one application
+    Manager -> System : selects one job opening
     activate System
+
+        System -> Manager : dysplayes list of applications of the job openings
+
+deactivate System
+
+     Manager -> System : selects an application
+
+      activate System
 
         System -> Manager : dysplayes all data of the application
 

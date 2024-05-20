@@ -21,17 +21,26 @@
  * @param config A pointer to the Config struct containing the configuration settings.
  */
 int checkIfCandidateFilesExist(Files *files, int numberOfCandidates, char *buffer);
-void reportFile(Config *config, Files *files, int numberOfCandidates)
+void reportFile(Config *config, CircularBuffer *sharedMemory)
 {
+    int numberOfCandidates = 0;
+    Files *files = NULL; // Initialize files to NULL
+    while (!isEmpty(sharedMemory))
+    {
+        files = createRealloc(files, sizeof(Files) * (numberOfCandidates + 1));
+        files[numberOfCandidates] = readFromBuffer(sharedMemory);
+        numberOfCandidates++;
+    }
 
-    char buffer[3000];
+    char buffer[300];
     sprintf(buffer, "%sreport.txt", config->outputPath);
+
     int temp;
     if ((temp = checkIfCandidateFilesExist(files, numberOfCandidates, buffer)) != -1)
         numberOfCandidates = temp;
 
-    FILE *file = fopen(buffer, "a");
-    if (file == NULL)
+    FILE *reportFile = fopen(buffer, "a");
+    if (reportFile == NULL)
     {
         errorMessages("Failed to create file.\n");
         exit(EXIT_FAILURE);
@@ -41,16 +50,16 @@ void reportFile(Config *config, Files *files, int numberOfCandidates)
         if (files[i].numFiles == 0)
             continue;
 
-        fprintf(file, "Candidate ID: %d\n", files[i].candidateID);
-        fprintf(file, "Job Offer: %s\n", files[i].jobOffer_dir);
-        fprintf(file, "\tFiles:\n");
+        fprintf(reportFile, "Candidate ID: %d\n", files[i].candidateID);
+        fprintf(reportFile, "Job Offer: %s\n", files[i].jobOffer_dir);
+        fprintf(reportFile, "\tFiles:\n");
         for (int j = 0; j < files[i].numFiles; j++)
         {
-            fprintf(file, "\t\t%s\n", files[i].files[j]);
+            fprintf(reportFile, "\t\t%s\n", files[i].files[j]);
         }
-        fprintf(file, "\n");
+        fprintf(reportFile, "\n");
     }
-    fclose(file);
+    fclose(reportFile);
     free(files);
     printf("-> Report file has been generated\n\n");
 }
@@ -63,7 +72,7 @@ int checkIfCandidateFilesExist(Files *files, int numberOfCandidates, char *buffe
     int validIndex = 0;
     for (int i = 0; i < numberOfCandidates; i++)
     {
-        if (fscanf(file, "Candidate ID: %d\nJob Offer: %s\n", &files[i].candidateID, &files[i].jobOffer_dir) == 2)
+        if (fscanf(file, "Candidate ID: %d\nJob Offer: %s\n", &files[i].candidateID, files[i].jobOffer_dir) == 2)
         {
             if (i != validIndex)
             {

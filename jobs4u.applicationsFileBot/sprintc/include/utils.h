@@ -3,18 +3,18 @@
 #define HASH_SET_SIZE 20
 #define PERMISSIONS 0777
 #include <semaphore.h>
-#include "hashSet.h"
+#include "info.h"
 
 int isInteger(char *str);
-// Utils functions
 // Semaphore
 sem_t *createSemaphore(char *name, unsigned value);
 void removeSemaphore(char *name);
 // Shared Memory
-HashSet *createSharedMemory(char *name, int *fd);
+CircularBuffer *createSharedMemory(char *name, int *fd);
 void removeSharedMemory(char *name);
-
+// Pipe
 void createPipe(int *fd);
+// child process
 int createChildProcess();
 
 // Malloc
@@ -28,5 +28,9 @@ void errorMessages(char *message);
 int isFileOrDirectory(char *path);
 void create_directory(const char *dir);
 void delete_directory(const char *dir);
+
+// Candidate Info
+void printFiles(Files file);
+Files createFiles(int candidateID);
 
 #endif // UTILS_H

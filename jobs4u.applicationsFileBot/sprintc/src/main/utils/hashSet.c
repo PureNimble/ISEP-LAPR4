@@ -86,3 +86,18 @@ int getArray(HashSet *set, int *array)
     }
     return counter;
 }
+
+void freeHashSet(HashSet *set)
+{
+    for (int i = 0; i < HASH_SET_SIZE; i++)
+    {
+        Node *node = set->buckets[i];
+        while (node)
+        {
+            Node *temp = node;
+            node = node->next;
+            free(temp);
+        }
+    }
+    free(set);
+}

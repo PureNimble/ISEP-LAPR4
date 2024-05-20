@@ -1,4 +1,4 @@
-grammar interview;
+grammar Interview;
 
 start: 'TITLE:' text+ 'NAME:' 'GRADE:' content+;
 

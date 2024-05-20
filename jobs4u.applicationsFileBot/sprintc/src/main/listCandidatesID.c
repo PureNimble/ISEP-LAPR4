@@ -18,20 +18,16 @@
  * @param config The configuration settings for the application.
  * @return The number of candidate IDs found.
  */
-void listCandidatesID(Config *config, HashSet *sharedData, sem_t *sem_barrier_mutex, int fd)
+void listCandidatesID(Config *config, CircularBuffer *sharedData, sem_t *sem_shared_memory)
 {
-    DIR *d;
     struct dirent *dir;
-    d = opendir(config->inputPath);
-    int *files = NULL;
-
-    HashSet *set = createHashSet();
+    DIR *d = opendir(config->inputPath);
     if (d == NULL)
     {
         errorMessages("Error opening directory\n");
         exit(EXIT_FAILURE);
     }
-    createMalloc((void **)&files, 0);
+    HashSet *set = createHashSet();
 
     while ((dir = readdir(d)) != NULL)
     {
@@ -47,15 +43,16 @@ void listCandidatesID(Config *config, HashSet *sharedData, sem_t *sem_barrier_mu
         }
     }
     closedir(d);
-    free(files);
+    int array[20];
+    int size = getArray(set, &array);
+    freeHashSet(set);
 
-    int size = getArray(set, &files);
-
+    sharedData->barrierCounter = size;
     printf("Number of candidates: %d\n", size);
     for (int i = 0; i < size; i++)
     {
-        printf("Candidate ID: %d\n", files[i]);
+        Files file = createFiles(array[i]);
+        addToBuffer(sharedData, file);
     }
-
-    pause();
+    sem_post(sem_shared_memory);
 }

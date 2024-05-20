@@ -11,6 +11,7 @@
 #include <ctype.h>
 #include <semaphore.h>
 #include "utils.h"
+#include "circularBuffer.h"
 
 sem_t *createSemaphore(char *name, unsigned value)
 {
@@ -23,32 +24,29 @@ sem_t *createSemaphore(char *name, unsigned value)
     return sem;
 }
 
-int createSharedMemory(char *name)
+CircularBuffer *createSharedMemory(char *name, int *fd)
 {
-    int fd;
-    if ((fd = shm_open(name, O_CREAT | O_RDWR, 0644)) == -1)
+    CircularBuffer *shm;
+
+    if ((*fd = shm_open(name, O_CREAT | O_RDWR, 0644)) == -1)
     {
         perror("shm_open");
         exit(1);
     }
 
-    return fd;
-}
-Files *setSharedMemorySize(int fd, int size)
-{
-    Files *shm;
     // Truncate the shared memory to the size of the struct
-    if (ftruncate(fd, size) == -1)
+    if (ftruncate(*fd, sizeof(CircularBuffer)) == -1)
     {
         perror("ftruncate");
         exit(2);
     }
     // Map the shared memory to the address space of the process
-    if ((shm = mmap(NULL, size, PROT_READ | PROT_WRITE, MAP_SHARED, fd, 0)) == MAP_FAILED)
+    if ((shm = mmap(NULL, sizeof(CircularBuffer), PROT_READ | PROT_WRITE, MAP_SHARED, *fd, 0)) == MAP_FAILED)
     {
         perror("mmap");
         exit(3);
     }
+    initBuffer(shm);
     return shm;
 }
 
@@ -80,9 +78,9 @@ void removeSharedMemory(char *name)
     }
 }
 
-void close_shared_memory(int fd, HashSet *shm)
+void close_shared_memory(int fd, CircularBuffer *shm)
 {
-    if (munmap(shm, sizeof(HashSet)) < 0)
+    if (munmap(shm, sizeof(CircularBuffer)) < 0)
     {
         perror("munmap");
         exit(4);
@@ -277,4 +275,22 @@ void delete_directory(const char *dir)
         errorMessages("Failed to delete directory.\n");
         exit(EXIT_FAILURE);
     }
+}
+void printFiles(Files file)
+{
+    printf("Candidate ID: %d\n", file.candidateID);
+    printf("Number of files: %d\n", file.numFiles);
+    for (int i = 0; i < file.numFiles; i++)
+    {
+        printf("File %d: %s\n", i + 1, file.files[i]);
+    }
+}
+
+Files createFiles(int candidateID)
+{
+    Files file;
+    file.candidateID = candidateID;
+    file.numFiles = 0;
+    file.jobOffer_dir[0] = '\0';
+    return file;
 }

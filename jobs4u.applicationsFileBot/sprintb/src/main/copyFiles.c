@@ -52,8 +52,9 @@ void copyFiles(int *send_work_fd, int *recive_work_fd, Config *config)
                 {
                     // create new directory and copy the files
                     sprintf(buffer, "%s%s/%d", config->outputPath, files.jobOffer_dir, candidateID);
+
                     char command[1024];
-                    snprintf(command, sizeof(command), "mkdir -p %s && /bin/mv -u %s%d-* %s", buffer, config->inputPath, candidateID, buffer);
+                    snprintf(command, sizeof(command), "mkdir -p %s && /bin/cp -u %s%d-* %s", buffer, config->inputPath, candidateID, buffer);
                     execlp("/bin/sh", "sh", "-c", command, NULL);
                     exit(EXIT_FAILURE);
                 }

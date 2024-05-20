@@ -69,6 +69,7 @@ void newFileChecker(Config *config, sem_t *sem)
             }
             if (files_birth[counter - 1] > lastFileTime)
             {
+                write(1, "-------------------------\n| New Files were found. |\n-------------------------\n", 79);
                 sem_post(sem);
             }
             lastFileTime = files_birth[counter - 1];

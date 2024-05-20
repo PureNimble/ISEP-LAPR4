@@ -12,53 +12,52 @@ skinparam class {
     BackgroundColor #FEF9E7
     ArrowColor Black
 }
-package "<<aggregate>> Candidate" {
-    entity Candidate <<entity>> <<root>> {}
+' Job Opening Aggregate
+package "<<aggregate>> Job Opening" {
+    entity JobOpening <<entity>> <<root>> {}
 
-    class FirstName <<valueObject>> <<(V, #FF8B40)>> {}
-    class LastName <<valueObject>> <<(V, #FF8B40)>> {}
+    class JobReference <<valueObject>> <<(V, #FF8B40)>> {}
+    class TitleOrFunction <<valueObject>> <<(V, #FF8B40)>> {}
+    class ContractType <<valueObject>> <<(V, #FF8B40)>> {}
+    class Mode <<valueObject>> <<(V, #FF8B40)>> {}
+    class NumberOfVacancies <<valueObject>> <<(V, #FF8B40)>> {}
+    class JobDescription <<valueObject>> <<(V, #FF8B40)>> {}
+    entity RequirementSpecification <<entity>> {}
 }
 
-' User Aggregate
-package "<<aggregate>> User" {
-    entity User <<entity>> <<root>> {}
 
-    class Password <<valueObject>> <<(V, #FF8B40)>> {}
-    class Role <<valueObject>> <<(V, #FF8B40)>> {}
-    class IsActive <<valueObject>> <<(V, #FF8B40)>> {}
+' Application Aggregate
+package "<<aggregate>> Application" {
+    entity Application <<entity>> <<root>> {}
+    entity Result <<entity>> {}
 
-    class Authentication <<service>> <<(S, #85C1E9)>> {}
+    class ApplicationDate <<valueObject>> <<(V, #FF8B40)>> {}
+    class ApplicationNumber <<valueObject>> <<(V, #FF8B40)>> {}
+    class Outcome <<valueObject>> <<(V, #FF8B40)>> {}
+    class Justification <<valueObject>> <<(V, #FF8B40)>> {}
 
-    class Token <<valueObject>> <<(V, #FF8B40)>> {}
-    class createdOn <<valueObject>> <<(V, #FF8B40)>> {}
-    class PasswordPolicy <<service>> <<(S, #85C1E9)>> {}
-    class PasswordEncoder <<service>> <<(S, #85C1E9)>> {}
+    note right of Outcome: Outcome can be Approved or Rejected
+    note left of Justification: Rejected outcomes must have a justification
 }
-class PhoneNumber <<valueObject>> <<(V, #FF8B40)>> {}
-class Email <<valueObject>> <<(V, #FF8B40)>> {}
+' Job Opening relationships
+JobOpening "1" --> "1" JobReference : has
+JobOpening "1" --> "1" TitleOrFunction : has
+JobOpening "1" --> "1" ContractType : has
+JobOpening "1" --> "1" Mode : has
+JobOpening "1" --> "1" Address : has
+JobOpening "1" --> "1" CompanyName : has
+JobOpening "1" --> "1" NumberOfVacancies : has
+JobOpening "1" --> "1" JobDescription : has
+JobOpening "1" --> "1" RequirementSpecification: has
+JobOpening "1" -down--> "1" Interview : can have
 
-' User relationships
-User "1" --> "1" Email : has
-User "1" --> "1" Password : has
-User "1" --> "1" Role : has
-User "1" --> "1" IsActive : can be
-User "1" --> "1" Authentication : authenticated by
-' Authentication relationships
-Authentication "1" ..> "1" Email : authenticated by
-Authentication "1" ..> "1" Password : authenticated by
-Authentication "1" ..> "1" Token : generates
-Authentication "1" ..> "1" createdOn : generates
-Authentication "1" ..> "1" PasswordPolicy : applies
-Authentication "1" ..> "1" PasswordEncoder : uses
-' Password relationships
-Password "1" ..> "1" PasswordPolicy : applies
-Password "1" ..> "1" PasswordEncoder : uses
-' Candidate relationships
-Candidate "1" --> "1" FirstName : has
-Candidate "1" --> "1" LastName : has
-Candidate "1" --> "1" PhoneNumber : has
-Candidate "1" --> "1" Email : has
-Candidate "1" ---|> "1" User : has
+' Application relationships
+Application "1" --> "1" ApplicationDate : has
+Application "1" --> "1" ApplicationNumber : has
+Application "1" --> "0..1" Result : has
+Application "1" --> "1" JobOpening : for
+Application "1" --> "1" Candidate : from
+
 
 skinparam package {
     BackgroundColor #EBF5FB

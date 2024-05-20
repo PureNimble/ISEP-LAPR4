@@ -1,4 +1,4 @@
-grammar requirements;
+grammar Requirements;
 
 start: 'TITLE:' text+ 'NAME:' content+;
 

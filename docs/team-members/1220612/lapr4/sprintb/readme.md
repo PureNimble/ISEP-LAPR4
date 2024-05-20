@@ -95,4 +95,4 @@
 
 **Justification and Evidences:** The requirements were met in full, and any options related to the interpretation/analysis of the problem are correctly justified. There is a very complete definition of acceptance criteria, with most criteria reflected in tests.
 
-<img width=100% src="https://capsule-render.vercel.app/api?type=waving&height=120&color=4E1764&section=footer"/>
+<img width=100% src="https://capsule-render.v ercel.app/api?type=waving&height=120&color=4E1764&section=footer"/>

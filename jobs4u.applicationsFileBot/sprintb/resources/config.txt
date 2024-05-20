@@ -1,4 +1,4 @@
-INPUT_PATH=./resources/input/
-OUTPUT_PATH=./resources/output/
+INPUT_PATH=../sprintc/resources/input/
+OUTPUT_PATH=../sprintc/resources/output/
 NUMBER_OF_CHILDREN=5
 VERIFY_NEW_FILES_FREQUENCY=5

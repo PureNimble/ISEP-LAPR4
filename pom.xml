@@ -41,6 +41,7 @@
 		<module>jobs4u.persistence.impl</module>
 		<module>jobs4u.integrations.plugins.standard</module>
 		<module>jobs4u.applicationProtocol</module>
+		<module>jobs4u.ANTLR</module>
 	</modules>
 	<dependencies>
 		<dependency>

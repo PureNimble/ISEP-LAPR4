@@ -8,6 +8,6 @@ typedef struct
     int numFiles;
     char files[MAX_FILES][100];
 
-} Files;
+} CandidateInfo;
 
 #endif // CANDIDATE_INFO_H

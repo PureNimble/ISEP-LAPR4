@@ -5,32 +5,44 @@
 #include <semaphore.h>
 #include "info.h"
 
-int isInteger(char *str);
-// Semaphore
+// -----------------------------
+// Semaphore related functions
+// -----------------------------
 sem_t *createSemaphore(char *name, unsigned value);
 void removeSemaphore(char *name);
-// Shared Memory
+// -----------------------------
+// Shared memory related functions
+// -----------------------------
 CircularBuffer *createSharedMemory(char *name, int *fd);
 void removeSharedMemory(char *name);
-// Pipe
+void close_shared_memory(int fd, CircularBuffer *shm);
+// ----------------------------------
+// Process and pipe related functions
+// ----------------------------------
+pid_t createChildProcess();
 void createPipe(int *fd);
-// child process
-int createChildProcess();
-
-// Malloc
-void createMalloc(void **ptr, size_t size);
-void *createRealloc(void *ptr, size_t size);
-
-// Error Messages
-void errorMessages(char *message);
-
-// File/Directory
+// -----------------------------------
+// Memory allocation related functions
+// -----------------------------------
+void createMalloc(void **array, size_t size);
+void *createRealloc(void *array, size_t size);
+void createMallocString(char **str, char *value);
+// ------------------------------------
+// File and directory related functions
+// ------------------------------------
 int isFileOrDirectory(char *path);
+char *readFirstLine(char *file_path, int candidateID);
 void create_directory(const char *dir);
 void delete_directory(const char *dir);
-
-// Candidate Info
-void printFiles(Files file);
-Files createFiles(int candidateID);
+// -----------------------------
+// Utility functions
+// -----------------------------
+int isInteger(char *str);
+void errorMessages(char *message);
+// -----------------------------
+// CandidateInfo struct related functions
+// -----------------------------
+void printFiles(CandidateInfo file);
+CandidateInfo createFiles(int candidateID);
 
 #endif // UTILS_H

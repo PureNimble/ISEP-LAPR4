@@ -14,7 +14,7 @@ public class ClientApp {
         boolean isSecure = appSettings.isSSLEnabled();
         Integer port = appSettings.boardServerPort();
 
-        TcpClient server = new TcpClient(port, ClientHandler.class, isSecure);
+        TcpServer server = new TcpServer(port, ClientHandler.class, isSecure);
         server.run();
     }
 }

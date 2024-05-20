@@ -1,7 +1,10 @@
 package lapr4.jobs4u.protocol;
 
 import java.io.ByteArrayOutputStream;
+import java.io.DataInputStream;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ProtocolMessage {
 
@@ -25,6 +28,34 @@ public class ProtocolMessage {
     this.protocolVersion = protocolVersion;
     this.code = code;
     this.dataChunks = dataChunk;
+  }
+
+  public static ProtocolMessage fromDataStream(DataInputStream input) throws IOException {
+
+    byte protocolVersion = input.readByte();
+    MessageCode code = MessageCode.valueOf(input.readByte());
+
+    List<byte[]> dataChunks = new ArrayList<>();
+    while (true) {
+      int length = input.readUnsignedByte() + input.readUnsignedByte() * 256;
+      if (length == 0) {
+        break;
+      }
+
+      byte[] data = new byte[length];
+      input.readFully(data);
+      dataChunks.add(data);
+    }
+
+    int totalLength = dataChunks.stream().mapToInt(chunk -> chunk.length).sum();
+    byte[] allData = new byte[totalLength];
+    int currentIndex = 0;
+    for (byte[] chunk : dataChunks) {
+      System.arraycopy(chunk, 0, allData, currentIndex, chunk.length);
+      currentIndex += chunk.length;
+    }
+
+    return new ProtocolMessage(protocolVersion, code, allData);
   }
 
   public byte[] toByteStream() throws IOException {
@@ -52,6 +83,10 @@ public class ProtocolMessage {
 
   public byte[][] datachunks() {
     return this.dataChunks;
+  }
+
+  public MessageCode code() {
+    return this.code;
   }
 
 }

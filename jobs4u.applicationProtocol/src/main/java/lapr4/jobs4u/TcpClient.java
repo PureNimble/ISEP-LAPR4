@@ -1,65 +1,69 @@
 package lapr4.jobs4u;
 
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
 import java.io.IOException;
-import java.net.ServerSocket;
 import java.net.Socket;
+import java.net.UnknownHostException;
 
-import javax.net.ssl.SSLServerSocket;
-import javax.net.ssl.SSLServerSocketFactory;
+import javax.net.ssl.SSLParameters;
+import javax.net.ssl.SSLSocket;
+import javax.net.ssl.SSLSocketFactory;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+import lapr4.jobs4u.protocol.ProtocolMessage;
 
 public class TcpClient {
 
-    private int port;
-    private Class<? extends Runnable> handlerClass;
-    private boolean secure;
-    private EventListener eventListener;
+    private Socket socket;
+    private DataInputStream input;
+    private DataOutputStream output;
 
-    public TcpClient(int port, Class<? extends Runnable> handler, boolean secure) {
-        this.port = port;
-        this.handlerClass = handler;
-        this.secure = secure;
-        this.eventListener = new EventListener();
+    private final Logger logger = LogManager.getLogger(TcpClient.class);
+
+    protected TcpClient() {
     }
 
-    public void run() {
+    public void connect(String hostname, int port, boolean secure) throws UnknownHostException, IOException {
 
-        ServerSocket tcpSocket;
-        Socket socket;
+        if (secure) {
+            socket = SSLSocketFactory.getDefault().createSocket(hostname, port);
 
-        try {
-            if (this.secure) {
-                tcpSocket = SSLServerSocketFactory.getDefault().createServerSocket(port);
-                SSLServerSocket sslListener = (SSLServerSocket) tcpSocket;
-                sslListener.setNeedClientAuth(true);
-            } else
-                tcpSocket = new ServerSocket(port);
-        } catch (IOException e) {
-            System.out.println("Error creating the tcp socket");
-            e.printStackTrace();
-            return;
+            SSLParameters sslParams = new SSLParameters();
+            sslParams.setEndpointIdentificationAlgorithm("HTTPS");
+            ((SSLSocket) socket).setSSLParameters(sslParams);
+
+            ((SSLSocket) socket).startHandshake();
+        } else {
+            socket = new Socket(hostname, port);
         }
 
-        System.out.printf("[TCP%s Server] Listening on port %d!\n", this.secure ? " SSL" : "", port);
+        logger.debug("Connected to the server!");
 
-        while (!tcpSocket.isClosed()) {
-            try {
-                socket = tcpSocket.accept();
-                Runnable handler = handlerClass.getConstructor(Socket.class, EventListener.class)
-                        .newInstance(socket, this.eventListener);
-                Thread clientHandler = new Thread(handler);
+        input = new DataInputStream(socket.getInputStream());
+        output = new DataOutputStream(socket.getOutputStream());
+    }
 
-                clientHandler.start();
-            } catch (Exception e) {
-                System.out.println("Error creating the client handler thread");
-                e.printStackTrace();
-            }
+    public void send(ProtocolMessage msg) throws IOException {
+        output.write(msg.toByteStream());
+    }
+
+    public ProtocolMessage receive() throws IOException, ClassNotFoundException {
+        return ProtocolMessage.fromDataStream(input);
+    }
+
+    public ProtocolMessage sendRecv(ProtocolMessage msg) throws IOException, ClassNotFoundException {
+        synchronized (this) {
+            send(msg);
+            return receive();
         }
+    }
 
-        try {
-            tcpSocket.close();
-        } catch (IOException e) {
-            System.out.println("Error closing the tcp socket");
-            e.printStackTrace();
-        }
+    public void close() throws IOException {
+        output.close();
+        input.close();
+        socket.close();
     }
 }

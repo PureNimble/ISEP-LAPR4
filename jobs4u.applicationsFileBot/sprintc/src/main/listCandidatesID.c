@@ -44,14 +44,14 @@ void listCandidatesID(Config *config, CircularBuffer *sharedData, sem_t *sem_sha
     }
     closedir(d);
     int array[20];
-    int size = getArray(set, &array);
+    int size = getArray(set, array);
     freeHashSet(set);
 
     sharedData->barrierCounter = size;
     printf("Number of candidates: %d\n", size);
     for (int i = 0; i < size; i++)
     {
-        Files file = createFiles(array[i]);
+        CandidateInfo file = createFiles(array[i]);
         addToBuffer(sharedData, file);
     }
     sem_post(sem_shared_memory);

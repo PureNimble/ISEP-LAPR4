@@ -1,5 +1,6 @@
 package lapr4.jobs4u.jobopeningmanagement.domain;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -12,6 +13,7 @@ import eapli.framework.infrastructure.authz.domain.model.Role;
 import eapli.framework.infrastructure.authz.domain.model.SystemUser;
 import eapli.framework.infrastructure.authz.domain.model.SystemUserBuilder;
 import eapli.framework.time.util.CurrentTimeCalendars;
+import lapr4.jobs4u.customermanagement.domain.Address;
 import lapr4.jobs4u.customermanagement.domain.Customer;
 import lapr4.jobs4u.customermanagement.domain.CustomerBuilder;
 import lapr4.jobs4u.usermanagement.domain.BaseRoles;
@@ -103,5 +105,53 @@ public class JobOpeningTest {
         final boolean expected = aJobOpening.sameAs(anotherJobOpening);
 
         assertFalse(expected);
+    }
+
+    @Test
+    public void testSetTitleOrFunction() {
+        JobOpening jobOpening = getNewDummyJobOpening(aJobReference);
+        TitleOrFunction newTitleOrFunction = TitleOrFunction.valueOf("newTitleOrFunction");
+        jobOpening.editTitleOrFunction(newTitleOrFunction);
+        assertEquals(newTitleOrFunction, jobOpening.titleOrFunction());
+    }
+    
+    @Test
+    public void testEditContractType() {
+        JobOpening jobOpening = getNewDummyJobOpening(aJobReference);
+        ContractType newContractType = ContractType.valueOf(TypesOfContract.FULL_TIME.toString());
+        jobOpening.editContractType(newContractType);
+        assertEquals(newContractType, jobOpening.contractType());
+    }
+
+    @Test
+    public void testEditAddress() {
+        JobOpening jobOpening = getNewDummyJobOpening(aJobReference);
+        Address newAddress = Address.valueOf("newAddress");
+        jobOpening.editAddress(newAddress);
+        assertEquals(newAddress, jobOpening.address());
+    }
+
+    @Test
+    public void testEditJobDescription() {
+        JobOpening jobOpening = getNewDummyJobOpening(aJobReference);
+        JobDescription newJobDescription = JobDescription.valueOf("newJobDescription");
+        jobOpening.editJobDescription(newJobDescription);
+        assertEquals(newJobDescription, jobOpening.jobDescription());
+    }
+
+    @Test
+    public void testEditNumberOfVacancies() {
+        JobOpening jobOpening = getNewDummyJobOpening(aJobReference);
+        NumberOfVacancies newNumberOfVacancies = NumberOfVacancies.valueOf("123");
+        jobOpening.editNumberOfVacancies(newNumberOfVacancies);
+        assertEquals(newNumberOfVacancies, jobOpening.numberOfVacancies());
+    }
+
+    @Test
+    public void testEditMode() {
+        JobOpening jobOpening = getNewDummyJobOpening(aJobReference);
+        Mode newMode = Mode.valueOf(ModeTypes.PRESENTIAL.toString());
+        jobOpening.editMode(newMode);
+        assertEquals(newMode, jobOpening.mode());
     }
 }

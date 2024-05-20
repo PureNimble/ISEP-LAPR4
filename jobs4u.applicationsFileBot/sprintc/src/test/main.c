@@ -14,8 +14,6 @@
 
 int main()
 {
-    setUpSignal();
-
     create_directory(SHARED_FOLDER);
     create_directory(TEST_INPUT);
     create_directory(TEST_OUTPUT);
@@ -25,28 +23,41 @@ int main()
     strcpy(config.outputPath, TEST_OUTPUT);
     config.verifyNewFilesFrequency = TEST_FREQUENCY;
     config.numberOfChildren = TEST_CHILDREN;
+    setUpSignal();
 
-    char *file_path = newFileChecker_test(config);
-    Files file = copyFiles_test(config);
-    reportFile_test(config, file);
+    newFileChecker_test(config);
+    int fd;
+    // Shared memory and semaphores
+    CircularBuffer *shared_data = createSharedMemory(SHARED_MEMORY, &fd);
+    sem_t *sem_shared_memory = createSemaphore(SEM_SHARED_MEMORY, 0);
+    sem_t *sem_barrier = createSemaphore(SEM_BARRIER, 0);
+    sem_t *sem_barrier_mutex = createSemaphore(SEM_BARRIER_MUTEX, 1);
+
+    copyFiles_test(config, shared_data, sem_shared_memory, sem_barrier, sem_barrier_mutex);
+
+    reportFile_test(config, shared_data);
 
     // delete folder
     printf("-> Deleting test folders in 5 seconds\n");
     sleep(DELETE_FOLDER_TIME);
     delete_directory(TEST_INPUT);
     delete_directory(TEST_OUTPUT);
-
-    free(file_path);
+    removeSemaphore(SEM_NEW_FILE_CHECKER);
+    removeSemaphore(SEM_SHARED_MEMORY);
+    removeSemaphore(SEM_BARRIER);
+    removeSemaphore(SEM_BARRIER_MUTEX);
+    removeSharedMemory(SHARED_MEMORY);
 
     return 0;
 }
 
-char *newFileChecker_test(Config config)
+void newFileChecker_test(Config config)
 {
     pid_t pid;
+    sem_t *sem_new_file_checker = createSemaphore(SEM_NEW_FILE_CHECKER, 0);
     printf("-> Testing newFileChecker\n");
     if ((pid = createChildProcess()) == 0)
-        newFileChecker(&config);
+        newFileChecker(&config, sem_new_file_checker);
 
     // create new file in input folder
     char *file_path = malloc(FILE_PATH_SIZE);
@@ -59,43 +70,32 @@ char *newFileChecker_test(Config config)
         exit(EXIT_FAILURE);
     }
     fprintf(file, "FNAC1-1\njohndoe@email.com\nJohn Doe\n961234567\n");
-    pause();
+    sem_wait(sem_new_file_checker);
     kill(pid, SIGTERM);
     fclose(file);
 
     printf("-> newFileChecker test passed\n\n\n");
-
-    return file_path;
 }
 
-Files copyFiles_test(Config config)
+void copyFiles_test(Config config, CircularBuffer *shared_data, sem_t *sem_shared_memory, sem_t *sem_barrier, sem_t *sem_barrier_mutex)
 {
     printf("-> Testing copyFiles\n");
     pid_t pid;
-    int send_work_fd[2], recive_work_fd[2];
-    createPipe(send_work_fd);
-    createPipe(recive_work_fd);
+
     if ((pid = createChildProcess()) == 0)
-        copyFiles(send_work_fd, recive_work_fd, &config);
+        copyFiles(&config, shared_data, sem_shared_memory, sem_barrier, sem_barrier_mutex, 1);
 
-    listCandidatesID(send_work_fd, &config);
-
-    Files file;
-    read(recive_work_fd[0], &file, sizeof(Files));
-    printf("All files have been copied\n");
+    listCandidatesID(&config, shared_data, sem_shared_memory);
+    sem_wait(sem_barrier);
 
     printf("-> copyFiles test passed\n\n\n");
-    return file;
 }
 
-int reportFile_test(Config config, Files file)
+void reportFile_test(Config config, CircularBuffer *shared_data)
 {
     printf("-> Testing reportFile\n");
-    Files *files;
-    createMalloc((void **)&files, sizeof(Files));
-    files[0] = file;
 
-    reportFile(&config, files, 1);
+    reportFile(&config, shared_data);
 
     printf("-> reportFile test passed\n");
 }

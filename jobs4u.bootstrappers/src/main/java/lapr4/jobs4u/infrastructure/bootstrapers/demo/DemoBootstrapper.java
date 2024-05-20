@@ -41,7 +41,7 @@ import eapli.framework.validations.Invariants;
 public class DemoBootstrapper implements Action {
 
     private static final String POWERUSER_A1 = "poweruserA1";
-    private static final String POWERUSER = "poweruser@email.com";
+    private static final String POWERUSER = "poweruser@email.local";
 
     private final AuthorizationService authz = AuthzRegistry.authorizationService();
     private final AuthenticationService authenticationService = AuthzRegistry.authenticationService();

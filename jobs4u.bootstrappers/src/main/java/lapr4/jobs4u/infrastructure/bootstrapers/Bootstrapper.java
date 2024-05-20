@@ -52,7 +52,7 @@ public class Bootstrapper implements Action {
             Bootstrapper.class);
 
     private static final String POWERUSER_PWD = "poweruserA1";
-    private static final String POWERUSER = "poweruser@email.com";
+    private static final String POWERUSER = "poweruser@email.local";
 
     private final AuthorizationService authz = AuthzRegistry.authorizationService();
     private final AuthenticationService authenticationService = AuthzRegistry.authenticationService();

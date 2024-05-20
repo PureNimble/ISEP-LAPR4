@@ -19,7 +19,7 @@ public class OperatorMenu extends Menu {
     private static final String RETURN_LABEL = "Return ";
 
     public OperatorMenu() {
-        super("Candidate >");
+        super("Operator Menu >");
 
         addItem(REGISTER_CANDIDATE, "Register Candidate", new RegisterCandidateAction());
         addItem(LIST_CANDIDATES, "List Candidates", new ListCandidatesAction());

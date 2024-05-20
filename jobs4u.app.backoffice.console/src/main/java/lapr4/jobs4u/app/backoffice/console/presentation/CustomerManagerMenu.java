@@ -2,6 +2,7 @@ package lapr4.jobs4u.app.backoffice.console.presentation;
 
 import eapli.framework.actions.Actions;
 import eapli.framework.actions.menu.Menu;
+import lapr4.jobs4u.app.backoffice.console.presentation.authz.action.EditJobOpeningAction;
 import lapr4.jobs4u.app.backoffice.console.presentation.authz.action.ExportInterviewAction;
 import lapr4.jobs4u.app.backoffice.console.presentation.authz.action.ListApplicationsAction;
 import lapr4.jobs4u.app.backoffice.console.presentation.authz.action.ListCandidatesDataAction;
@@ -25,11 +26,12 @@ public class CustomerManagerMenu extends Menu {
     private static final int SELECT_INTERVIEW = 8;
     private static final int SELECT_REQUIREMENT = 9;
     private static final int OPEN_OR_CLOSE_PHASE = 10;
+    private static final int EDIT_JOB_OPENING = 11;
     private static final int EXIT_OPTION = 0;
     private static final String RETURN_LABEL = "Return ";
 
     public CustomerManagerMenu() {
-        super("Customer >");
+        super("Customer Manager Menu >");
 
         addItem(REGISTER_CUSTOMER, "Register Customer", new RegisterCustomerAction());
         addItem(REGISTER_JOB_OPENING, "Register Job Opening", new RegisterJobOpeningAction());
@@ -41,6 +43,7 @@ public class CustomerManagerMenu extends Menu {
         addItem(SELECT_INTERVIEW, "Select Interview", new SelectInterviewAction());
         addItem(SELECT_REQUIREMENT, "Select Requirement", new SelectRequirementAction());
         addItem(OPEN_OR_CLOSE_PHASE, "Open or Close Phase", new OpenOrClosePhaseAction());
+        addItem(EDIT_JOB_OPENING, "Edit Job Opening", new EditJobOpeningAction());
         addItem(EXIT_OPTION, RETURN_LABEL, Actions.SUCCESS);
     }
 }

@@ -11,7 +11,7 @@ public class LanguageEngineerMenu extends Menu {
     private static final String RETURN_LABEL = "Return ";
 
     public LanguageEngineerMenu() {
-        super("Plugins >");
+        super("Language Engineer Menu >");
 
         addItem(ADD_PLUGINS, "Create Plugin", new CreatePluginsAction());
         addItem(EXIT_OPTION, RETURN_LABEL, Actions.SUCCESS);

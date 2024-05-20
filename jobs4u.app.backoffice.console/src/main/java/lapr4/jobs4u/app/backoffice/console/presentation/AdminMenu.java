@@ -15,7 +15,7 @@ public class AdminMenu  extends Menu {
     private static final int EXIT_OPTION = 0;
 
     public AdminMenu() {
-        super("Users >");
+        super("Admin Menu >");
 
         addItem(ADD_USER_OPTION, "Add User", new AddBackofficeUserAction());
         addItem(LIST_USERS_OPTION, "List all Users", new ListBackofficeUsersAction());

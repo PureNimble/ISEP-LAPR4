@@ -79,4 +79,12 @@ public class JobOpeningRequirement implements AggregateRoot<Long> {
     public JobOpening jobOpening() {
         return this.jobOpening;
     }
+
+    public QuestionImporterPlugin plugin() {
+        return this.plugin;
+    }
+
+    public void editPlugin(QuestionImporterPlugin plugin) {
+        this.plugin = plugin;
+    }
 }

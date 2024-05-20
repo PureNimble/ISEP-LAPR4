@@ -109,7 +109,7 @@ public class JobOpening implements AggregateRoot<JobReference>, DTOable<JobOpeni
         return this.registeredOn;
     }
 
-    public String registeredOnPeriode() {
+    public String registeredOnPeriod() {
         int month = this.registeredOn.get(Calendar.MONTH) + 1;
         int year = this.registeredOn.get(Calendar.YEAR);
         return month + "-" + year;
@@ -129,6 +129,54 @@ public class JobOpening implements AggregateRoot<JobReference>, DTOable<JobOpeni
         } else {
             this.active = false;
         }
+    }
+
+    public TitleOrFunction titleOrFunction() {
+        return this.titleOrFunction;
+    }
+
+    public ContractType contractType() {
+        return this.contractType;
+    }
+
+    public Mode mode() {
+        return this.mode;
+    }
+
+    public Address address() {
+        return this.address;
+    }
+
+    public NumberOfVacancies numberOfVacancies() {
+        return this.numberOfVacancies;
+    }
+
+    public JobDescription jobDescription() {
+        return this.jobDescription;
+    }
+
+    public void editTitleOrFunction(final TitleOrFunction titleOrFunction) {
+        this.titleOrFunction = titleOrFunction;
+    }
+
+    public void editContractType(final ContractType contractType) {
+        this.contractType = contractType;
+    }
+
+    public void editMode(final Mode mode) {
+        this.mode = mode;
+    }
+
+    public void editAddress(final Address address) {
+        this.address = address;
+    }
+
+    public void editJobDescription(final JobDescription jobDescription) {
+        this.jobDescription = jobDescription;
+    }
+
+    public void editNumberOfVacancies(final NumberOfVacancies numberOfVacancies) {
+        this.numberOfVacancies = numberOfVacancies;
     }
 
     public JobOpeningDTO toDTO() {

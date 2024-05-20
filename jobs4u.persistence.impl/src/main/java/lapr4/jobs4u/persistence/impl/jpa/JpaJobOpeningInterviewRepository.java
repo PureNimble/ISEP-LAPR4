@@ -52,7 +52,6 @@ class JpaJobOpeningInterviewRepository extends JpaAutoTxRepository<JobOpeningInt
         List<JobOpeningInterview> results = createQuery("SELECT ji FROM JobOpeningInterview ji WHERE ji.jobOpening = :jobOpening", JobOpeningInterview.class)
                 .setParameter("jobOpening", jobOpening)
                 .getResultList();
-        System.out.println("results: " + results);
         return results.isEmpty() ? Optional.empty() : Optional.of(results.get(0));
     }
 }

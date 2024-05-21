@@ -55,10 +55,10 @@
 			<version>${eapli.framework.authz.version}</version>
 		</dependency>
 		<dependency>
-            <groupId>org.bitbucket.pag_isep.eapliframework</groupId>
-            <artifactId>eapli.framework.infrastructure.pubsub</artifactId>
-            <version>${eapli.framework.pubsub.version}</version>
-        </dependency>
+			<groupId>org.bitbucket.pag_isep.eapliframework</groupId>
+			<artifactId>eapli.framework.infrastructure.pubsub</artifactId>
+			<version>${eapli.framework.pubsub.version}</version>
+		</dependency>
 
 		<!--
 		https://mvnrepository.com/artifact/jakarta.xml.bind/jakarta.xml.bind-api -->

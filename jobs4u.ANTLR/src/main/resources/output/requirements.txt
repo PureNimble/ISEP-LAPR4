@@ -1,8 +1,9 @@
 TITLE: Data Scientist
+NAME:
 
 # Enter the number of years of experience (integer)
-Experience-years: 2
+Experience-years:
 # Select one Degree (none; bachelor; master; phD)
-Academic-degree: none
+Academic-degree:
 # Select one or more Programming Languages (python; java; javascript; scala; swift; ruby; r; sql)
-Programming-languages: python, javascript
+Programming-languages:

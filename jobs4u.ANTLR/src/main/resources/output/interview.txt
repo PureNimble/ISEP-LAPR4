@@ -5,9 +5,9 @@ GRADE:
 COTATION: 30%
 QUESTION TYPE: Choice, with single answer
 QUESTION: What is the capital of France?
-1. London
-2. Paris
-3. Berlin
+1) London
+2) Paris
+3) Berlin
 ANSWER:
 GRADE:
 

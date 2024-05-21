@@ -38,6 +38,7 @@ README.html
 
 # ANTLR
 .antlr/
+jobs4u.ANTLR/src/main/resources/output/*
 
 # SCOMP project files
 obj/

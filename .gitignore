@@ -36,10 +36,10 @@ error-logs/
 
 README.html
 
+# ANTLR
+.antlr/
+
 # SCOMP project files
 obj/
-jobs4u.applicationsFileBot/sprintb/bin/*
-jobs4u.applicationsFileBot/sprintc/bin/*
-
-doubts.txt
-output/
+jobs4u.applicationsFileBot/*/bin/*
+jobs4u.applicationsFileBot/*/output/

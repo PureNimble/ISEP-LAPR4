@@ -1,4 +1,4 @@
-package lapr4.jobs4u.interview.parser;
+package lapr4.jobs4u.requirement.parser;
 
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -7,12 +7,12 @@ import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.tree.ParseTree;
 
-public class ANTLRInterview {
+public class ANTLRRequirements {
 
     public void parseFromFile(final String path) throws Exception {
-        final InterviewLexer lexer = new InterviewLexer(CharStreams.fromFileName(path));
+        final RequirementsLexer lexer = new RequirementsLexer(CharStreams.fromFileName(path));
         final CommonTokenStream tokens = new CommonTokenStream(lexer);
-        final InterviewParser parser = new InterviewParser(tokens);
+        final RequirementsParser parser = new RequirementsParser(tokens);
         final ParseTree tree = parser.start();
 
         if (parser.getNumberOfSyntaxErrors() > 0)

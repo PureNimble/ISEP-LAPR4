@@ -1,6 +1,0 @@
-"Choice, with single answer";"20";"What is the capital of France? 1. London 2. Berlin 3. Paris";"Paris"
-"Choice, with multiple answers";"20";"Which of the following are prime numbers? 1. 2 2. 4 3. 7 4. 9";"2/7"
-"True/False";"10";"Is the sky blue?";"True"
-"Choice, with single answer";"20";"Who is the current CEO of Amazon? 1. Jeff Bezos 2. Andy Jassy 3. Elon Musk";"Andy Jassy"
-"Choice, with multiple answers";"20";"Which of the following are planets in our solar system? 1. Earth 2. Mars 3. Pluto 4. Neptune";"Earth/Mars/Neptune"
-"True/False";"10";"Is Python a type of coffee?";"False"

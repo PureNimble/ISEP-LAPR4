@@ -1,4 +1,4 @@
-package lapr4.jobs4u.importer.parser;
+package lapr4.jobs4u.importer.csv.parser;
 // Generated from Csv.g4 by ANTLR 4.13.1
 import org.antlr.v4.runtime.Lexer;
 import org.antlr.v4.runtime.CharStream;

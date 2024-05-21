@@ -37,4 +37,14 @@ public interface RequirementsListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitContent(RequirementsParser.ContentContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link RequirementsParser#option}.
+	 * @param ctx the parse tree
+	 */
+	void enterOption(RequirementsParser.OptionContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link RequirementsParser#option}.
+	 * @param ctx the parse tree
+	 */
+	void exitOption(RequirementsParser.OptionContext ctx);
 }

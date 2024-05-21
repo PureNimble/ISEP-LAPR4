@@ -4,14 +4,18 @@ questions: question+ EOF;
 
 body: '"' (TEXT | NUMBER | LETTER)+ '"';
 
-question: body ';' cotation? ';' body ';' body;
+questionBody: body;
+
+type: body;
+
+answer: body;
+
+question: type ';' (cotation ';' cotationType ';')? questionBody ';' answer;
 
 cotation:
-	'"' (TWO_DIGIT_NUMBER | FRACTIONAL_NUMBER | '100') (
-		'%'
-		| 'POINTS'
-		| 'VALUES'
-	) '"';
+	'"' (TWO_DIGIT_NUMBER | FRACTIONAL_NUMBER | '100') '"';
+
+cotationType: '"' ( '%' | 'POINTS' | 'VALUES') '"';
 
 NUMBER: [0-9];
 LETTER: [a-zA-Z];

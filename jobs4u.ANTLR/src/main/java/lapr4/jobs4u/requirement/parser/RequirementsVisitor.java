@@ -28,4 +28,10 @@ public interface RequirementsVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitContent(RequirementsParser.ContentContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link RequirementsParser#option}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitOption(RequirementsParser.OptionContext ctx);
 }

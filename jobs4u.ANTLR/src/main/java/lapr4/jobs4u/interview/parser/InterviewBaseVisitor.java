@@ -32,20 +32,6 @@ public class InterviewBaseVisitor<T> extends AbstractParseTreeVisitor<T> impleme
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitText(InterviewParser.TextContext ctx) { return visitChildren(ctx); }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation returns the result of calling
-	 * {@link #visitChildren} on {@code ctx}.</p>
-	 */
-	@Override public T visitType(InterviewParser.TypeContext ctx) { return visitChildren(ctx); }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation returns the result of calling
-	 * {@link #visitChildren} on {@code ctx}.</p>
-	 */
 	@Override public T visitChoice(InterviewParser.ChoiceContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
@@ -54,4 +40,18 @@ public class InterviewBaseVisitor<T> extends AbstractParseTreeVisitor<T> impleme
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
 	@Override public T visitOption(InterviewParser.OptionContext ctx) { return visitChildren(ctx); }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
+	@Override public T visitText(InterviewParser.TextContext ctx) { return visitChildren(ctx); }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
+	@Override public T visitType(InterviewParser.TypeContext ctx) { return visitChildren(ctx); }
 }

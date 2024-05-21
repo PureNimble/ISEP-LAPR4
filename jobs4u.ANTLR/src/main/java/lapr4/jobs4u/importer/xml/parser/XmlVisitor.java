@@ -1,4 +1,4 @@
-package lapr4.jobs4u.importer.parser;
+package lapr4.jobs4u.importer.xml.parser;
 // Generated from Xml.g4 by ANTLR 4.13.1
 import org.antlr.v4.runtime.tree.ParseTreeVisitor;
 
@@ -28,6 +28,12 @@ public interface XmlVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitCotation(XmlParser.CotationContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link XmlParser#cotationType}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitCotationType(XmlParser.CotationTypeContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link XmlParser#type}.
 	 * @param ctx the parse tree

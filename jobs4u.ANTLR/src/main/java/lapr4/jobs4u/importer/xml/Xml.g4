@@ -3,14 +3,13 @@ grammar Xml;
 questions: '<Questions>' question+ '</Questions>' EOF;
 
 question:
-	'<Question>' cotation? type body possibleAnswersList '</Question>';
+	'<Question>' (cotation cotationType)? type body possibleAnswersList '</Question>';
 
 cotation:
-	'<Cotation>' (
-		TWO_DIGIT_NUMBER
-		| FRACTIONAL_NUMBER
-		| '100'
-	) ('%' | 'POINTS' | 'VALUES') '</Cotation>';
+	'<Cotation>' (TWO_DIGIT_NUMBER | FRACTIONAL_NUMBER | '100') '</Cotation>';
+
+cotationType:
+	'<CotationType>' ('%' | 'POINTS' | 'VALUES') '</CotationType>';
 
 type: '<type>' TEXT+ '</type>';
 

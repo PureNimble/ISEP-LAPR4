@@ -1,4 +1,4 @@
-package lapr4.jobs4u.importer.parser;
+package lapr4.jobs4u.importer.csv.parser;
 // Generated from Csv.g4 by ANTLR 4.13.1
 import org.antlr.v4.runtime.tree.ParseTreeListener;
 
@@ -28,6 +28,36 @@ public interface CsvListener extends ParseTreeListener {
 	 */
 	void exitBody(CsvParser.BodyContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link CsvParser#questionBody}.
+	 * @param ctx the parse tree
+	 */
+	void enterQuestionBody(CsvParser.QuestionBodyContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link CsvParser#questionBody}.
+	 * @param ctx the parse tree
+	 */
+	void exitQuestionBody(CsvParser.QuestionBodyContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link CsvParser#type}.
+	 * @param ctx the parse tree
+	 */
+	void enterType(CsvParser.TypeContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link CsvParser#type}.
+	 * @param ctx the parse tree
+	 */
+	void exitType(CsvParser.TypeContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link CsvParser#answer}.
+	 * @param ctx the parse tree
+	 */
+	void enterAnswer(CsvParser.AnswerContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link CsvParser#answer}.
+	 * @param ctx the parse tree
+	 */
+	void exitAnswer(CsvParser.AnswerContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link CsvParser#question}.
 	 * @param ctx the parse tree
 	 */
@@ -47,4 +77,14 @@ public interface CsvListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitCotation(CsvParser.CotationContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link CsvParser#cotationType}.
+	 * @param ctx the parse tree
+	 */
+	void enterCotationType(CsvParser.CotationTypeContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link CsvParser#cotationType}.
+	 * @param ctx the parse tree
+	 */
+	void exitCotationType(CsvParser.CotationTypeContext ctx);
 }

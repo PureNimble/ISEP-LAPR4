@@ -1,4 +1,4 @@
-package lapr4.jobs4u.importer.parser;
+package lapr4.jobs4u.importer.json.parser;
 // Generated from Json.g4 by ANTLR 4.13.1
 import org.antlr.v4.runtime.tree.AbstractParseTreeVisitor;
 
@@ -32,5 +32,40 @@ public class JsonBaseVisitor<T> extends AbstractParseTreeVisitor<T> implements J
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
+	@Override public T visitQuestionBody(JsonParser.QuestionBodyContext ctx) { return visitChildren(ctx); }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
+	@Override public T visitType(JsonParser.TypeContext ctx) { return visitChildren(ctx); }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
+	@Override public T visitAnswer(JsonParser.AnswerContext ctx) { return visitChildren(ctx); }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
 	@Override public T visitQuestion(JsonParser.QuestionContext ctx) { return visitChildren(ctx); }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
+	@Override public T visitCotation(JsonParser.CotationContext ctx) { return visitChildren(ctx); }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
+	@Override public T visitCotationType(JsonParser.CotationTypeContext ctx) { return visitChildren(ctx); }
 }

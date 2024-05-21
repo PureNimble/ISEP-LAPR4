@@ -7,29 +7,26 @@ content:
 		'%'
 		| 'POINTS'
 		| 'VALUES'
-	) 'QUESTION TYPE:' type;
-
-text: (TEXT | NUMBER | LETTER)+;
-
-type: (
-		'True/False' 'QUESTION:' text
-		| 'Short text answer' 'QUESTION:' text
-		| 'Choice, with single answer' 'QUESTION:' text choice
-		| 'Choice, with multiple answers' 'QUESTION:' text choice
-		| 'Integer Number' 'QUESTION:' text
-		| 'Decimal Number' 'QUESTION:' text
-		| 'Date' 'QUESTION:' text
-		| 'Time' 'QUESTION:' text
-		| 'Numeric Scale' 'QUESTION:' text
-	) 'ANSWER:' 'GRADE:';
+	) 'QUESTION TYPE:' type 'ANSWER:' 'GRADE:';
 
 choice: option option+;
+option: NUMBER ')' text;
+text: (TEXT | NUMBER | LETTER)+;
 
-option: NUMBER '.' text;
+type:
+	'True/False' 'QUESTION:' text
+	| 'Short text answer' 'QUESTION:' text
+	| 'Choice, with single answer' 'QUESTION:' text choice
+	| 'Choice, with multiple answers' 'QUESTION:' text choice
+	| 'Integer Number' 'QUESTION:' text
+	| 'Decimal Number' 'QUESTION:' text
+	| 'Date' 'QUESTION:' text
+	| 'Time' 'QUESTION:' text
+	| 'Numeric Scale' 'QUESTION:' text;
 
 NUMBER: [0-9];
 LETTER: [a-zA-Z];
-MEMBER: [.,;:/#+!?)([\]] | '\'';
+MEMBER: [.,;:/#+!?[\]] | '\'';
 TWO_DIGIT_NUMBER: NUMBER NUMBER?;
 FRACTIONAL_NUMBER:
 	TWO_DIGIT_NUMBER ('.' | ',') TWO_DIGIT_NUMBER;

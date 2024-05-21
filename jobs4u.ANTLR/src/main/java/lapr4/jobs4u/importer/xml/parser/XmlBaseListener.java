@@ -1,89 +1,113 @@
-package lapr4.jobs4u.interview.parser;
-// Generated from Interview.g4 by ANTLR 4.13.1
+package lapr4.jobs4u.importer.xml.parser;
+// Generated from Xml.g4 by ANTLR 4.13.1
 
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.tree.ErrorNode;
 import org.antlr.v4.runtime.tree.TerminalNode;
 
 /**
- * This class provides an empty implementation of {@link InterviewListener},
+ * This class provides an empty implementation of {@link XmlListener},
  * which can be extended to create a listener which only needs to handle a subset
  * of the available methods.
  */
 @SuppressWarnings("CheckReturnValue")
-public class InterviewBaseListener implements InterviewListener {
+public class XmlBaseListener implements XmlListener {
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterStart(InterviewParser.StartContext ctx) { }
+	@Override public void enterQuestions(XmlParser.QuestionsContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitStart(InterviewParser.StartContext ctx) { }
+	@Override public void exitQuestions(XmlParser.QuestionsContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterContent(InterviewParser.ContentContext ctx) { }
+	@Override public void enterQuestion(XmlParser.QuestionContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitContent(InterviewParser.ContentContext ctx) { }
+	@Override public void exitQuestion(XmlParser.QuestionContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterChoice(InterviewParser.ChoiceContext ctx) { }
+	@Override public void enterCotation(XmlParser.CotationContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitChoice(InterviewParser.ChoiceContext ctx) { }
+	@Override public void exitCotation(XmlParser.CotationContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterOption(InterviewParser.OptionContext ctx) { }
+	@Override public void enterCotationType(XmlParser.CotationTypeContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitOption(InterviewParser.OptionContext ctx) { }
+	@Override public void exitCotationType(XmlParser.CotationTypeContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterText(InterviewParser.TextContext ctx) { }
+	@Override public void enterType(XmlParser.TypeContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitText(InterviewParser.TextContext ctx) { }
+	@Override public void exitType(XmlParser.TypeContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterType(InterviewParser.TypeContext ctx) { }
+	@Override public void enterBody(XmlParser.BodyContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitType(InterviewParser.TypeContext ctx) { }
+	@Override public void exitBody(XmlParser.BodyContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterPossibleAnswersList(XmlParser.PossibleAnswersListContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitPossibleAnswersList(XmlParser.PossibleAnswersListContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterPossibleAnswers(XmlParser.PossibleAnswersContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitPossibleAnswers(XmlParser.PossibleAnswersContext ctx) { }
 
 	/**
 	 * {@inheritDoc}

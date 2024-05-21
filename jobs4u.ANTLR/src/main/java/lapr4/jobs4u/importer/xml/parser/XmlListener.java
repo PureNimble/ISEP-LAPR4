@@ -1,4 +1,4 @@
-package lapr4.jobs4u.importer.parser;
+package lapr4.jobs4u.importer.xml.parser;
 // Generated from Xml.g4 by ANTLR 4.13.1
 import org.antlr.v4.runtime.tree.ParseTreeListener;
 
@@ -37,6 +37,16 @@ public interface XmlListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitCotation(XmlParser.CotationContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link XmlParser#cotationType}.
+	 * @param ctx the parse tree
+	 */
+	void enterCotationType(XmlParser.CotationTypeContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link XmlParser#cotationType}.
+	 * @param ctx the parse tree
+	 */
+	void exitCotationType(XmlParser.CotationTypeContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link XmlParser#type}.
 	 * @param ctx the parse tree

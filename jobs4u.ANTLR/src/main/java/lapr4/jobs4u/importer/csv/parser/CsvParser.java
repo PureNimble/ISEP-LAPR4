@@ -1,4 +1,4 @@
-package lapr4.jobs4u.importer.parser;
+package lapr4.jobs4u.importer.csv.parser;
 // Generated from Csv.g4 by ANTLR 4.13.1
 import org.antlr.v4.runtime.atn.*;
 import org.antlr.v4.runtime.dfa.DFA;
@@ -20,10 +20,12 @@ public class CsvParser extends Parser {
 		T__0=1, T__1=2, T__2=3, T__3=4, T__4=5, T__5=6, NUMBER=7, LETTER=8, MEMBER=9, 
 		TWO_DIGIT_NUMBER=10, FRACTIONAL_NUMBER=11, TEXT=12, WS=13;
 	public static final int
-		RULE_questions = 0, RULE_body = 1, RULE_question = 2, RULE_cotation = 3;
+		RULE_questions = 0, RULE_body = 1, RULE_questionBody = 2, RULE_type = 3, 
+		RULE_answer = 4, RULE_question = 5, RULE_cotation = 6, RULE_cotationType = 7;
 	private static String[] makeRuleNames() {
 		return new String[] {
-			"questions", "body", "question", "cotation"
+			"questions", "body", "questionBody", "type", "answer", "question", "cotation", 
+			"cotationType"
 		};
 	}
 	public static final String[] ruleNames = makeRuleNames();
@@ -126,21 +128,21 @@ public class CsvParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(9); 
+			setState(17); 
 			_errHandler.sync(this);
 			_la = _input.LA(1);
 			do {
 				{
 				{
-				setState(8);
+				setState(16);
 				question();
 				}
 				}
-				setState(11); 
+				setState(19); 
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 			} while ( _la==T__0 );
-			setState(13);
+			setState(21);
 			match(EOF);
 			}
 		}
@@ -195,15 +197,15 @@ public class CsvParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(15);
+			setState(23);
 			match(T__0);
-			setState(17); 
+			setState(25); 
 			_errHandler.sync(this);
 			_la = _input.LA(1);
 			do {
 				{
 				{
-				setState(16);
+				setState(24);
 				_la = _input.LA(1);
 				if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & 4480L) != 0)) ) {
 				_errHandler.recoverInline(this);
@@ -215,11 +217,11 @@ public class CsvParser extends Parser {
 				}
 				}
 				}
-				setState(19); 
+				setState(27); 
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 			} while ( (((_la) & ~0x3f) == 0 && ((1L << _la) & 4480L) != 0) );
-			setState(21);
+			setState(29);
 			match(T__0);
 			}
 		}
@@ -235,15 +237,156 @@ public class CsvParser extends Parser {
 	}
 
 	@SuppressWarnings("CheckReturnValue")
-	public static class QuestionContext extends ParserRuleContext {
-		public List<BodyContext> body() {
-			return getRuleContexts(BodyContext.class);
+	public static class QuestionBodyContext extends ParserRuleContext {
+		public BodyContext body() {
+			return getRuleContext(BodyContext.class,0);
 		}
-		public BodyContext body(int i) {
-			return getRuleContext(BodyContext.class,i);
+		public QuestionBodyContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_questionBody; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof CsvListener ) ((CsvListener)listener).enterQuestionBody(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof CsvListener ) ((CsvListener)listener).exitQuestionBody(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof CsvVisitor ) return ((CsvVisitor<? extends T>)visitor).visitQuestionBody(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+
+	public final QuestionBodyContext questionBody() throws RecognitionException {
+		QuestionBodyContext _localctx = new QuestionBodyContext(_ctx, getState());
+		enterRule(_localctx, 4, RULE_questionBody);
+		try {
+			enterOuterAlt(_localctx, 1);
+			{
+			setState(31);
+			body();
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
+	@SuppressWarnings("CheckReturnValue")
+	public static class TypeContext extends ParserRuleContext {
+		public BodyContext body() {
+			return getRuleContext(BodyContext.class,0);
+		}
+		public TypeContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_type; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof CsvListener ) ((CsvListener)listener).enterType(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof CsvListener ) ((CsvListener)listener).exitType(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof CsvVisitor ) return ((CsvVisitor<? extends T>)visitor).visitType(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+
+	public final TypeContext type() throws RecognitionException {
+		TypeContext _localctx = new TypeContext(_ctx, getState());
+		enterRule(_localctx, 6, RULE_type);
+		try {
+			enterOuterAlt(_localctx, 1);
+			{
+			setState(33);
+			body();
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
+	@SuppressWarnings("CheckReturnValue")
+	public static class AnswerContext extends ParserRuleContext {
+		public BodyContext body() {
+			return getRuleContext(BodyContext.class,0);
+		}
+		public AnswerContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_answer; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof CsvListener ) ((CsvListener)listener).enterAnswer(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof CsvListener ) ((CsvListener)listener).exitAnswer(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof CsvVisitor ) return ((CsvVisitor<? extends T>)visitor).visitAnswer(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+
+	public final AnswerContext answer() throws RecognitionException {
+		AnswerContext _localctx = new AnswerContext(_ctx, getState());
+		enterRule(_localctx, 8, RULE_answer);
+		try {
+			enterOuterAlt(_localctx, 1);
+			{
+			setState(35);
+			body();
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
+	@SuppressWarnings("CheckReturnValue")
+	public static class QuestionContext extends ParserRuleContext {
+		public TypeContext type() {
+			return getRuleContext(TypeContext.class,0);
+		}
+		public QuestionBodyContext questionBody() {
+			return getRuleContext(QuestionBodyContext.class,0);
+		}
+		public AnswerContext answer() {
+			return getRuleContext(AnswerContext.class,0);
 		}
 		public CotationContext cotation() {
 			return getRuleContext(CotationContext.class,0);
+		}
+		public CotationTypeContext cotationType() {
+			return getRuleContext(CotationTypeContext.class,0);
 		}
 		public QuestionContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
@@ -266,33 +409,36 @@ public class CsvParser extends Parser {
 
 	public final QuestionContext question() throws RecognitionException {
 		QuestionContext _localctx = new QuestionContext(_ctx, getState());
-		enterRule(_localctx, 4, RULE_question);
-		int _la;
+		enterRule(_localctx, 10, RULE_question);
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(23);
-			body();
-			setState(24);
+			setState(37);
+			type();
+			setState(38);
 			match(T__1);
-			setState(26);
+			setState(44);
 			_errHandler.sync(this);
-			_la = _input.LA(1);
-			if (_la==T__0) {
+			switch ( getInterpreter().adaptivePredict(_input,2,_ctx) ) {
+			case 1:
 				{
-				setState(25);
+				setState(39);
 				cotation();
+				setState(40);
+				match(T__1);
+				setState(41);
+				cotationType();
+				setState(42);
+				match(T__1);
 				}
+				break;
 			}
-
-			setState(28);
+			setState(46);
+			questionBody();
+			setState(47);
 			match(T__1);
-			setState(29);
-			body();
-			setState(30);
-			match(T__1);
-			setState(31);
-			body();
+			setState(48);
+			answer();
 			}
 		}
 		catch (RecognitionException re) {
@@ -331,14 +477,14 @@ public class CsvParser extends Parser {
 
 	public final CotationContext cotation() throws RecognitionException {
 		CotationContext _localctx = new CotationContext(_ctx, getState());
-		enterRule(_localctx, 6, RULE_cotation);
+		enterRule(_localctx, 12, RULE_cotation);
 		int _la;
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(33);
+			setState(50);
 			match(T__0);
-			setState(34);
+			setState(51);
 			_la = _input.LA(1);
 			if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & 3080L) != 0)) ) {
 			_errHandler.recoverInline(this);
@@ -348,7 +494,52 @@ public class CsvParser extends Parser {
 				_errHandler.reportMatch(this);
 				consume();
 			}
-			setState(35);
+			setState(52);
+			match(T__0);
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
+	@SuppressWarnings("CheckReturnValue")
+	public static class CotationTypeContext extends ParserRuleContext {
+		public CotationTypeContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_cotationType; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof CsvListener ) ((CsvListener)listener).enterCotationType(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof CsvListener ) ((CsvListener)listener).exitCotationType(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof CsvVisitor ) return ((CsvVisitor<? extends T>)visitor).visitCotationType(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+
+	public final CotationTypeContext cotationType() throws RecognitionException {
+		CotationTypeContext _localctx = new CotationTypeContext(_ctx, getState());
+		enterRule(_localctx, 14, RULE_cotationType);
+		int _la;
+		try {
+			enterOuterAlt(_localctx, 1);
+			{
+			setState(54);
+			match(T__0);
+			setState(55);
 			_la = _input.LA(1);
 			if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & 112L) != 0)) ) {
 			_errHandler.recoverInline(this);
@@ -358,7 +549,7 @@ public class CsvParser extends Parser {
 				_errHandler.reportMatch(this);
 				consume();
 			}
-			setState(36);
+			setState(56);
 			match(T__0);
 			}
 		}
@@ -374,33 +565,41 @@ public class CsvParser extends Parser {
 	}
 
 	public static final String _serializedATN =
-		"\u0004\u0001\r\'\u0002\u0000\u0007\u0000\u0002\u0001\u0007\u0001\u0002"+
-		"\u0002\u0007\u0002\u0002\u0003\u0007\u0003\u0001\u0000\u0004\u0000\n\b"+
-		"\u0000\u000b\u0000\f\u0000\u000b\u0001\u0000\u0001\u0000\u0001\u0001\u0001"+
-		"\u0001\u0004\u0001\u0012\b\u0001\u000b\u0001\f\u0001\u0013\u0001\u0001"+
-		"\u0001\u0001\u0001\u0002\u0001\u0002\u0001\u0002\u0003\u0002\u001b\b\u0002"+
-		"\u0001\u0002\u0001\u0002\u0001\u0002\u0001\u0002\u0001\u0002\u0001\u0003"+
-		"\u0001\u0003\u0001\u0003\u0001\u0003\u0001\u0003\u0001\u0003\u0000\u0000"+
-		"\u0004\u0000\u0002\u0004\u0006\u0000\u0003\u0002\u0000\u0007\b\f\f\u0002"+
-		"\u0000\u0003\u0003\n\u000b\u0001\u0000\u0004\u0006%\u0000\t\u0001\u0000"+
-		"\u0000\u0000\u0002\u000f\u0001\u0000\u0000\u0000\u0004\u0017\u0001\u0000"+
-		"\u0000\u0000\u0006!\u0001\u0000\u0000\u0000\b\n\u0003\u0004\u0002\u0000"+
-		"\t\b\u0001\u0000\u0000\u0000\n\u000b\u0001\u0000\u0000\u0000\u000b\t\u0001"+
-		"\u0000\u0000\u0000\u000b\f\u0001\u0000\u0000\u0000\f\r\u0001\u0000\u0000"+
-		"\u0000\r\u000e\u0005\u0000\u0000\u0001\u000e\u0001\u0001\u0000\u0000\u0000"+
-		"\u000f\u0011\u0005\u0001\u0000\u0000\u0010\u0012\u0007\u0000\u0000\u0000"+
-		"\u0011\u0010\u0001\u0000\u0000\u0000\u0012\u0013\u0001\u0000\u0000\u0000"+
-		"\u0013\u0011\u0001\u0000\u0000\u0000\u0013\u0014\u0001\u0000\u0000\u0000"+
-		"\u0014\u0015\u0001\u0000\u0000\u0000\u0015\u0016\u0005\u0001\u0000\u0000"+
-		"\u0016\u0003\u0001\u0000\u0000\u0000\u0017\u0018\u0003\u0002\u0001\u0000"+
-		"\u0018\u001a\u0005\u0002\u0000\u0000\u0019\u001b\u0003\u0006\u0003\u0000"+
-		"\u001a\u0019\u0001\u0000\u0000\u0000\u001a\u001b\u0001\u0000\u0000\u0000"+
-		"\u001b\u001c\u0001\u0000\u0000\u0000\u001c\u001d\u0005\u0002\u0000\u0000"+
-		"\u001d\u001e\u0003\u0002\u0001\u0000\u001e\u001f\u0005\u0002\u0000\u0000"+
-		"\u001f \u0003\u0002\u0001\u0000 \u0005\u0001\u0000\u0000\u0000!\"\u0005"+
-		"\u0001\u0000\u0000\"#\u0007\u0001\u0000\u0000#$\u0007\u0002\u0000\u0000"+
-		"$%\u0005\u0001\u0000\u0000%\u0007\u0001\u0000\u0000\u0000\u0003\u000b"+
-		"\u0013\u001a";
+		"\u0004\u0001\r;\u0002\u0000\u0007\u0000\u0002\u0001\u0007\u0001\u0002"+
+		"\u0002\u0007\u0002\u0002\u0003\u0007\u0003\u0002\u0004\u0007\u0004\u0002"+
+		"\u0005\u0007\u0005\u0002\u0006\u0007\u0006\u0002\u0007\u0007\u0007\u0001"+
+		"\u0000\u0004\u0000\u0012\b\u0000\u000b\u0000\f\u0000\u0013\u0001\u0000"+
+		"\u0001\u0000\u0001\u0001\u0001\u0001\u0004\u0001\u001a\b\u0001\u000b\u0001"+
+		"\f\u0001\u001b\u0001\u0001\u0001\u0001\u0001\u0002\u0001\u0002\u0001\u0003"+
+		"\u0001\u0003\u0001\u0004\u0001\u0004\u0001\u0005\u0001\u0005\u0001\u0005"+
+		"\u0001\u0005\u0001\u0005\u0001\u0005\u0001\u0005\u0003\u0005-\b\u0005"+
+		"\u0001\u0005\u0001\u0005\u0001\u0005\u0001\u0005\u0001\u0006\u0001\u0006"+
+		"\u0001\u0006\u0001\u0006\u0001\u0007\u0001\u0007\u0001\u0007\u0001\u0007"+
+		"\u0001\u0007\u0000\u0000\b\u0000\u0002\u0004\u0006\b\n\f\u000e\u0000\u0003"+
+		"\u0002\u0000\u0007\b\f\f\u0002\u0000\u0003\u0003\n\u000b\u0001\u0000\u0004"+
+		"\u00065\u0000\u0011\u0001\u0000\u0000\u0000\u0002\u0017\u0001\u0000\u0000"+
+		"\u0000\u0004\u001f\u0001\u0000\u0000\u0000\u0006!\u0001\u0000\u0000\u0000"+
+		"\b#\u0001\u0000\u0000\u0000\n%\u0001\u0000\u0000\u0000\f2\u0001\u0000"+
+		"\u0000\u0000\u000e6\u0001\u0000\u0000\u0000\u0010\u0012\u0003\n\u0005"+
+		"\u0000\u0011\u0010\u0001\u0000\u0000\u0000\u0012\u0013\u0001\u0000\u0000"+
+		"\u0000\u0013\u0011\u0001\u0000\u0000\u0000\u0013\u0014\u0001\u0000\u0000"+
+		"\u0000\u0014\u0015\u0001\u0000\u0000\u0000\u0015\u0016\u0005\u0000\u0000"+
+		"\u0001\u0016\u0001\u0001\u0000\u0000\u0000\u0017\u0019\u0005\u0001\u0000"+
+		"\u0000\u0018\u001a\u0007\u0000\u0000\u0000\u0019\u0018\u0001\u0000\u0000"+
+		"\u0000\u001a\u001b\u0001\u0000\u0000\u0000\u001b\u0019\u0001\u0000\u0000"+
+		"\u0000\u001b\u001c\u0001\u0000\u0000\u0000\u001c\u001d\u0001\u0000\u0000"+
+		"\u0000\u001d\u001e\u0005\u0001\u0000\u0000\u001e\u0003\u0001\u0000\u0000"+
+		"\u0000\u001f \u0003\u0002\u0001\u0000 \u0005\u0001\u0000\u0000\u0000!"+
+		"\"\u0003\u0002\u0001\u0000\"\u0007\u0001\u0000\u0000\u0000#$\u0003\u0002"+
+		"\u0001\u0000$\t\u0001\u0000\u0000\u0000%&\u0003\u0006\u0003\u0000&,\u0005"+
+		"\u0002\u0000\u0000\'(\u0003\f\u0006\u0000()\u0005\u0002\u0000\u0000)*"+
+		"\u0003\u000e\u0007\u0000*+\u0005\u0002\u0000\u0000+-\u0001\u0000\u0000"+
+		"\u0000,\'\u0001\u0000\u0000\u0000,-\u0001\u0000\u0000\u0000-.\u0001\u0000"+
+		"\u0000\u0000./\u0003\u0004\u0002\u0000/0\u0005\u0002\u0000\u000001\u0003"+
+		"\b\u0004\u00001\u000b\u0001\u0000\u0000\u000023\u0005\u0001\u0000\u0000"+
+		"34\u0007\u0001\u0000\u000045\u0005\u0001\u0000\u00005\r\u0001\u0000\u0000"+
+		"\u000067\u0005\u0001\u0000\u000078\u0007\u0002\u0000\u000089\u0005\u0001"+
+		"\u0000\u00009\u000f\u0001\u0000\u0000\u0000\u0003\u0013\u001b,";
 	public static final ATN _ATN =
 		new ATNDeserializer().deserialize(_serializedATN.toCharArray());
 	static {

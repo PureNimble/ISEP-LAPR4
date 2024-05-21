@@ -1,101 +1,113 @@
-package lapr4.jobs4u.importer.parser;
-// Generated from Xml.g4 by ANTLR 4.13.1
+package lapr4.jobs4u.importer.csv.parser;
+// Generated from Csv.g4 by ANTLR 4.13.1
 
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.tree.ErrorNode;
 import org.antlr.v4.runtime.tree.TerminalNode;
 
 /**
- * This class provides an empty implementation of {@link XmlListener},
+ * This class provides an empty implementation of {@link CsvListener},
  * which can be extended to create a listener which only needs to handle a subset
  * of the available methods.
  */
 @SuppressWarnings("CheckReturnValue")
-public class XmlBaseListener implements XmlListener {
+public class CsvBaseListener implements CsvListener {
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterQuestions(XmlParser.QuestionsContext ctx) { }
+	@Override public void enterQuestions(CsvParser.QuestionsContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitQuestions(XmlParser.QuestionsContext ctx) { }
+	@Override public void exitQuestions(CsvParser.QuestionsContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterQuestion(XmlParser.QuestionContext ctx) { }
+	@Override public void enterBody(CsvParser.BodyContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitQuestion(XmlParser.QuestionContext ctx) { }
+	@Override public void exitBody(CsvParser.BodyContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterCotation(XmlParser.CotationContext ctx) { }
+	@Override public void enterQuestionBody(CsvParser.QuestionBodyContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitCotation(XmlParser.CotationContext ctx) { }
+	@Override public void exitQuestionBody(CsvParser.QuestionBodyContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterType(XmlParser.TypeContext ctx) { }
+	@Override public void enterType(CsvParser.TypeContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitType(XmlParser.TypeContext ctx) { }
+	@Override public void exitType(CsvParser.TypeContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterBody(XmlParser.BodyContext ctx) { }
+	@Override public void enterAnswer(CsvParser.AnswerContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitBody(XmlParser.BodyContext ctx) { }
+	@Override public void exitAnswer(CsvParser.AnswerContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterPossibleAnswersList(XmlParser.PossibleAnswersListContext ctx) { }
+	@Override public void enterQuestion(CsvParser.QuestionContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitPossibleAnswersList(XmlParser.PossibleAnswersListContext ctx) { }
+	@Override public void exitQuestion(CsvParser.QuestionContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterPossibleAnswers(XmlParser.PossibleAnswersContext ctx) { }
+	@Override public void enterCotation(CsvParser.CotationContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitPossibleAnswers(XmlParser.PossibleAnswersContext ctx) { }
+	@Override public void exitCotation(CsvParser.CotationContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterCotationType(CsvParser.CotationTypeContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitCotationType(CsvParser.CotationTypeContext ctx) { }
 
 	/**
 	 * {@inheritDoc}

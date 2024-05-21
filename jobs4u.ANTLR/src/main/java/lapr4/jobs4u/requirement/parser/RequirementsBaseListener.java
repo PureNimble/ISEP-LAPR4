@@ -48,6 +48,18 @@ public class RequirementsBaseListener implements RequirementsListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitContent(RequirementsParser.ContentContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterOption(RequirementsParser.OptionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitOption(RequirementsParser.OptionContext ctx) { }
 
 	/**
 	 * {@inheritDoc}

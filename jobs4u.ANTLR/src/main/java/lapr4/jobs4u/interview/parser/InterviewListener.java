@@ -28,26 +28,6 @@ public interface InterviewListener extends ParseTreeListener {
 	 */
 	void exitContent(InterviewParser.ContentContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link InterviewParser#text}.
-	 * @param ctx the parse tree
-	 */
-	void enterText(InterviewParser.TextContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link InterviewParser#text}.
-	 * @param ctx the parse tree
-	 */
-	void exitText(InterviewParser.TextContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link InterviewParser#type}.
-	 * @param ctx the parse tree
-	 */
-	void enterType(InterviewParser.TypeContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link InterviewParser#type}.
-	 * @param ctx the parse tree
-	 */
-	void exitType(InterviewParser.TypeContext ctx);
-	/**
 	 * Enter a parse tree produced by {@link InterviewParser#choice}.
 	 * @param ctx the parse tree
 	 */
@@ -67,4 +47,24 @@ public interface InterviewListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitOption(InterviewParser.OptionContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link InterviewParser#text}.
+	 * @param ctx the parse tree
+	 */
+	void enterText(InterviewParser.TextContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link InterviewParser#text}.
+	 * @param ctx the parse tree
+	 */
+	void exitText(InterviewParser.TextContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link InterviewParser#type}.
+	 * @param ctx the parse tree
+	 */
+	void enterType(InterviewParser.TypeContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link InterviewParser#type}.
+	 * @param ctx the parse tree
+	 */
+	void exitType(InterviewParser.TypeContext ctx);
 }

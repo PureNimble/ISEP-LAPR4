@@ -1,13 +1,15 @@
 grammar Requirements;
 
-start: 'TITLE:' text+ 'NAME:' content+;
+start: 'TITLE:' text 'NAME:' content+;
 
-text: (WORD | NUMBER | MEMBER);
+text: TEXT+;
 
-content:'#' (text MEMBER?)*
-        text+':' (text MEMBER?)*;
+content: '#' text ('(' option+ ')')? text ':';
 
-NUMBER: [0-9]+;
-WORD: [a-zA-Z.]+;
-MEMBER: [.,;:!?)(-] | '\'';
+option: TEXT (',')?;
+
+NUMBER: [0-9];
+LETTER: [a-zA-Z];
+MEMBER: [.,;!?-] | '\'';
+TEXT: (LETTER | NUMBER | MEMBER)+;
 WS: [ \t\r\n]+ -> skip;

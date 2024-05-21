@@ -1,4 +1,4 @@
-package lapr4.jobs4u.importer.parser;
+package lapr4.jobs4u.importer.json.parser;
 // Generated from Json.g4 by ANTLR 4.13.1
 
 import org.antlr.v4.runtime.ParserRuleContext;
@@ -41,6 +41,42 @@ public class JsonBaseListener implements JsonListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterQuestionBody(JsonParser.QuestionBodyContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitQuestionBody(JsonParser.QuestionBodyContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterType(JsonParser.TypeContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitType(JsonParser.TypeContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterAnswer(JsonParser.AnswerContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitAnswer(JsonParser.AnswerContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterQuestion(JsonParser.QuestionContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -48,6 +84,30 @@ public class JsonBaseListener implements JsonListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitQuestion(JsonParser.QuestionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterCotation(JsonParser.CotationContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitCotation(JsonParser.CotationContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterCotationType(JsonParser.CotationTypeContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitCotationType(JsonParser.CotationTypeContext ctx) { }
 
 	/**
 	 * {@inheritDoc}

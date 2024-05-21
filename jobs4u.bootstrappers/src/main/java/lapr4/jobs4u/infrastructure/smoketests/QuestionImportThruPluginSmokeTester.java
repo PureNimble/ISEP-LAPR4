@@ -53,11 +53,11 @@ public class QuestionImportThruPluginSmokeTester implements Action {
 	@Override
 	public boolean execute() {
 		// import one file in standard format
-		testImportFrom("Standard.csv");
-		testImportFrom("JsonFile.json");
+		testImportFrom("jobs4u.ANTLR/src/main/resources/input/Standard.csv");
+		testImportFrom("jobs4u.ANTLR/src/main/resources/input/JsonFile.json");
 		// import one file in alternate format
-		testImportFrom("Alternate.csv");
-		testImportFrom("XmlFile.xml");
+		testImportFrom("jobs4u.ANTLR/src/main/resources/input/Alternate.csv");
+		testImportFrom("jobs4u.ANTLR/src/main/resources/input/XmlFile.xml");
 
 		// nothing else to do
 		return true;

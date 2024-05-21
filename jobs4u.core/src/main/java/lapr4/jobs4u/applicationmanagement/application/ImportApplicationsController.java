@@ -33,7 +33,7 @@ import lapr4.jobs4u.recruitmentprocessmanagement.domain.Date;
 @UseCaseController
 public class ImportApplicationsController {
 
-    private static final String REPORT_FILE_NAME = "/report.txt";
+    private static final String REPORT_FILE_NAME = "\\report.txt";
     private static final String CANDIDATE_DATA_FILE_SUFFIX = "-candidate-data.txt";
     private static final String CANDIDATE_ID_REGEX = "Candidate ID: (\\d+)Job Offer: (\\w+-\\d+)";
 
@@ -83,16 +83,8 @@ public class ImportApplicationsController {
 
     private String constructCandidateDataFilePath(String folder, String candidateId, String jobId) {
         String candidateFolder = folder + "/" + jobId + "/" + candidateId;
-        if (!Files.exists(Paths.get(candidateFolder))) {
-            renameFolder(folder, jobId);
-        }
-        return candidateFolder + "/" + candidateId + CANDIDATE_DATA_FILE_SUFFIX;
-    }
 
-    private void renameFolder(String folder, String jobId) {
-        java.io.File oldDirectory = new java.io.File(folder + "/" + jobId + "/");
-        java.io.File newDirectory = new java.io.File(folder + "/" + jobId + "/");
-        oldDirectory.renameTo(newDirectory);
+        return candidateFolder + "/" + candidateId + CANDIDATE_DATA_FILE_SUFFIX;
     }
 
     private List<String> extractCandidateInfo(InputStream inputStream) throws IOException {
@@ -153,7 +145,8 @@ public class ImportApplicationsController {
         return files;
     }
 
-    public boolean haveReportFile(String folder) {
+    public boolean isPathValid(String folder) {
+
         return Files.exists(Paths.get(folder + REPORT_FILE_NAME));
     }
 }

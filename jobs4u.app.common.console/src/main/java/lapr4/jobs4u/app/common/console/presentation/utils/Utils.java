@@ -2,6 +2,9 @@ package lapr4.jobs4u.app.common.console.presentation.utils;
 
 import eapli.framework.io.util.Console;
 
+import java.io.File;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -9,6 +12,10 @@ import java.util.List;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
+
+import javax.swing.JDialog;
+import javax.swing.JFileChooser;
+import javax.swing.UIManager;
 
 public class Utils {
 
@@ -93,5 +100,32 @@ public class Utils {
         } while (value < 0 || value > list.size());
 
         return value == 0 ? null : list.get(value - 1);
+    }
+
+    static public String getPath(boolean isDirectory) {
+        try {
+            // Set system look and feel
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        JFileChooser chooser = new JFileChooser();
+        chooser.setCurrentDirectory(new File(System.getProperty("user.dir")));
+        int selectionMode = isDirectory ? JFileChooser.DIRECTORIES_ONLY : JFileChooser.FILES_ONLY;
+        chooser.setFileSelectionMode(selectionMode);
+        JDialog dialog = new JDialog();
+        dialog.setIconImage(null); // Remove application icon
+        int returnVal = chooser.showOpenDialog(dialog);
+
+        if (returnVal == JFileChooser.APPROVE_OPTION) {
+            Path currentPath = Paths.get(System.getProperty("user.dir"));
+            Path absolutePath = Paths.get(chooser.getSelectedFile().getAbsolutePath());
+            Path relativePath = currentPath.relativize(absolutePath);
+            String relativePathStr = relativePath.toString();
+            return relativePathStr.replace("\\", "/");
+        }
+
+        return null;
     }
 }

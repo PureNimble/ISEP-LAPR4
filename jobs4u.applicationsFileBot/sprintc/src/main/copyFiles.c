@@ -54,11 +54,11 @@ void copyFiles(Config *config, CircularBuffer *shared_data, sem_t *sem_shared_me
             {
                 strcpy(files.jobOffer_dir, job);
                 files.jobOffer_dir[strlen(files.jobOffer_dir) - 1] = '\0';
+                sprintf(buffer, "%s%s/%d", config->outputPath, files.jobOffer_dir, candidateID);
+                replaceChar(buffer, "\r", "");
                 pid = createChildProcess();
                 if (pid == 0)
                 {
-                    // create new directory and copy the files
-                    sprintf(buffer, "%s%s/%d", config->outputPath, files.jobOffer_dir, candidateID);
                     char command[1024];
                     snprintf(command, sizeof(command), "mkdir -p %s && /bin/cp -u %s%d-* %s", buffer, config->inputPath, candidateID, buffer);
                     execlp("/bin/sh", "sh", "-c", command, NULL);
@@ -74,15 +74,13 @@ void copyFiles(Config *config, CircularBuffer *shared_data, sem_t *sem_shared_me
                         errorMessages("Failed to copy files");
                     }
                 }
-                // list all files in the directory
-                sprintf(buffer, "%s%s/%d", config->outputPath, files.jobOffer_dir, candidateID);
                 DIR *dir;
                 struct dirent *entry;
 
                 if (!(dir = opendir(buffer)))
                 {
                     errorMessages("Failed to open directory\n");
-                    return; // or exit(1), depending on your program structure
+                    exit(1);
                 }
                 while ((entry = readdir(dir)) != NULL)
                 {

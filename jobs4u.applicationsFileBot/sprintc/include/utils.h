@@ -39,6 +39,7 @@ void delete_directory(const char *dir);
 // -----------------------------
 int isInteger(char *str);
 void errorMessages(char *message);
+void replaceChar(char *str, char *find, char *replace);
 // -----------------------------
 // CandidateInfo struct related functions
 // -----------------------------

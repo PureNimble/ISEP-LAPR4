@@ -46,7 +46,7 @@ public class QuestionDTOParser implements DTOParser<QuestionDTO, Question> {
                 .orElseThrow(() -> new IllegalArgumentException("Unknown question type: " + dto.getType()));
 
         return new QuestionBuilder()
-                .with(type, dto.getCotation(), dto.getBody().toString(), dto.getPossibleAnswers(),
+                .with(type, dto.getCotation(), dto.getCotationType(), dto.getBody().toString(), dto.getPossibleAnswers(),
                         dto.getQuestionImporterPlugin()).build();
     }
 }

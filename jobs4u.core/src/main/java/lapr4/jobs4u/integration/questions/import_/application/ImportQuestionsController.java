@@ -21,7 +21,6 @@
 package lapr4.jobs4u.integration.questions.import_.application;
 
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -80,7 +79,8 @@ public class ImportQuestionsController {
 		InputStream content = null;
 		try {
 			// get the content of the file to import
-			content = inputStreamFromResourceOrFile(filename);
+			content = new FileInputStream(filename);
+
 
 			// get the right plugin for the file
 			//final var fileExt = FilenameUtils.getExtension(filename);
@@ -126,15 +126,5 @@ public class ImportQuestionsController {
 		}
 		// TODO commit transaction
 		return questions;
-	}
-
-	private InputStream inputStreamFromResourceOrFile(final String filename) throws FileNotFoundException {
-		InputStream content;
-		final var classLoader = this.getClass().getClassLoader();
-		content = classLoader.getResourceAsStream(filename);
-		if (content == null) {
-			content = new FileInputStream(filename);
-		}
-		return content;
 	}
 }

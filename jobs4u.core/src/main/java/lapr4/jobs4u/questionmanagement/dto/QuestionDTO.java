@@ -30,6 +30,10 @@ public class QuestionDTO {
 
     @XmlElement
     @JsonProperty
+    private String cotationType;
+
+    @XmlElement
+    @JsonProperty
     private String body;
 
     @XmlElementWrapper(name = "possibleAnswersList")

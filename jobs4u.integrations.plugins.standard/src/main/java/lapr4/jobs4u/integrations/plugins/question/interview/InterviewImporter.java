@@ -20,28 +20,25 @@
  */
 package lapr4.jobs4u.integrations.plugins.question.interview;
 
-import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
 
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.NodeList;
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
-import org.xml.sax.SAXException;
+import org.antlr.v4.runtime.CharStreams;
+import org.antlr.v4.runtime.CommonTokenStream;
+import org.antlr.v4.runtime.tree.ParseTree;
+import org.antlr.v4.runtime.tree.ParseTreeWalker;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import lapr4.jobs4u.importer.csv.parser.CsvLexer;
+import lapr4.jobs4u.importer.csv.parser.CsvParser;
+import lapr4.jobs4u.importer.json.parser.JsonLexer;
+import lapr4.jobs4u.importer.json.parser.JsonParser;
+import lapr4.jobs4u.importer.xml.parser.XmlLexer;
+import lapr4.jobs4u.importer.xml.parser.XmlParser;
 import lapr4.jobs4u.integration.questions.import_.application.QuestionImporter;
 import lapr4.jobs4u.integration.questions.import_.domain.QuestionImporterPlugin;
-import lapr4.jobs4u.questionmanagement.domain.Answer;
+import lapr4.jobs4u.integrations.plugins.question.CsvListener;
+import lapr4.jobs4u.integrations.plugins.question.JsonListener;
+import lapr4.jobs4u.integrations.plugins.question.XmlListener;
 import lapr4.jobs4u.questionmanagement.dto.QuestionDTO;
 
 public class InterviewImporter implements QuestionImporter {
@@ -63,83 +60,84 @@ public class InterviewImporter implements QuestionImporter {
 			return importFromXML(filename, plugin);
 
 		} else {
-			throw new IllegalArgumentException("Unsupported file extension: " + plugin.fileExtension());
+			throw new IOException("Unsupported file extension: " + plugin.fileExtension());
 		}
 	}
 
 	private Iterable<QuestionDTO> importFromCSV(final InputStream filename, final QuestionImporterPlugin plugin)
 			throws IOException {
-		var result = new ArrayList<QuestionDTO>();
-		try (BufferedReader br = new BufferedReader(new InputStreamReader(filename))) {
-			String line;
-			while ((line = br.readLine()) != null) {
-				String[] values = line.replace("\"", "").split(";");
-				String[] answerStrings = values[values.length - 1].split("/");
-				List<Answer> answers = new ArrayList<>();
-				for (String answerString : answerStrings) {
-					Answer answer = Answer.valueOf(answerString);
-					answers.add(answer);
-				}
-				result.add(new QuestionDTO(values[0], values[1], values[2], answers, plugin.identity().toString()));
-			}
-		} catch (IOException e) {
-			e.printStackTrace();
+
+		// parse
+		final var charStream = CharStreams.fromStream(filename);
+		final var lexer = new CsvLexer(charStream);
+		final var tokens = new CommonTokenStream(lexer);
+		final var parser = new CsvParser(tokens);
+		final ParseTree tree = parser.questions();
+		final var listener = new CsvListener();
+
+		if (parser.getNumberOfSyntaxErrors() > 0) {
+			throw new IOException("Syntax error in CSV file");
 		}
-		return result;
+
+		ParseTreeWalker.DEFAULT.walk(listener, tree);
+
+		Iterable<QuestionDTO> questions = listener.questions();
+
+		for (QuestionDTO question : questions) {
+			question.setQuestionImporterPlugin(plugin.identity().toString());
+		}
+
+		return questions;
 	}
 
 	private Iterable<QuestionDTO> importFromJSON(final InputStream filename, final QuestionImporterPlugin plugin)
 			throws IOException {
-		var result = new ArrayList<QuestionDTO>();
-		ObjectMapper objectMapper = new ObjectMapper();
-		try (BufferedReader br = new BufferedReader(new InputStreamReader(filename))) {
-			String content = br.lines().collect(Collectors.joining());
-			List<QuestionDTO> questionDTOs = objectMapper.readValue(content,
-					new TypeReference<List<QuestionDTO>>() {
-					});
-			for (QuestionDTO questionDTO : questionDTOs) {
-				QuestionDTO newQuestionDTO = new QuestionDTO(
-						questionDTO.getType(),
-						questionDTO.getCotation(),
-						questionDTO.getBody(),
-						questionDTO.getPossibleAnswers(),
-						plugin.identity().toString());
-				result.add(newQuestionDTO);
-			}
-		} catch (JsonProcessingException e) {
-			e.printStackTrace();
+		// parse
+		final var charStream = CharStreams.fromStream(filename);
+		final var lexer = new JsonLexer(charStream);
+		final var tokens = new CommonTokenStream(lexer);
+		final var parser = new JsonParser(tokens);
+		final ParseTree tree = parser.questions();
+		final var listener = new JsonListener();
+
+		if (parser.getNumberOfSyntaxErrors() > 0) {
+			throw new IOException("Syntax error in CSV file");
 		}
-		return result;
+
+		ParseTreeWalker.DEFAULT.walk(listener, tree);
+
+		Iterable<QuestionDTO> questions = listener.questions();
+
+		for (QuestionDTO question : questions) {
+			question.setQuestionImporterPlugin(plugin.identity().toString());
+		}
+
+		return questions;
 	}
 
 	private Iterable<QuestionDTO> importFromXML(final InputStream filename, final QuestionImporterPlugin plugin)
 			throws IOException {
-		var result = new ArrayList<QuestionDTO>();
-		try {
-			DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-			DocumentBuilder builder = factory.newDocumentBuilder();
-			Document doc = builder.parse(filename);
-			NodeList questionNodes = doc.getElementsByTagName("Question");
-			for (int i = 0; i < questionNodes.getLength(); i++) {
-				Element questionElement = (Element) questionNodes.item(i);
-				String type = questionElement.getElementsByTagName("type").item(0).getTextContent();
-				String body = questionElement.getElementsByTagName("body").item(0).getTextContent();
-				String cotation = questionElement.getElementsByTagName("cotation").item(0).getTextContent();
-				Element possibleAnswersElement = (Element) questionElement.getElementsByTagName("possibleAnswersList")
-						.item(0);
-				NodeList answerNodes = possibleAnswersElement.getElementsByTagName("possibleAnswers");
-				List<Answer> possibleAnswers = new ArrayList<>();
-				for (int j = 0; j < answerNodes.getLength(); j++) {
-					Element answerElement = (Element) answerNodes.item(j);
-					Answer answer = Answer.valueOf(answerElement.getTextContent());
-					possibleAnswers.add(answer);
-				}
-				QuestionDTO newQuestionDTO = new QuestionDTO(type, cotation, body, possibleAnswers, plugin.identity().toString());
-				result.add(newQuestionDTO);
-			}
-		} catch (IOException | SAXException | ParserConfigurationException e) {
-			e.printStackTrace();
+		// parse
+		final var charStream = CharStreams.fromStream(filename);
+		final var lexer = new XmlLexer(charStream);
+		final var tokens = new CommonTokenStream(lexer);
+		final var parser = new XmlParser(tokens);
+		final ParseTree tree = parser.questions();
+		final var listener = new XmlListener();
+
+		if (parser.getNumberOfSyntaxErrors() > 0) {
+			throw new IOException("Syntax error in CSV file");
 		}
-		return result;
+
+		ParseTreeWalker.DEFAULT.walk(listener, tree);
+
+		Iterable<QuestionDTO> questions = listener.questions();
+
+		for (QuestionDTO question : questions) {
+			question.setQuestionImporterPlugin(plugin.identity().toString());
+		}
+
+		return questions;
 	}
+
 }

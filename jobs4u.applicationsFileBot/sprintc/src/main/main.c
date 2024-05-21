@@ -6,6 +6,14 @@
 #include <string.h>
 #include "utils.h"
 #include <semaphore.h>
+/**
+ * @brief The main function of the application.
+ *
+ * This function initializes the necessary variables and resources, reads the configuration file,
+ * creates semaphores and shared memory, creates child processes, and performs the parent and worker tasks.
+ *
+ * @return 0 on successful execution.
+ */
 int main()
 {
     Config config;
@@ -27,14 +35,7 @@ int main()
     sem_barrier = createSemaphore(SEM_BARRIER, 0);             // To wait for all workers to finish
 
     createWorkers(&config, sharedMemory, sem_shared_memory, sem_barrier, sem_barrier_mutex);
-    while (1)
-    {
-        sem_wait(sem_newFile);
-        printf("New file detected\n");
-        listCandidatesID(&config, sharedMemory, sem_shared_memory);
-        sem_wait(sem_barrier);
-        reportFile(&config, sharedMemory);
-    }
+    parentWork(&config, sharedMemory, sem_shared_memory, sem_newFile, sem_barrier);
 
     return 0;
 }
@@ -52,6 +53,28 @@ void createWorkers(Config *config, CircularBuffer *shared_data, sem_t *sem_share
     for (i = 0; i < config->numberOfChildren; i++)
     {
         if (createChildProcess() == 0)
-            copyFiles(config, shared_data, sem_shared_memory, sem_barrier, sem_barrier_mutex);
+            copyFiles(config, shared_data, sem_shared_memory, sem_barrier, sem_barrier_mutex, 0);
+    }
+}
+
+/**
+ * Performs the work of the parent process.
+ *
+ * This function continuously waits for a new file signal, then lists the candidates' IDs
+ * and generates a report file based on the configuration.
+ *
+ * @param config The configuration object.
+ * @param sharedMemory The shared memory object.
+ * @param sem_shared_memory The semaphore for shared memory synchronization.
+ * @param sem_newFile The semaphore for signaling a new file.
+ */
+void parentWork(Config *config, CircularBuffer *sharedMemory, sem_t *sem_shared_memory, sem_t *sem_newFile, sem_t *sem_barrier)
+{
+    while (1)
+    {
+        sem_wait(sem_newFile);
+        listCandidatesID(config, sharedMemory, sem_shared_memory);
+        sem_wait(sem_barrier);
+        reportFile(config, sharedMemory);
     }
 }

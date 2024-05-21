@@ -1,0 +1,48 @@
+@startuml SSD-US1004
+
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+title System Sequence Diagram (SSD) - Edit a Job Opening.
+
+autonumber
+
+actor "Customer Manager" as CustomerManager
+participant ":System" as System
+
+activate CustomerManager
+
+CustomerManager -> System : Asks to record the time and date for an interview.
+
+activate System
+
+System --> CustomerManager : Shows list of job openings.
+deactivate System
+
+CustomerManager -> System : Chooses a job opening.
+activate System
+
+System --> CustomerManager : Shows list of candidates for the chosen job opening
+deactivate System
+    
+CustomerManager -> System : Chooses an candidate
+activate System
+
+System --> CustomerManager : Asks to record the time and date for an interview
+deactivate System
+CustomerManager -> System : Provides new time and date for the interview
+activate System
+
+System --> CustomerManager : Asks to confirm changes
+deactivate System
+
+CustomerManager -> System : Confirms changes
+activate System
+
+System --> CustomerManager : Informs success or failure of update
+deactivate System
+
+deactivate CustomerManager
+
+@enduml

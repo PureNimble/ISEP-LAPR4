@@ -14,6 +14,12 @@
 #include "utils.h"
 #include <sys/types.h>
 
+/**
+ * Monitors the creation of new files in a specified directory.
+ *
+ * @param config A pointer to the configuration struct.
+ * @param sem A pointer to the semaphore used for synchronization.
+ */
 void newFileChecker(Config *config, sem_t *sem)
 {
     int exec_fd[2], lastFileTime = 0, status;

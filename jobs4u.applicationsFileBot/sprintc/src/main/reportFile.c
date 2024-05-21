@@ -20,14 +20,13 @@
  *
  * @param config A pointer to the Config struct containing the configuration settings.
  */
-int checkIfCandidateFilesExist(Files *files, int numberOfCandidates, char *buffer);
 void reportFile(Config *config, CircularBuffer *sharedMemory)
 {
     int numberOfCandidates = 0;
-    Files *files = NULL; // Initialize files to NULL
+    CandidateInfo *files = NULL; // Initialize files to NULL
     while (!isEmpty(sharedMemory))
     {
-        files = createRealloc(files, sizeof(Files) * (numberOfCandidates + 1));
+        files = createRealloc(files, sizeof(CandidateInfo) * (numberOfCandidates + 1));
         files[numberOfCandidates] = readFromBuffer(sharedMemory);
         numberOfCandidates++;
     }
@@ -64,7 +63,15 @@ void reportFile(Config *config, CircularBuffer *sharedMemory)
     printf("-> Report file has been generated\n\n");
 }
 
-int checkIfCandidateFilesExist(Files *files, int numberOfCandidates, char *buffer)
+/**
+ * Checks if candidate files exist and populates the CandidateInfo array with valid candidates.
+ *
+ * @param files The CandidateInfo array to populate with valid candidates.
+ * @param numberOfCandidates The number of candidates in the array.
+ * @param buffer The file path to open and read candidate information from.
+ * @return The number of valid candidates found in the file, or -1 if the file cannot be opened.
+ */
+int checkIfCandidateFilesExist(CandidateInfo *files, int numberOfCandidates, char *buffer)
 {
     FILE *file = fopen(buffer, "r");
     if (file == NULL)
@@ -82,6 +89,6 @@ int checkIfCandidateFilesExist(Files *files, int numberOfCandidates, char *buffe
         }
     }
     fclose(file);
-    files = createRealloc(files, validIndex * sizeof(Files));
+    files = createRealloc(files, validIndex * sizeof(CandidateInfo));
     return validIndex;
 }

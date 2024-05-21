@@ -4,7 +4,7 @@
 #include "candidateInfo.h"
 typedef struct
 {
-    Files buffer[BUFFER_SIZE];
+    CandidateInfo buffer[BUFFER_SIZE];
     int head;
     int tail;
     int count;
@@ -12,8 +12,9 @@ typedef struct
 } CircularBuffer;
 
 void initBuffer(CircularBuffer *buf);
-void addToBuffer(CircularBuffer *buf, Files data);
-Files readFromBuffer(CircularBuffer *buf);
+void addToBuffer(CircularBuffer *buf, CandidateInfo data);
+CandidateInfo readFromBuffer(CircularBuffer *buf);
 int isEmpty(CircularBuffer *buf);
+void printBuffer(CircularBuffer *buf);
 
 #endif // CIRCULAR_BUFFER_H

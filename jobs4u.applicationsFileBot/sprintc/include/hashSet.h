@@ -2,24 +2,29 @@
 #define HASH_SET_H
 #define HASH_SET_SIZE 20
 
-// HashSet struct
+// Node struct for linked list
 typedef struct Node
 {
     int key;
     struct Node *next;
 } Node;
 
+// HashSet struct
 typedef struct HashSet
 {
     Node *buckets[HASH_SET_SIZE];
 } HashSet;
 
-// HashSet functions
+// Hash function
 int hash(int key);
+
+// HashSet creation and deletion
 HashSet *createHashSet();
+void freeHashSet(HashSet *set);
+
+// HashSet operations
 void add(HashSet *set, int key);
 int contains(HashSet *set, int key);
 int getArray(HashSet *set, int *array);
-void freeHashSet(HashSet *set);
 
 #endif // HASH_SET_H

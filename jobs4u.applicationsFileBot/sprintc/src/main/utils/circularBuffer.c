@@ -10,7 +10,7 @@ void initBuffer(CircularBuffer *buf)
 
     for (int i = 0; i < BUFFER_SIZE; i++)
     {
-        Files file;
+        CandidateInfo file;
         file.candidateID = -1;
         file.jobOffer_dir[0] = '\0';
         file.numFiles = 0;
@@ -19,7 +19,7 @@ void initBuffer(CircularBuffer *buf)
 }
 
 // Add to buffer
-void addToBuffer(CircularBuffer *buf, Files data)
+void addToBuffer(CircularBuffer *buf, CandidateInfo data)
 {
     buf->buffer[buf->head] = data;
     buf->head = (buf->head + 1) % BUFFER_SIZE;
@@ -30,9 +30,9 @@ void addToBuffer(CircularBuffer *buf, Files data)
 }
 
 // Remove from buffer
-Files readFromBuffer(CircularBuffer *buf)
+CandidateInfo readFromBuffer(CircularBuffer *buf)
 {
-    Files item = buf->buffer[buf->tail];
+    CandidateInfo item = buf->buffer[buf->tail];
     buf->tail = (buf->tail + 1) % BUFFER_SIZE;
     --buf->count;
     return item;
@@ -41,4 +41,14 @@ Files readFromBuffer(CircularBuffer *buf)
 int isEmpty(CircularBuffer *buf)
 {
     return buf->count == 0;
+}
+
+void printBuffer(CircularBuffer *buf)
+{
+    printf("Buffer: ");
+    for (int i = 0; i < BUFFER_SIZE; i++)
+    {
+        printf("%d ", buf->buffer[i].candidateID);
+    }
+    printf("\n");
 }

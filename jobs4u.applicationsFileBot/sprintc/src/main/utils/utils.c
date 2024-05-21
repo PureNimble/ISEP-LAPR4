@@ -13,6 +13,13 @@
 #include "utils.h"
 #include "circularBuffer.h"
 
+/**
+ * Creates a semaphore with the given name and initial value.
+ *
+ * @param name The name of the semaphore.
+ * @param value The initial value of the semaphore.
+ * @return A pointer to the created semaphore.
+ */
 sem_t *createSemaphore(char *name, unsigned value)
 {
     sem_t *sem;
@@ -24,6 +31,13 @@ sem_t *createSemaphore(char *name, unsigned value)
     return sem;
 }
 
+/**
+ * Creates a shared memory region and returns a pointer to it.
+ *
+ * @param name The name of the shared memory region.
+ * @param fd A pointer to an integer that will hold the file descriptor of the shared memory region.
+ * @return A pointer to the created shared memory region.
+ */
 CircularBuffer *createSharedMemory(char *name, int *fd)
 {
     CircularBuffer *shm;
@@ -50,6 +64,11 @@ CircularBuffer *createSharedMemory(char *name, int *fd)
     return shm;
 }
 
+/**
+ * Removes a named semaphore.
+ *
+ * @param name The name of the semaphore to remove.
+ */
 void removeSemaphore(char *name)
 {
     if (sem_unlink(name) == -1)
@@ -59,18 +78,13 @@ void removeSemaphore(char *name)
     }
 }
 
-void createPipe(int *fd)
-{
-    if (pipe(fd) == -1)
-    {
-        perror("pipe");
-        exit(1);
-    }
-}
-
+/**
+ * Removes the shared memory with the given name.
+ *
+ * @param name The name of the shared memory to remove.
+ */
 void removeSharedMemory(char *name)
 {
-
     if (shm_unlink(name) == -1)
     {
         perror("shm_unlink");
@@ -78,6 +92,12 @@ void removeSharedMemory(char *name)
     }
 }
 
+/**
+ * Closes the shared memory and file descriptor.
+ *
+ * @param fd The file descriptor to close.
+ * @param shm The shared memory to unmap.
+ */
 void close_shared_memory(int fd, CircularBuffer *shm)
 {
     if (munmap(shm, sizeof(CircularBuffer)) < 0)
@@ -107,6 +127,21 @@ pid_t createChildProcess()
         exit(EXIT_FAILURE);
     }
     return pid;
+}
+
+/**
+ * Creates a pipe using the pipe system call.
+ *
+ * @param fd An integer array to store the file descriptors of the pipe.
+ * @return None.
+ */
+void createPipe(int *fd)
+{
+    if (pipe(fd) == -1)
+    {
+        perror("pipe");
+        exit(1);
+    }
 }
 
 /**
@@ -141,28 +176,22 @@ void *createRealloc(void *array, size_t size)
     }
     return newArray;
 }
-
 /**
- * Checks if a given path is a file or a directory.
+ * @brief Create a malloc string.
  *
- * @param path The path to be checked.
- * @return 1 if the path is a file, 2 if the path is a directory, 0 otherwise.
+ * @param str The string to be created.
+ * @param value The value to be assigned to the string.
  */
-int isFileOrDirectory(char *path)
+void createMallocString(char **str, char *value)
 {
-    struct stat path_stat;
-    stat(path, &path_stat);
-    if (S_ISREG(path_stat.st_mode))
+    *str = malloc(strlen(value) + 1);
+    if (*str == NULL)
     {
-        return 1; // file
+        errorMessages("Failed to allocate memory for the string\n");
+        return;
     }
-    else if (S_ISDIR(path_stat.st_mode))
-    {
-        return 2; // directory
-    }
-    return 0; // not a file or directory
+    strcpy(*str, value);
 }
-
 /**
  * Checks if a given string represents an integer.
  *
@@ -199,20 +228,24 @@ void errorMessages(char *message)
 }
 
 /**
- * @brief Create a malloc string.
+ * Checks if a given path is a file or a directory.
  *
- * @param str The string to be created.
- * @param value The value to be assigned to the string.
+ * @param path The path to be checked.
+ * @return 1 if the path is a file, 2 if the path is a directory, 0 otherwise.
  */
-void createMallocString(char **str, char *value)
+int isFileOrDirectory(char *path)
 {
-    *str = malloc(strlen(value) + 1);
-    if (*str == NULL)
+    struct stat path_stat;
+    stat(path, &path_stat);
+    if (S_ISREG(path_stat.st_mode))
     {
-        errorMessages("Failed to allocate memory for the string\n");
-        return;
+        return 1; // file
     }
-    strcpy(*str, value);
+    else if (S_ISDIR(path_stat.st_mode))
+    {
+        return 2; // directory
+    }
+    return 0; // not a file or directory
 }
 
 /**
@@ -276,9 +309,18 @@ void delete_directory(const char *dir)
         exit(EXIT_FAILURE);
     }
 }
-void printFiles(Files file)
+/**
+ * Prints the details of a CandidateInfo object.
+ *
+ * This function prints the candidate ID, job offer directory, and the list of files
+ * associated with the CandidateInfo object.
+ *
+ * @param file The CandidateInfo object to be printed.
+ */
+void printFiles(CandidateInfo file)
 {
     printf("Candidate ID: %d\n", file.candidateID);
+    printf("Job Offer Directory: %s\n", file.jobOffer_dir);
     printf("Number of files: %d\n", file.numFiles);
     for (int i = 0; i < file.numFiles; i++)
     {
@@ -286,9 +328,15 @@ void printFiles(Files file)
     }
 }
 
-Files createFiles(int candidateID)
+/**
+ * Creates a CandidateInfo struct with the given candidate ID and initializes its fields.
+ *
+ * @param candidateID The ID of the candidate.
+ * @return The created CandidateInfo struct.
+ */
+CandidateInfo createFiles(int candidateID)
 {
-    Files file;
+    CandidateInfo file;
     file.candidateID = candidateID;
     file.numFiles = 0;
     file.jobOffer_dir[0] = '\0';

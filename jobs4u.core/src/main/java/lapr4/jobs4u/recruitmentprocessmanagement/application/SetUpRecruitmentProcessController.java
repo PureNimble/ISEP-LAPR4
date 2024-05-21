@@ -18,13 +18,10 @@ import lapr4.jobs4u.jobopeningmanagement.repositories.JobOpeningRepository;
 public class SetUpRecruitmentProcessController {
         private final AuthorizationService authz;
         private final RecruitmentProcessRepository recruitmentProcessRepository;
-        private final JobOpeningRepository jobOpeningRepository;
-
         public SetUpRecruitmentProcessController(final RecruitmentProcessRepository recruitmentProcessRepository,
                         final JobOpeningRepository jobOpeningRepository,
                         final AuthorizationService authz) {
                 this.recruitmentProcessRepository = recruitmentProcessRepository;
-                this.jobOpeningRepository = jobOpeningRepository;
                 this.authz = authz;
         }
 
@@ -72,7 +69,6 @@ public class SetUpRecruitmentProcessController {
                                 analysisFinalDate, resultInitialDate, resultFinalDate, jobOpening,
                                 formattedDate);
                 RecruitmentProcess re = recruitmentProcessRepository.save(recruitmentProcess);
-                activateJobOpening(jobOpening);
                 return re;
         }
 
@@ -92,7 +88,6 @@ public class SetUpRecruitmentProcessController {
                                 resultInitialDate,
                                 resultFinalDate, jobOpening, formattedDate);
                 RecruitmentProcess re = recruitmentProcessRepository.save(recruitmentProcess);
-                activateJobOpening(jobOpening);
                 return re;
         }
 
@@ -126,10 +121,5 @@ public class SetUpRecruitmentProcessController {
                                                 analysisInitialDate, analysisFinalDate, resultInitialDate,
                                                 resultFinalDate, jobOpening, registeredOn)
                                 .build();
-        }
-
-        private void activateJobOpening(final JobOpening jobOpening) {
-                jobOpening.activate();
-                jobOpeningRepository.save(jobOpening);
         }
 }

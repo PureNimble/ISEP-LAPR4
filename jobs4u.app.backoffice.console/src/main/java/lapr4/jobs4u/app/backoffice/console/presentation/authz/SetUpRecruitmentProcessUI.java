@@ -26,7 +26,7 @@ public class SetUpRecruitmentProcessUI extends AbstractUI {
     protected boolean doShow() {
 
         Iterable<JobOpeningDTO> jobOpeningList = this.listJobOpeningsController
-                .getIntersection(listJobOpeningsController.filterByActive(false));
+                .getIntersection(listJobOpeningsController.hasRecruitmentProcess(false));
         final SelectWidget<JobOpeningDTO> selector = new SelectWidget<>("Job Openings:", jobOpeningList,
                 new JobOpeningPrinter());
         selector.show();

@@ -19,6 +19,9 @@ public abstract class Phase {
     
     @Embedded
     private State state;
+
+    @Column(name = "in_progress")
+    private boolean inProgress;
     
     protected Phase(final String initialDate, final String finalDate) {
         Preconditions.noneNull(new Object[] { initialDate, finalDate});
@@ -30,6 +33,7 @@ public abstract class Phase {
         this.initialDate = initialDateTemp;
         this.finalDate = finalDateTemp;
         this.state = State.valueOf(ActivityState.CLOSED.toString());
+        this.inProgress = false;
     }
 
     protected Phase(final String initialDate, final String finalDate, final String minDate) {
@@ -43,12 +47,14 @@ public abstract class Phase {
         this.initialDate = initialDateTemp;
         this.finalDate = finalDateTemp;
         this.state = State.valueOf(ActivityState.CLOSED.toString());
+        this.inProgress = false;
     }
 
     protected Phase() {
         this.initialDate = null;
         this.finalDate = null;
         this.state = null;
+        this.inProgress = false;
     }
 
     public Date initialDate() {
@@ -61,6 +67,10 @@ public abstract class Phase {
 
     public State state() {
         return state;
+    }
+
+    public boolean inProgress() {
+        return inProgress;
     }
 
     public void open() {

@@ -21,16 +21,16 @@ public class OpenOrClosePhaseUI extends AbstractUI {
     private final OpenOrClosePhaseController openOrClosePhaseController = new OpenOrClosePhaseController(
             PersistenceContext.repositories().recruitmentProcesses(), PersistenceContext.repositories().jobOpenings(),
             PersistenceContext.repositories().jobOpeningRequirements(),
-            PersistenceContext.repositories().jobOpeningInterviews(), AuthzRegistry.authorizationService());
+            PersistenceContext.repositories().jobOpeningInterviews(), PersistenceContext.repositories().applications() ,AuthzRegistry.authorizationService());
 
     @Override
     protected boolean doShow() {
         final List<String> options = new ArrayList<>();
-        options.add("Yes");
-        options.add("No");
+        options.add("Go to the next Phase");
+        options.add("Go to the previous Phase");
         final int option;
         final Iterable<JobOpeningDTO> jobOpenings = listJobOpeningsController
-                .getIntersection(listJobOpeningsController.filterByActive(true));
+                .getIntersection(listJobOpeningsController.hasRecruitmentProcess(true));
         final SelectWidget<JobOpeningDTO> selector = new SelectWidget<>("Job Openings:", jobOpenings,
                 new JobOpeningPrinter());
         selector.show();
@@ -45,16 +45,20 @@ public class OpenOrClosePhaseUI extends AbstractUI {
                     "There is no open phase for this job opening. Do you wish to start the recruitment process?");
         } else {
             option = Utils.showAndSelectIndex(options,
-                    "The current phase is: " + currentPhase + ". Do you wish to go to the next one?");
+                    "The current phase is: " + currentPhase + ". Do you wish to go to the next one or go back to the previous state?");
         }
         if (option == 0) {
-            if (openOrClosePhaseController.changePhase(currentPhase, theJobOpening)) {
-                System.out.println("Phase changed successfully.");
+            if (openOrClosePhaseController.changePhase(currentPhase, theJobOpening, true)) {
+                System.out.println("Phase changed to the next one successfully.");
             } else {
                 System.out.println("Error changing phase.");
             }
         } else if (option == 1) {
-            return false;
+            if (openOrClosePhaseController.changePhase(currentPhase, theJobOpening, false)) {
+                System.out.println("Phase changed to the previous one successfully.");
+            } else {
+                System.out.println("Error changing phase.");
+            }
         }
         return true;
     }

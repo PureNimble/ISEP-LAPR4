@@ -52,11 +52,21 @@ public class JpaJobOpeningRepository extends JpaAutoTxRepository<JobOpening, Job
         return count.toString();
     }
 
+    @SuppressWarnings("unchecked")
     @Override
-    public Iterable<JobOpening> filterByActive(final boolean active) {
-        final Map<String, Object> params = new HashMap<>();
-        params.put("active", active);
-        return match("e.active=:active", params);
+    public Iterable<JobOpening> hasRecruitmentProcess(final boolean hasRecruitmentProcess) {
+        Query query = null;
+        if (hasRecruitmentProcess) {
+           query = createQuery(
+                "SELECT e FROM JobOpening e, RecruitmentProcess RP WHERE e.jobReference = RP.jobOpening.jobReference",
+                JobOpening.class);
+        }
+        else{
+            query = createQuery(
+                "SELECT e FROM JobOpening e LEFT JOIN RecruitmentProcess RP ON e.jobReference = RP.jobOpening.jobReference WHERE RP.jobOpening.jobReference IS NULL",
+                JobOpening.class);
+        }
+        return query.getResultList();
     }
 
     @SuppressWarnings("unchecked")

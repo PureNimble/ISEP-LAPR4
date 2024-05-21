@@ -342,3 +342,14 @@ CandidateInfo createFiles(int candidateID)
     file.jobOffer_dir[0] = '\0';
     return file;
 }
+
+void replaceChar(char *str, char *find, char *replace)
+{
+    char *pos = str;
+    while ((pos = strstr(pos, find)) != NULL)
+    {
+        memmove(pos + strlen(replace), pos + strlen(find), strlen(pos + strlen(find)) + 1);
+        memcpy(pos, replace, strlen(replace));
+        pos += strlen(replace);
+    }
+}

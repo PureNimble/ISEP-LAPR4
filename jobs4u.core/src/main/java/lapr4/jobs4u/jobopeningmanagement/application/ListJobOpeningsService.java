@@ -45,8 +45,8 @@ public class ListJobOpeningsService {
         return jobOpeningsDTO;
     }
 
-    public Iterable<JobOpeningDTO> filterByActive(final boolean active) {
-        final Iterable<JobOpening> jobOpenings = this.jobOpeningRepository.filterByActive(active);
+    public Iterable<JobOpeningDTO> hasRecruitmentProcess(final boolean hasRecruitmentProcess) {
+        final Iterable<JobOpening> jobOpenings = this.jobOpeningRepository.hasRecruitmentProcess(hasRecruitmentProcess);
         
         List<JobOpeningDTO> jobOpeningsDTO = new ArrayList<>();
         jobOpenings.forEach(jobOpening -> jobOpeningsDTO.add(jobOpening.toDTO()));

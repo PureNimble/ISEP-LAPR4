@@ -34,8 +34,8 @@ public class InMemoryJobOpeningRepository extends InMemoryDomainRepository<JobOp
     }
 
     @Override
-    public Iterable<JobOpening> filterByActive(final boolean active) {
-        return match(e -> e.isActive() == active);
+    public Iterable<JobOpening> hasRecruitmentProcess(final boolean hasRecruitmentProcess) {
+        return hasRecruitmentProcess(hasRecruitmentProcess);
     }
 
     @Override

@@ -44,7 +44,7 @@ public class EditJobOpeningUI extends AbstractUI {
                         PersistenceContext.repositories().recruitmentProcesses(),
                         PersistenceContext.repositories().jobOpenings(),
                         PersistenceContext.repositories().jobOpeningRequirements(),
-                        PersistenceContext.repositories().jobOpeningInterviews(), AuthzRegistry.authorizationService());
+                        PersistenceContext.repositories().jobOpeningInterviews(), PersistenceContext.repositories().applications(), AuthzRegistry.authorizationService());
 
         private final ListQuestionPluginController pluginController = new ListQuestionPluginController(
                         PersistenceContext.repositories().questionImporterPlugins(),

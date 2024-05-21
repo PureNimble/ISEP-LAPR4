@@ -47,7 +47,7 @@ public class ListJobOpeningsUI extends AbstractListUI<JobOpeningDTO> {
                                 "See Inactive Job Openings");
                         final int activeOption = Utils.showAndSelectIndex(activeOptions,
                                 "\nWhich type of Job Opening do you want to see?");
-                        elems = this.jobOpeningsByActive(activeOption == 0);
+                        elems = this.jobOpeningsWithRecruitmentProcess(activeOption == 0);
                         break;
                     case 2:
                         final Calendar initialDate = Utils.readDateFromConsole("Enter a initial date (MM-yyyy): ",
@@ -111,8 +111,8 @@ public class ListJobOpeningsUI extends AbstractListUI<JobOpeningDTO> {
         return listJobOpeningsController.filterByCustomer(customer);
     }
 
-    protected Iterable<JobOpeningDTO> jobOpeningsByActive(final boolean active) {
-        return listJobOpeningsController.getIntersection(listJobOpeningsController.filterByActive(active));
+    protected Iterable<JobOpeningDTO> jobOpeningsWithRecruitmentProcess(final boolean hasRecruitmentProcess) {
+        return listJobOpeningsController.getIntersection(listJobOpeningsController.hasRecruitmentProcess(hasRecruitmentProcess));
     }
 
     protected Iterable<JobOpeningDTO> jobOpeningsByDate(final Calendar initialDate, final Calendar finalDate) {

@@ -1,5 +1,6 @@
 package lapr4.jobs4u.app.backoffice.console.presentation.authz;
 
+import lapr4.jobs4u.app.common.console.presentation.utils.Utils;
 import lapr4.jobs4u.applicationmanagement.application.ImportApplicationsController;
 import lapr4.jobs4u.applicationmanagement.domain.File;
 import lapr4.jobs4u.candidatemanagement.application.RegisterCandidateController;
@@ -10,8 +11,6 @@ import lapr4.jobs4u.jobopeningmanagement.domain.JobReference;
 import lapr4.jobs4u.usermanagement.application.AddUserController;
 import lapr4.jobs4u.usermanagement.domain.BaseRoles;
 
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -23,15 +22,12 @@ import eapli.framework.domain.repositories.IntegrityViolationException;
 import eapli.framework.infrastructure.authz.application.AuthzRegistry;
 import eapli.framework.infrastructure.authz.domain.model.Role;
 import eapli.framework.infrastructure.authz.domain.model.SystemUser;
-import eapli.framework.io.util.Console;
 import eapli.framework.presentation.console.AbstractUI;
 
 public class ImportApplicationsUI extends AbstractUI {
 
-    private static final String DEFAULT_FOLDER = "jobs4u.applicationsFileBot/sprintb/resources/output";
     private static final String EMAIL_ALREADY_REGISTERED = "That E-mail is already registered.";
     private static final String JOB_OPENING_DOES_NOT_EXIST = "Job Opening does not exist";
-    private static final String INVALID_PATH = "Invalid Path";
 
     private final RegisterCandidateController registerCandidateController;
     private final AddUserController addUserController;
@@ -50,8 +46,10 @@ public class ImportApplicationsUI extends AbstractUI {
 
     @Override
     protected boolean doShow() {
-        String folder = getFolderPath();
-        if (folder == null) {
+        System.out.println("Please insert the folder path");
+        String folder = Utils.getPath(true);
+        if (folder == null && haveReportFile(folder)) {
+            System.out.println("Invalid Folder");
             return false;
         }
 
@@ -59,19 +57,6 @@ public class ImportApplicationsUI extends AbstractUI {
         processCandidates(candidateJobMap, folder);
 
         return false;
-    }
-
-    private String getFolderPath() {
-        if (Console.readBoolean("Do you want to use the default Path? (Y/N)")) {
-            return DEFAULT_FOLDER;
-        } else {
-            String folder = Console.readLine("Shared Folder Path (Insert a valid path):");
-            if (!Files.exists(Paths.get(folder)) && haveReportFile(folder)) {
-                System.out.println(INVALID_PATH);
-                return null;
-            }
-            return folder;
-        }
     }
 
     private void processCandidates(Map<String, Set<String>> candidateJobMap, String folder) {
@@ -118,7 +103,7 @@ public class ImportApplicationsUI extends AbstractUI {
     }
 
     private boolean haveReportFile(String folder) {
-        return theController.haveReportFile(folder);
+        return theController.isPathValid(folder);
     }
 
     @Override

@@ -43,4 +43,4 @@ jobs4u.ANTLR/src/main/resources/output/*
 # SCOMP project files
 obj/
 jobs4u.applicationsFileBot/*/bin/*
-jobs4u.applicationsFileBot/*/output/
+jobs4u.applicationsFileBot/*/resources/output/*

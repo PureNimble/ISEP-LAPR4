@@ -23,6 +23,18 @@ public interface InterviewVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitContent(InterviewParser.ContentContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link InterviewParser#cotation}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitCotation(InterviewParser.CotationContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link InterviewParser#cotationType}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitCotationType(InterviewParser.CotationTypeContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link InterviewParser#choice}.
 	 * @param ctx the parse tree
 	 * @return the visitor result

@@ -28,6 +28,26 @@ public interface InterviewListener extends ParseTreeListener {
 	 */
 	void exitContent(InterviewParser.ContentContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link InterviewParser#cotation}.
+	 * @param ctx the parse tree
+	 */
+	void enterCotation(InterviewParser.CotationContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link InterviewParser#cotation}.
+	 * @param ctx the parse tree
+	 */
+	void exitCotation(InterviewParser.CotationContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link InterviewParser#cotationType}.
+	 * @param ctx the parse tree
+	 */
+	void enterCotationType(InterviewParser.CotationTypeContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link InterviewParser#cotationType}.
+	 * @param ctx the parse tree
+	 */
+	void exitCotationType(InterviewParser.CotationTypeContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link InterviewParser#choice}.
 	 * @param ctx the parse tree
 	 */

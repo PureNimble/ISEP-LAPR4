@@ -3,11 +3,12 @@ grammar Interview;
 start: 'TITLE:' text 'NAME:' 'GRADE:' content+;
 
 content:
-	'COTATION:' (TWO_DIGIT_NUMBER | FRACTIONAL_NUMBER | '100') (
-		'%'
-		| 'POINTS'
-		| 'VALUES'
-	) 'QUESTION TYPE:' type 'ANSWER:' 'GRADE:';
+	cotation cotationType 'QUESTION TYPE:' type 'ANSWER:' 'GRADE:';
+
+cotation:
+	'COTATION:' (TWO_DIGIT_NUMBER | FRACTIONAL_NUMBER | '100');
+
+cotationType: ( '%' | 'POINTS' | 'VALUES');
 
 choice: option option+;
 option: NUMBER ')' text;

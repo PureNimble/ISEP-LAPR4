@@ -39,7 +39,7 @@
 		<module>jobs4u.core</module>
 		<module>jobs4u.infrastructure.application</module>
 		<module>jobs4u.persistence.impl</module>
-		<module>jobs4u.integrations.plugins.standard</module>
+		<module>jobs4u.integrations.plugins</module>
 		<module>jobs4u.applicationProtocol</module>
 		<module>jobs4u.ANTLR</module>
 	</modules>

@@ -28,10 +28,10 @@ import eapli.framework.domain.repositories.TransactionalContext;
 import eapli.framework.general.domain.model.Designation;
 import eapli.framework.infrastructure.repositories.impl.jpa.JpaAutoTxRepository;
 import lapr4.jobs4u.Application;
-import lapr4.jobs4u.integration.questions.import_.domain.FileExtension;
-import lapr4.jobs4u.integration.questions.import_.domain.PluginType;
-import lapr4.jobs4u.integration.questions.import_.domain.QuestionImporterPlugin;
-import lapr4.jobs4u.integration.questions.import_.repositories.QuestionImporterPluginRepository;
+import lapr4.jobs4u.integration.questions.importer.domain.FileExtension;
+import lapr4.jobs4u.integration.questions.importer.domain.PluginType;
+import lapr4.jobs4u.integration.questions.importer.domain.QuestionImporterPlugin;
+import lapr4.jobs4u.integration.questions.importer.repositories.QuestionImporterPluginRepository;
 
 /**
  * @author Paulo Gandra de Sousa 2024.04.30

@@ -47,9 +47,8 @@
         </dependency>
         <dependency>
             <groupId>lapr4</groupId>
-            <artifactId>jobs4u.integrations.plugins.standard</artifactId>
+            <artifactId>jobs4u.integrations.plugins</artifactId>
             <version>${project.parent.version}</version>
-            <scope>runtime</scope>
         </dependency>
     </dependencies>
 </project>

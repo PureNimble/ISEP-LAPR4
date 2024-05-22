@@ -36,8 +36,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import eapli.framework.actions.Action;
-
-import lapr4.jobs4u.integration.questions.import_.application.ImportQuestionsController;
+import lapr4.jobs4u.integration.questions.importer.application.ImportQuestionsController;
 import lapr4.jobs4u.questionmanagement.domain.Question;
 
 /**

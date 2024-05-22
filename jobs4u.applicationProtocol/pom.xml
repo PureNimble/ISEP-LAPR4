@@ -23,9 +23,9 @@
 
     <dependencies>
         <dependency>
-            <groupId>lapr4</groupId>
-            <artifactId>jobs4u.app.common.console</artifactId>
-            <version>${project.parent.version}</version>
-        </dependency>
+			<groupId>lapr4</groupId>
+			<artifactId>jobs4u.core</artifactId>
+			<version>${project.parent.version}</version>
+		</dependency>
     </dependencies>
 </project>

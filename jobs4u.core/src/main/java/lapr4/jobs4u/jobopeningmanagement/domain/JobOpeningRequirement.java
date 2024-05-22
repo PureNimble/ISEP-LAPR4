@@ -12,7 +12,7 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.Version;
-import lapr4.jobs4u.integration.questions.import_.domain.QuestionImporterPlugin;
+import lapr4.jobs4u.integration.questions.importer.domain.QuestionImporterPlugin;
 
 @Entity
 @Table(name = "T_JOB_OPENING_REQUIREMENT")

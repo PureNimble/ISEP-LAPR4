@@ -8,10 +8,10 @@ import eapli.framework.infrastructure.authz.application.AuthzRegistry;
 import eapli.framework.presentation.console.AbstractUI;
 import lapr4.jobs4u.app.common.console.presentation.utils.Utils;
 import lapr4.jobs4u.infrastructure.persistence.PersistenceContext;
-import lapr4.jobs4u.integration.questions.export.application.FileFormat;
-import lapr4.jobs4u.integration.questions.export.application.QuestionExporterController;
-import lapr4.jobs4u.integration.questions.import_.application.ListQuestionPluginController;
-import lapr4.jobs4u.integration.questions.import_.domain.QuestionImporterPlugin;
+import lapr4.jobs4u.integration.questions.exporter.application.FileFormat;
+import lapr4.jobs4u.integration.questions.exporter.application.QuestionExporterController;
+import lapr4.jobs4u.integration.questions.importer.application.ListQuestionPluginController;
+import lapr4.jobs4u.integration.questions.importer.domain.QuestionImporterPlugin;
 
 public class ExportRequirementUI extends AbstractUI {
 

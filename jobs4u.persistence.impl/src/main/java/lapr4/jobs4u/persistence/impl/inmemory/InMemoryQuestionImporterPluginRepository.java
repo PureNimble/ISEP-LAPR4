@@ -4,10 +4,10 @@ import java.util.Optional;
 
 import eapli.framework.general.domain.model.Designation;
 import eapli.framework.infrastructure.repositories.impl.inmemory.InMemoryDomainRepository;
-import lapr4.jobs4u.integration.questions.import_.domain.FileExtension;
-import lapr4.jobs4u.integration.questions.import_.domain.PluginType;
-import lapr4.jobs4u.integration.questions.import_.domain.QuestionImporterPlugin;
-import lapr4.jobs4u.integration.questions.import_.repositories.QuestionImporterPluginRepository;
+import lapr4.jobs4u.integration.questions.importer.domain.FileExtension;
+import lapr4.jobs4u.integration.questions.importer.domain.PluginType;
+import lapr4.jobs4u.integration.questions.importer.domain.QuestionImporterPlugin;
+import lapr4.jobs4u.integration.questions.importer.repositories.QuestionImporterPluginRepository;
 
 public class InMemoryQuestionImporterPluginRepository
         extends InMemoryDomainRepository<QuestionImporterPlugin, Designation>

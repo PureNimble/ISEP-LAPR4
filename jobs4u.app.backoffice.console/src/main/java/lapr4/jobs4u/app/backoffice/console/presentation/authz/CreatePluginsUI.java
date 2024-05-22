@@ -8,9 +8,9 @@ import eapli.framework.domain.repositories.IntegrityViolationException;
 import eapli.framework.io.util.Console;
 import eapli.framework.presentation.console.AbstractUI;
 import lapr4.jobs4u.app.common.console.presentation.utils.Utils;
-import lapr4.jobs4u.integration.questions.import_.application.ImportQuestionsController;
-import lapr4.jobs4u.integration.questions.import_.application.RegisterQuestionImporterPluginController;
-import lapr4.jobs4u.integration.questions.import_.domain.TypesOfPlugins;
+import lapr4.jobs4u.integration.questions.importer.application.ImportQuestionsController;
+import lapr4.jobs4u.integration.questions.importer.application.RegisterQuestionImporterPluginController;
+import lapr4.jobs4u.integration.questions.importer.domain.TypesOfPlugins;
 
 public class CreatePluginsUI extends AbstractUI {
 

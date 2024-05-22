@@ -5,7 +5,7 @@ import java.util.Optional;
 import eapli.framework.application.UseCaseController;
 import eapli.framework.infrastructure.authz.application.AuthorizationService;
 import lapr4.jobs4u.customermanagement.domain.Address;
-import lapr4.jobs4u.integration.questions.import_.domain.QuestionImporterPlugin;
+import lapr4.jobs4u.integration.questions.importer.domain.QuestionImporterPlugin;
 import lapr4.jobs4u.jobopeningmanagement.domain.ContractType;
 import lapr4.jobs4u.jobopeningmanagement.domain.JobDescription;
 import lapr4.jobs4u.jobopeningmanagement.domain.JobOpening;

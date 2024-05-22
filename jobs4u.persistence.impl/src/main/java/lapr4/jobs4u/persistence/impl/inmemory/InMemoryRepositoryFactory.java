@@ -171,7 +171,17 @@ public class InMemoryRepositoryFactory implements RepositoryFactory {
     }
 
     @Override
+    public JobOpeningInterviewRepository jobOpeningInterviews(TransactionalContext autoTx) {
+        return jobOpeningInterviews(null);
+    }
+
+    @Override
     public JobOpeningRequirementRepository jobOpeningRequirements() {
         return new InMemoryJobOpeningRequirementRepository();
+    }
+
+    @Override
+    public JobOpeningRequirementRepository jobOpeningRequirements(TransactionalContext autoTx) {
+        return jobOpeningRequirements(null);
     }
 }

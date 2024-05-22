@@ -9,6 +9,7 @@ import java.util.Optional;
 
 import eapli.framework.domain.repositories.ConcurrencyException;
 import eapli.framework.domain.repositories.IntegrityViolationException;
+import eapli.framework.domain.repositories.TransactionalContext;
 import eapli.framework.infrastructure.authz.application.AuthzRegistry;
 import eapli.framework.io.util.Console;
 import eapli.framework.presentation.console.AbstractUI;
@@ -31,6 +32,8 @@ import lapr4.jobs4u.recruitmentprocessmanagement.application.OpenOrClosePhaseCon
 
 public class EditJobOpeningUI extends AbstractUI {
 
+        private final TransactionalContext ctx = PersistenceContext.repositories().newTransactionalContext();
+
         private final ListJobOpeningsController listJobOpeningsController = new ListJobOpeningsController(
                         PersistenceContext.repositories().jobOpenings(), AuthzRegistry.authorizationService());
 
@@ -44,7 +47,7 @@ public class EditJobOpeningUI extends AbstractUI {
                         PersistenceContext.repositories().recruitmentProcesses(),
                         PersistenceContext.repositories().jobOpenings(),
                         PersistenceContext.repositories().jobOpeningRequirements(),
-                        PersistenceContext.repositories().jobOpeningInterviews(), PersistenceContext.repositories().applications(), AuthzRegistry.authorizationService());
+                        PersistenceContext.repositories().jobOpeningInterviews(), PersistenceContext.repositories().applications(), AuthzRegistry.authorizationService(), ctx);
 
         private final ListQuestionPluginController pluginController = new ListQuestionPluginController(
                         PersistenceContext.repositories().questionImporterPlugins(),

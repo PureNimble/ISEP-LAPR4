@@ -3,8 +3,8 @@ package lapr4.jobs4u.recruitmentprocessmanagement.application;
 import java.util.Optional;
 
 import eapli.framework.application.UseCaseController;
+import eapli.framework.domain.repositories.TransactionalContext;
 import eapli.framework.infrastructure.authz.application.AuthorizationService;
-import org.springframework.transaction.annotation.Transactional;
 import lapr4.jobs4u.applicationmanagement.repositories.ApplicationRepository;
 import lapr4.jobs4u.jobopeningmanagement.domain.JobOpening;
 import lapr4.jobs4u.jobopeningmanagement.repositories.JobOpeningInterviewRepository;
@@ -23,16 +23,19 @@ public class OpenOrClosePhaseController {
     private final JobOpeningRequirementRepository jobOpeningRequirementRepository;
     private final JobOpeningInterviewRepository JobOpeningInterviewRepository;
     private final ApplicationRepository ApplicationRepository;
+    private final TransactionalContext txCtx;
 
     public OpenOrClosePhaseController(RecruitmentProcessRepository recruitmentProcessRepository,
             JobOpeningRepository jobOpeningRepository, JobOpeningRequirementRepository jobOpeningRequirementRepository,
-            JobOpeningInterviewRepository JobOpeningInterviewRepository, ApplicationRepository ApplicationRepository, AuthorizationService authz) {
+            JobOpeningInterviewRepository JobOpeningInterviewRepository, ApplicationRepository ApplicationRepository,
+            AuthorizationService authz, TransactionalContext txCtx) {
         this.recruitmentProcessRepository = recruitmentProcessRepository;
         this.jobOpeningRepository = jobOpeningRepository;
         this.jobOpeningRequirementRepository = jobOpeningRequirementRepository;
         this.JobOpeningInterviewRepository = JobOpeningInterviewRepository;
         this.ApplicationRepository = ApplicationRepository;
         this.authz = authz;
+        this.txCtx = txCtx;
     }
 
     public String currentPhase(JobOpening jobOpening) {
@@ -45,81 +48,80 @@ public class OpenOrClosePhaseController {
         return phase;
     }
 
-    @Transactional
-    public boolean changePhase(String currentPhase, JobOpening theJobOpening, Boolean moveUp) {
+    public boolean changePhase(String currentPhase, JobOpening theJobOpening, Boolean moveUp) throws Exception {
         authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.CUSTOMER_MANAGER, BaseRoles.POWERUSER);
         RecruitmentProcess recruitmentProcess = recruitmentProcessRepository.findByJobOpening(theJobOpening).get();
 
-
-        boolean success = switch (currentPhase) {
+        txCtx.beginTransaction();
+        switch (currentPhase) {
 
             case null -> {
                 if (moveUp) {
                     recruitmentProcess.applicationPhase().open();
                     theJobOpening.activate();
                 } else {
-                    yield false;
+                    throw new Exception("The Recruitment Process has not started yet, so there is no previous phase");
                 }
-                yield true;
             }
+
             case "ApplicationPhase" -> {
                 recruitmentProcess.applicationPhase().close();
                 if (moveUp) {
                     if (!hasRequirements(theJobOpening)) {
-                        yield false;
-                    }
-                    else{
+                        throw new Exception("No requirements specifications associated with the job opening: "
+                                + theJobOpening.jobReference());
+                    } else if (!hasApplications(theJobOpening)) {
+                        throw new Exception("You cannot move to the screening phase without applications");
+                    } else {
                         recruitmentProcess.screeningPhase().open();
                     }
                 } else {
-                    if (!ApplicationRepository.filterByJobOpening(theJobOpening).iterator().hasNext()) {
+                    if (!hasApplications(theJobOpening)) {
                         theJobOpening.deactivate();
                     } else {
-                        yield false;
+                        throw new Exception("Cannot go to the previous phase! Application phase is already in progress");
                     }
                 }
-                yield true;
             }
+
             case "ScreeningPhase" -> {
                 recruitmentProcess.screeningPhase().close();
                 if (moveUp) {
                     if (recruitmentProcess.interviewPhase() != null) {
                         if (!hasInterviewModel(theJobOpening))
-                            yield false;
+                            throw new Exception("No interview model associated with the job opening: "
+                                    + theJobOpening.jobReference());
                         recruitmentProcess.interviewPhase().open();
                     } else {
                         recruitmentProcess.analysisPhase().open();
                     }
                 } else {
-                    //TODO: redo this verification to check if there is already requirements that have been checked
                     if (!recruitmentProcess.screeningPhase().inProgress()) {
                         recruitmentProcess.applicationPhase().open();
                     } else {
-                        yield false;
+                        throw new Exception("Cannot go to the previous phase! Screening phase is already in progress");
                     }
                 }
-                yield true;
             }
+
             case "InterviewPhase" -> {
                 recruitmentProcess.interviewPhase().close();
                 if (moveUp) {
                     recruitmentProcess.analysisPhase().open();
                 } else {
-                    //TODO: redo this verification to check if there is already interviews registered in the system
                     if (!recruitmentProcess.interviewPhase().inProgress()) {
                         recruitmentProcess.screeningPhase().open();
                     } else {
-                        yield false;
+                        throw new Exception("Cannot go to the previous phase! Interview phase is already in progress");
                     }
                 }
-                yield true;
             }
+
             case "AnalysisPhase" -> {
                 recruitmentProcess.analysisPhase().close();
                 if (moveUp) {
                     recruitmentProcess.resultPhase().open();
                 } else {
-                    //TODO: redo this verification to check if there is already interviews that have been analyzed
                     if (!recruitmentProcess.analysisPhase().inProgress()) {
                         if (recruitmentProcess.interviewPhase() != null) {
                             recruitmentProcess.interviewPhase().open();
@@ -127,34 +129,40 @@ public class OpenOrClosePhaseController {
                             recruitmentProcess.screeningPhase().open();
                         }
                     } else {
-                        yield false;
+                        throw new Exception("Cannot go to the previous phase! Analysis phase is already in progress");
                     }
                 }
-                yield true;
             }
+
             case "ResultPhase" -> {
                 recruitmentProcess.resultPhase().close();
                 if (moveUp) {
                     theJobOpening.deactivate();
                 } else {
-                    //TODO: redo this verification to check if there is already results that have been published
                     if (!recruitmentProcess.resultPhase().inProgress()) {
                         recruitmentProcess.analysisPhase().open();
                     } else {
-                        yield false;
+                        throw new Exception("Cannot go to the previous phase! Result phase is already in progress");
                     }
                 }
-                yield true;
             }
-            default -> false;
-        };
 
-        if (success) {
-            recruitmentProcessRepository.save(recruitmentProcess);
-            jobOpeningRepository.save(theJobOpening);
+            default -> throw new Exception("Invalid phase: " + currentPhase);
         }
+        ;
 
-        return success;
+        recruitmentProcessRepository.save(recruitmentProcess);
+        jobOpeningRepository.save(theJobOpening);
+        try {
+            txCtx.commit();
+        } catch (final Exception e) {
+            txCtx.rollback();
+            throw new RuntimeException("Error occurred while committing the transaction. Rolled back.", e);
+        } finally {
+            txCtx.close();
+        }
+        return true;
+
     }
 
     private boolean hasInterviewModel(JobOpening theJobOpening) {
@@ -163,5 +171,9 @@ public class OpenOrClosePhaseController {
 
     private boolean hasRequirements(JobOpening theJobOpening) {
         return jobOpeningRequirementRepository.findJobOpeningRequirementsByJobOpening(theJobOpening).isPresent();
+    }
+
+    private boolean hasApplications(JobOpening theJobOpening) {
+        return ApplicationRepository.filterByJobOpening(theJobOpening).iterator().hasNext();
     }
 }

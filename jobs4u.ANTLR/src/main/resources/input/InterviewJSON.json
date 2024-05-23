@@ -3,29 +3,29 @@
         "type": "Choice, with single answer",
         "cotation": "40",
         "cotationType" : "%",
-        "body": "What is the capital of Spain? 1) Madrid 2) Barcelona 3) Valencia",
+        "body": "Which language is primarily used for Android app development? [1] Swift [2] Kotlin [3] JavaScript",
         "possibleAnswers": [
-            "Madrid"
+            "Kotlin"
         ]
     },
     {
         "type": "Choice, with multiple answers",
         "cotation": "30",
         "cotationType" : "%",
-        "body": "Which of the following are fruits? 1) Apple 2) Carrot 3) Banana 4) Pear",
+        "body": "Which of the following are Python libraries for data analysis? [1] Pandas [2] NumPy [3] Matplotlib [4] Express",
         "possibleAnswers": [
-            "Apple",
-            "Banana",
-            "Pear"
+            "Pandas",
+            "NumPy",
+            "Matplotlib"
         ]
     },
     {
         "type": "True/False",
         "cotation": "30",
         "cotationType" : "%",
-        "body": "Is the Earth round?",
+        "body": "Does Java support multiple inheritance?",
         "possibleAnswers": [
-            "True"
+            "False"
         ]
     }
 ]

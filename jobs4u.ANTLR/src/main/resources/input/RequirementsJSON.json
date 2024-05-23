@@ -1,0 +1,42 @@
+[
+    {
+        "body": "Which of the following languages are you proficient in? (Python | JavaScript | C++)",
+        "possibleAnswers": [
+            "Python",
+            "JavaScript",
+            "C++"
+        ]
+    },
+    {
+        "body": "Which of the following databases have you used in your projects? (MySQL | PostgreSQL | MongoDB)",
+        "possibleAnswers": [
+            "MySQL",
+            "PostgreSQL",
+            "MongoDB"
+        ]
+    },
+    {
+        "body": "Which of the following tasks have you performed? (Writing unit tests | Setting up CI/CD pipelines | Deploying applications on cloud platforms)",
+        "possibleAnswers": [
+            "Writing unit tests",
+            "Setting up CI/CD pipelines",
+            "Deploying applications on cloud platforms"
+        ]
+    },
+    {
+        "body": "Which of the following frontend frameworks have you used? (React | Angular | Vue.js)",
+        "possibleAnswers": [
+            "React",
+            "Angular",
+            "Vue.js"
+        ]
+    },
+    {
+        "body": "Which of the following DevOps tools have you used? (Docker | Kubernetes | Jenkins)",
+        "possibleAnswers": [
+            "Docker",
+            "Kubernetes",
+            "Jenkins"
+        ]
+    }
+]

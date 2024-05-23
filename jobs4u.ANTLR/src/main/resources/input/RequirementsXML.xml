@@ -1,0 +1,42 @@
+<Questions>
+    <Question>
+        <Body>What is your proficiency level in Unix/Linux? (Beginner | Intermediate | Advanced)</Body>
+        <PossibleAnswersList>
+            <PossibleAnswers>Beginner</PossibleAnswers>
+            <PossibleAnswers>Intermediate</PossibleAnswers>
+            <PossibleAnswers>Advanced</PossibleAnswers>
+        </PossibleAnswersList>
+    </Question>
+    <Question>
+        <Body>Which of the following HTTP methods are you familiar with? (GET | POST | PUT | DELETE)</Body>
+        <PossibleAnswersList>
+            <PossibleAnswers>GET</PossibleAnswers>
+            <PossibleAnswers>POST</PossibleAnswers>
+            <PossibleAnswers>PUT</PossibleAnswers>
+            <PossibleAnswers>DELETE</PossibleAnswers>
+        </PossibleAnswersList>
+    </Question>
+    <Question>
+        <Body>Do you have experience with SQL? (Yes | No)</Body>
+        <PossibleAnswersList>
+            <PossibleAnswers>Yes</PossibleAnswers>
+            <PossibleAnswers>No</PossibleAnswers>
+        </PossibleAnswersList>
+    </Question>
+    <Question>
+        <Body>Which of the following JavaScript frameworks have you used in your projects? (React | Angular | Vue | Ember)</Body>
+        <PossibleAnswersList>
+            <PossibleAnswers>React</PossibleAnswers>
+            <PossibleAnswers>Angular</PossibleAnswers>
+            <PossibleAnswers>Vue</PossibleAnswers>
+            <PossibleAnswers>Ember</PossibleAnswers>
+        </PossibleAnswersList>
+    </Question>
+    <Question>
+        <Body>Do you have experience with Git? (Yes | No)</Body>
+        <PossibleAnswersList>
+            <PossibleAnswers>Yes</PossibleAnswers>
+            <PossibleAnswers>No</PossibleAnswers>
+        </PossibleAnswersList>
+    </Question>
+</Questions>

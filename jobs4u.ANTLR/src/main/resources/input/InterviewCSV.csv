@@ -1,0 +1,6 @@
+"Choice, with single answer";"20";"%";"What is the primary use of HTML? [1] Styling web pages [2] Structuring web pages [3] Server-side computations";"Structuring web pages"
+"Choice, with multiple answers";"20";"%";"Which of the following are sorting algorithms? [1] Bubble Sort [2] Quick Sort [3] Binary Search [4] Depth-First Search";"Bubble Sort/Quick Sort"
+"True/False";"10";"%";"Is JavaScript a compiled language?";"False"
+"Choice, with single answer";"20";"%";"Who created the C programming language? [1] Dennis Ritchie [2] James Gosling [3] Guido van Rossum";"Dennis Ritchie"
+"Choice, with multiple answers";"20";"%";"Which of the following are data structures? [1] Array [2] Queue [3] Graph [4] Gradient";"Array/Queue/Graph"
+"True/False";"10";"%";"Is Python an object-oriented programming language?";"True"

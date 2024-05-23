@@ -34,5 +34,10 @@
             <version>${project.parent.version}</version>
             <scope>runtime</scope>
         </dependency>
+        <dependency>
+            <groupId>lapr4</groupId>
+            <artifactId>jobs4u.integrations.plugins</artifactId>
+            <version>${project.parent.version}</version>
+        </dependency>
     </dependencies>
 </project>

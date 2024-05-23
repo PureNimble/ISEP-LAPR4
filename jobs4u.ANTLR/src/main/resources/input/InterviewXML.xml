@@ -1,0 +1,29 @@
+<Questions>
+    <Question>
+        <Cotation>40</Cotation>
+        <CotationType>%</CotationType>
+        <Type>Choice, with single answer</Type>
+        <Body>What is the time complexity of binary search? [1] O(1) [2] O(log n) [3] O(n) [4] O(n log n)</Body>
+        <PossibleAnswersList>
+            <PossibleAnswers>O(log n)</PossibleAnswers>
+        </PossibleAnswersList>
+    </Question>
+    <Question>
+        <Cotation>30</Cotation>
+        <CotationType>%</CotationType>
+        <Type>Choice, with multiple answers</Type>
+        <Body>Which of the following are not types of inheritance in C++? [1] Multiple [2] Multilevel [3] Hierarchical [4] Hybrid [5] Parallel</Body>
+        <PossibleAnswersList>
+            <PossibleAnswers>Parallel</PossibleAnswers>
+        </PossibleAnswersList>
+    </Question>
+    <Question>
+        <Cotation>30</Cotation>
+        <CotationType>%</CotationType>
+        <Type>True/False</Type>
+        <Body>Does the 'volatile' keyword in Java indicate that a variable's value will not be cached thread-locally?</Body>
+        <PossibleAnswersList>
+            <PossibleAnswers>True</PossibleAnswers>
+        </PossibleAnswersList>
+    </Question>
+</Questions>

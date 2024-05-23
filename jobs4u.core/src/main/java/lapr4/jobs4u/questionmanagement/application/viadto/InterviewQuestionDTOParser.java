@@ -24,28 +24,28 @@
 package lapr4.jobs4u.questionmanagement.application.viadto;
 
 import eapli.framework.representations.dto.DTOParser;
-import lapr4.jobs4u.questionmanagement.domain.Question;
-import lapr4.jobs4u.questionmanagement.domain.QuestionBuilder;
-import lapr4.jobs4u.questionmanagement.dto.QuestionDTO;
+import lapr4.jobs4u.questionmanagement.domain.InterviewQuestion;
+import lapr4.jobs4u.questionmanagement.domain.InterviewQuestionBuilder;
+import lapr4.jobs4u.questionmanagement.dto.InterviewQuestionDTO;
 import lapr4.jobs4u.questionmanagement.repositories.QuestionTypeRepository;
 
 /**
  * @author Paulo Gandra de Sousa 2021/04/28
  */
-public class QuestionDTOParser implements DTOParser<QuestionDTO, Question> {
+public class InterviewQuestionDTOParser implements DTOParser<InterviewQuestionDTO, InterviewQuestion> {
 
     private final QuestionTypeRepository questionTypeRepository;
 
-    public QuestionDTOParser(final QuestionTypeRepository questionTypeRepository) {
+    public InterviewQuestionDTOParser(final QuestionTypeRepository questionTypeRepository) {
         this.questionTypeRepository = questionTypeRepository;
     }
 
     @Override
-    public Question valueOf(final QuestionDTO dto) {
+    public InterviewQuestion valueOf(final InterviewQuestionDTO dto) {
         final var type = questionTypeRepository.ofIdentity(dto.getType())
                 .orElseThrow(() -> new IllegalArgumentException("Unknown question type: " + dto.getType()));
 
-        return new QuestionBuilder()
+        return new InterviewQuestionBuilder()
                 .with(type, dto.getCotation(), dto.getCotationType(), dto.getBody().toString(), dto.getPossibleAnswers(),
                         dto.getQuestionImporterPlugin()).build();
     }

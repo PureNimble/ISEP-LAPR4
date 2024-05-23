@@ -19,6 +19,7 @@ import java.util.Map;
 
 import eapli.framework.domain.repositories.ConcurrencyException;
 import eapli.framework.domain.repositories.IntegrityViolationException;
+import eapli.framework.domain.repositories.TransactionalContext;
 import eapli.framework.infrastructure.authz.application.AuthzRegistry;
 import eapli.framework.infrastructure.authz.domain.model.Role;
 import eapli.framework.infrastructure.authz.domain.model.SystemUser;
@@ -29,19 +30,21 @@ public class ImportApplicationsUI extends AbstractUI {
     private static final String EMAIL_ALREADY_REGISTERED = "That E-mail is already registered.";
     private static final String JOB_OPENING_DOES_NOT_EXIST = "Job Opening does not exist";
 
+    private final TransactionalContext txCtx = PersistenceContext.repositories().newTransactionalContext();
     private final RegisterCandidateController registerCandidateController;
     private final AddUserController addUserController;
     private final ImportApplicationsController theController;
 
     public ImportApplicationsUI() {
         registerCandidateController = new RegisterCandidateController(
-                PersistenceContext.repositories().candidates(), PersistenceContext.repositories().candidateUsers(),
+                PersistenceContext.repositories().candidates(txCtx),
+                PersistenceContext.repositories().candidateUsers(txCtx),
                 AuthzRegistry.authorizationService());
 
         addUserController = new AddUserController();
 
         theController = new ImportApplicationsController(
-                PersistenceContext.repositories().applications(), PersistenceContext.repositories().jobOpenings());
+                PersistenceContext.repositories().applications(txCtx), PersistenceContext.repositories().jobOpenings());
     }
 
     @Override
@@ -68,8 +71,17 @@ public class ImportApplicationsUI extends AbstractUI {
                     return;
                 }
                 List<File> files = theController.getFiles(folder, candidateId, jobOffer);
-                Candidate candidate = registerCandidates(folder, candidateId, jobOffer);
-                registerApplication(files, job, candidate);
+                try {
+                    txCtx.beginTransaction();
+                    Candidate candidate = registerCandidates(folder, candidateId, jobOffer);
+                    registerApplication(files, job, candidate);
+                    txCtx.commit();
+                } catch (final IntegrityViolationException | ConcurrencyException e) {
+                    txCtx.rollback();
+                    System.out.println(EMAIL_ALREADY_REGISTERED);
+                } finally {
+                    txCtx.close();
+                }
             });
         });
     }
@@ -81,21 +93,16 @@ public class ImportApplicationsUI extends AbstractUI {
         String firstName = output.get(2);
         String lastName = output.get(3);
 
-        try {
-            final Set<Role> roleTypes = new HashSet<>();
-            roleTypes.add(BaseRoles.CANDIDATE);
-            final Candidate candidate = registerCandidateController.registerCandidate(firstName, lastName,
-                    email,
-                    phoneNumber);
-            final SystemUser user = addUserController.addUser(email, firstName,
-                    lastName, roleTypes);
-            registerCandidateController.registerCandidateUser(candidate, user);
+        final Set<Role> roleTypes = new HashSet<>();
+        roleTypes.add(BaseRoles.CANDIDATE);
+        final Candidate candidate = registerCandidateController.registerCandidate(firstName, lastName,
+                email,
+                phoneNumber);
+        final SystemUser user = addUserController.addUser(email, firstName,
+                lastName, roleTypes);
+        registerCandidateController.registerCandidateUser(candidate, user);
 
-            return candidate;
-        } catch (final IntegrityViolationException | ConcurrencyException e) {
-            System.out.println(EMAIL_ALREADY_REGISTERED);
-        }
-        return null;
+        return candidate;
     }
 
     private void registerApplication(List<File> files, JobOpening job, Candidate candidate) {

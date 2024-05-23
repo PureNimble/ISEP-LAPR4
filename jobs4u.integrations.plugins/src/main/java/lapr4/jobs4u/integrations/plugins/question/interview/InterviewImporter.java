@@ -29,23 +29,21 @@ import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.tree.ParseTree;
 import org.antlr.v4.runtime.tree.ParseTreeWalker;
 
-import lapr4.jobs4u.importer.csv.parser.CsvLexer;
-import lapr4.jobs4u.importer.csv.parser.CsvParser;
-import lapr4.jobs4u.importer.json.parser.JsonLexer;
-import lapr4.jobs4u.importer.json.parser.JsonParser;
-import lapr4.jobs4u.importer.xml.parser.XmlLexer;
-import lapr4.jobs4u.importer.xml.parser.XmlParser;
+import lapr4.jobs4u.importer.csv.generated.interview.InterviewCsvLexer;
+import lapr4.jobs4u.importer.csv.generated.interview.InterviewCsvParser;
+import lapr4.jobs4u.importer.json.generated.interview.InterviewJsonLexer;
+import lapr4.jobs4u.importer.json.generated.interview.InterviewJsonParser;
+import lapr4.jobs4u.importer.xml.generated.InterviewXmlLexer;
+import lapr4.jobs4u.importer.xml.generated.InterviewXmlParser;
 import lapr4.jobs4u.integration.questions.importer.application.QuestionImporter;
 import lapr4.jobs4u.integration.questions.importer.domain.QuestionImporterPlugin;
-import lapr4.jobs4u.integrations.plugins.question.CsvListener;
-import lapr4.jobs4u.integrations.plugins.question.JsonListener;
-import lapr4.jobs4u.integrations.plugins.question.XmlListener;
-import lapr4.jobs4u.questionmanagement.dto.QuestionDTO;
+import lapr4.jobs4u.questionmanagement.dto.InterviewQuestionDTO;
+import lapr4.jobs4u.questionmanagement.dto.RequirementsQuestionDTO;
 
 public class InterviewImporter implements QuestionImporter {
 
 	@Override
-	public Iterable<QuestionDTO> importFrom(final InputStream filename, final QuestionImporterPlugin plugin)
+	public Iterable<InterviewQuestionDTO> importInterviewFrom(final InputStream filename, final QuestionImporterPlugin plugin)
 			throws IOException {
 
 		if (plugin.fileExtension().toString().equals("csv")) {
@@ -65,16 +63,16 @@ public class InterviewImporter implements QuestionImporter {
 		}
 	}
 
-	private Iterable<QuestionDTO> importFromCSV(final InputStream filename, final QuestionImporterPlugin plugin)
+	private Iterable<InterviewQuestionDTO> importFromCSV(final InputStream filename, final QuestionImporterPlugin plugin)
 			throws IOException {
 
 		// parse
 		final CharStream charStream = CharStreams.fromStream(filename);
-		final CsvLexer lexer = new CsvLexer(charStream);
+		final InterviewCsvLexer lexer = new InterviewCsvLexer(charStream);
 		final CommonTokenStream tokens = new CommonTokenStream(lexer);
-		final CsvParser parser = new CsvParser(tokens);
+		final InterviewCsvParser parser = new InterviewCsvParser(tokens);
 		final ParseTree tree = parser.questions();
-		final CsvListener listener = new CsvListener();
+		final InterviewCsvListener listener = new InterviewCsvListener();
 
 		if (parser.getNumberOfSyntaxErrors() > 0) {
 			throw new IOException("Syntax error in CSV file");
@@ -82,24 +80,24 @@ public class InterviewImporter implements QuestionImporter {
 
 		ParseTreeWalker.DEFAULT.walk(listener, tree);
 
-		Iterable<QuestionDTO> questions = listener.questions();
+		Iterable<InterviewQuestionDTO> questions = listener.questions();
 
-		for (QuestionDTO question : questions) {
+		for (InterviewQuestionDTO question : questions) {
 			question.setQuestionImporterPlugin(plugin.identity().toString());
 		}
 
 		return questions;
 	}
 
-	private Iterable<QuestionDTO> importFromJSON(final InputStream filename, final QuestionImporterPlugin plugin)
+	private Iterable<InterviewQuestionDTO> importFromJSON(final InputStream filename, final QuestionImporterPlugin plugin)
 			throws IOException {
 		// parse
 		final CharStream charStream = CharStreams.fromStream(filename);
-		final JsonLexer lexer = new JsonLexer(charStream);
+		final InterviewJsonLexer lexer = new InterviewJsonLexer(charStream);
 		final CommonTokenStream tokens = new CommonTokenStream(lexer);
-		final JsonParser parser = new JsonParser(tokens);
+		final InterviewJsonParser parser = new InterviewJsonParser(tokens);
 		final ParseTree tree = parser.questions();
-		final JsonListener listener = new JsonListener();
+		final InterviewJsonListener listener = new InterviewJsonListener();
 
 		if (parser.getNumberOfSyntaxErrors() > 0) {
 			throw new IOException("Syntax error in JSON file");
@@ -107,24 +105,24 @@ public class InterviewImporter implements QuestionImporter {
 
 		ParseTreeWalker.DEFAULT.walk(listener, tree);
 
-		Iterable<QuestionDTO> questions = listener.questions();
+		Iterable<InterviewQuestionDTO> questions = listener.questions();
 
-		for (QuestionDTO question : questions) {
+		for (InterviewQuestionDTO question : questions) {
 			question.setQuestionImporterPlugin(plugin.identity().toString());
 		}
 
 		return questions;
 	}
 
-	private Iterable<QuestionDTO> importFromXML(final InputStream filename, final QuestionImporterPlugin plugin)
+	private Iterable<InterviewQuestionDTO> importFromXML(final InputStream filename, final QuestionImporterPlugin plugin)
 			throws IOException {
 		// parse
 		final CharStream charStream = CharStreams.fromStream(filename);
-		final XmlLexer lexer = new XmlLexer(charStream);
+		final InterviewXmlLexer lexer = new InterviewXmlLexer(charStream);
 		final CommonTokenStream tokens = new CommonTokenStream(lexer);
-		final XmlParser parser = new XmlParser(tokens);
+		final InterviewXmlParser parser = new InterviewXmlParser(tokens);
 		final ParseTree tree = parser.questions();
-		final XmlListener listener = new XmlListener();
+		final InterviewXmlListener listener = new InterviewXmlListener();
 
 		if (parser.getNumberOfSyntaxErrors() > 0) {
 			throw new IOException("Syntax error in XML file");
@@ -132,13 +130,20 @@ public class InterviewImporter implements QuestionImporter {
 
 		ParseTreeWalker.DEFAULT.walk(listener, tree);
 
-		Iterable<QuestionDTO> questions = listener.questions();
+		Iterable<InterviewQuestionDTO> questions = listener.questions();
 
-		for (QuestionDTO question : questions) {
+		for (InterviewQuestionDTO question : questions) {
 			question.setQuestionImporterPlugin(plugin.identity().toString());
 		}
 
 		return questions;
+	}
+
+	@Override
+	public Iterable<RequirementsQuestionDTO> importRequirementsFrom(InputStream filename, QuestionImporterPlugin plugin)
+			throws IOException {
+		// TODO Auto-generated method stub
+		throw new UnsupportedOperationException("Unimplemented method 'importRequirementsFrom'");
 	}
 
 }

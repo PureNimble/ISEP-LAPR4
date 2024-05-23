@@ -22,19 +22,31 @@ public class QuestionExportSmokeTester implements Action {
 
 	@Override
 	public boolean execute() {
-		testExportTo(FileFormat.INTERVIEW, "Standard");
-		testExportTo(FileFormat.INTERVIEW, "JsonFile");
-		testExportTo(FileFormat.REQUIREMENT, "XmlFile");
-		testExportTo(FileFormat.REQUIREMENT, "Alternate");
+		testExportInterviewTo(FileFormat.INTERVIEW, "InterviewCSV");
+		testExportInterviewTo(FileFormat.INTERVIEW, "InterviewJSON");
+		testExportInterviewTo(FileFormat.INTERVIEW, "InterviewXML");
+		testExportRequirementsTo(FileFormat.REQUIREMENT, "RequirementsCSV");
+		testExportRequirementsTo(FileFormat.REQUIREMENT, "RequirementsJSON");
+		testExportRequirementsTo(FileFormat.REQUIREMENT, "RequirementsXML");
 
 		// nothing else to do
 		return true;
 	}
 
-	private void testExportTo(final FileFormat format, final String plugin) {
+	private void testExportInterviewTo(final FileFormat format, final String plugin) {
 		final var filename = "jobs4u.ANTLR/src/main/resources/output/" + plugin + ".txt";
 		try {
-			questionExporterController.export(filename, format, plugin);
+			questionExporterController.exportInterview(filename, format, plugin);
+			outputExportedContent(format, filename, plugin);
+		} catch (final IOException e) {
+			LOGGER.error(e);
+		}
+	}
+
+	private void testExportRequirementsTo(final FileFormat format, final String plugin) {
+		final var filename = "jobs4u.ANTLR/src/main/resources/output/" + plugin + ".txt";
+		try {
+			questionExporterController.exportRequirements(filename, format, plugin);
 			outputExportedContent(format, filename, plugin);
 		} catch (final IOException e) {
 			LOGGER.error(e);

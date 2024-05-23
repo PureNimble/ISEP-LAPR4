@@ -1,4 +1,4 @@
-package lapr4.jobs4u.integrations.plugins.question;
+package lapr4.jobs4u.integrations.plugins.question.interview;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -7,48 +7,48 @@ import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.Token;
 import org.antlr.v4.runtime.misc.Interval;
 
-import lapr4.jobs4u.importer.csv.parser.CsvBaseListener;
-import lapr4.jobs4u.importer.csv.parser.CsvParser;
+import lapr4.jobs4u.importer.csv.generated.interview.InterviewCsvBaseListener;
+import lapr4.jobs4u.importer.csv.generated.interview.InterviewCsvParser;
 import lapr4.jobs4u.questionmanagement.domain.Answer;
-import lapr4.jobs4u.questionmanagement.dto.QuestionDTO;
+import lapr4.jobs4u.questionmanagement.dto.InterviewQuestionDTO;
 
-public class CsvListener extends CsvBaseListener {
+public class InterviewCsvListener extends InterviewCsvBaseListener {
 
-    private final List<QuestionDTO> questions = new ArrayList<>();
-    private QuestionDTO current;
+    private final List<InterviewQuestionDTO> questions = new ArrayList<>();
+    private InterviewQuestionDTO current;
 
     @Override
-    public void enterQuestion(final CsvParser.QuestionContext ctx) {
-        current = new QuestionDTO();
+    public void enterQuestion(final InterviewCsvParser.QuestionContext ctx) {
+        current = new InterviewQuestionDTO();
     }
 
     @Override
-    public void exitQuestion(final CsvParser.QuestionContext ctx) {
+    public void exitQuestion(final InterviewCsvParser.QuestionContext ctx) {
         questions.add(current);
     }
 
     @Override
-    public void enterQuestionBody(final CsvParser.QuestionBodyContext ctx) {
+    public void enterQuestionBody(final InterviewCsvParser.QuestionBodyContext ctx) {
         current.setBody(extractValue(ctx));
     }
 
     @Override
-    public void enterCotation(final CsvParser.CotationContext ctx) {
+    public void enterCotation(final InterviewCsvParser.CotationContext ctx) {
         current.setCotation(extractValue(ctx));
     }
 
     @Override
-    public void enterCotationType(final CsvParser.CotationTypeContext ctx) {
+    public void enterCotationType(final InterviewCsvParser.CotationTypeContext ctx) {
         current.setCotationType(extractValue(ctx));
     }
 
     @Override
-    public void enterType(final CsvParser.TypeContext ctx) {
+    public void enterType(final InterviewCsvParser.TypeContext ctx) {
         current.setType(extractValue(ctx));
     }
 
     @Override
-    public void enterAnswer(final CsvParser.AnswerContext ctx) {
+    public void enterAnswer(final InterviewCsvParser.AnswerContext ctx) {
         final String value = extractValue(ctx);
         final String[] answer = value.split("/");
         final List<Answer> answers = new ArrayList<>();
@@ -66,7 +66,7 @@ public class CsvListener extends CsvBaseListener {
         return intervalText.substring(1, intervalText.length() - 1);
     }
 
-    public List<QuestionDTO> questions() {
+    public List<InterviewQuestionDTO> questions() {
         return questions;
     }
 }

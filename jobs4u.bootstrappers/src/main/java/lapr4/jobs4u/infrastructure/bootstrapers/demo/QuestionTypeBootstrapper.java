@@ -12,7 +12,7 @@ import eapli.framework.infrastructure.authz.application.AuthzRegistry;
 
 public class QuestionTypeBootstrapper implements Action {
 
-	private static final Logger LOGGER = LogManager.getLogger(StandardQuestionImporterPluginsBootstrapper.class);
+	private static final Logger LOGGER = LogManager.getLogger(QuestionTypeBootstrapper.class);
 
 	RegisterQuestionTypeController registerQuestionTypeController = new RegisterQuestionTypeController(
 			AuthzRegistry.authorizationService(), PersistenceContext.repositories().questionType());

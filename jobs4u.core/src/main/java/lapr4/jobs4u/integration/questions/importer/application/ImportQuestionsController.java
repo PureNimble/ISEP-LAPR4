@@ -26,22 +26,22 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.commons.io.FilenameUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import eapli.framework.application.UseCaseController;
-import eapli.framework.general.domain.model.Designation;
 import eapli.framework.infrastructure.authz.application.AuthorizationService;
-import eapli.framework.infrastructure.authz.application.AuthzRegistry;
-import lapr4.jobs4u.infrastructure.persistence.PersistenceContext;
 import lapr4.jobs4u.integration.questions.importer.domain.QuestionImporterPlugin;
 import lapr4.jobs4u.integration.questions.importer.repositories.QuestionImporterPluginRepository;
-import lapr4.jobs4u.questionmanagement.application.viadto.QuestionDTOParser;
-import lapr4.jobs4u.questionmanagement.domain.Question;
-import lapr4.jobs4u.questionmanagement.dto.QuestionDTO;
-import lapr4.jobs4u.questionmanagement.repositories.QuestionRepository;
+import lapr4.jobs4u.questionmanagement.application.viadto.InterviewQuestionDTOParser;
+import lapr4.jobs4u.questionmanagement.application.viadto.RequirementsQuestionDTOParser;
+import lapr4.jobs4u.questionmanagement.domain.InterviewQuestion;
+import lapr4.jobs4u.questionmanagement.domain.RequirementsQuestion;
+import lapr4.jobs4u.questionmanagement.dto.InterviewQuestionDTO;
+import lapr4.jobs4u.questionmanagement.dto.RequirementsQuestionDTO;
+import lapr4.jobs4u.questionmanagement.repositories.InterviewQuestionRepository;
 import lapr4.jobs4u.questionmanagement.repositories.QuestionTypeRepository;
+import lapr4.jobs4u.questionmanagement.repositories.RequirementsQuestionRepository;
 import lapr4.jobs4u.usermanagement.domain.BaseRoles;
 
 /**
@@ -51,11 +51,22 @@ import lapr4.jobs4u.usermanagement.domain.BaseRoles;
 public class ImportQuestionsController {
 	private static final Logger LOGGER = LogManager.getLogger(ImportQuestionsController.class);
 
-	private final AuthorizationService authz = AuthzRegistry.authorizationService();
-	private final QuestionImporterPluginRepository pluginRepo = PersistenceContext.repositories()
-			.questionImporterPlugins();
-	private final QuestionRepository questionRepository = PersistenceContext.repositories().question();
-	private final QuestionTypeRepository questionTypeRepository = PersistenceContext.repositories().questionType();
+	private final AuthorizationService authz;
+	private final InterviewQuestionRepository interviewQuestionRepository;
+	private final RequirementsQuestionRepository requirementsQuestionRepository;
+	private final QuestionTypeRepository questionTypeRepository;
+
+	public ImportQuestionsController(final QuestionImporterPluginRepository pluginRepo,
+			final InterviewQuestionRepository interviewQuestionRepository,
+			final RequirementsQuestionRepository requirementsQuestionRepository,
+			final QuestionTypeRepository questionTypeRepository,
+			final AuthorizationService authz) {
+		this.interviewQuestionRepository = interviewQuestionRepository;
+		this.requirementsQuestionRepository = requirementsQuestionRepository;
+		this.questionTypeRepository = questionTypeRepository;
+		this.authz = authz;
+
+	}
 
 	/**
 	 * Import questions from a file. It uses the file extension to determine which
@@ -67,40 +78,20 @@ public class ImportQuestionsController {
 	 * @return the list of imported questions
 	 * @throws IOException
 	 */
-	public List<Question> importQuestions(final String filename) throws IOException {
+	public List<InterviewQuestion> importInterviewQuestions(final String filename, final QuestionImporterPlugin plugin) throws IOException {
 		authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.LANGUAGE_ENGINEER, BaseRoles.POWERUSER);
 
-		// TODO refactor this method to move logic from the controller into a service
-		// class
+		List<InterviewQuestion> questions = new ArrayList<>();
 
-		// prepare the result variable
-		List<Question> questions = new ArrayList<>();
-
-		// get the content of the file to import
 		InputStream content = null;
 		try {
-			// get the content of the file to import
 			content = new FileInputStream(filename);
 
-
-			// get the right plugin for the file
-			//final var fileExt = FilenameUtils.getExtension(filename);
-
-			final String fileName = FilenameUtils.getBaseName(filename);
-
-			final QuestionImporterPlugin plugin = pluginRepo.findByName(Designation.valueOf(fileName)).orElseThrow(
-					() -> new IllegalStateException("There is no plugin associated with that name"));
-
-			/* final var plugin = pluginRepo.findByFileExtension(FileExtension.valueOf(fileExt)).orElseThrow(
-					() -> new IllegalStateException("There is no plugin associated with that file extension")); */
-
-			// load the plugin
 			final QuestionImporter importer = plugin.buildImporter();
-			// parse the content
-			final Iterable<QuestionDTO> questionsToRegister = importer.importFrom(content, plugin);
 
-			// do the import
-			questions = doTheImport(questionsToRegister);
+			final Iterable<InterviewQuestionDTO> questionsToRegister = importer.importInterviewFrom(content, plugin);
+			questions = doTheInterviewImport(questionsToRegister);
+
 		} finally {
 			if (content != null) {
 				try {
@@ -114,18 +105,61 @@ public class ImportQuestionsController {
 		return questions;
 	}
 
-	private List<Question> doTheImport(final Iterable<QuestionDTO> questionsToRegister) {
-		// TODO begin transaction
-		final List<Question> questions = new ArrayList<>();
-		for (final QuestionDTO dto : questionsToRegister) {
-			final Question newQuestion = new QuestionDTOParser(questionTypeRepository).valueOf(dto);
-			// TODO check what should be done if we are trying to import a question that
-			// already
-			// exists
-			final Question savedQuestion = questionRepository.save(newQuestion);
+	/**
+	 * Import questions from a file. It uses the file extension to determine which
+	 * import plugin to activate.
+	 * <p>
+	 * If there is an error parsing the file no dish will be imported.
+	 * 
+	 * @param filename
+	 * @return the list of imported questions
+	 * @throws IOException
+	 */
+	public List<RequirementsQuestion> importRequirementsQuestions(final String filename, final QuestionImporterPlugin plugin) throws IOException {
+		authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.LANGUAGE_ENGINEER, BaseRoles.POWERUSER);
+
+		List<RequirementsQuestion> questions = new ArrayList<>();
+
+		InputStream content = null;
+		try {
+			content = new FileInputStream(filename);
+
+			final QuestionImporter importer = plugin.buildImporter();
+
+			final Iterable<RequirementsQuestionDTO> questionsToRegister = importer.importRequirementsFrom(content, plugin);
+			questions = doTheRequirementsImport(questionsToRegister);
+
+		} finally {
+			if (content != null) {
+				try {
+					content.close();
+				} catch (final IOException e) {
+					LOGGER.error("Error closing the file {}", filename);
+				}
+			}
+		}
+
+		return questions;
+	}
+
+	private List<InterviewQuestion> doTheInterviewImport(final Iterable<InterviewQuestionDTO> questionsToRegister) {
+		final List<InterviewQuestion> questions = new ArrayList<>();
+		for (final InterviewQuestionDTO dto : questionsToRegister) {
+			final InterviewQuestion newQuestion = new InterviewQuestionDTOParser(questionTypeRepository).valueOf(dto);
+			final InterviewQuestion savedQuestion = interviewQuestionRepository.save(newQuestion);
 			questions.add(savedQuestion);
 		}
-		// TODO commit transaction
+		return questions;
+	}
+
+	private List<RequirementsQuestion> doTheRequirementsImport(
+			final Iterable<RequirementsQuestionDTO> questionsToRegister) {
+		final List<RequirementsQuestion> questions = new ArrayList<>();
+		for (final RequirementsQuestionDTO dto : questionsToRegister) {
+			final RequirementsQuestion newQuestion = new RequirementsQuestionDTOParser().valueOf(dto);
+			final RequirementsQuestion savedQuestion = requirementsQuestionRepository.save(newQuestion);
+			questions.add(savedQuestion);
+		}
 		return questions;
 	}
 }

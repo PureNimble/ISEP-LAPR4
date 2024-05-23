@@ -15,6 +15,7 @@ import lapr4.jobs4u.integration.questions.importer.domain.QuestionImporterPlugin
 
 public class ExportRequirementUI extends AbstractUI {
 
+    private static final String PATH = "jobs4u.ANTLR/src/main/resources/output/";
     private final QuestionExporterController questionExporterController = new QuestionExporterController();
     private final ListQuestionPluginController listQuestionPluginController = new ListQuestionPluginController(
             PersistenceContext.repositories().questionImporterPlugins(), AuthzRegistry.authorizationService());
@@ -32,8 +33,8 @@ public class ExportRequirementUI extends AbstractUI {
         }
 
         try {
-            final String filename = "jobs4u.ANTLR/src/main/resources/output/" + questionImporterPlugin.identity().toString() + ".txt";
-            this.questionExporterController.export(filename, FileFormat.REQUIREMENT,
+            final String filename = PATH + questionImporterPlugin.identity().toString() + ".txt";
+            this.questionExporterController.exportRequirements(filename, FileFormat.REQUIREMENT,
                     questionImporterPlugin.identity().toString());
         } catch (final IntegrityViolationException | IOException | ConcurrencyException e) {
             System.out.println("Something went wrong.");

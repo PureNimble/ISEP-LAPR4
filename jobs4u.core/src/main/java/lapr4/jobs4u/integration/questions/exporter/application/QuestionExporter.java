@@ -2,7 +2,8 @@ package lapr4.jobs4u.integration.questions.exporter.application;
 
 import java.io.IOException;
 
-import lapr4.jobs4u.questionmanagement.domain.Question;
+import lapr4.jobs4u.questionmanagement.domain.InterviewQuestion;
+import lapr4.jobs4u.questionmanagement.domain.RequirementsQuestion;
 
 public interface QuestionExporter {
 
@@ -20,7 +21,14 @@ public interface QuestionExporter {
      *
      * @param e
      */
-    void element(final Question e);
+    void element(final InterviewQuestion e);
+
+     /**
+     * Export one single element.
+     *
+     * @param e
+     */
+    void element(final RequirementsQuestion e);
 
     /**
      * Indicates that a new element will be created.

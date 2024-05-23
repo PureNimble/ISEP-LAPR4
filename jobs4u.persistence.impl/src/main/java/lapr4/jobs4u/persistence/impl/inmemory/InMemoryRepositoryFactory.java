@@ -31,8 +31,9 @@ import lapr4.jobs4u.integration.questions.importer.repositories.QuestionImporter
 import lapr4.jobs4u.jobopeningmanagement.repositories.JobOpeningInterviewRepository;
 import lapr4.jobs4u.jobopeningmanagement.repositories.JobOpeningRepository;
 import lapr4.jobs4u.jobopeningmanagement.repositories.JobOpeningRequirementRepository;
-import lapr4.jobs4u.questionmanagement.repositories.QuestionRepository;
+import lapr4.jobs4u.questionmanagement.repositories.InterviewQuestionRepository;
 import lapr4.jobs4u.questionmanagement.repositories.QuestionTypeRepository;
+import lapr4.jobs4u.questionmanagement.repositories.RequirementsQuestionRepository;
 import lapr4.jobs4u.recruitmentprocessmanagement.repositories.RecruitmentProcessRepository;
 import eapli.framework.domain.repositories.TransactionalContext;
 import eapli.framework.infrastructure.authz.domain.repositories.UserRepository;
@@ -146,13 +147,23 @@ public class InMemoryRepositoryFactory implements RepositoryFactory {
     }
 
     @Override
-    public QuestionRepository question(TransactionalContext autoTx) {
-        return new InMemoryQuestionRepository();
+    public InterviewQuestionRepository interviewQuestion(TransactionalContext autoTx) {
+        return new InMemoryInterviewQuestionRepository();
     }
 
     @Override
-    public QuestionRepository question() {
-        return question(null);
+    public InterviewQuestionRepository interviewQuestion() {
+        return interviewQuestion(null);
+    }
+
+    @Override
+    public RequirementsQuestionRepository requirementsQuestion(TransactionalContext autoTx) {
+        return new InMemoryRequirementsQuestionRepository();
+    }
+
+    @Override
+    public RequirementsQuestionRepository requirementsQuestion() {
+        return requirementsQuestion(null);
     }
 
     @Override

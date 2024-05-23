@@ -1,18 +1,26 @@
 package lapr4.jobs4u.questionmanagement.application;
 
-import lapr4.jobs4u.questionmanagement.domain.Question;
-import lapr4.jobs4u.questionmanagement.repositories.QuestionRepository;
+import lapr4.jobs4u.questionmanagement.domain.InterviewQuestion;
+import lapr4.jobs4u.questionmanagement.domain.RequirementsQuestion;
+import lapr4.jobs4u.questionmanagement.repositories.InterviewQuestionRepository;
+import lapr4.jobs4u.questionmanagement.repositories.RequirementsQuestionRepository;
 
 public class ListQuestionsService {
 
-    private final QuestionRepository questionRepository;
+    private final InterviewQuestionRepository interviewQuestionRepository;
+    private final RequirementsQuestionRepository requirementsQuestionRepository;
 
-    public ListQuestionsService(QuestionRepository questionRepository) {
-        this.questionRepository = questionRepository;
+    public ListQuestionsService(InterviewQuestionRepository questionRepository, RequirementsQuestionRepository requirementsQuestionRepository) {
+        this.interviewQuestionRepository = questionRepository;
+        this.requirementsQuestionRepository = requirementsQuestionRepository;
     }
 
-    public Iterable<Question> findQuestionsByPlugin(final String plugin) {
-        return this.questionRepository.findQuestionsByPlugin(plugin);
+    public Iterable<InterviewQuestion> findInterviewQuestionsByPlugin(final String plugin) {
+        return this.interviewQuestionRepository.findQuestionsByPlugin(plugin);
+    }
+
+    public Iterable<RequirementsQuestion> findRequirementsQuestionsByPlugin(final String plugin) {
+        return this.requirementsQuestionRepository.findQuestionsByPlugin(plugin);
     }
     
 }

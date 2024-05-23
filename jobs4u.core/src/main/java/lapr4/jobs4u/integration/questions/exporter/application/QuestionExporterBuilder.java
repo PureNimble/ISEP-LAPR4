@@ -7,7 +7,7 @@ public class QuestionExporterBuilder {
             case INTERVIEW:
                 return new InterviewExporter();
             case REQUIREMENT:
-                return new RequirementExporter();
+                return new RequirementsExporter();
         }
         throw new IllegalStateException("Unknown format");
     }

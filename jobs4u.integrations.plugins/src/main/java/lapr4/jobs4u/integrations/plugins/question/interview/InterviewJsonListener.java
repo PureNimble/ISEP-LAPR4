@@ -1,4 +1,4 @@
-package lapr4.jobs4u.integrations.plugins.question;
+package lapr4.jobs4u.integrations.plugins.question.interview;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -7,51 +7,51 @@ import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.Token;
 import org.antlr.v4.runtime.misc.Interval;
 
-import lapr4.jobs4u.importer.json.parser.JsonBaseListener;
-import lapr4.jobs4u.importer.json.parser.JsonParser;
+import lapr4.jobs4u.importer.json.generated.interview.InterviewJsonBaseListener;
+import lapr4.jobs4u.importer.json.generated.interview.InterviewJsonParser;
 import lapr4.jobs4u.questionmanagement.domain.Answer;
-import lapr4.jobs4u.questionmanagement.dto.QuestionDTO;
+import lapr4.jobs4u.questionmanagement.dto.InterviewQuestionDTO;
 
-public class JsonListener extends JsonBaseListener {
+public class InterviewJsonListener extends InterviewJsonBaseListener {
 
-    private final List<QuestionDTO> questions = new ArrayList<>();
-    private QuestionDTO current;
+    private final List<InterviewQuestionDTO> questions = new ArrayList<>();
+    private InterviewQuestionDTO current;
     private List<Answer> answers = new ArrayList<>();
 
     @Override
-    public void enterQuestion(final JsonParser.QuestionContext ctx) {
-        current = new QuestionDTO();
+    public void enterQuestion(final InterviewJsonParser.QuestionContext ctx) {
+        current = new InterviewQuestionDTO();
     }
 
     @Override
-    public void exitQuestion(final JsonParser.QuestionContext ctx) {
+    public void exitQuestion(final InterviewJsonParser.QuestionContext ctx) {
         current.setPossibleAnswers(answers);
         answers = new ArrayList<>();
         questions.add(current);
     }
 
     @Override
-    public void enterQuestionBody(final JsonParser.QuestionBodyContext ctx) {
+    public void enterQuestionBody(final InterviewJsonParser.QuestionBodyContext ctx) {
         current.setBody(extractValue(ctx));
     }
 
     @Override
-    public void enterCotation(final JsonParser.CotationContext ctx) {
+    public void enterCotation(final InterviewJsonParser.CotationContext ctx) {
         current.setCotation(extractValue(ctx));
     }
 
     @Override
-    public void enterCotationType(final JsonParser.CotationTypeContext ctx) {
+    public void enterCotationType(final InterviewJsonParser.CotationTypeContext ctx) {
         current.setCotationType(extractValue(ctx));
     }
 
     @Override
-    public void enterType(final JsonParser.TypeContext ctx) {
+    public void enterType(final InterviewJsonParser.TypeContext ctx) {
         current.setType(extractValue(ctx));
     }
 
     @Override
-    public void enterAnswer(final JsonParser.AnswerContext ctx) {
+    public void enterAnswer(final InterviewJsonParser.AnswerContext ctx) {
         final String value = extractValue(ctx);
         answers.add(Answer.valueOf(value));
     }
@@ -64,7 +64,7 @@ public class JsonListener extends JsonBaseListener {
         return intervalText.substring(1, intervalText.length() - 1);
     }
 
-    public List<QuestionDTO> questions() {
+    public List<InterviewQuestionDTO> questions() {
         return questions;
     }
 }

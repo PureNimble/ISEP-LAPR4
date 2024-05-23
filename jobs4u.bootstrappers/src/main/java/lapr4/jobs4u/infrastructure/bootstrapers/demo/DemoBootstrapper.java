@@ -50,8 +50,7 @@ public class DemoBootstrapper implements Action {
     public boolean execute() {
         // declare bootstrap actions
         final Action[] actions = { new BackofficeUsersBootstrapper(), new CustomerBootstrapper(),
-                new CandidateBootstrapper(), new QuestionTypeBootstrapper(),
-                new StandardQuestionImporterPluginsBootstrapper()
+                new CandidateBootstrapper(), new QuestionTypeBootstrapper()
         };
 
         authenticateForBootstrapping();

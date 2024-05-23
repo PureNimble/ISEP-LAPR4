@@ -17,8 +17,8 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@XmlRootElement(name = "Question")
-public class QuestionDTO {
+@XmlRootElement(name = "InterviewQuestion")
+public class InterviewQuestionDTO {
 
     @XmlElement
     @JsonProperty

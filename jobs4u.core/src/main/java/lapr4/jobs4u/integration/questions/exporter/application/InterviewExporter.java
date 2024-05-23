@@ -8,9 +8,10 @@ import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CodePointCharStream;
 import org.antlr.v4.runtime.CommonTokenStream;
 
-import lapr4.jobs4u.interview.parser.InterviewLexer;
-import lapr4.jobs4u.interview.parser.InterviewParser;
-import lapr4.jobs4u.questionmanagement.domain.Question;
+import lapr4.jobs4u.exporter.interview.generated.InterviewLexer;
+import lapr4.jobs4u.exporter.interview.generated.InterviewParser;
+import lapr4.jobs4u.questionmanagement.domain.InterviewQuestion;
+import lapr4.jobs4u.questionmanagement.domain.RequirementsQuestion;
 
 public class InterviewExporter implements QuestionExporter {
 
@@ -26,7 +27,7 @@ public class InterviewExporter implements QuestionExporter {
     }
 
     @Override
-    public void element(final Question e) {
+    public void element(final InterviewQuestion e) {
         if (e.cotation().value() == Math.floor(e.cotation().value())) {
             content.append(
                     String.format("\nCOTATION: %d%s\n", (int) e.cotation().value().doubleValue(), e.cotationType()));
@@ -36,7 +37,7 @@ public class InterviewExporter implements QuestionExporter {
         content.append(String.format("QUESTION TYPE: %s\n", e.questionType()));
         if (e.questionType().identity().contains("Choice")) {
             content.append("QUESTION: ");
-            String[] parts = e.questionBody().toString().split(" (?=\\d\\) )");
+            String[] parts = e.questionBody().toString().split(" (?=\\[\\d+\\])");
             for (String part : parts) {
                 if (!part.isEmpty()) {
                     content.append(part.trim()).append("\n");
@@ -74,11 +75,11 @@ public class InterviewExporter implements QuestionExporter {
     }
 
     @Override
-    public void begin(String filename) throws IOException {
+    public void begin(final String filename) throws IOException {
         // nothing to do
     }
 
-    private boolean isValid(String content) {
+    private boolean isValid(final String content) {
         // parse
         final CodePointCharStream charStream = CharStreams.fromString(content);
         final InterviewLexer lexer = new InterviewLexer(charStream);
@@ -98,5 +99,9 @@ public class InterviewExporter implements QuestionExporter {
         } catch (IllegalStateException e) {
             return false;
         }
+    }
+
+    @Override
+    public void element(final RequirementsQuestion e) {
     }
 }

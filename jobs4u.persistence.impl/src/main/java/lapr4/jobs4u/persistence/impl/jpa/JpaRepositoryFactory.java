@@ -123,13 +123,23 @@ public class JpaRepositoryFactory implements RepositoryFactory {
     }
 
     @Override
-    public JpaQuestionRepository question() {
-        return new JpaQuestionRepository(Application.settings().getPersistenceUnitName());
+    public JpaInterviewQuestionRepository interviewQuestion() {
+        return new JpaInterviewQuestionRepository(Application.settings().getPersistenceUnitName());
     }
 
     @Override
-    public JpaQuestionRepository question(final TransactionalContext autoTx) {
-        return new JpaQuestionRepository(autoTx);
+    public JpaInterviewQuestionRepository interviewQuestion(final TransactionalContext autoTx) {
+        return new JpaInterviewQuestionRepository(autoTx);
+    }
+
+    @Override
+    public JpaRequirementsQuestionRepository requirementsQuestion() {
+        return new JpaRequirementsQuestionRepository(Application.settings().getPersistenceUnitName());
+    }
+
+    @Override
+    public JpaRequirementsQuestionRepository requirementsQuestion(final TransactionalContext autoTx) {
+        return new JpaRequirementsQuestionRepository(autoTx);
     }
 
     @Override

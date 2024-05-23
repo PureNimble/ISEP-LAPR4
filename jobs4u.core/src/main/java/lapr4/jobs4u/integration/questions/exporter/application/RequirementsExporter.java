@@ -8,11 +8,12 @@ import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CodePointCharStream;
 import org.antlr.v4.runtime.CommonTokenStream;
 
-import lapr4.jobs4u.questionmanagement.domain.Question;
-import lapr4.jobs4u.requirement.parser.RequirementsLexer;
-import lapr4.jobs4u.requirement.parser.RequirementsParser;
+import lapr4.jobs4u.exporter.requirement.generated.RequirementsLexer;
+import lapr4.jobs4u.exporter.requirement.generated.RequirementsParser;
+import lapr4.jobs4u.questionmanagement.domain.InterviewQuestion;
+import lapr4.jobs4u.questionmanagement.domain.RequirementsQuestion;
 
-public class RequirementExporter implements QuestionExporter {
+public class RequirementsExporter implements QuestionExporter {
 
     private StringBuilder content;
     private PrintWriter stream;
@@ -26,9 +27,9 @@ public class RequirementExporter implements QuestionExporter {
     }
 
     @Override
-    public void element(final Question e) {
+    public void element(final RequirementsQuestion e) {
         content.append(String.format("\n# " + e.questionBody()));
-        content.append(String.format("ANSWER:"));
+        content.append(String.format("\nANSWER:\n"));
     }
 
     @Override
@@ -56,11 +57,11 @@ public class RequirementExporter implements QuestionExporter {
     }
 
     @Override
-    public void begin(String filename) throws IOException {
+    public void begin(final String filename) throws IOException {
         // nothing to do
     }
 
-    private boolean isValid(String content) {
+    private boolean isValid(final String content) {
         // parse
         final CodePointCharStream charStream = CharStreams.fromString(content);
         final RequirementsLexer lexer = new RequirementsLexer(charStream);
@@ -80,5 +81,9 @@ public class RequirementExporter implements QuestionExporter {
         } catch (IllegalStateException e) {
             return false;
         }
+    }
+
+    @Override
+    public void element(final InterviewQuestion e) {
     }
 }

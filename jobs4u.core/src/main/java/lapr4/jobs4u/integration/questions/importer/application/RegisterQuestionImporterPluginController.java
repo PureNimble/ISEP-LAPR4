@@ -22,8 +22,6 @@ package lapr4.jobs4u.integration.questions.importer.application;
 
 import eapli.framework.application.UseCaseController;
 import eapli.framework.infrastructure.authz.application.AuthorizationService;
-import eapli.framework.infrastructure.authz.application.AuthzRegistry;
-import lapr4.jobs4u.infrastructure.persistence.PersistenceContext;
 import lapr4.jobs4u.integration.questions.importer.domain.QuestionImporterPlugin;
 import lapr4.jobs4u.integration.questions.importer.domain.QuestionImporterPluginBuilder;
 import lapr4.jobs4u.integration.questions.importer.repositories.QuestionImporterPluginRepository;
@@ -34,8 +32,13 @@ import lapr4.jobs4u.usermanagement.domain.BaseRoles;
  */
 @UseCaseController
 public class RegisterQuestionImporterPluginController {
-	private final AuthorizationService authorizationService = AuthzRegistry.authorizationService();
-	private final QuestionImporterPluginRepository repository = PersistenceContext.repositories().questionImporterPlugins();
+	private final AuthorizationService authorizationService;
+	private final QuestionImporterPluginRepository repository;
+
+	public RegisterQuestionImporterPluginController(final QuestionImporterPluginRepository repository, final AuthorizationService authorizationService) {
+		this.repository = repository;
+		this.authorizationService = authorizationService;
+	}
 
 	/**
 	 * Registers a plugin.

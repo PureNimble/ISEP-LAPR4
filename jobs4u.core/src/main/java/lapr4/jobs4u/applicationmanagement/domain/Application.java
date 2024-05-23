@@ -51,9 +51,8 @@ public class Application implements AggregateRoot<ApplicationCode> {
     @JoinColumn(name = "Candidate")
     private Candidate candidate;
 
-    Application(final Date date, final ApplicationCode applicationCode,
-            final List<File> file, final JobOpening jobOpening, final Candidate candidate,
-            final Result result) {
+    Application(final Date date, final ApplicationCode applicationCode, final List<File> file,
+            final JobOpening jobOpening, final Candidate candidate, final Result result) {
         Preconditions.noneNull(new Object[] { date, applicationCode, file, jobOpening, candidate, result });
         this.date = date;
         this.applicationCode = applicationCode;

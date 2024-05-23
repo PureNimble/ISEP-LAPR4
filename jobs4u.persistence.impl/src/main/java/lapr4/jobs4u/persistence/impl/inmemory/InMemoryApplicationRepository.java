@@ -14,8 +14,7 @@ import lapr4.jobs4u.jobopeningmanagement.domain.JobReference;
  *
  * @author Jorge Santos ajs@isep.ipp.pt 02/04/2016
  */
-public class InMemoryApplicationRepository
-        extends InMemoryDomainRepository<Application, ApplicationCode>
+public class InMemoryApplicationRepository extends InMemoryDomainRepository<Application, ApplicationCode>
         implements ApplicationRepository {
 
     static {
@@ -40,5 +39,10 @@ public class InMemoryApplicationRepository
     @Override
     public Iterable<Application> findApplicationsFromCandidate(final Candidate candidate) {
         return match(e -> e.candidate().equals(candidate));
+    }
+
+    @Override
+    public Iterable<Application> findApplicationWithInterviewRecord(JobOpening jobOpening) {
+        return match(e -> e.jobOpening().equals(jobOpening));
     }
 }

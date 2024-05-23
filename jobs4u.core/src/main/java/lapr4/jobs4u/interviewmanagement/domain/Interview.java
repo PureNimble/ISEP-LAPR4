@@ -23,7 +23,7 @@ public class Interview implements AggregateRoot<Long> {
     private static final long serialVersionUID = 1L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Version
@@ -36,7 +36,7 @@ public class Interview implements AggregateRoot<Long> {
     private Time time;
 
     @ManyToOne(optional = false)
-    @JoinColumn(name = "Application")
+    @JoinColumn(name = "Application", unique = true)
     private Application application;
 
     @Column(nullable = true)

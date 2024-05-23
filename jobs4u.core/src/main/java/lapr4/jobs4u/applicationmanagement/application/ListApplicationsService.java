@@ -32,4 +32,13 @@ public class ListApplicationsService {
                 .orElseThrow(IllegalArgumentException::new);
     }
 
+    public Iterable<ApplicationDTO> findApplicationWithInterviewRecord(JobOpening jobOpening) {
+        final Iterable<Application> applications = this.applicationRepository
+                .findApplicationWithInterviewRecord(jobOpening);
+
+        List<ApplicationDTO> applicationsDTO = new ArrayList<>();
+        applications.forEach(application -> applicationsDTO.add(application.toDTO()));
+        return applicationsDTO;
+    }
+
 }

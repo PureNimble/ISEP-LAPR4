@@ -8,15 +8,14 @@ import lapr4.jobs4u.app.backoffice.console.presentation.authz.printer.JobOpening
 import lapr4.jobs4u.app.common.console.presentation.utils.Utils;
 import lapr4.jobs4u.applicationmanagement.application.ListApplicationsController;
 import lapr4.jobs4u.applicationmanagement.domain.Application;
+import lapr4.jobs4u.applicationmanagement.domain.File;
 import lapr4.jobs4u.applicationmanagement.dto.ApplicationDTO;
 import lapr4.jobs4u.infrastructure.persistence.PersistenceContext;
 import lapr4.jobs4u.interviewmanagement.application.UploadInterviewController;
 import lapr4.jobs4u.interviewmanagement.domain.Interview;
-import lapr4.jobs4u.interviewmanagement.domain.Time;
 import lapr4.jobs4u.jobopeningmanagement.application.ListJobOpeningsController;
 import lapr4.jobs4u.jobopeningmanagement.domain.JobOpening;
 import lapr4.jobs4u.jobopeningmanagement.dto.JobOpeningDTO;
-import lapr4.jobs4u.recruitmentprocessmanagement.domain.Date;
 
 public class UploadInterviewUI extends AbstractUI {
 
@@ -39,18 +38,23 @@ public class UploadInterviewUI extends AbstractUI {
         Application app = selectApplication();
         if (app == null)
             return false;
-        //String file = Utils.getPath(false);
-        //checkInterview(); // TODO: LPROG
+        // list interviews
+        Interview i = controller.findInterview(app);
+        if (i == null) {
+            return false;
+        }
+        String file = Utils.getPath(false);
+        i.addFile(File.valueOf(file));
+        checkInterview(); // TODO: LPROG
 
-        //controller.uploadInterview(Interview.valueOf(Date.today().toString(), Time.now().toString(), app));
-        // find interview
-        // add file to interview
+        controller.save(i);
+
         return false;
 
     }
 
     private Application selectApplication() {
-        //TODO: check if theJobOpening interviewPhase is open
+        //TODO: accept only jobOpenings in screening phase or interview phase
         final Iterable<JobOpeningDTO> jobOpenings = this.jobOpeningsController.filterByCostumerManager();
         final SelectWidget<JobOpeningDTO> selector = new SelectWidget<>("Job Openings:", jobOpenings,
                 new JobOpeningPrinter());
@@ -60,7 +64,8 @@ public class UploadInterviewUI extends AbstractUI {
             return null;
         }
         JobOpening theJobOpening = jobOpeningsController.selectedJobOpening(theJobOpeningDTO);
-        final Iterable<ApplicationDTO> applications = applicationController.filterByJobOpening(theJobOpening);
+        final Iterable<ApplicationDTO> applications = applicationController
+                .findApplicationWithInterviewRecord(theJobOpening);
         final SelectWidget<ApplicationDTO> selector1 = new SelectWidget<>("Applications:", applications,
                 new ApplicationPrinter());
         selector1.show();

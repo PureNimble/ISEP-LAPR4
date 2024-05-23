@@ -28,6 +28,7 @@ import lapr4.jobs4u.customermanagement.repositories.CustomerUserRepository;
 import lapr4.jobs4u.infrastructure.bootstrapers.Bootstrapper;
 import lapr4.jobs4u.infrastructure.persistence.RepositoryFactory;
 import lapr4.jobs4u.integration.questions.importer.repositories.QuestionImporterPluginRepository;
+import lapr4.jobs4u.interviewmanagement.repositories.InterviewRepository;
 import lapr4.jobs4u.jobopeningmanagement.repositories.JobOpeningInterviewRepository;
 import lapr4.jobs4u.jobopeningmanagement.repositories.JobOpeningRepository;
 import lapr4.jobs4u.jobopeningmanagement.repositories.JobOpeningRequirementRepository;
@@ -194,5 +195,9 @@ public class InMemoryRepositoryFactory implements RepositoryFactory {
     @Override
     public JobOpeningRequirementRepository jobOpeningRequirements(TransactionalContext autoTx) {
         return jobOpeningRequirements(null);
+    }
+
+    public InterviewRepository interviews() {
+        return new InMemoryInterviewRepository();
     }
 }

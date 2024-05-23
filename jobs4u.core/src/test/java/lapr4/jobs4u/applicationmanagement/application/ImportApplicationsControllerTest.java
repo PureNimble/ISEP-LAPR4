@@ -16,7 +16,7 @@ import lapr4.jobs4u.jobopeningmanagement.repositories.JobOpeningRepository;
 
 public class ImportApplicationsControllerTest {
 
-    /* @Mock
+    @Mock
     private ApplicationRepository applicationRepository;
 
     @Mock
@@ -30,7 +30,7 @@ public class ImportApplicationsControllerTest {
 
     @BeforeEach
     public void setUp() {
-        folder = "jobs4u.applicationsFileBot/resources/output";
+        folder = "jobs4u.applicationsFileBot/sprintc/resources/output";
 
         if (Files.currentDirectory().contains("jobs4u.core")) {
             folder = "../" + folder;
@@ -67,6 +67,6 @@ public class ImportApplicationsControllerTest {
 
     @Test
     public void testHaveReportFile() {
-        assertTrue(controller.haveReportFile(folder));
-    } */
+        assertTrue(controller.isPathValid(folder));
+    }
 }

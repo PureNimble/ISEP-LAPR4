@@ -11,9 +11,7 @@ import jakarta.persistence.Version;
 import lapr4.jobs4u.customermanagement.domain.Address;
 import lapr4.jobs4u.customermanagement.domain.Customer;
 import lapr4.jobs4u.jobopeningmanagement.dto.JobOpeningDTO;
-
 import java.util.Calendar;
-
 import eapli.framework.domain.model.AggregateRoot;
 import eapli.framework.domain.model.DomainEntities;
 import eapli.framework.representations.dto.DTOable;
@@ -47,7 +45,8 @@ public class JobOpening implements AggregateRoot<JobReference>, DTOable<JobOpeni
     @Column(nullable = false)
     private NumberOfVacancies numberOfVacancies;
 
-    private boolean active;
+    @Column(nullable = false)
+    private JobOpeningState jobOpeningState;
 
     @Temporal(TemporalType.DATE)
     private Calendar registeredOn;
@@ -74,7 +73,7 @@ public class JobOpening implements AggregateRoot<JobReference>, DTOable<JobOpeni
         this.customer = customer;
         this.jobDescription = jobDescription;
         this.numberOfVacancies = numberOfVacancies;
-        this.active = false;
+        this.jobOpeningState = JobOpeningState.valueOf(TypesOfJobOpeningStates.PENDING.toString());
 
     }
 
@@ -101,8 +100,8 @@ public class JobOpening implements AggregateRoot<JobReference>, DTOable<JobOpeni
         return DomainEntities.areEqual(this, other);
     }
 
-    public boolean isActive() {
-        return this.active;
+    public JobOpeningState jobOpeningState() {
+        return this.jobOpeningState;
     }
 
     public Calendar registeredOn() {
@@ -116,18 +115,22 @@ public class JobOpening implements AggregateRoot<JobReference>, DTOable<JobOpeni
     }
 
     public void activate() {
-        if (this.active) {
-            throw new IllegalStateException("Cannot activate an active job opening");
+        if (this.jobOpeningState.equals(JobOpeningState.valueOf(TypesOfJobOpeningStates.OCURRING.toString()))) {
+            throw new IllegalStateException("Cannot activate an ocurring job opening");
         } else {
-            this.active = true;
+            this.jobOpeningState = JobOpeningState.valueOf(TypesOfJobOpeningStates.OCURRING.toString());
         }
     }
 
-    public void deactivate() {
-        if (!this.active) {
-            throw new IllegalStateException("Cannot deactivate an inactive job opening");
+    public void deactivate(String recruitmentProcessPhase) {
+        if (this.jobOpeningState.equals(JobOpeningState.valueOf(TypesOfJobOpeningStates.PENDING.toString())) || this.jobOpeningState.equals(JobOpeningState.valueOf(TypesOfJobOpeningStates.CLOSED.toString()))) {
+            throw new IllegalStateException("Cannot deactivate a pending/closed job opening");
         } else {
-            this.active = false;
+            if (recruitmentProcessPhase.equals("ApplicationPhase")) {
+                this.jobOpeningState = JobOpeningState.valueOf(TypesOfJobOpeningStates.PENDING.toString());
+            } else if (recruitmentProcessPhase.equals("ResultsPhase")) {
+                this.jobOpeningState = JobOpeningState.valueOf(TypesOfJobOpeningStates.CLOSED.toString());
+            }
         }
     }
 

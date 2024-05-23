@@ -29,4 +29,9 @@ public class ListApplicationsController {
         authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.CUSTOMER_MANAGER, BaseRoles.POWERUSER);
         return applicationService.selectedApplication(applicationDTO);
     }
+
+    public Iterable<ApplicationDTO> findApplicationWithInterviewRecord(final JobOpening jobOpening) {
+        authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.CUSTOMER_MANAGER, BaseRoles.POWERUSER);
+        return applicationService.findApplicationWithInterviewRecord(jobOpening);
+    }
 }

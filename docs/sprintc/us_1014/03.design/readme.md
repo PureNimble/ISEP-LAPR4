@@ -1,6 +1,6 @@
 <img width=100% src="https://capsule-render.vercel.app/api?type=waving&height=120&color=4E1764"/>
 
-# US 1004 - Edit a Job Opening
+# US 1014 - Record the time and date for an interview
 
 ## 3. Design - User Story Realization
 
@@ -8,47 +8,56 @@
 
 | Interaction ID | Question: Which class is responsible for... | Answer               | Justification (with patterns)                                                                                 |
 |:-------------  |:--------------------- |:---------------------|:--------------------------------------------------------------------------------------------------------------|
-| Step 1  		 |	... interacting with the actor? | EditJobOpeningUI          | Pure Fabrication: there is no reason to assign this responsibility to any existing class in the Domain Model. |
-| 			  		 |	... coordinating the US? | EditJobOpeningController | Controller: The controller is responsible for handling the user's request and coordinating the use case. |
-| 			  		 |	... editing the job opening?						 | JobOpening         | Information Expert: The JobOpening class knows how to edit a JobOpening. |
-| 			  		 |	... saving the job opening?						 | JobOpeningRepository         | Information Expert: The repository knows how to save a job opening. |
-| 			  		 |	... querying the database for job openings?						 | JpaJobOpeningRepository         | Information Expert: The JpaJobOpeningRepository knows how to interact with the database. |
-| 			  		 |	... coordinating the job opening editing?						 | EditJobOpeningController         | 	Controller: The controller is responsible for handling the user's request and coordinating the use case. |
-| 			  		 |	... editing the job opening interview?						 | JobOpeningInterview	         | Information Expert: The JobOpeningInterview knows how to edit a JobOpeningInterview. |
-| 			  		 |	... saving the job opening interview?						 | JobOpeningInterviewRepository	         | Information Expert: The repository knows how to save a job opening interview. |
-| 			  		 |	... querying the database for job opening interviews?						 | JpaJobOpeningInterviewRepository	         | Information Expert: The JpaJobOpeningInterviewRepository knows how to interact with the database. |
-| 			  		 |	... editing the job opening requirement?						 | JobOpeningRequirement	         | Information Expert: The JobOpeningRequirement knows how to edit a JobOpeningRequirement. |
-| 			  		 |	... saving the job opening requirement?						 | JobOpeningRequirementRepository	         | Information Expert: The repository knows how to save a job opening requirement. |
-| 			  		 |	... querying the database for job opening requirements?						 | JpaJobOpeningRequirementRepository	         | Information Expert: The JpaJobOpeningRequirementRepository knows how to interact with the database. |
+| Step 1  		 |	... interacting with the actor?                            | RecordInterviewUI         | Pure Fabrication: there is no reason to assign this responsibility to any existing class in the Domain Model. |
+| 			  		 |	... coordinating the US?                               | RecordInterviewController | Controller: The controller is responsible for handling the user's request and coordinating the use case. |
+| 			  		 |	... create the interview?				     		   | Interview                 | Information Expert: The Interview class knows how to create a Interview. |
+| 			  		 |	... saving the interview?						       | InterviewRepository       | Information Expert: The repository knows how to save a interview. |
+| 			  		 |	... querying the database for interviews?			   | JpaInterviewRepository    | Information Expert: The JpaInterviewRepository knows how to interact with the database. |
+| 			  		 |	... applying the filter?						       | JobOpeningService	       | Creator: The service knows how to apply a filter to the job openings. |
+| 			  		 |	... creating the job opening DTO?					   | JobOpening                | Information Expert: The JobOpening class knows how to create a new JobOpeningDTO. |
+| 			  		 |	... saving the job opening?						       | JobOpeningRepository      | Information Expert: The repository knows how to save a job opening. |
+| 			  		 |	... querying the database for filtered job openings?   | JpaJobOpeningRepository   | Information Expert: The JpaJobOpeningRepository knows how to interact with the database. |
+| 			  		 |	... coordinating the US?                               | ListApplicationService    | Creator: The service knows how to apply a filter to the job openings. |
+| 			  		 |	... creating the job opening?						   | Application               | Information Expert: The Application class knows how to create a new application. |
+| 			  		 |	... saving the job opening?						       | ApplicationRepository     | Information Expert: The repository knows how to save an application. |
+| 			  		 |	... querying the database for job opening?			   | JpaApplicationRepository  | Information Expert: The JpaApplicationRepository knows how to interact with the database. |
+
 
 
 ### Systematization ##
 
 According to the taken rationale, the conceptual classes promoted to software classes are:
 
+* Interview
+* Time
+* Date
+* Result
+* Application
 * JobOpening
-* JobOpeningInterview
-* JobOpeningRequirement
 
 Other software classes (i.e. Pure Fabrication) identified:
 
-* EditJobOpeningUI
-* EditJobOpeningController
+* RecordInterviewUI
+* RecordInterviewController
+* InterviewRepository
+* JpaInterviewRepository
+* InterviewRepository
+* ListApplicationsService
+* ListJobOpeningsService
+* ApplicationRepository
+* JpaApplicationRepository
 * JobOpeningRepository
 * JpaJobOpeningRepository
-* JobOpeningInterviewRepository
-* JpaJobOpeningInterviewRepository
-* JobOpeningRequirementRepository
-* JpaJobOpeningRequirementRepository
+
 
 These classes are responsible for the user interface, controlling the use cases, editing and saving the job openings, job opening interviews, and job opening requirements, and interacting with the database, respectively.
 
 ## 3.2. Sequence Diagram (SD)
 
-![SD](svg/SD-US1004.svg)
+![SD](svg/SD-US1014.svg)
 
 ## 3.3. Class Diagram (CD)
 
-![Squence Diagram](svg/1004.png)
+![Squence Diagram](svg/1014.png)
 
 <img width=100% src="https://capsule-render.vercel.app/api?type=waving&height=120&color=4E1764&section=footer"/>

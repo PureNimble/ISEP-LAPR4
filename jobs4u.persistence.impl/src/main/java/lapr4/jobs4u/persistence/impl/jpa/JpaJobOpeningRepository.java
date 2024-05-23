@@ -24,8 +24,7 @@ public class JpaJobOpeningRepository extends JpaAutoTxRepository<JobOpening, Job
     }
 
     public JpaJobOpeningRepository(final String puname) {
-        super(puname, Application.settings().getExtendedPersistenceProperties(),
-                "jobReference");
+        super(puname, Application.settings().getExtendedPersistenceProperties(), "jobReference");
     }
 
     @Override
@@ -44,11 +43,8 @@ public class JpaJobOpeningRepository extends JpaAutoTxRepository<JobOpening, Job
 
     @Override
     public String findHighestSequenceForCustomer(final CustomerCode customerCode) {
-        Long count = createQuery(
-                "SELECT COUNT(jo) FROM JobOpening jo WHERE jo.customer.customerCode = :customerCode",
-                Long.class)
-                .setParameter("customerCode", customerCode)
-                .getSingleResult() + 1;
+        Long count = createQuery("SELECT COUNT(jo) FROM JobOpening jo WHERE jo.customer.customerCode = :customerCode",
+                Long.class).setParameter("customerCode", customerCode).getSingleResult() + 1;
         return count.toString();
     }
 
@@ -57,14 +53,13 @@ public class JpaJobOpeningRepository extends JpaAutoTxRepository<JobOpening, Job
     public Iterable<JobOpening> hasRecruitmentProcess(final boolean hasRecruitmentProcess) {
         Query query = null;
         if (hasRecruitmentProcess) {
-           query = createQuery(
-                "SELECT e FROM JobOpening e, RecruitmentProcess RP WHERE e.jobReference = RP.jobOpening.jobReference",
-                JobOpening.class);
-        }
-        else{
             query = createQuery(
-                "SELECT e FROM JobOpening e LEFT JOIN RecruitmentProcess RP ON e.jobReference = RP.jobOpening.jobReference WHERE RP.jobOpening.jobReference IS NULL",
-                JobOpening.class);
+                    "SELECT e FROM JobOpening e, RecruitmentProcess RP WHERE e.jobReference = RP.jobOpening.jobReference",
+                    JobOpening.class);
+        } else {
+            query = createQuery(
+                    "SELECT e FROM JobOpening e LEFT JOIN RecruitmentProcess RP ON e.jobReference = RP.jobOpening.jobReference WHERE RP.jobOpening.jobReference IS NULL",
+                    JobOpening.class);
         }
         return query.getResultList();
     }
@@ -72,8 +67,7 @@ public class JpaJobOpeningRepository extends JpaAutoTxRepository<JobOpening, Job
     @SuppressWarnings("unchecked")
     @Override
     public Iterable<JobOpening> filterByPeriod(final Calendar initialDate, final Calendar finalDate) {
-        Query query = createQuery(
-                "SELECT e FROM JobOpening e WHERE e.registeredOn BETWEEN :startDate AND :endDate",
+        Query query = createQuery("SELECT e FROM JobOpening e WHERE e.registeredOn BETWEEN :startDate AND :endDate",
                 JobOpening.class);
         query.setParameter("startDate", initialDate, TemporalType.TIMESTAMP);
         query.setParameter("endDate", finalDate, TemporalType.TIMESTAMP);

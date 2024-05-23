@@ -1,0 +1,67 @@
+@startuml SD-US1005
+
+title Sequence Diagram - US1005
+
+skinparam linetype ortho
+skinparam maxmessagesize 150
+skinparam sequenceParticipant underline
+
+actor "Customer Manager" as customerManager
+
+participant "RecordInterviewUI" as UI
+participant "RecordInterviewController" as Controller
+participant "Interview" as Interview
+
+participant "RecordInterviewService" as Service
+participant "InterviewRepository" as Repository
+participant "JpaInterviewRepository" as JpaRepository
+database "Database" as DB
+
+activate customerManager
+
+customerManager -> UI: Asks to record a interview
+
+activate UI
+    ref over customerManager, DB : US1003 ➡️ List Job Openings
+    UI --> customerManager : Shows list of job openings and asks to select one
+deactivate UI
+customerManager -> UI : selects a job opening
+activate UI
+    ref over customerManager, DB : US1005 ➡️ List Applications
+    UI --> customerManager : Shows list of applications and asks to select one
+    note right: Should only return valid applications\n the interviewPhase need to be active
+deactivate UI
+customerManager -> UI : selects a application
+activate UI
+UI --> customerManager : Asks to type the interview date and time
+deactivate UI
+
+customerManager -> UI : types the interview date and time
+activate UI
+    UI --> Controller: createInterview(application, date, time)
+    activate Controller
+        Controller -> Interview: createInterview(application, date, time)
+        activate Interview
+        Interview --> Controller: Interview
+        deactivate Interview
+        Controller -> Repository: save(Interview)
+        activate Repository
+        Repository -> JpaRepository: save(Interview)
+        activate JpaRepository
+        JpaRepository -> DB: save(Interview)
+        activate DB
+        DB --> JpaRepository: boolean
+        deactivate DB
+        JpaRepository --> Repository: boolean
+        deactivate JpaRepository
+        Repository --> Controller: boolean
+        deactivate Repository
+        Controller --> UI: boolean
+        deactivate Controller
+        UI --> customerManager: Informs if the interview was created
+    deactivate UI
+deactivate UI
+
+deactivate customerManager
+
+@enduml

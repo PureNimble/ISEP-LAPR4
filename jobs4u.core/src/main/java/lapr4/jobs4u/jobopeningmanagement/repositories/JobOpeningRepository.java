@@ -13,10 +13,17 @@ import lapr4.jobs4u.jobopeningmanagement.domain.JobReference;
 public interface JobOpeningRepository extends DomainRepository<JobReference, JobOpening> {
 
     Iterable<JobOpening> filterByCostumerManager(final Username username);
+
     Optional<JobOpening> findJobOpeningByReference(final JobReference jobReference);
+
     String findHighestSequenceForCustomer(final CustomerCode customerCode);
+
     Iterable<JobOpening> filterByCostumer(final Customer customer);
+
     Iterable<JobOpening> hasRecruitmentProcess(final boolean hasRecruitmentProcess);
+
     Iterable<JobOpening> filterByPeriod(final Calendar initialDate, final Calendar finalDate);
+
     Iterable<JobOpening> filterWithInterview();
+
 }

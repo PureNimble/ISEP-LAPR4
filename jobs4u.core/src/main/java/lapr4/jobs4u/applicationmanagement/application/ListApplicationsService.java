@@ -28,10 +28,17 @@ public class ListApplicationsService {
     }
 
     public Application selectedApplication(ApplicationDTO applicationDTO) {
-        Application selectedJobOpening = applicationRepository
-                .ofIdentity(ApplicationCode.valueOf(applicationDTO.getApplicationCode()))
+        return applicationRepository.ofIdentity(ApplicationCode.valueOf(applicationDTO.getApplicationCode()))
                 .orElseThrow(IllegalArgumentException::new);
-        return selectedJobOpening;
+    }
+
+    public Iterable<ApplicationDTO> findApplicationWithInterviewRecord(JobOpening jobOpening) {
+        final Iterable<Application> applications = this.applicationRepository
+                .findApplicationWithInterviewRecord(jobOpening);
+
+        List<ApplicationDTO> applicationsDTO = new ArrayList<>();
+        applications.forEach(application -> applicationsDTO.add(application.toDTO()));
+        return applicationsDTO;
     }
 
 }

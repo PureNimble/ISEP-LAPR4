@@ -8,11 +8,13 @@ import lapr4.jobs4u.app.backoffice.console.presentation.authz.action.ListApplica
 import lapr4.jobs4u.app.backoffice.console.presentation.authz.action.ListCandidatesDataAction;
 import lapr4.jobs4u.app.backoffice.console.presentation.authz.action.ListJobOpeningsAction;
 import lapr4.jobs4u.app.backoffice.console.presentation.authz.action.OpenOrClosePhaseAction;
+import lapr4.jobs4u.app.backoffice.console.presentation.authz.action.RecordInterviewAction;
 import lapr4.jobs4u.app.backoffice.console.presentation.authz.action.RegisterCustomerAction;
 import lapr4.jobs4u.app.backoffice.console.presentation.authz.action.RegisterJobOpeningAction;
 import lapr4.jobs4u.app.backoffice.console.presentation.authz.action.SelectInterviewAction;
 import lapr4.jobs4u.app.backoffice.console.presentation.authz.action.SelectRequirementAction;
 import lapr4.jobs4u.app.backoffice.console.presentation.authz.action.SetUpRecruitmentProcessAction;
+import lapr4.jobs4u.app.backoffice.console.presentation.authz.action.UploadInterviewAction;
 
 public class CustomerManagerMenu extends Menu {
 
@@ -27,6 +29,8 @@ public class CustomerManagerMenu extends Menu {
     private static final int SELECT_REQUIREMENT = 9;
     private static final int OPEN_OR_CLOSE_PHASE = 10;
     private static final int EDIT_JOB_OPENING = 11;
+    private static final int UPLOAD_INTERVIEW = 12;
+    private static final int RECORD_INTERVIEW = 13;
     private static final int EXIT_OPTION = 0;
     private static final String RETURN_LABEL = "Return ";
 
@@ -44,6 +48,8 @@ public class CustomerManagerMenu extends Menu {
         addItem(SELECT_REQUIREMENT, "Select Requirement", new SelectRequirementAction());
         addItem(OPEN_OR_CLOSE_PHASE, "Open or Close Phase", new OpenOrClosePhaseAction());
         addItem(EDIT_JOB_OPENING, "Edit Job Opening", new EditJobOpeningAction());
+        addItem(UPLOAD_INTERVIEW, "Upload Interview", new UploadInterviewAction());
+        addItem(RECORD_INTERVIEW, "Record Interview", new RecordInterviewAction());
         addItem(EXIT_OPTION, RETURN_LABEL, Actions.SUCCESS);
     }
 }

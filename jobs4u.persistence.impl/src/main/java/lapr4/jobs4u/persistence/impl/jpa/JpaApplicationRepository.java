@@ -9,7 +9,6 @@ import lapr4.jobs4u.applicationmanagement.domain.Application;
 import lapr4.jobs4u.applicationmanagement.domain.ApplicationCode;
 import lapr4.jobs4u.applicationmanagement.repositories.ApplicationRepository;
 import lapr4.jobs4u.candidatemanagement.domain.Candidate;
-import lapr4.jobs4u.interviewmanagement.domain.Interview;
 import lapr4.jobs4u.jobopeningmanagement.domain.JobOpening;
 import lapr4.jobs4u.jobopeningmanagement.domain.JobReference;
 import eapli.framework.domain.repositories.TransactionalContext;
@@ -42,7 +41,7 @@ class JpaApplicationRepository extends JpaAutoTxRepository<Application, Applicat
 
         Long count = createQuery(
                 "SELECT COUNT(jo) FROM Application jo WHERE jo.jobOpening.jobReference = :jobReference", Long.class)
-                        .setParameter("jobReference", jobReference).getSingleResult()
+                .setParameter("jobReference", jobReference).getSingleResult()
                 + 1;
         return count.toString();
 

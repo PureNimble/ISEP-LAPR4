@@ -16,6 +16,8 @@ import lapr4.jobs4u.customermanagement.domain.CustomerCode;
 import lapr4.jobs4u.jobopeningmanagement.domain.JobOpening;
 import lapr4.jobs4u.jobopeningmanagement.domain.JobReference;
 import lapr4.jobs4u.jobopeningmanagement.repositories.JobOpeningRepository;
+import lapr4.jobs4u.recruitmentprocessmanagement.domain.ActivityState;
+import lapr4.jobs4u.recruitmentprocessmanagement.domain.State;
 
 public class JpaJobOpeningRepository extends JpaAutoTxRepository<JobOpening, JobReference, JobReference>
         implements JobOpeningRepository {
@@ -87,6 +89,19 @@ public class JpaJobOpeningRepository extends JpaAutoTxRepository<JobOpening, Job
                 "SELECT e FROM JobOpening e, RecruitmentProcess RP WHERE e.jobReference = RP.jobOpening.jobReference AND RP.interviewPhase IS NOT NULL",
                 JobOpening.class);
         return query.getResultList();
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public Iterable<JobOpening> filterWithAvailablePhase(final Username username) {
+        Query query = createQuery(
+                "SELECT e FROM JobOpening e, RecruitmentProcess r WHERE e.customer.manager.username = :name AND e = r.jobOpening "
+                        + "AND (r.screeningPhase.state = :openPhase OR r.interviewPhase.state = :openPhase)",
+                JobOpening.class);
+        query.setParameter("name", username);
+        query.setParameter("openPhase", State.valueOf(ActivityState.OPEN.toString()));
+        return query.getResultList();
+
     }
 
 }

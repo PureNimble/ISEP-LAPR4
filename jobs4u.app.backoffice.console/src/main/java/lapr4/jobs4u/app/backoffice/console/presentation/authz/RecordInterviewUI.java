@@ -49,8 +49,7 @@ public class RecordInterviewUI extends AbstractUI {
     }
 
     private Application selectApplication() {
-        //TODO: accept only jobOpenings in screening phase or interview phase
-        final Iterable<JobOpeningDTO> jobOpenings = this.jobOpeningsController.filterByCostumerManager();
+        final Iterable<JobOpeningDTO> jobOpenings = this.jobOpeningsController.filterWithAvailablePhase();
         final SelectWidget<JobOpeningDTO> selector = new SelectWidget<>("Job Openings:", jobOpenings,
                 new JobOpeningPrinter());
         selector.show();
@@ -58,7 +57,7 @@ public class RecordInterviewUI extends AbstractUI {
         if (theJobOpeningDTO == null) {
             return null;
         }
-        //TODO: accept only applications that have passed the screening phase
+        // TODO: accept only applications that have passed the screening phase
         JobOpening theJobOpening = jobOpeningsController.selectedJobOpening(theJobOpeningDTO);
         final Iterable<ApplicationDTO> applications = this.applicationController.filterByJobOpening(theJobOpening);
         final SelectWidget<ApplicationDTO> selector1 = new SelectWidget<>("Applications:", applications,

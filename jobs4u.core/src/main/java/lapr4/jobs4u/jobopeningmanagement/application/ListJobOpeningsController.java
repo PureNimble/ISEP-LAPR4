@@ -64,4 +64,11 @@ public class ListJobOpeningsController {
                 .filter(list2::contains)
                 .collect(Collectors.toList());
     }
+
+    public Iterable<JobOpeningDTO> filterWithAvailablePhase() {
+        authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.CUSTOMER_MANAGER, BaseRoles.POWERUSER);
+
+        return jobOpeningsService.filterWithAvailablePhase();
+    }
+
 }

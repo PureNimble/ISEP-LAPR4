@@ -71,6 +71,10 @@ public class ImportApplicationsUI extends AbstractUI {
                     return;
                 }
                 List<File> files = theController.getFiles(folder, candidateId, jobOffer);
+                if (files.isEmpty()) {
+                    System.out.println("No files found for candidate " + candidateId + " in job offer " + jobOffer);
+                    return;
+                }
                 try {
                     txCtx.beginTransaction();
                     Candidate candidate = registerCandidates(folder, candidateId, jobOffer);

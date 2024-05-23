@@ -39,7 +39,7 @@ public class ListJobOpeningsService {
 
     public Iterable<JobOpeningDTO> filterByCustomer(final Customer customer) {
         final Iterable<JobOpening> jobOpenings = this.jobOpeningRepository.filterByCostumer(customer);
-        
+
         List<JobOpeningDTO> jobOpeningsDTO = new ArrayList<>();
         jobOpenings.forEach(jobOpening -> jobOpeningsDTO.add(jobOpening.toDTO()));
         return jobOpeningsDTO;
@@ -47,7 +47,7 @@ public class ListJobOpeningsService {
 
     public Iterable<JobOpeningDTO> hasRecruitmentProcess(final boolean hasRecruitmentProcess) {
         final Iterable<JobOpening> jobOpenings = this.jobOpeningRepository.hasRecruitmentProcess(hasRecruitmentProcess);
-        
+
         List<JobOpeningDTO> jobOpeningsDTO = new ArrayList<>();
         jobOpenings.forEach(jobOpening -> jobOpeningsDTO.add(jobOpening.toDTO()));
         return jobOpeningsDTO;
@@ -60,12 +60,12 @@ public class ListJobOpeningsService {
         finalDate.set(Calendar.SECOND, 59);
         finalDate.set(Calendar.MILLISECOND, 999);
         final Iterable<JobOpening> jobOpenings = this.jobOpeningRepository.filterByPeriod(initialDate, finalDate);
-        
+
         List<JobOpeningDTO> jobOpeningsDTO = new ArrayList<>();
         jobOpenings.forEach(jobOpening -> jobOpeningsDTO.add(jobOpening.toDTO()));
         return jobOpeningsDTO;
     }
-    
+
     public Optional<JobOpening> findJobOpeningByReference(JobReference jobReference) {
         Optional<JobOpening> jobOpening = jobOpeningRepository.findJobOpeningByReference(jobReference);
         return jobOpening;
@@ -73,17 +73,28 @@ public class ListJobOpeningsService {
 
     public Iterable<JobOpeningDTO> filterWithInterview() {
         final Iterable<JobOpening> jobOpenings = this.jobOpeningRepository.filterWithInterview();
-        
+
         List<JobOpeningDTO> jobOpeningsDTO = new ArrayList<>();
         jobOpenings.forEach(jobOpening -> jobOpeningsDTO.add(jobOpening.toDTO()));
         return jobOpeningsDTO;
     }
-    
+
     public JobOpening selectedJobOpening(final JobOpeningDTO jobOpeningDTO) {
         JobOpening selectedJobOpening = jobOpeningRepository
                 .ofIdentity(JobReference.valueOf(jobOpeningDTO.getJobReference()))
                 .orElseThrow(IllegalArgumentException::new);
         return selectedJobOpening;
+    }
+
+    public Iterable<JobOpeningDTO> filterWithAvailablePhase() {
+        final SystemUser manager = authz.loggedinUserWithPermissions(BaseRoles.CUSTOMER_MANAGER, BaseRoles.POWERUSER)
+                .orElseThrow(IllegalStateException::new);
+        final Iterable<JobOpening> jobOpenings = this.jobOpeningRepository.filterWithAvailablePhase(manager.username());
+
+        List<JobOpeningDTO> jobOpeningsDTO = new ArrayList<>();
+        jobOpenings.forEach(jobOpening -> jobOpeningsDTO.add(jobOpening.toDTO()));
+        return jobOpeningsDTO;
+
     }
 
 }

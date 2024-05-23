@@ -146,7 +146,6 @@ public class ImportApplicationsController {
     }
 
     public boolean isPathValid(String folder) {
-
         return Files.exists(Paths.get(folder + REPORT_FILE_NAME));
     }
 }

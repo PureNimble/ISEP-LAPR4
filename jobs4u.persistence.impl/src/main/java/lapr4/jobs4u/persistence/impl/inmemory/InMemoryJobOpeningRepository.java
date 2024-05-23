@@ -44,12 +44,17 @@ public class InMemoryJobOpeningRepository extends InMemoryDomainRepository<JobOp
             return e.registeredOn().after(initialDate) && e.registeredOn().before(finalDate);
         });
     }
-    
+
     public Optional<JobOpening> findJobOpeningByReference(final JobReference jobReference) {
         return Optional.ofNullable(matchOne(e -> e.identity().equals(jobReference)).orElse(null));
     }
 
     public Iterable<JobOpening> filterWithInterview() {
         return filterWithInterview();
+    }
+
+    @Override
+    public Iterable<JobOpening> filterWithAvailablePhase(Username username) {
+        return filterWithAvailablePhase(username);
     }
 }

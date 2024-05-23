@@ -11,10 +11,9 @@ public class ClientApp {
                 new PlainTextEncoder());
         AppSettings appSettings = new AppSettings();
 
-        boolean isSecure = appSettings.isSSLEnabled();
         Integer port = appSettings.boardServerPort();
 
-        TcpServer server = new TcpServer(port, ClientHandler.class, isSecure);
+        TcpServer server = new TcpServer(port, ClientHandler.class);
         server.run();
     }
 }

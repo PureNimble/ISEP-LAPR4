@@ -4,20 +4,15 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-import javax.net.ssl.SSLServerSocket;
-import javax.net.ssl.SSLServerSocketFactory;
-
 public class TcpServer {
 
     private int port;
     private Class<? extends Runnable> handlerClass;
-    private boolean secure;
     private EventListener eventListener;
 
-    public TcpServer(int port, Class<? extends Runnable> handler, boolean secure) {
+    public TcpServer(int port, Class<? extends Runnable> handler) {
         this.port = port;
         this.handlerClass = handler;
-        this.secure = secure;
         this.eventListener = new EventListener();
     }
 
@@ -27,19 +22,14 @@ public class TcpServer {
         Socket socket;
 
         try {
-            if (this.secure) {
-                tcpSocket = SSLServerSocketFactory.getDefault().createServerSocket(port);
-                SSLServerSocket sslListener = (SSLServerSocket) tcpSocket;
-                sslListener.setNeedClientAuth(true);
-            } else
-                tcpSocket = new ServerSocket(port);
+            tcpSocket = new ServerSocket(port);
         } catch (IOException e) {
             System.out.println("Error creating the tcp socket");
             e.printStackTrace();
             return;
         }
 
-        System.out.printf("[TCP%s Server] Listening on port %d!\n", this.secure ? " SSL" : "", port);
+        System.out.printf("[TCP%s Server] Listening on port %d!\n", port);
 
         while (!tcpSocket.isClosed()) {
             try {

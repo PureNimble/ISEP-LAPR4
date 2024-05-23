@@ -20,9 +20,15 @@
  */
 package lapr4.jobs4u.app.candidate.console;
 
+import lapr4.jobs4u.AppSettings;
+import lapr4.jobs4u.TcpClient;
 import lapr4.jobs4u.app.candidate.console.presentation.FrontMenu;
 import lapr4.jobs4u.infrastructure.persistence.PersistenceContext;
 import lapr4.jobs4u.usermanagement.domain.BasePasswordPolicy;
+
+import java.io.IOException;
+import java.net.UnknownHostException;
+
 import eapli.framework.infrastructure.authz.application.AuthzRegistry;
 import eapli.framework.infrastructure.authz.domain.model.PlainTextEncoder;
 
@@ -45,10 +51,22 @@ public final class CandidateApp {
         System.out.println("(C) 2024");
         System.out.println("=====================================");
 
-        AuthzRegistry.configure(PersistenceContext.repositories().users(),
-                new BasePasswordPolicy(), new PlainTextEncoder());
+        AuthzRegistry.configure(PersistenceContext.repositories().users(), new BasePasswordPolicy(),
+                new PlainTextEncoder());
 
-        new FrontMenu().show();
+        // TODO: change the following code to use the TCP client
+        AppSettings appSettings = new AppSettings();
+        String host = appSettings.serverHost();
+        Integer port = appSettings.serverPort();
+        TcpClient client = new TcpClient();
+        try {
+            client.connect(host, port);
+            new FrontMenu().show();
+        } catch (UnknownHostException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         // exiting the application, closing all threads
         System.exit(0);

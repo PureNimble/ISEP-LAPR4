@@ -9,11 +9,9 @@ public class ClientApp {
     public static void main(String[] args) {
         AuthzRegistry.configure(PersistenceContext.repositories().users(), new BasePasswordPolicy(),
                 new PlainTextEncoder());
-        AppSettings appSettings = new AppSettings();
-
-        Integer port = appSettings.boardServerPort();
-
-        TcpServer server = new TcpServer(port, ClientHandler.class);
+        final AppSettings appSettings = new AppSettings();
+        final Integer port = appSettings.serverPort();
+        final TcpServer server = new TcpServer(port, ClientHandler.class);
         server.run();
     }
 }

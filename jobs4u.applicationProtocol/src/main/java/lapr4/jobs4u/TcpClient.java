@@ -19,13 +19,12 @@ public class TcpClient {
 
     private final Logger logger = LogManager.getLogger(TcpClient.class);
 
-    protected TcpClient() {
+    public TcpClient() {
     }
 
     public void connect(String hostname, int port) throws UnknownHostException, IOException {
 
         socket = new Socket(hostname, port);
-
         logger.debug("Connected to the server!");
 
         input = new DataInputStream(socket.getInputStream());

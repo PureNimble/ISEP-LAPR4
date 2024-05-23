@@ -4,8 +4,12 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 public class TcpServer {
 
+    private final Logger logger = LogManager.getLogger(TcpServer.class);
     private int port;
     private Class<? extends Runnable> handlerClass;
     private EventListener eventListener;
@@ -24,12 +28,11 @@ public class TcpServer {
         try {
             tcpSocket = new ServerSocket(port);
         } catch (IOException e) {
-            System.out.println("Error creating the tcp socket");
-            e.printStackTrace();
+            logger.debug("Error creating the tcp socket");
             return;
         }
 
-        System.out.printf("[TCP%s Server] Listening on port %d!\n", port);
+        logger.debug("[TCP%s Server] Listening on port %d!\n", port);
 
         while (!tcpSocket.isClosed()) {
             try {
@@ -43,16 +46,14 @@ public class TcpServer {
 
                 clientHandler.start();
             } catch (Exception e) {
-                System.out.println("Error creating the client handler thread");
-                e.printStackTrace();
+                logger.debug("Error creating the client handler thread");
             }
         }
 
         try {
             tcpSocket.close();
         } catch (IOException e) {
-            System.out.println("Error closing the tcp socket");
-            e.printStackTrace();
+            logger.debug("Error closing the tcp socket");
         }
     }
 }

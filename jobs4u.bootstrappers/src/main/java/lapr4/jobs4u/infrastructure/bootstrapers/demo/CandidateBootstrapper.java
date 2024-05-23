@@ -13,8 +13,8 @@ public class CandidateBootstrapper extends Jobs4UBootstrapperBase implements Act
     @Override
     public boolean execute() {
         registerCandidate("Candidate", "Candidate", "ca@email.local", "912345678");
-        registerCandidate("Alice Johnson", "Software Engineer", "alicejohnson@email.local", "912345678");
-        registerCandidate("Bob Williams", "Data Analyst", "bobwilliams@email.local", "912345678");
+        registerCandidate("Alice", "Johnson", "alicejohnson@email.local", "912345678");
+        registerCandidate("Bob", "Williams", "bobwilliams@email.local", "912345678");
         return true;
     }
 

@@ -7,8 +7,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-import eapli.framework.domain.repositories.ConcurrencyException;
-import eapli.framework.domain.repositories.IntegrityViolationException;
 import eapli.framework.domain.repositories.TransactionalContext;
 import eapli.framework.infrastructure.authz.application.AuthzRegistry;
 import eapli.framework.io.util.Console;
@@ -28,26 +26,19 @@ import lapr4.jobs4u.jobopeningmanagement.domain.JobOpeningRequirement;
 import lapr4.jobs4u.jobopeningmanagement.domain.ModeTypes;
 import lapr4.jobs4u.jobopeningmanagement.domain.TypesOfContract;
 import lapr4.jobs4u.jobopeningmanagement.dto.JobOpeningDTO;
-import lapr4.jobs4u.recruitmentprocessmanagement.application.OpenOrClosePhaseController;
 
 public class EditJobOpeningUI extends AbstractUI {
 
         private final TransactionalContext ctx = PersistenceContext.repositories().newTransactionalContext();
-
         private final ListJobOpeningsController listJobOpeningsController = new ListJobOpeningsController(
                         PersistenceContext.repositories().jobOpenings(), AuthzRegistry.authorizationService());
 
         private final EditJobOpeningController editJobOpeningController = new EditJobOpeningController(
-                        PersistenceContext.repositories().jobOpenings(),
-                        PersistenceContext.repositories().jobOpeningInterviews(),
-                        PersistenceContext.repositories().jobOpeningRequirements(),
-                        AuthzRegistry.authorizationService());
-
-        private final OpenOrClosePhaseController openOrClosePhaseController = new OpenOrClosePhaseController(
+                        PersistenceContext.repositories().jobOpenings(ctx),
+                        PersistenceContext.repositories().jobOpeningInterviews(ctx),
+                        PersistenceContext.repositories().jobOpeningRequirements(ctx),
                         PersistenceContext.repositories().recruitmentProcesses(),
-                        PersistenceContext.repositories().jobOpenings(),
-                        PersistenceContext.repositories().jobOpeningRequirements(),
-                        PersistenceContext.repositories().jobOpeningInterviews(), PersistenceContext.repositories().applications(), AuthzRegistry.authorizationService(), ctx);
+                        AuthzRegistry.authorizationService());
 
         private final ListQuestionPluginController pluginController = new ListQuestionPluginController(
                         PersistenceContext.repositories().questionImporterPlugins(),
@@ -114,7 +105,7 @@ public class EditJobOpeningUI extends AbstractUI {
 
                 } while (!Utils.confirm("\nDo you wish to edit this Job Opening?"));
 
-                currentPhase = this.openOrClosePhaseController.currentPhase(theJobOpening);
+                currentPhase = this.editJobOpeningController.currentPhase(theJobOpening);
                 titleOrFunction = theJobOpening.titleOrFunction().toString();
                 contractType = theJobOpening.contractType().toString();
                 mode = theJobOpening.mode().toString();
@@ -227,6 +218,7 @@ public class EditJobOpeningUI extends AbstractUI {
                 }
 
                 try {
+                        ctx.beginTransaction();
                         this.editJobOpeningController.editJobOpening(titleOrFunction, contractType, mode, address,
                                         jobDescription, numberOfVacancies, theJobOpening);
                         if (theJobOpeningInterview != null)
@@ -235,9 +227,13 @@ public class EditJobOpeningUI extends AbstractUI {
                         if (theJobOpeningRequirement != null)
                                 this.editJobOpeningController.editJobOpeningRequirement(theJobOpeningRequirement,
                                                 requirement);
+                        ctx.commit();
                         System.out.println("\nJob Opening edited successfully.");
-                } catch (final IntegrityViolationException | ConcurrencyException e) {
+                } catch (final Exception e) {
+                        ctx.rollback();
                         System.out.println("Something went wrong. Please try again.");
+                } finally {
+                        ctx.close();
                 }
 
                 return false;

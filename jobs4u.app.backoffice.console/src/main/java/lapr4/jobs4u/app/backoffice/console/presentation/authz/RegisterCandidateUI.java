@@ -2,8 +2,10 @@ package lapr4.jobs4u.app.backoffice.console.presentation.authz;
 
 import java.util.HashSet;
 import java.util.Set;
+
 import eapli.framework.domain.repositories.ConcurrencyException;
 import eapli.framework.domain.repositories.IntegrityViolationException;
+import eapli.framework.domain.repositories.TransactionalContext;
 import eapli.framework.infrastructure.authz.application.AuthzRegistry;
 import eapli.framework.infrastructure.authz.domain.model.Role;
 import eapli.framework.infrastructure.authz.domain.model.SystemUser;
@@ -17,9 +19,10 @@ import lapr4.jobs4u.usermanagement.domain.BaseRoles;
 
 public class RegisterCandidateUI extends AbstractUI {
 
+    private final TransactionalContext txCtx = PersistenceContext.repositories().newTransactionalContext();
     private final RegisterCandidateController registerCandidateController = new RegisterCandidateController(
-            PersistenceContext.repositories().candidates(), PersistenceContext.repositories().candidateUsers(),
-            AuthzRegistry.authorizationService());
+            PersistenceContext.repositories().candidates(txCtx),
+            PersistenceContext.repositories().candidateUsers(txCtx), AuthzRegistry.authorizationService());
 
     private final AddUserController addUserController = new AddUserController();
 
@@ -35,13 +38,18 @@ public class RegisterCandidateUI extends AbstractUI {
         try {
             final Set<Role> roleTypes = new HashSet<>();
             roleTypes.add(BaseRoles.CANDIDATE);
+            txCtx.beginTransaction();
             final Candidate customer = this.registerCandidateController.registerCandidate(firstName, lastName, email,
                     phoneNumber);
             final SystemUser user = this.addUserController.addUser(email, firstName,
                     lastName, roleTypes);
             this.registerCandidateController.registerCandidateUser(customer, user);
+            txCtx.commit();
         } catch (final IntegrityViolationException | ConcurrencyException e) {
+            txCtx.rollback();
             System.out.println("That E-mail is already registered.");
+        } finally {
+            txCtx.close();
         }
 
         return false;

@@ -17,6 +17,7 @@ import lapr4.jobs4u.jobopeningmanagement.domain.TitleOrFunction;
 import lapr4.jobs4u.jobopeningmanagement.repositories.JobOpeningInterviewRepository;
 import lapr4.jobs4u.jobopeningmanagement.repositories.JobOpeningRepository;
 import lapr4.jobs4u.jobopeningmanagement.repositories.JobOpeningRequirementRepository;
+import lapr4.jobs4u.recruitmentprocessmanagement.repositories.RecruitmentProcessRepository;
 import lapr4.jobs4u.usermanagement.domain.BaseRoles;
 
 @UseCaseController
@@ -25,16 +26,19 @@ public class EditJobOpeningController {
         private final JobOpeningRepository jobOpeningRepository;
         private final JobOpeningInterviewRepository jobOpeningInterviewRepository;
         private final JobOpeningRequirementRepository jobOpeningRequirementRepository;
+        private final RecruitmentProcessRepository recruitmentProcessRepository;
         private final AuthorizationService authz;
 
         public EditJobOpeningController(final JobOpeningRepository jobOpeningRepository,
                         final JobOpeningInterviewRepository jobOpeningInterviewRepository,
                         final JobOpeningRequirementRepository jobOpeningRequirementRepository,
+                        final RecruitmentProcessRepository recruitmentProcessRepository,
                         final AuthorizationService authz) {
 
                 this.jobOpeningRepository = jobOpeningRepository;
                 this.jobOpeningInterviewRepository = jobOpeningInterviewRepository;
                 this.jobOpeningRequirementRepository = jobOpeningRequirementRepository;
+                this.recruitmentProcessRepository = recruitmentProcessRepository;
                 this.authz = authz;
 
         }
@@ -73,22 +77,26 @@ public class EditJobOpeningController {
                 return jobOpeningRepository.save(jobOpening);
         }
 
-        public JobOpeningInterview editJobOpeningInterview(final JobOpeningInterview jobOpeningInterview, final QuestionImporterPlugin plugin) {
+        public JobOpeningInterview editJobOpeningInterview(final JobOpeningInterview jobOpeningInterview,
+                        final QuestionImporterPlugin plugin) {
                 authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.CUSTOMER_MANAGER, BaseRoles.POWERUSER);
                 return doEditJobOpeningInterview(jobOpeningInterview, plugin);
         }
 
-        private JobOpeningInterview doEditJobOpeningInterview(final JobOpeningInterview jobOpeningInterview, final QuestionImporterPlugin plugin) {
+        private JobOpeningInterview doEditJobOpeningInterview(final JobOpeningInterview jobOpeningInterview,
+                        final QuestionImporterPlugin plugin) {
                 jobOpeningInterview.editPlugin(plugin);
                 return jobOpeningInterviewRepository.save(jobOpeningInterview);
         }
 
-        public JobOpeningRequirement editJobOpeningRequirement(final JobOpeningRequirement jobOpeningRequirement, final QuestionImporterPlugin plugin) {
+        public JobOpeningRequirement editJobOpeningRequirement(final JobOpeningRequirement jobOpeningRequirement,
+                        final QuestionImporterPlugin plugin) {
                 authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.CUSTOMER_MANAGER, BaseRoles.POWERUSER);
                 return doEditJobOpeningRequirement(jobOpeningRequirement, plugin);
         }
 
-        private JobOpeningRequirement doEditJobOpeningRequirement(final JobOpeningRequirement jobOpeningRequirement, final QuestionImporterPlugin plugin) {
+        private JobOpeningRequirement doEditJobOpeningRequirement(final JobOpeningRequirement jobOpeningRequirement,
+                        final QuestionImporterPlugin plugin) {
                 jobOpeningRequirement.editPlugin(plugin);
                 return jobOpeningRequirementRepository.save(jobOpeningRequirement);
         }
@@ -100,5 +108,15 @@ public class EditJobOpeningController {
         public Optional<JobOpeningRequirement> requirementModel(final JobOpening jobOpening) {
                 return jobOpeningRequirementRepository.findJobOpeningRequirementsByJobOpening(jobOpening);
         }
-        
+
+        public String currentPhase(JobOpening jobOpening) {
+                authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.CUSTOMER_MANAGER, BaseRoles.POWERUSER);
+                Optional<String> phaseOpt = recruitmentProcessRepository.currentPhase(jobOpening);
+                if (!phaseOpt.isPresent()) {
+                        return null;
+                }
+                String phase = phaseOpt.get();
+                return phase;
+        }
+
 }

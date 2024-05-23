@@ -4,6 +4,7 @@ import java.util.HashSet;
 import java.util.Set;
 import eapli.framework.domain.repositories.ConcurrencyException;
 import eapli.framework.domain.repositories.IntegrityViolationException;
+import eapli.framework.domain.repositories.TransactionalContext;
 import eapli.framework.infrastructure.authz.application.AuthzRegistry;
 import eapli.framework.infrastructure.authz.domain.model.Role;
 import eapli.framework.infrastructure.authz.domain.model.SystemUser;
@@ -17,8 +18,9 @@ import lapr4.jobs4u.usermanagement.domain.BaseRoles;
 
 public class RegisterCustomerUI extends AbstractUI {
 
+    private final TransactionalContext txCtx = PersistenceContext.repositories().newTransactionalContext();
     private final RegisterCustomerController registerCustomerController = new RegisterCustomerController(
-            PersistenceContext.repositories().customers(), PersistenceContext.repositories().customerUsers(),
+            PersistenceContext.repositories().customers(txCtx), PersistenceContext.repositories().customerUsers(txCtx),
             AuthzRegistry.authorizationService());
 
     private final AddUserController addUserController = new AddUserController();
@@ -40,13 +42,18 @@ public class RegisterCustomerUI extends AbstractUI {
         try {
             final Set<Role> roleTypes = new HashSet<>();
             roleTypes.add(BaseRoles.CUSTOMER);
+            txCtx.beginTransaction();
             final Customer customer = this.registerCustomerController.registerCustomer(companyName, companyAddress,
                     companyCode, companyEmail, companyPhoneNumber);
             final SystemUser user = this.addUserController.addUser(representativeEmail, representativefirstName,
                     representativelastName, roleTypes);
             this.registerCustomerController.registerCustomerUser(customer, user);
+            txCtx.commit();
         } catch (final IntegrityViolationException | ConcurrencyException e) {
+            txCtx.rollback();
             System.out.println("That E-mail is already registered.");
+        } finally {
+            txCtx.close();
         }
 
         return false;

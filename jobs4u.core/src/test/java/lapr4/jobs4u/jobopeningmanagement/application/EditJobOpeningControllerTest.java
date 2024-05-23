@@ -20,6 +20,7 @@ import lapr4.jobs4u.jobopeningmanagement.domain.TypesOfContract;
 import lapr4.jobs4u.jobopeningmanagement.repositories.JobOpeningInterviewRepository;
 import lapr4.jobs4u.jobopeningmanagement.repositories.JobOpeningRepository;
 import lapr4.jobs4u.jobopeningmanagement.repositories.JobOpeningRequirementRepository;
+import lapr4.jobs4u.recruitmentprocessmanagement.repositories.RecruitmentProcessRepository;
 
 import java.util.Optional;
 
@@ -37,6 +38,9 @@ public class EditJobOpeningControllerTest {
 
     @Mock
     JobOpeningRequirementRepository mockJobOpeningRequirementRepo;
+
+    @Mock
+    RecruitmentProcessRepository mockRecruitmentProcessRepository;
 
     @Mock
     AuthorizationService mockAuthz;
@@ -61,13 +65,15 @@ public class EditJobOpeningControllerTest {
         when(mockJobOpening.address()).thenReturn(Address.valueOf("someAddress"));
         when(mockJobOpening.jobDescription()).thenReturn(JobDescription.valueOf("someJobDescription"));
         when(mockJobOpening.numberOfVacancies()).thenReturn(NumberOfVacancies.valueOf("123"));
-        controller = new EditJobOpeningController(mockJobOpeningRepo, mockJobOpeningInterviewRepo, mockJobOpeningRequirementRepo, mockAuthz);
+        controller = new EditJobOpeningController(mockJobOpeningRepo, mockJobOpeningInterviewRepo,
+                mockJobOpeningRequirementRepo, mockRecruitmentProcessRepository, mockAuthz);
     }
 
     @Test
     void testEditJobOpening() {
         when(mockJobOpeningRepo.save(any(JobOpening.class))).thenReturn(mockJobOpening);
-        JobOpening result = controller.editJobOpening("newTitleOrFunction", TypesOfContract.FREELANCE.toString(), ModeTypes.HYBRID.toString(), "newAddress", "newJobDescription", "321", mockJobOpening);
+        JobOpening result = controller.editJobOpening("newTitleOrFunction", TypesOfContract.FREELANCE.toString(),
+                ModeTypes.HYBRID.toString(), "newAddress", "newJobDescription", "321", mockJobOpening);
         assertEquals(mockJobOpening, result);
         verify(mockJobOpeningRepo).save(any(JobOpening.class));
     }
@@ -82,7 +88,8 @@ public class EditJobOpeningControllerTest {
 
     @Test
     void testEditJobOpeningRequirement() {
-        when(mockJobOpeningRequirementRepo.save(any(JobOpeningRequirement.class))).thenReturn(mockJobOpeningRequirement);
+        when(mockJobOpeningRequirementRepo.save(any(JobOpeningRequirement.class)))
+                .thenReturn(mockJobOpeningRequirement);
         JobOpeningRequirement result = controller.editJobOpeningRequirement(mockJobOpeningRequirement, null);
         assertEquals(mockJobOpeningRequirement, result);
         verify(mockJobOpeningRequirementRepo).save(any(JobOpeningRequirement.class));
@@ -90,14 +97,16 @@ public class EditJobOpeningControllerTest {
 
     @Test
     void testInterviewModel() {
-        when(mockJobOpeningInterviewRepo.findJobOpeningInterviewsByJobOpening(any(JobOpening.class))).thenReturn(Optional.of(mockJobOpeningInterview));
+        when(mockJobOpeningInterviewRepo.findJobOpeningInterviewsByJobOpening(any(JobOpening.class)))
+                .thenReturn(Optional.of(mockJobOpeningInterview));
         Optional<JobOpeningInterview> result = controller.interviewModel(mockJobOpening);
         assertEquals(Optional.of(mockJobOpeningInterview), result);
     }
 
     @Test
     void testRequirementModel() {
-        when(mockJobOpeningRequirementRepo.findJobOpeningRequirementsByJobOpening(any(JobOpening.class))).thenReturn(Optional.of(mockJobOpeningRequirement));
+        when(mockJobOpeningRequirementRepo.findJobOpeningRequirementsByJobOpening(any(JobOpening.class)))
+                .thenReturn(Optional.of(mockJobOpeningRequirement));
         Optional<JobOpeningRequirement> result = controller.requirementModel(mockJobOpening);
         assertEquals(Optional.of(mockJobOpeningRequirement), result);
     }

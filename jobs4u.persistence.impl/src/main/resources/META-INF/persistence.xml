@@ -26,8 +26,9 @@
     <class>lapr4.jobs4u.applicationmanagement.domain.Application</class>
     <class>lapr4.jobs4u.applicationmanagement.domain.Result</class>
     <class>lapr4.jobs4u.integration.questions.importer.domain.QuestionImporterPlugin</class>
-    <class>lapr4.jobs4u.questionmanagement.domain.Question</class>
     <class>lapr4.jobs4u.questionmanagement.domain.QuestionType</class>
+    <class>lapr4.jobs4u.questionmanagement.domain.InterviewQuestion</class>
+    <class>lapr4.jobs4u.questionmanagement.domain.RequirementsQuestion</class>
 
     <properties>
       <!-- <property name="jakarta.persistence.jdbc.url" value="jdbc:h2:tcp://localhost/~/jobs4u"/> -->

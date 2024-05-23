@@ -20,7 +20,7 @@ public class RegisterCandidateController {
     private final CandidateUserRepository candidateUserRepository;
 
     public RegisterCandidateController(final CandidateRepository candidateRepository,
-            final CandidateUserRepository candidateUserRepository, AuthorizationService authz) {
+            final CandidateUserRepository candidateUserRepository, final AuthorizationService authz) {
         this.candidateRepository = candidateRepository;
         this.candidateUserRepository = candidateUserRepository;
         this.authz = authz;

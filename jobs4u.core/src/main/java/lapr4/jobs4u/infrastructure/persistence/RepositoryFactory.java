@@ -29,8 +29,9 @@ import lapr4.jobs4u.integration.questions.importer.repositories.QuestionImporter
 import lapr4.jobs4u.jobopeningmanagement.repositories.JobOpeningInterviewRepository;
 import lapr4.jobs4u.jobopeningmanagement.repositories.JobOpeningRepository;
 import lapr4.jobs4u.jobopeningmanagement.repositories.JobOpeningRequirementRepository;
-import lapr4.jobs4u.questionmanagement.repositories.QuestionRepository;
+import lapr4.jobs4u.questionmanagement.repositories.InterviewQuestionRepository;
 import lapr4.jobs4u.questionmanagement.repositories.QuestionTypeRepository;
+import lapr4.jobs4u.questionmanagement.repositories.RequirementsQuestionRepository;
 import lapr4.jobs4u.recruitmentprocessmanagement.repositories.RecruitmentProcessRepository;
 import eapli.framework.domain.repositories.TransactionalContext;
 import eapli.framework.infrastructure.authz.domain.repositories.UserRepository;
@@ -174,14 +175,29 @@ public interface RepositoryFactory {
      *               the transactional context to enroll
      * @return
      */
-    QuestionRepository question(TransactionalContext autoTx);
+    InterviewQuestionRepository interviewQuestion(TransactionalContext autoTx);
 
     /**
      * repository will be created in auto transaction mode
      *
      * @return
      */
-    QuestionRepository question();
+    InterviewQuestionRepository interviewQuestion();
+
+    /**
+     *
+     * @param autoTx
+     *               the transactional context to enroll
+     * @return
+     */
+    RequirementsQuestionRepository requirementsQuestion(TransactionalContext autoTx);
+
+    /**
+     * repository will be created in auto transaction mode
+     *
+     * @return
+     */
+    RequirementsQuestionRepository requirementsQuestion();
 
     /**
      *

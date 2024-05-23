@@ -1,12 +1,13 @@
 package lapr4.jobs4u.recruitmentprocessmanagement.application;
 
 import java.util.Optional;
-
 import eapli.framework.application.UseCaseController;
 import eapli.framework.domain.repositories.TransactionalContext;
 import eapli.framework.infrastructure.authz.application.AuthorizationService;
 import lapr4.jobs4u.applicationmanagement.repositories.ApplicationRepository;
 import lapr4.jobs4u.jobopeningmanagement.domain.JobOpening;
+import lapr4.jobs4u.jobopeningmanagement.domain.JobOpeningState;
+import lapr4.jobs4u.jobopeningmanagement.domain.TypesOfJobOpeningStates;
 import lapr4.jobs4u.jobopeningmanagement.repositories.JobOpeningInterviewRepository;
 import lapr4.jobs4u.jobopeningmanagement.repositories.JobOpeningRepository;
 import lapr4.jobs4u.jobopeningmanagement.repositories.JobOpeningRequirementRepository;
@@ -56,12 +57,25 @@ public class OpenOrClosePhaseController {
         switch (currentPhase) {
 
             case null -> {
-                if (moveUp) {
-                    recruitmentProcess.applicationPhase().open();
-                    theJobOpening.activate();
+                if (theJobOpening.jobOpeningState().equals(JobOpeningState.valueOf(TypesOfJobOpeningStates.PENDING.toString()))) {
+                    if (moveUp) {
+                        recruitmentProcess.applicationPhase().open();
+                        theJobOpening.activate();
+                    }
+                    else {
+                        throw new Exception("The job opening is in the initial state! Cannot go to a previous phase");
+                    }
+                } else if (theJobOpening.jobOpeningState().equals(JobOpeningState.valueOf(TypesOfJobOpeningStates.CLOSED.toString()))) {
+                    if (moveUp) {
+                        throw new Exception("The job opening is closed! There are no more phases to open next");
+                    } else {
+                        recruitmentProcess.resultPhase().close();
+                        theJobOpening.deactivate(currentPhase);
+                    }
                 } else {
-                    throw new Exception("The Recruitment Process has not started yet, so there is no previous phase");
+                    throw new Exception("The job opening is in an invalid state");
                 }
+                
             }
 
             case "ApplicationPhase" -> {
@@ -77,7 +91,7 @@ public class OpenOrClosePhaseController {
                     }
                 } else {
                     if (!hasApplications(theJobOpening)) {
-                        theJobOpening.deactivate();
+                        theJobOpening.deactivate(currentPhase);
                     } else {
                         throw new Exception("Cannot go to the previous phase! Application phase is already in progress");
                     }
@@ -137,7 +151,7 @@ public class OpenOrClosePhaseController {
             case "ResultPhase" -> {
                 recruitmentProcess.resultPhase().close();
                 if (moveUp) {
-                    theJobOpening.deactivate();
+                    theJobOpening.deactivate(currentPhase);
                 } else {
                     if (!recruitmentProcess.resultPhase().inProgress()) {
                         recruitmentProcess.analysisPhase().open();

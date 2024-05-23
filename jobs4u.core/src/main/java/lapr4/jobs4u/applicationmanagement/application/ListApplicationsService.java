@@ -28,10 +28,8 @@ public class ListApplicationsService {
     }
 
     public Application selectedApplication(ApplicationDTO applicationDTO) {
-        Application selectedJobOpening = applicationRepository
-                .ofIdentity(ApplicationCode.valueOf(applicationDTO.getApplicationCode()))
+        return applicationRepository.ofIdentity(ApplicationCode.valueOf(applicationDTO.getApplicationCode()))
                 .orElseThrow(IllegalArgumentException::new);
-        return selectedJobOpening;
     }
 
 }

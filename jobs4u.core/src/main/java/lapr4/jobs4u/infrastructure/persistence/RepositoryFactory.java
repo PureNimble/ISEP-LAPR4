@@ -26,6 +26,7 @@ import lapr4.jobs4u.candidatemanagement.repositories.CandidateUserRepository;
 import lapr4.jobs4u.customermanagement.repositories.CustomerRepository;
 import lapr4.jobs4u.customermanagement.repositories.CustomerUserRepository;
 import lapr4.jobs4u.integration.questions.importer.repositories.QuestionImporterPluginRepository;
+import lapr4.jobs4u.interviewmanagement.repositories.InterviewRepository;
 import lapr4.jobs4u.jobopeningmanagement.repositories.JobOpeningInterviewRepository;
 import lapr4.jobs4u.jobopeningmanagement.repositories.JobOpeningRepository;
 import lapr4.jobs4u.jobopeningmanagement.repositories.JobOpeningRequirementRepository;
@@ -42,7 +43,8 @@ import eapli.framework.infrastructure.authz.domain.repositories.UserRepository;
 public interface RepositoryFactory {
 
     /**
-     * factory method to create a transactional context to use in the repositories
+     * factory method to create a transactional context to use in the
+     * repositories
      *
      * @return
      */
@@ -50,8 +52,7 @@ public interface RepositoryFactory {
 
     /**
      *
-     * @param autoTx
-     *               the transactional context to enrol
+     * @param autoTx the transactional context to enrol
      * @return
      */
     UserRepository users(TransactionalContext autoTx);
@@ -65,8 +66,7 @@ public interface RepositoryFactory {
 
     /**
      *
-     * @param autoTx
-     *               the transactional context to enroll
+     * @param autoTx the transactional context to enroll
      * @return
      */
     CustomerRepository customers(TransactionalContext autoTx);
@@ -80,8 +80,7 @@ public interface RepositoryFactory {
 
     /**
      *
-     * @param autoTx
-     *               the transactional context to enroll
+     * @param autoTx the transactional context to enroll
      * @return
      */
     CandidateRepository candidates(TransactionalContext autoTx);
@@ -95,8 +94,7 @@ public interface RepositoryFactory {
 
     /**
      *
-     * @param autoTx
-     *               the transactional context to enroll
+     * @param autoTx the transactional context to enroll
      * @return
      */
     CustomerUserRepository customerUsers(TransactionalContext autoTx);
@@ -110,8 +108,7 @@ public interface RepositoryFactory {
 
     /**
      *
-     * @param autoTx
-     *               the transactional context to enroll
+     * @param autoTx the transactional context to enroll
      * @return
      */
     CandidateUserRepository candidateUsers(TransactionalContext autoTx);
@@ -125,8 +122,7 @@ public interface RepositoryFactory {
 
     /**
      *
-     * @param autoTx
-     *               the transactional context to enroll
+     * @param autoTx the transactional context to enroll
      * @return
      */
     RecruitmentProcessRepository recruitmentProcesses(TransactionalContext autoTx);
@@ -140,8 +136,7 @@ public interface RepositoryFactory {
 
     /**
      *
-     * @param autoTx
-     *               the transactional context to enroll
+     * @param autoTx the transactional context to enroll
      * @return
      */
     JobOpeningRepository jobOpenings(TransactionalContext autoTx);
@@ -155,8 +150,7 @@ public interface RepositoryFactory {
 
     /**
      *
-     * @param autoTx
-     *               the transactional context to enroll
+     * @param autoTx the transactional context to enroll
      * @return
      */
     ApplicationRepository applications(TransactionalContext autoTx);
@@ -170,8 +164,7 @@ public interface RepositoryFactory {
 
     /**
      *
-     * @param autoTx
-     *               the transactional context to enroll
+     * @param autoTx the transactional context to enroll
      * @return
      */
     QuestionRepository question(TransactionalContext autoTx);
@@ -185,8 +178,7 @@ public interface RepositoryFactory {
 
     /**
      *
-     * @param autoTx
-     *               the transactional context to enroll
+     * @param autoTx the transactional context to enroll
      * @return
      */
     QuestionImporterPluginRepository questionImporterPlugins(TransactionalContext autoTx);
@@ -200,8 +192,7 @@ public interface RepositoryFactory {
 
     /**
      *
-     * @param autoTx
-     *               the transactional context to enroll
+     * @param autoTx the transactional context to enroll
      * @return
      */
     QuestionTypeRepository questionType(TransactionalContext autoTx);
@@ -242,5 +233,12 @@ public interface RepositoryFactory {
      * @return
      */
     JobOpeningRequirementRepository jobOpeningRequirements();
+
+    /**
+     * repository will be created in auto transaction mode
+     *
+     * @return
+     */
+    InterviewRepository interviews();
 
 }

@@ -28,6 +28,8 @@
     <class>lapr4.jobs4u.integration.questions.importer.domain.QuestionImporterPlugin</class>
     <class>lapr4.jobs4u.questionmanagement.domain.Question</class>
     <class>lapr4.jobs4u.questionmanagement.domain.QuestionType</class>
+    <class>lapr4.jobs4u.interviewmanagement.domain.Interview</class>
+
 
     <properties>
       <!-- <property name="jakarta.persistence.jdbc.url" value="jdbc:h2:tcp://localhost/~/jobs4u"/> -->

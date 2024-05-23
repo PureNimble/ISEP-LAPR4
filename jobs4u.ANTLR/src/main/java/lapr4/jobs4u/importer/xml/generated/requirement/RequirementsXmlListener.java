@@ -1,4 +1,4 @@
-package lapr4.jobs4u.importer.xml.generated;
+package lapr4.jobs4u.importer.xml.generated.requirement;
 // Generated from RequirementsXml.g4 by ANTLR 4.13.1
 import org.antlr.v4.runtime.tree.ParseTreeListener;
 

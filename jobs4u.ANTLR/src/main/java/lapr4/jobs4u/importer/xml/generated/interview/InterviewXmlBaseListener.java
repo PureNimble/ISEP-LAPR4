@@ -1,4 +1,4 @@
-package lapr4.jobs4u.importer.xml.generated;
+package lapr4.jobs4u.importer.xml.generated.interview;
 // Generated from InterviewXml.g4 by ANTLR 4.13.1
 
 import org.antlr.v4.runtime.ParserRuleContext;

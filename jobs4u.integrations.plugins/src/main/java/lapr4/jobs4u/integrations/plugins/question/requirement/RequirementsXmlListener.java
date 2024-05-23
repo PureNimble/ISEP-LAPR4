@@ -7,8 +7,8 @@ import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.Token;
 import org.antlr.v4.runtime.misc.Interval;
 
-import lapr4.jobs4u.importer.xml.generated.RequirementsXmlBaseListener;
-import lapr4.jobs4u.importer.xml.generated.RequirementsXmlParser;
+import lapr4.jobs4u.importer.xml.generated.requirement.RequirementsXmlBaseListener;
+import lapr4.jobs4u.importer.xml.generated.requirement.RequirementsXmlParser;
 import lapr4.jobs4u.questionmanagement.domain.Answer;
 import lapr4.jobs4u.questionmanagement.dto.RequirementsQuestionDTO;
 

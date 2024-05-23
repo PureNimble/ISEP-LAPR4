@@ -78,7 +78,7 @@ public class RequirementsQuestion implements AggregateRoot<Long>, DTOable<Requir
     public boolean sameAs(final Object other) {
         return DomainEntities.areEqual(this, other);
     }
-
+    
     public Long ofIdentity() {
         return identity();
     }

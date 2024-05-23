@@ -4,18 +4,17 @@ import java.util.List;
 
 import jakarta.xml.bind.annotation.XmlElement;
 import jakarta.xml.bind.annotation.XmlRootElement;
-import lapr4.jobs4u.questionmanagement.dto.RequirementsQuestionDTO;
 
 @XmlRootElement(name = "Questions")
-public class RequirementQuestionWrapper {
-    private List<RequirementsQuestionDTO> questions;
+public class QuestionWrapper<T> {
+    private List<T> questions;
 
     @XmlElement(name = "Question")
-    public List<RequirementsQuestionDTO> getQuestions() {
+    public List<T> getQuestions() {
         return questions;
     }
 
-    public void setQuestions(List<RequirementsQuestionDTO> questions) {
+    public void setQuestions(List<T> questions) {
         this.questions = questions;
     }
 }

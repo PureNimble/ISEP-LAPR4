@@ -38,12 +38,12 @@ import lapr4.jobs4u.importer.xml.generated.interview.InterviewXmlParser;
 import lapr4.jobs4u.integration.questions.importer.application.QuestionImporter;
 import lapr4.jobs4u.integration.questions.importer.domain.QuestionImporterPlugin;
 import lapr4.jobs4u.questionmanagement.dto.InterviewQuestionDTO;
-import lapr4.jobs4u.questionmanagement.dto.RequirementsQuestionDTO;
 
 public class InterviewImporter implements QuestionImporter {
 
+	@SuppressWarnings("unchecked")
 	@Override
-	public Iterable<InterviewQuestionDTO> importInterviewFrom(final InputStream filename, final QuestionImporterPlugin plugin)
+	public Iterable<InterviewQuestionDTO> importQuestionsFrom(final InputStream filename, final QuestionImporterPlugin plugin)
 			throws IOException {
 
 		if (plugin.fileExtension().toString().equals("csv")) {
@@ -137,13 +137,6 @@ public class InterviewImporter implements QuestionImporter {
 		}
 
 		return questions;
-	}
-
-	@Override
-	public Iterable<RequirementsQuestionDTO> importRequirementsFrom(InputStream filename, QuestionImporterPlugin plugin)
-			throws IOException {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Unimplemented method 'importRequirementsFrom'");
 	}
 
 }

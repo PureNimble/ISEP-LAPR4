@@ -37,13 +37,13 @@ import lapr4.jobs4u.importer.xml.generated.requirement.RequirementsXmlLexer;
 import lapr4.jobs4u.importer.xml.generated.requirement.RequirementsXmlParser;
 import lapr4.jobs4u.integration.questions.importer.application.QuestionImporter;
 import lapr4.jobs4u.integration.questions.importer.domain.QuestionImporterPlugin;
-import lapr4.jobs4u.questionmanagement.dto.InterviewQuestionDTO;
 import lapr4.jobs4u.questionmanagement.dto.RequirementsQuestionDTO;
 
 public class RequirementsImporter implements QuestionImporter {
 
+	@SuppressWarnings("unchecked")
 	@Override
-	public Iterable<RequirementsQuestionDTO> importRequirementsFrom(final InputStream filename, final QuestionImporterPlugin plugin)
+	public Iterable<RequirementsQuestionDTO> importQuestionsFrom(final InputStream filename, final QuestionImporterPlugin plugin)
 			throws IOException {
 
 		if (plugin.fileExtension().toString().equals("csv")) {
@@ -137,12 +137,6 @@ public class RequirementsImporter implements QuestionImporter {
 		}
 
 		return questions;
-	}
-
-	@Override
-	public Iterable<InterviewQuestionDTO> importInterviewFrom(InputStream filename, QuestionImporterPlugin plugin)
-			throws IOException {
-		throw new UnsupportedOperationException("Unimplemented method 'importInterviewFrom'");
 	}
 
 }

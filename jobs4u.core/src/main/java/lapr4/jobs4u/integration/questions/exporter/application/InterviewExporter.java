@@ -74,11 +74,6 @@ public class InterviewExporter implements QuestionExporter {
         }
     }
 
-    @Override
-    public void begin(final String filename) throws IOException {
-        // nothing to do
-    }
-
     private boolean isValid(final String content) {
         // parse
         final CodePointCharStream charStream = CharStreams.fromString(content);
@@ -103,5 +98,6 @@ public class InterviewExporter implements QuestionExporter {
 
     @Override
     public void element(final RequirementsQuestion e) {
+        // nothing to do
     }
 }

@@ -14,7 +14,6 @@ public interface QuestionExporter {
      * @param filename
      */
     void begin(final String filename, final String plugin) throws IOException;
-    void begin(final String filename) throws IOException;
 
     /**
      * Export one single element.

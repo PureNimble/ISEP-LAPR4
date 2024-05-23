@@ -43,7 +43,7 @@ public class RequirementsExporter implements QuestionExporter {
             try {
                 stream = new PrintWriter(new FileWriter(filename));
                 stream.print(content.toString());
-            } catch (IOException e) {
+            } catch (final IOException e) {
                 return;
             }
         }
@@ -54,11 +54,6 @@ public class RequirementsExporter implements QuestionExporter {
         if (stream != null) {
             stream.close();
         }
-    }
-
-    @Override
-    public void begin(final String filename) throws IOException {
-        // nothing to do
     }
 
     private boolean isValid(final String content) {
@@ -78,12 +73,13 @@ public class RequirementsExporter implements QuestionExporter {
                 }
             }
             return true;
-        } catch (IllegalStateException e) {
+        } catch (final IllegalStateException e) {
             return false;
         }
     }
 
     @Override
     public void element(final InterviewQuestion e) {
+        // nothing to do
     }
 }

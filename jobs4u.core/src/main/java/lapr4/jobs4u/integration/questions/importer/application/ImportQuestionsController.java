@@ -89,7 +89,7 @@ public class ImportQuestionsController {
 
 			final QuestionImporter importer = plugin.buildImporter();
 
-			final Iterable<InterviewQuestionDTO> questionsToRegister = importer.importInterviewFrom(content, plugin);
+			final Iterable<InterviewQuestionDTO> questionsToRegister = importer.importQuestionsFrom(content, plugin);
 			questions = doTheInterviewImport(questionsToRegister);
 
 		} finally {
@@ -126,7 +126,7 @@ public class ImportQuestionsController {
 
 			final QuestionImporter importer = plugin.buildImporter();
 
-			final Iterable<RequirementsQuestionDTO> questionsToRegister = importer.importRequirementsFrom(content, plugin);
+			final Iterable<RequirementsQuestionDTO> questionsToRegister = importer.importQuestionsFrom(content, plugin);
 			questions = doTheRequirementsImport(questionsToRegister);
 
 		} finally {

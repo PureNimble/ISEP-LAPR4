@@ -22,7 +22,7 @@ public class TcpClient {
     public TcpClient() {
     }
 
-    public void connect(String hostname, int port) throws UnknownHostException, IOException {
+    public void connect(final String hostname, final int port) throws UnknownHostException, IOException {
 
         socket = new Socket(hostname, port);
         logger.debug("Connected to the server!");
@@ -31,7 +31,7 @@ public class TcpClient {
         output = new DataOutputStream(socket.getOutputStream());
     }
 
-    public void send(ProtocolMessage msg) throws IOException {
+    public void send(final ProtocolMessage msg) throws IOException {
         output.write(msg.toByteStream());
     }
 
@@ -39,7 +39,7 @@ public class TcpClient {
         return ProtocolMessage.fromDataStream(input);
     }
 
-    public ProtocolMessage sendRecv(ProtocolMessage msg) throws IOException, ClassNotFoundException {
+    public ProtocolMessage sendRecv(final ProtocolMessage msg) throws IOException, ClassNotFoundException {
         synchronized (this) {
             send(msg);
             return receive();

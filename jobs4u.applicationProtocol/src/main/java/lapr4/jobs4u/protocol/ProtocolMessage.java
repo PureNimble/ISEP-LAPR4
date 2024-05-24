@@ -15,47 +15,45 @@ public class ProtocolMessage {
     public ProtocolMessage(final byte protocolVersion, final MessageCode code) {
         this.protocolVersion = protocolVersion;
         this.code = code;
-        this.dataChunks = new byte[0][0];
+        this.dataChunks = new byte[0][];
     }
-
-    public ProtocolMessage(final byte protocolVersion, final MessageCode code, final String data) {
+    
+    public ProtocolMessage(final byte protocolVersion, final MessageCode code, final String... data) {
         this.protocolVersion = protocolVersion;
         this.code = code;
-        this.dataChunks = new byte[][] { data.getBytes() };
+        this.dataChunks = new byte[data.length][];
+        for (int i = 0; i < data.length; i++) {
+            this.dataChunks[i] = data[i].getBytes();
+        }
     }
-
+    
     public ProtocolMessage(final byte protocolVersion, final MessageCode code, final byte[]... dataChunk) {
         this.protocolVersion = protocolVersion;
         this.code = code;
-        this.dataChunks = dataChunk;
+        this.dataChunks = new byte[dataChunk.length][];
+        for (int i = 0; i < dataChunk.length; i++) {
+            this.dataChunks[i] = new byte[dataChunk[i].length];
+            System.arraycopy(dataChunk[i], 0, this.dataChunks[i], 0, dataChunk[i].length);
+        }
     }
 
-    public static ProtocolMessage fromDataStream(DataInputStream input) throws IOException {
-
-        byte protocolVersion = input.readByte();
-        MessageCode code = MessageCode.valueOf(input.readByte());
-
+    public static ProtocolMessage fromDataStream(final DataInputStream input) throws IOException {
+        final byte protocolVersion = input.readByte();
+        final MessageCode code = MessageCode.valueOf(input.readByte());
+    
         List<byte[]> dataChunks = new ArrayList<>();
         while (true) {
-            int length = input.readUnsignedByte() + input.readUnsignedByte() * 256;
+            final int length = input.readUnsignedByte() + input.readUnsignedByte() * 256;
             if (length == 0) {
                 break;
             }
-
+    
             byte[] data = new byte[length];
             input.readFully(data);
             dataChunks.add(data);
         }
-
-        int totalLength = dataChunks.stream().mapToInt(chunk -> chunk.length).sum();
-        byte[] allData = new byte[totalLength];
-        int currentIndex = 0;
-        for (byte[] chunk : dataChunks) {
-            System.arraycopy(chunk, 0, allData, currentIndex, chunk.length);
-            currentIndex += chunk.length;
-        }
-
-        return new ProtocolMessage(protocolVersion, code, allData);
+    
+        return new ProtocolMessage(protocolVersion, code, dataChunks.toArray(new byte[0][]));
     }
 
     public byte[] toByteStream() throws IOException {

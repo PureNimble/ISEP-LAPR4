@@ -47,8 +47,8 @@ public class ClientHandler implements Runnable {
             logger.debug("[Client Handler Thread] Connected to "
                     + socket.getInetAddress().getHostAddress() + " port " + socket.getPort() + "!");
 
-            DataInputStream input = new DataInputStream(socket.getInputStream());
-            DataOutputStream output = new DataOutputStream(socket.getOutputStream());
+            final DataInputStream input = new DataInputStream(socket.getInputStream());
+            final DataOutputStream output = new DataOutputStream(socket.getOutputStream());
 
             while (!socket.isClosed()) {
                 try {

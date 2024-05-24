@@ -24,7 +24,7 @@ public abstract class Message {
 
     public abstract void handle() throws IOException;
 
-    public void send(ProtocolMessage response) throws IOException {
+    public void send(final ProtocolMessage response) throws IOException {
         synchronized (output) {
             output.write(response.toByteStream());
         }

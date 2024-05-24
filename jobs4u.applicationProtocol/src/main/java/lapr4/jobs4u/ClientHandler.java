@@ -36,7 +36,7 @@ public class ClientHandler implements Runnable {
     private Socket socket;
     private EventListener eventListener;
 
-    public ClientHandler(Socket socket, EventListener eventListener) {
+    public ClientHandler(final Socket socket, final EventListener eventListener) {
         this.socket = socket;
         this.eventListener = eventListener;
     }
@@ -52,7 +52,7 @@ public class ClientHandler implements Runnable {
 
             while (!socket.isClosed()) {
                 try {
-                    ProtocolMessage message = ProtocolMessage.fromDataStream(input);
+                    final ProtocolMessage message = ProtocolMessage.fromDataStream(input);
 
                     if (message == null)
                         break;
@@ -75,7 +75,7 @@ public class ClientHandler implements Runnable {
         }
     }
 
-    private void processMessage(ProtocolMessage message, DataOutputStream output) throws IOException {
+    private void processMessage(final ProtocolMessage message, final DataOutputStream output) throws IOException {
         Message handleMessage;
 
         Class<? extends Message> clazz = MESSAGE_MAP.get(message.code());

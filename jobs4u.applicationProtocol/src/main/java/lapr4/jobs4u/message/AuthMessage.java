@@ -18,40 +18,40 @@ import lapr4.jobs4u.protocol.ProtocolMessage;
 
 public class AuthMessage extends Message {
 
-    public AuthMessage(ProtocolMessage protocolMessage, DataOutputStream output, Socket socket,
-            EventListener eventListener) {
+    public AuthMessage(final ProtocolMessage protocolMessage, final DataOutputStream output, final Socket socket,
+            final EventListener eventListener) {
         super(protocolMessage, output, socket, eventListener);
     }
 
     @Override
     public void handle() throws IOException {
-        
-        CredentialHandler credentialHandler = new AuthenticationCredentialHandler();
-        UserManagementService userSvc = AuthzRegistry.userService();
+
+        final CredentialHandler credentialHandler = new AuthenticationCredentialHandler();
+        final UserManagementService userSvc = AuthzRegistry.userService();
 
         byte[][] dataChunks = request.datachunks();
-        
+
         if (dataChunks.length < 2) {
             send(new ProtocolMessage((byte) 1, MessageCode.ERR, "Bad Request"));
             return;
         }
 
-        String usernameStr = new String(dataChunks[0], StandardCharsets.US_ASCII);
-        String passwordStr = new String(dataChunks[1], StandardCharsets.US_ASCII);
+        final String usernameStr = new String(dataChunks[0], StandardCharsets.US_ASCII);
+        final String passwordStr = new String(dataChunks[1], StandardCharsets.US_ASCII);
 
         if (!credentialHandler.authenticated(usernameStr, passwordStr, null)) {
             send(new ProtocolMessage((byte) 1, MessageCode.ERR, "Wrong credentials!"));
             return;
         }
 
-        Optional<SystemUser> optional = userSvc.userOfIdentity(Username.valueOf(usernameStr));
+        final Optional<SystemUser> optional = userSvc.userOfIdentity(Username.valueOf(usernameStr));
 
         if (!optional.isPresent()) {
             send(new ProtocolMessage((byte) 1, MessageCode.ERR, "Wrong credentials!"));
             return;
         }
 
-        send(new ProtocolMessage((byte) 1, MessageCode.ACK, usernameStr + " authenticated!"));
+        send(new ProtocolMessage((byte) 1, MessageCode.ACK));
 
     }
 }

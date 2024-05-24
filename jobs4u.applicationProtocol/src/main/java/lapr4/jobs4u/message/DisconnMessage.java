@@ -9,8 +9,8 @@ import lapr4.jobs4u.protocol.MessageCode;
 import lapr4.jobs4u.protocol.ProtocolMessage;
 
 public class DisconnMessage extends Message {
-    public DisconnMessage(ProtocolMessage protocolMessage, DataOutputStream output, Socket socket,
-            EventListener eventListener) {
+    public DisconnMessage(final ProtocolMessage protocolMessage, final DataOutputStream output, final Socket socket,
+            final EventListener eventListener) {
         super(protocolMessage, output, socket, eventListener);
     }
 

@@ -53,7 +53,7 @@ void createWorkers(Config *config, CircularBuffer *shared_data, sem_t *sem_share
     for (i = 0; i < config->numberOfChildren; i++)
     {
         if (createChildProcess() == 0)
-            copyFiles(config, shared_data, sem_shared_memory, sem_barrier, sem_barrier_mutex, 0);
+            copyFiles(config, shared_data, sem_shared_memory, sem_barrier, sem_barrier_mutex);
     }
 }
 

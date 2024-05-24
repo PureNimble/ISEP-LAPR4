@@ -83,7 +83,7 @@ void copyFiles_test(Config config, CircularBuffer *shared_data, sem_t *sem_share
     pid_t pid;
 
     if ((pid = createChildProcess()) == 0)
-        copyFiles(&config, shared_data, sem_shared_memory, sem_barrier, sem_barrier_mutex, 1);
+        copyFiles(&config, shared_data, sem_shared_memory, sem_barrier, sem_barrier_mutex);
 
     listCandidatesID(&config, shared_data, sem_shared_memory);
     sem_wait(sem_barrier);

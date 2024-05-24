@@ -19,23 +19,20 @@
  * @param fd The file descriptor for the pipe.
  * @param config The configuration struct.
  */
-void copyFiles(Config *config, CircularBuffer *shared_data, sem_t *sem_shared_memory, sem_t *sem_barrier, sem_t *sem_barrier_mutex, int isTest)
+void copyFiles(Config *config, CircularBuffer *shared_data, sem_t *sem_shared_memory, sem_t *sem_barrier, sem_t *sem_barrier_mutex)
 {
     int candidateID;
     CandidateInfo files;
-
     while (1)
     {
         sem_wait(sem_shared_memory); // acess shared memory
-        if (isEmpty(shared_data))
-            continue;
 
         files = readFromBuffer(shared_data);
-        sem_post(sem_shared_memory); // release shared memory
+        if (!isEmpty(shared_data))
+            sem_post(sem_shared_memory); // release shared memory
 
         candidateID = files.candidateID;
         printf("-> Candidate ID: %d PID:%d\n", candidateID, getpid());
-
         pid_t pid;
         int status;
         char buffer[300];
@@ -72,6 +69,7 @@ void copyFiles(Config *config, CircularBuffer *shared_data, sem_t *sem_shared_me
                     if (WEXITSTATUS(status) == EXIT_FAILURE)
                     {
                         errorMessages("Failed to copy files");
+                        exit(EXIT_FAILURE);
                     }
                 }
                 DIR *dir;
@@ -80,7 +78,7 @@ void copyFiles(Config *config, CircularBuffer *shared_data, sem_t *sem_shared_me
                 if (!(dir = opendir(buffer)))
                 {
                     errorMessages("Failed to open directory\n");
-                    exit(1);
+                    exit(EXIT_FAILURE);
                 }
                 while ((entry = readdir(dir)) != NULL)
                 {
@@ -93,16 +91,16 @@ void copyFiles(Config *config, CircularBuffer *shared_data, sem_t *sem_shared_me
                 closedir(dir);
             }
         }
+
         sem_wait(sem_barrier_mutex); // protect the barrier counter
-        addToBuffer(shared_data, files);
         --shared_data->barrierCounter;
+        addToBuffer2(shared_data, files);
         sem_post(sem_barrier_mutex); // release the barrier counter
         if (shared_data->barrierCounter == 0)
         {
             printf("\n-> All files have been copied\n");
+            shared_data->count = shared_data->count2;
             sem_post(sem_barrier);
         }
-        if (isTest)
-            exit(EXIT_SUCCESS);
     }
 }

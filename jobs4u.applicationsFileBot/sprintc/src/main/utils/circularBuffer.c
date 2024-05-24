@@ -26,7 +26,16 @@ void addToBuffer(CircularBuffer *buf, CandidateInfo data)
     if (buf->count == BUFFER_SIZE)
         buf->tail = (buf->tail + 1) % BUFFER_SIZE;
     else
-        ++buf->count;
+        buf->count++;
+}
+void addToBuffer2(CircularBuffer *buf, CandidateInfo data)
+{
+    buf->buffer[buf->head] = data;
+    buf->head = (buf->head + 1) % BUFFER_SIZE;
+    if (buf->count == BUFFER_SIZE)
+        buf->tail = (buf->tail + 1) % BUFFER_SIZE;
+    else
+        buf->count2++;
 }
 
 // Remove from buffer

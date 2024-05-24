@@ -23,7 +23,7 @@ public class InterviewExporter implements QuestionExporter {
     public void begin(final String filename, final String plugin) throws IOException {
         this.filename = filename;
         content = new StringBuilder();
-        content.append(String.format("TITLE: %s\nNAME:\nGRADE:\n", plugin));
+        content.append(String.format("TITLE: %s\nNAME:\nEMAIL:\n", plugin));
     }
 
     @Override
@@ -47,7 +47,6 @@ public class InterviewExporter implements QuestionExporter {
             content.append("QUESTION: ").append(e.questionBody()).append("\n");
 
         content.append("ANSWER:\n");
-        content.append("GRADE:\n");
     }
 
     @Override

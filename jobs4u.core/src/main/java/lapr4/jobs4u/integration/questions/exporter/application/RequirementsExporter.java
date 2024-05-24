@@ -23,7 +23,7 @@ public class RequirementsExporter implements QuestionExporter {
     public void begin(final String filename, final String plugin) throws IOException {
         this.filename = filename;
         content = new StringBuilder();
-        content.append(String.format("TITLE: %s\nNAME:\n", plugin));
+        content.append(String.format("TITLE: %s\nNAME:\nEMAIL:\n", plugin));
     }
 
     @Override

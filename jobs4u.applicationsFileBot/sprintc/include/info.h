@@ -27,7 +27,7 @@ void newFileChecker(Config *config, sem_t *sem);
 // -----------------------------
 // Parent process functions
 // -----------------------------
-int checkIfCandidateFilesExist(CandidateInfo *files, int numberOfCandidates, char *buffer);
+CandidateInfo *checkIfCandidateFilesExist(CandidateInfo *files, int *numberOfCandidates, char *buffer);
 void reportFile(Config *config, CircularBuffer *sharedMemory);
 void parentWork(Config *config, CircularBuffer *sharedMemory, sem_t *sem_shared_memory, sem_t *sem_newFile, sem_t *sem_barrier);
 void listCandidatesID(Config *config, CircularBuffer *sharedData, sem_t *sem_shared_memory);
@@ -35,7 +35,7 @@ void createWorkers(Config *config, CircularBuffer *shared_data, sem_t *sem_share
 // -----------------------------
 // Child process functions
 // -----------------------------
-void copyFiles(Config *config, CircularBuffer *shared_data, sem_t *sem_shared_memory, sem_t *sem_barrier, sem_t *sem_barrier_mutex, int isTest);
+void copyFiles(Config *config, CircularBuffer *shared_data, sem_t *sem_shared_memory, sem_t *sem_barrier, sem_t *sem_barrier_mutex);
 // -----------------------------
 // Utility functions
 // -----------------------------

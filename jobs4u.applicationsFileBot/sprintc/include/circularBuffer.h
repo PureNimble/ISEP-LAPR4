@@ -8,11 +8,13 @@ typedef struct
     int head;
     int tail;
     int count;
+    int count2;
     int barrierCounter;
 } CircularBuffer;
 
 void initBuffer(CircularBuffer *buf);
 void addToBuffer(CircularBuffer *buf, CandidateInfo data);
+void addToBuffer2(CircularBuffer *buf, CandidateInfo data);
 CandidateInfo readFromBuffer(CircularBuffer *buf);
 int isEmpty(CircularBuffer *buf);
 void printBuffer(CircularBuffer *buf);

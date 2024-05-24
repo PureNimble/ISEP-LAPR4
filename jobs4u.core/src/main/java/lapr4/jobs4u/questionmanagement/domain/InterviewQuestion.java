@@ -62,12 +62,12 @@ public class InterviewQuestion implements AggregateRoot<Long>, DTOable<Interview
     @JsonProperty
     @CollectionTable(name = "T_INTERVIEW_QUESTION_POSSIBLE_ANSWERS")
     @ElementCollection
-    private List<Answer> possibleAnswers;
+    private List<InterviewAnswer> possibleAnswers;
 
     @Column(nullable = false)
     private String importerPlugin;
 
-    InterviewQuestion(final QuestionType type, final Cotation cotation, final CotationType cotationType, final QuestionBody body, final List<Answer> possibleAnswers,
+    InterviewQuestion(final QuestionType type, final Cotation cotation, final CotationType cotationType, final QuestionBody body, final List<InterviewAnswer> possibleAnswers,
             final String importerPlugin) {
         Preconditions.noneNull(new Object[] { type, body, possibleAnswers, importerPlugin });
         this.type = type;
@@ -126,7 +126,7 @@ public class InterviewQuestion implements AggregateRoot<Long>, DTOable<Interview
         return this.body;
     }
 
-    public List<Answer> possibleAnswers() {
+    public List<InterviewAnswer> possibleAnswers() {
         return this.possibleAnswers;
     }
 

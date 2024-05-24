@@ -10,15 +10,19 @@ import org.antlr.v4.runtime.misc.Interval;
 import lapr4.jobs4u.importer.xml.generated.interview.InterviewXmlBaseListener;
 import lapr4.jobs4u.importer.xml.generated.interview.InterviewXmlParser;
 import lapr4.jobs4u.questionmanagement.domain.Answer;
+import lapr4.jobs4u.questionmanagement.domain.Cotation;
+import lapr4.jobs4u.questionmanagement.domain.InterviewAnswer;
 import lapr4.jobs4u.questionmanagement.dto.InterviewQuestionDTO;
 
 public class InterviewXmlListener extends InterviewXmlBaseListener {
 
     private final List<InterviewQuestionDTO> questions = new ArrayList<>();
     private InterviewQuestionDTO current;
+    private List<InterviewAnswer> answers;
 
     @Override
     public void enterQuestion(final InterviewXmlParser.QuestionContext ctx) {
+        answers = new ArrayList<>();
         current = new InterviewQuestionDTO();
     }
 
@@ -47,17 +51,18 @@ public class InterviewXmlListener extends InterviewXmlBaseListener {
         current.setType(extractValue(ctx));
     }
 
+     @Override
+    public void enterAnswer(final InterviewXmlParser.AnswerContext ctx) {
+        answers.add(new InterviewAnswer(Answer.valueOf(extractValue(ctx)), null));
+    }
+
     @Override
-    public void enterPossibleAnswersList(final InterviewXmlParser.PossibleAnswersListContext ctx) {
-        List<Answer> answers = new ArrayList<>();
-        for (InterviewXmlParser.PossibleAnswersContext answerContext : ctx.possibleAnswers()) {
-            String value = extractValue(answerContext);
-            answers.add(Answer.valueOf(value));
-        }
+    public void enterAnswerCotation(final InterviewXmlParser.AnswerCotationContext ctx) {
+        answers.getLast().updateCotation(Cotation.valueOf(extractValue(ctx)));
         current.setPossibleAnswers(answers);
     }
 
-    private String extractValue(ParserRuleContext ctx) {
+    private String extractValue(final ParserRuleContext ctx) {
         final Token startToken = ctx.getStart();
         final Token stopToken = ctx.getStop();
         final Interval interval = new Interval(startToken.getStartIndex(), stopToken.getStopIndex());

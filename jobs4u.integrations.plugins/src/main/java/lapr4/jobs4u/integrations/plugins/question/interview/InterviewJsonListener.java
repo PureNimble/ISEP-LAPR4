@@ -10,16 +10,19 @@ import org.antlr.v4.runtime.misc.Interval;
 import lapr4.jobs4u.importer.json.generated.interview.InterviewJsonBaseListener;
 import lapr4.jobs4u.importer.json.generated.interview.InterviewJsonParser;
 import lapr4.jobs4u.questionmanagement.domain.Answer;
+import lapr4.jobs4u.questionmanagement.domain.Cotation;
+import lapr4.jobs4u.questionmanagement.domain.InterviewAnswer;
 import lapr4.jobs4u.questionmanagement.dto.InterviewQuestionDTO;
 
 public class InterviewJsonListener extends InterviewJsonBaseListener {
 
     private final List<InterviewQuestionDTO> questions = new ArrayList<>();
     private InterviewQuestionDTO current;
-    private List<Answer> answers = new ArrayList<>();
+    private List<InterviewAnswer> answers;
 
     @Override
     public void enterQuestion(final InterviewJsonParser.QuestionContext ctx) {
+        answers = new ArrayList<>();
         current = new InterviewQuestionDTO();
     }
 
@@ -52,11 +55,16 @@ public class InterviewJsonListener extends InterviewJsonBaseListener {
 
     @Override
     public void enterAnswer(final InterviewJsonParser.AnswerContext ctx) {
-        final String value = extractValue(ctx);
-        answers.add(Answer.valueOf(value));
+        answers.add(new InterviewAnswer(Answer.valueOf(extractValue(ctx)), null));
     }
 
-    private String extractValue(ParserRuleContext ctx) {
+    @Override
+    public void enterAnswerCotation(final InterviewJsonParser.AnswerCotationContext ctx) {
+        answers.getLast().updateCotation(Cotation.valueOf(extractValue(ctx)));
+        current.setPossibleAnswers(answers);
+    }
+
+    private String extractValue(final ParserRuleContext ctx) {
         final Token startToken = ctx.getStart();
         final Token stopToken = ctx.getStop();
         final Interval interval = new Interval(startToken.getStartIndex(), stopToken.getStopIndex());

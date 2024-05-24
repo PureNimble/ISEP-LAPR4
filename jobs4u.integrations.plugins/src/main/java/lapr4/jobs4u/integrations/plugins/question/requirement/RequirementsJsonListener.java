@@ -41,7 +41,7 @@ public class RequirementsJsonListener extends RequirementsJsonBaseListener {
         answers.add(Answer.valueOf(value));
     }
 
-    private String extractValue(ParserRuleContext ctx) {
+    private String extractValue(final ParserRuleContext ctx) {
         final Token startToken = ctx.getStart();
         final Token stopToken = ctx.getStop();
         final Interval interval = new Interval(startToken.getStartIndex(), stopToken.getStopIndex());

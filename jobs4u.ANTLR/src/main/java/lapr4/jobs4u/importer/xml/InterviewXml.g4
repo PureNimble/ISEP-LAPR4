@@ -13,9 +13,9 @@ cotation:
 cotationType:
 	'<CotationType>' ('%' | 'POINTS' | 'VALUES') '</CotationType>';
 
-type: '<Type>' text '</Type>';
+type: '<Type>' text (('<' | '/' | '>' | '</') text (('<' | '/' | '>' | '</') text)?)? '</Type>';
 
-body: '<Body>' text '</Body>';
+body: '<Body>' text (('<' | '/' | '>' | '</') text (('<' | '/' | '>' | '</') text)?)? '</Body>';
 
 answerCotation: cotation;
 
@@ -28,7 +28,7 @@ answer: '<Answer>' text '</Answer>';
 
 NUMBER: [0-9];
 LETTER: [a-zA-Z];
-MEMBER: [.,;:/#+!?)([\]] | '\'' | '|' | '-';
+MEMBER: [.,;:/#+!?@*)([\]] | '\'' | '|' | '-';
 TWO_DIGIT_NUMBER: NUMBER NUMBER?;
 FRACTIONAL_NUMBER:
 	TWO_DIGIT_NUMBER ('.' | ',') TWO_DIGIT_NUMBER;

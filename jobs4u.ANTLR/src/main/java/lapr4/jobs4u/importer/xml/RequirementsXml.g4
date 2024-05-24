@@ -7,16 +7,16 @@ text: (TEXT | NUMBER | LETTER | MEMBER)+;
 question:
 	'<Question>' body possibleAnswersList '</Question>';
 
-body: '<Body>' text '</Body>';
+body: '<Body>' text (('<' | '/' | '>' | '</') text (('<' | '/' | '>' | '</') text)?)? '</Body>';
 
 possibleAnswersList:
 	'<PossibleAnswersList>' possibleAnswers* '</PossibleAnswersList>';
 
-possibleAnswers: '<PossibleAnswers>' text '</PossibleAnswers>';
+possibleAnswers: '<PossibleAnswers>' text (('<' | '/' | '>' | '</') text (('<' | '/' | '>' | '</') text)?)? '</PossibleAnswers>';
 
 NUMBER: [0-9];
 LETTER: [a-zA-Z];
-MEMBER: [.,;:/#+!?)([\]] | '\'' | '|' | '-';
+MEMBER: [.,;:/#+!?@*)([\]] | '\'' | '|' | '-';
 TWO_DIGIT_NUMBER: NUMBER NUMBER?;
 FRACTIONAL_NUMBER:
 	TWO_DIGIT_NUMBER ('.' | ',') TWO_DIGIT_NUMBER;

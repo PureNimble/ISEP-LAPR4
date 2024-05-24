@@ -2,7 +2,7 @@ grammar InterviewJson;
 
 questions: '[' question (',' question)+ ']' EOF;
 
-body: '"' (TEXT | NUMBER | LETTER | MEMBER)+ '"';
+body: '"' (TEXT | NUMBER | LETTER | MEMBER)+ ('"' (TEXT | NUMBER | LETTER | MEMBER)+ '"' ((TEXT | NUMBER | LETTER | MEMBER)+)?)? '"';
 
 questionBody: body;
 
@@ -26,7 +26,7 @@ cotationType: '"' ( '%' | 'POINTS' | 'VALUES') '"';
 
 NUMBER: [0-9];
 LETTER: [a-zA-Z];
-MEMBER: [.,;:/#+!?)([\]] | '\'' | '|' | '-';
+MEMBER: [.,;:/#+!?@*)([\]] | '\'' | '|' | '-';
 TWO_DIGIT_NUMBER: NUMBER NUMBER?;
 FRACTIONAL_NUMBER:
 	TWO_DIGIT_NUMBER ('.' | ',') TWO_DIGIT_NUMBER;

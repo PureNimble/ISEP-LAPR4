@@ -10,10 +10,13 @@ type: body;
 
 answer: body;
 
+answerCotation: cotation;
+
 question:
 	'{' '"type"' ':' type ',' '"cotation"' ':' cotation ',' '"cotationType"' ':' cotationType ','
-		'"body"' ':' questionBody ',' '"possibleAnswers"' ':' '[' answer (
-		',' answer
+		'"body"' ':' questionBody ',' '"possibleAnswers"' ':' '[' '{' '"answer"' ':' answer ','
+		'"cotation"' ':' answerCotation '}' (
+		',' '{' '"answer"' ':' answer ',' '"cotation"' ':' answerCotation '}'
 	)* ']' '}';
 
 cotation:

@@ -77,6 +77,18 @@ public class InterviewCsvBaseListener implements InterviewCsvListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterAnswerCotation(InterviewCsvParser.AnswerCotationContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitAnswerCotation(InterviewCsvParser.AnswerCotationContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterQuestion(InterviewCsvParser.QuestionContext ctx) { }
 	/**
 	 * {@inheritDoc}

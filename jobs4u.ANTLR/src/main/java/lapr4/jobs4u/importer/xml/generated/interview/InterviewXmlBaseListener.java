@@ -101,6 +101,18 @@ public class InterviewXmlBaseListener implements InterviewXmlListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterAnswerCotation(InterviewXmlParser.AnswerCotationContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitAnswerCotation(InterviewXmlParser.AnswerCotationContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterPossibleAnswersList(InterviewXmlParser.PossibleAnswersListContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -120,6 +132,18 @@ public class InterviewXmlBaseListener implements InterviewXmlListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitPossibleAnswers(InterviewXmlParser.PossibleAnswersContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterAnswer(InterviewXmlParser.AnswerContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitAnswer(InterviewXmlParser.AnswerContext ctx) { }
 
 	/**
 	 * {@inheritDoc}

@@ -10,8 +10,10 @@ type: body;
 
 answer: body;
 
+answerCotation: cotation;
+
 question:
-	type ';' cotation ';' cotationType ';' questionBody ';' answer;
+	type ';' cotation ';' cotationType ';' questionBody (';' answer ';' answerCotation)+;
 
 cotation:
 	'"' (TWO_DIGIT_NUMBER | FRACTIONAL_NUMBER | '100') '"';

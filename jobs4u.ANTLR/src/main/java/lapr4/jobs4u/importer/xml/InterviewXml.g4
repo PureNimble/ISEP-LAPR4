@@ -17,10 +17,14 @@ type: '<Type>' text '</Type>';
 
 body: '<Body>' text '</Body>';
 
+answerCotation: cotation;
+
 possibleAnswersList:
 	'<PossibleAnswersList>' possibleAnswers* '</PossibleAnswersList>';
 
-possibleAnswers: '<PossibleAnswers>' text '</PossibleAnswers>';
+possibleAnswers: '<PossibleAnswers>' answer answerCotation '</PossibleAnswers>';
+
+answer: '<Answer>' text '</Answer>';
 
 NUMBER: [0-9];
 LETTER: [a-zA-Z];

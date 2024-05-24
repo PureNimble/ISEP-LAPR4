@@ -78,6 +78,16 @@ public interface InterviewXmlListener extends ParseTreeListener {
 	 */
 	void exitBody(InterviewXmlParser.BodyContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link InterviewXmlParser#answerCotation}.
+	 * @param ctx the parse tree
+	 */
+	void enterAnswerCotation(InterviewXmlParser.AnswerCotationContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link InterviewXmlParser#answerCotation}.
+	 * @param ctx the parse tree
+	 */
+	void exitAnswerCotation(InterviewXmlParser.AnswerCotationContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link InterviewXmlParser#possibleAnswersList}.
 	 * @param ctx the parse tree
 	 */
@@ -97,4 +107,14 @@ public interface InterviewXmlListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitPossibleAnswers(InterviewXmlParser.PossibleAnswersContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link InterviewXmlParser#answer}.
+	 * @param ctx the parse tree
+	 */
+	void enterAnswer(InterviewXmlParser.AnswerContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link InterviewXmlParser#answer}.
+	 * @param ctx the parse tree
+	 */
+	void exitAnswer(InterviewXmlParser.AnswerContext ctx);
 }

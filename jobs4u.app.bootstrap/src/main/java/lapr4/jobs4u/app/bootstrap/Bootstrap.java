@@ -87,7 +87,7 @@ public final class Bootstrap extends Jobs4UApplication {
 
     @Override
     protected String appTitle() {
-        return "Bootstrapping Base data ";
+        return "Bootstrapping Jobs4U data ";
     }
 
     @Override

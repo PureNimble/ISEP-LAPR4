@@ -53,5 +53,6 @@ public class AuthMessage extends Message {
 
         send(new ProtocolMessage((byte) 1, MessageCode.ACK));
 
+        eventListener.addClient(usernameStr, socket);
     }
 }

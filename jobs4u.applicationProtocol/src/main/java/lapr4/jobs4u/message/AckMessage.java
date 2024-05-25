@@ -15,5 +15,6 @@ public class AckMessage extends Message {
 
     @Override
     public void handle() {
+        // nothing to do
     }
 }

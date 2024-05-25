@@ -101,6 +101,18 @@ public class InterviewXmlBaseListener implements InterviewXmlListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterQuestionCotation(InterviewXmlParser.QuestionCotationContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitQuestionCotation(InterviewXmlParser.QuestionCotationContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterAnswerCotation(InterviewXmlParser.AnswerCotationContext ctx) { }
 	/**
 	 * {@inheritDoc}

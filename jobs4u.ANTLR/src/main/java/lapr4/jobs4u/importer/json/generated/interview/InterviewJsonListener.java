@@ -48,6 +48,16 @@ public interface InterviewJsonListener extends ParseTreeListener {
 	 */
 	void exitType(InterviewJsonParser.TypeContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link InterviewJsonParser#questionCotation}.
+	 * @param ctx the parse tree
+	 */
+	void enterQuestionCotation(InterviewJsonParser.QuestionCotationContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link InterviewJsonParser#questionCotation}.
+	 * @param ctx the parse tree
+	 */
+	void exitQuestionCotation(InterviewJsonParser.QuestionCotationContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link InterviewJsonParser#answer}.
 	 * @param ctx the parse tree
 	 */

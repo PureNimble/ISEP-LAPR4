@@ -1,5 +1,6 @@
 package lapr4.jobs4u.questionmanagement.domain;
 
+import eapli.framework.validations.Preconditions;
 import jakarta.persistence.Embeddable;
 import jakarta.xml.bind.annotation.XmlAccessorType;
 import jakarta.xml.bind.annotation.XmlValue;
@@ -16,6 +17,7 @@ public class InterviewAnswer {
     private Cotation cotation;
 
     public InterviewAnswer(final Answer answer, final Cotation cotation) {
+        Preconditions.noneNull(new Object[] { answer, cotation });
         this.answer = answer;
         this.cotation = cotation;
     }
@@ -56,15 +58,6 @@ public class InterviewAnswer {
 
     @Override
     public String toString() {
-        return this.answer + " - " + this.cotation;
+        return this.answer.toString();
     }
-
-    public Answer updateAnswer(Answer answer) {
-        return this.answer = answer;
-    }
-
-    public Cotation updateCotation(Cotation cotation) {
-        return this.cotation = cotation;
-    }
-
 }

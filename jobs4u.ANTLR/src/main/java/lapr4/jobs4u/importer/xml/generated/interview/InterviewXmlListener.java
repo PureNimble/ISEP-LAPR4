@@ -78,6 +78,16 @@ public interface InterviewXmlListener extends ParseTreeListener {
 	 */
 	void exitBody(InterviewXmlParser.BodyContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link InterviewXmlParser#questionCotation}.
+	 * @param ctx the parse tree
+	 */
+	void enterQuestionCotation(InterviewXmlParser.QuestionCotationContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link InterviewXmlParser#questionCotation}.
+	 * @param ctx the parse tree
+	 */
+	void exitQuestionCotation(InterviewXmlParser.QuestionCotationContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link InterviewXmlParser#answerCotation}.
 	 * @param ctx the parse tree
 	 */

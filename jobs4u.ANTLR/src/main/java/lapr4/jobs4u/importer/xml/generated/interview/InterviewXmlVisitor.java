@@ -53,6 +53,12 @@ public interface InterviewXmlVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitBody(InterviewXmlParser.BodyContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link InterviewXmlParser#questionCotation}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitQuestionCotation(InterviewXmlParser.QuestionCotationContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link InterviewXmlParser#answerCotation}.
 	 * @param ctx the parse tree
 	 * @return the visitor result

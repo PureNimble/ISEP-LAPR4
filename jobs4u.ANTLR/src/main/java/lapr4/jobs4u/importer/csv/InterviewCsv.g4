@@ -8,12 +8,14 @@ questionBody: body;
 
 type: body;
 
+questionCotation: cotation;
+
 answer: body;
 
 answerCotation: cotation;
 
 question:
-	type ';' cotation ';' cotationType ';' questionBody (';' answer ';' answerCotation)+ (NEWLINE)?;
+	type ';' questionCotation ';' cotationType ';' questionBody (';' answer ';' answerCotation)+ (NEWLINE)?;
 
 cotation:
 	'"' (TWO_DIGIT_NUMBER | FRACTIONAL_NUMBER | '100') '"';

@@ -46,6 +46,13 @@ public class InterviewJsonBaseVisitor<T> extends AbstractParseTreeVisitor<T> imp
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
+	@Override public T visitQuestionCotation(InterviewJsonParser.QuestionCotationContext ctx) { return visitChildren(ctx); }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
 	@Override public T visitAnswer(InterviewJsonParser.AnswerContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}

@@ -5,7 +5,7 @@ questions: '<Questions>' question+ '</Questions>' EOF;
 text: (TEXT | NUMBER | LETTER | MEMBER)+;
 
 question:
-	'<Question>' cotation cotationType type body possibleAnswersList '</Question>';
+	'<Question>' questionCotation cotationType type body possibleAnswersList '</Question>';
 
 cotation:
 	'<Cotation>' (TWO_DIGIT_NUMBER | FRACTIONAL_NUMBER | '100') '</Cotation>';
@@ -16,6 +16,8 @@ cotationType:
 type: '<Type>' text (('<' | '/' | '>' | '</') text (('<' | '/' | '>' | '</') text)?)? '</Type>';
 
 body: '<Body>' text (('<' | '/' | '>' | '</') text (('<' | '/' | '>' | '</') text)?)? '</Body>';
+
+questionCotation: cotation;
 
 answerCotation: cotation;
 

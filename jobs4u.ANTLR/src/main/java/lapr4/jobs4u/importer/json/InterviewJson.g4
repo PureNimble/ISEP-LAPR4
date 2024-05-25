@@ -8,12 +8,14 @@ questionBody: body;
 
 type: body;
 
+questionCotation: cotation;
+
 answer: body;
 
 answerCotation: cotation;
 
 question:
-	'{' '"type"' ':' type ',' '"cotation"' ':' cotation ',' '"cotationType"' ':' cotationType ','
+	'{' '"type"' ':' type ',' '"cotation"' ':' questionCotation ',' '"cotationType"' ':' cotationType ','
 		'"body"' ':' questionBody ',' '"possibleAnswers"' ':' '[' '{' '"answer"' ':' answer ','
 		'"cotation"' ':' answerCotation '}' (
 		',' '{' '"answer"' ':' answer ',' '"cotation"' ':' answerCotation '}'

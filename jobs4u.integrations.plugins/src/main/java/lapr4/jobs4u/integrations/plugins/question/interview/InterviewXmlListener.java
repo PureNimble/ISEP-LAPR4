@@ -19,6 +19,7 @@ public class InterviewXmlListener extends InterviewXmlBaseListener {
     private final List<InterviewQuestionDTO> questions = new ArrayList<>();
     private InterviewQuestionDTO current;
     private List<InterviewAnswer> answers;
+    private Answer answer;
 
     @Override
     public void enterQuestion(final InterviewXmlParser.QuestionContext ctx) {
@@ -37,7 +38,7 @@ public class InterviewXmlListener extends InterviewXmlBaseListener {
     }
 
     @Override
-    public void enterCotation(final InterviewXmlParser.CotationContext ctx) {
+    public void enterQuestionCotation(final InterviewXmlParser.QuestionCotationContext ctx) {
         current.setCotation(extractValue(ctx));
     }
 
@@ -51,14 +52,14 @@ public class InterviewXmlListener extends InterviewXmlBaseListener {
         current.setType(extractValue(ctx));
     }
 
-     @Override
+    @Override
     public void enterAnswer(final InterviewXmlParser.AnswerContext ctx) {
-        answers.add(new InterviewAnswer(Answer.valueOf(extractValue(ctx)), null));
+        answer = Answer.valueOf(extractValue(ctx));
     }
 
     @Override
     public void enterAnswerCotation(final InterviewXmlParser.AnswerCotationContext ctx) {
-        answers.getLast().updateCotation(Cotation.valueOf(extractValue(ctx)));
+        answers.add(new InterviewAnswer(answer, Cotation.valueOf(extractValue(ctx))));
         current.setPossibleAnswers(answers);
     }
 

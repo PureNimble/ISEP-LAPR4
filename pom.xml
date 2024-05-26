@@ -42,6 +42,7 @@
 		<module>jobs4u.integrations.plugins</module>
 		<module>jobs4u.applicationProtocol</module>
 		<module>jobs4u.ANTLR</module>
+		<module>jobs4u.app.client.common</module>
 	</modules>
 	<dependencies>
 		<dependency>

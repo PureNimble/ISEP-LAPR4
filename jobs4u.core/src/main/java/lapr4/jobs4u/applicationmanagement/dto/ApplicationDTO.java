@@ -13,5 +13,5 @@ public class ApplicationDTO {
 
     private String applicationCode;
     private String candidate;
-    
+
 }

@@ -42,9 +42,21 @@
 >
 > **Answer:** Pode ser como apresenta. Pode ser em português ou inglês.
 
+> **Date:** 22/05/2024
+>
+> **Question 209:** US1016 - About the Us1016 wich states: "As Customer Manager, I want the system to notify candidates, by email, of the result of verification process". I want to know when the client says "verification process" is the same about the screening phase.
+>
+> **Answer:** Yes.
+>
+> **Question 210:** 1016 - Notify candidates - This user story has a functional dependency with 1015. I would like to know if an error occurs, do I need to delete what happened in US 1015, as if it were a transaction?
+>
+> **Answer:** The process of notification (US1016) must be done after the verification (US1015) but an error in the notification does not invalidate the “results” of the verification process.
+
 ### 1.3. Acceptance Criteria
 
 * **AC1:** The notifications must be sent by email to the candidates
+
+* **AC2:** The email notifications can only be sent after the verification process is completed
 
 ### 1.4. Found out Dependencies
 

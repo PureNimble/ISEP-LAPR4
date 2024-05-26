@@ -57,15 +57,16 @@ public class OpenOrClosePhaseController {
         switch (currentPhase) {
 
             case null -> {
-                if (theJobOpening.jobOpeningState().equals(JobOpeningState.valueOf(TypesOfJobOpeningStates.PENDING.toString()))) {
+                if (theJobOpening.jobOpeningState()
+                        .equals(JobOpeningState.valueOf(TypesOfJobOpeningStates.PENDING.toString()))) {
                     if (moveUp) {
                         recruitmentProcess.applicationPhase().open();
                         theJobOpening.activate();
-                    }
-                    else {
+                    } else {
                         throw new Exception("The job opening is in the initial state! Cannot go to a previous phase");
                     }
-                } else if (theJobOpening.jobOpeningState().equals(JobOpeningState.valueOf(TypesOfJobOpeningStates.CLOSED.toString()))) {
+                } else if (theJobOpening.jobOpeningState()
+                        .equals(JobOpeningState.valueOf(TypesOfJobOpeningStates.CLOSED.toString()))) {
                     if (moveUp) {
                         throw new Exception("The job opening is closed! There are no more phases to open next");
                     } else {
@@ -75,7 +76,7 @@ public class OpenOrClosePhaseController {
                 } else {
                     throw new Exception("The job opening is in an invalid state");
                 }
-                
+
             }
 
             case "ApplicationPhase" -> {
@@ -93,7 +94,8 @@ public class OpenOrClosePhaseController {
                     if (!hasApplications(theJobOpening)) {
                         theJobOpening.deactivate(currentPhase);
                     } else {
-                        throw new Exception("Cannot go to the previous phase! Application phase is already in progress");
+                        throw new Exception(
+                                "Cannot go to the previous phase! Application phase is already in progress");
                     }
                 }
             }
@@ -102,9 +104,10 @@ public class OpenOrClosePhaseController {
                 recruitmentProcess.screeningPhase().close();
                 if (moveUp) {
                     if (recruitmentProcess.interviewPhase() != null) {
-                        if (!hasInterviewModel(theJobOpening))
+                        if (!hasInterviewModel(theJobOpening)) {
                             throw new Exception("No interview model associated with the job opening: "
                                     + theJobOpening.jobReference());
+                        }
                         recruitmentProcess.interviewPhase().open();
                     } else {
                         recruitmentProcess.analysisPhase().open();

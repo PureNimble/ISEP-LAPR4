@@ -9,7 +9,9 @@ public enum MessageCode {
     DISCONN((byte) 1),
     ACK((byte) 2),
     ERR((byte) 3),
-    AUTH((byte) 4);
+    AUTH((byte) 4),
+    BADREQUEST((byte) 5),
+    LOGOUT((byte) 6);
 
     private static final Map<Byte, MessageCode> CODES = new HashMap<>();
 

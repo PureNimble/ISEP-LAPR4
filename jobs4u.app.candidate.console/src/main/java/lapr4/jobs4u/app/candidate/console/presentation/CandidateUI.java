@@ -20,9 +20,11 @@
  */
 package lapr4.jobs4u.app.candidate.console.presentation;
 
-import eapli.framework.infrastructure.authz.application.AuthorizationService;
-import eapli.framework.infrastructure.authz.application.AuthzRegistry;
+import java.util.Optional;
+
 import eapli.framework.presentation.console.AbstractUI;
+import lapr4.jobs4u.app.common.ClientBackend;
+import lapr4.jobs4u.usermanagement.dto.SystemUserDTO;
 
 /**
  *
@@ -31,13 +33,11 @@ import eapli.framework.presentation.console.AbstractUI;
 @SuppressWarnings("squid:S106")
 public abstract class CandidateUI extends AbstractUI {
 
-    private final AuthorizationService authz = AuthzRegistry.authorizationService();
-
     @Override
     public String headline() {
 
-        return authz.session().map(s -> "Candidate App [ @" + s.authenticatedUser().identity() + " ] ")
-                .orElse("Candidate App [ ==Anonymous== ]");
+        Optional<SystemUserDTO> user = ClientBackend.getInstance().credentialAuth().systemUser();
+        return (user.isPresent() ? "Candidate App [ @" + user.get().getName() + " ] " : "Candidate App [ ==Anonymous== ]");
     }
 
     @Override

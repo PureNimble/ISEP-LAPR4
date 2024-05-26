@@ -23,8 +23,9 @@
  */
 package lapr4.jobs4u.app.candidate.console.presentation;
 
+import lapr4.jobs4u.app.common.ClientBackend;
+import lapr4.jobs4u.app.common.DisconnectAction;
 import lapr4.jobs4u.app.common.console.presentation.authz.LoginUI;
-import lapr4.jobs4u.infrastructure.authz.AuthenticationCredentialHandler;
 import lapr4.jobs4u.usermanagement.domain.BaseRoles;
 import eapli.framework.actions.ChainedAction;
 import eapli.framework.actions.menu.Menu;
@@ -55,12 +56,14 @@ public class FrontMenu extends AbstractUI {
     @Override
     public boolean doShow() {
         final Menu menu = new Menu();
-        menu.addItem(LOGIN_OPTION, "Login", new ChainedAction(new LoginUI(new AuthenticationCredentialHandler(),
+        final ClientBackend clientBackend = ClientBackend.getInstance();
+        menu.addItem(LOGIN_OPTION, "Login", new ChainedAction(new LoginUI(clientBackend.credentialAuth().AUTHENTICATE,
                 BaseRoles.CANDIDATE)::show, () -> {
                     new MainMenu().mainLoop();
                     return true;
                 }));
-        menu.addItem(EXIT_OPTION, "Exit", new ExitWithMessageAction("Goodbye!"));
+        menu.addItem(EXIT_OPTION, "Exit",
+                new ChainedAction(new DisconnectAction(), new ExitWithMessageAction("Goodbye!")));
 
         final MenuRenderer renderer = new VerticalMenuRenderer(menu, MenuItemRenderer.DEFAULT);
         return renderer.render();

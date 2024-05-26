@@ -73,7 +73,7 @@ public class AppSettings {
                 "lapr4.jobs4u.persistence.jpa.JpaRepositoryFactory");
         this.applicationProperties.setProperty(UI_MENU_LAYOUT_KEY, "horizontal");
         this.applicationProperties.setProperty(PERSISTENCE_UNIT_KEY, "eapli"
-                + ".base");
+                + ".jobs4u");
     }
 
     public Boolean isMenuLayoutHorizontal() {

@@ -1,4 +1,4 @@
-package lapr4.jobs4u;
+package lapr4.jobs4u.app.common;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -25,7 +25,7 @@ public class TcpClient {
     public void connect(final String hostname, final int port) throws UnknownHostException, IOException {
 
         socket = new Socket(hostname, port);
-        logger.debug("Connected to the server!");
+        logger.info("Connected to the server!");
 
         input = new DataInputStream(socket.getInputStream());
         output = new DataOutputStream(socket.getOutputStream());
@@ -46,7 +46,7 @@ public class TcpClient {
         }
     }
 
-    public void close() throws IOException {
+    public void disconnect() throws IOException {
         output.close();
         input.close();
         socket.close();

@@ -31,5 +31,5 @@ import eapli.framework.infrastructure.authz.domain.model.Role;
  *
  */
 public interface CredentialHandler {
-	boolean authenticated(String username, String password, Role onlyWithThis);
+	boolean authenticated(final String username, final String password, final Role onlyWithThis);
 }

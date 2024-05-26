@@ -18,9 +18,13 @@
  * DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-package lapr4.jobs4u.app.common.console.presentation.authz;
+package lapr4.jobs4u.app.common;
+
+import java.io.IOException;
 
 import eapli.framework.actions.Action;
+import lapr4.jobs4u.protocol.MessageCode;
+import lapr4.jobs4u.protocol.ProtocolMessage;
 
 /**
  * Menu action for user logout. Created by nuno on 20/03/16.
@@ -29,7 +33,21 @@ public class LogoutAction implements Action {
 
     @Override
     public boolean execute() {
-        // TODO call controller to execute logout
+        boolean disconnected = false;
+        ProtocolMessage response;
+        try {
+            do {
+                response = ClientBackend.getInstance().listener()
+                        .sendRecv(new ProtocolMessage((byte) 1, MessageCode.LOGOUT));
+                if (response.code() == MessageCode.ACK) {
+                    disconnected = true;
+                }
+            } while (!disconnected);
+            System.out.println(response.toString());
+            return true;
+        } catch (final IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
         return false;
     }
 }

@@ -8,13 +8,14 @@ import java.util.Optional;
 
 import eapli.framework.infrastructure.authz.application.AuthzRegistry;
 import eapli.framework.infrastructure.authz.application.UserManagementService;
+import eapli.framework.infrastructure.authz.domain.model.Role;
 import eapli.framework.infrastructure.authz.domain.model.SystemUser;
 import eapli.framework.infrastructure.authz.domain.model.Username;
 import lapr4.jobs4u.EventListener;
 import lapr4.jobs4u.infrastructure.authz.AuthenticationCredentialHandler;
-import lapr4.jobs4u.infrastructure.authz.CredentialHandler;
 import lapr4.jobs4u.protocol.MessageCode;
 import lapr4.jobs4u.protocol.ProtocolMessage;
+import lapr4.jobs4u.usermanagement.dto.SystemUserDTO;
 
 public class AuthMessage extends Message {
 
@@ -26,20 +27,21 @@ public class AuthMessage extends Message {
     @Override
     public void handle() throws IOException {
 
-        final CredentialHandler credentialHandler = new AuthenticationCredentialHandler();
+        final AuthenticationCredentialHandler credentialHandler = new AuthenticationCredentialHandler();
         final UserManagementService userSvc = AuthzRegistry.userService();
 
         byte[][] dataChunks = request.datachunks();
 
         if (dataChunks.length < 2) {
-            send(new ProtocolMessage((byte) 1, MessageCode.ERR, "Bad Request"));
+            new ErrMessage(new ProtocolMessage((byte) 1, MessageCode.BADREQUEST), output, socket, eventListener).handle();
             return;
         }
 
         final String usernameStr = new String(dataChunks[0], StandardCharsets.US_ASCII);
         final String passwordStr = new String(dataChunks[1], StandardCharsets.US_ASCII);
+        final String role = new String(dataChunks[2], StandardCharsets.US_ASCII);
 
-        if (!credentialHandler.authenticated(usernameStr, passwordStr, null)) {
+        if (!credentialHandler.authenticated(usernameStr, passwordStr, Role.valueOf(role))) {
             send(new ProtocolMessage((byte) 1, MessageCode.ERR, "Wrong credentials!"));
             return;
         }
@@ -51,7 +53,12 @@ public class AuthMessage extends Message {
             return;
         }
 
-        send(new ProtocolMessage((byte) 1, MessageCode.ACK));
+        final SystemUser systemUser = optional.get();
+
+        final SystemUserDTO systemUserDTO = new SystemUserDTO(systemUser.username().toString(),
+                systemUser.name().toString(), systemUser.email().toString(), systemUser.roleTypes().toString());
+
+        send(new ProtocolMessage((byte) 1, MessageCode.ACK, systemUserDTO));
 
         eventListener.addClient(usernameStr, socket);
     }

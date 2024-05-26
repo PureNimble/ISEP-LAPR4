@@ -48,7 +48,7 @@ public class ChangePasswordUI extends AbstractUI {
                 System.out.println("Invalid authentication");
                 return false;
             }
-        } catch (ConcurrencyException | IntegrityViolationException e) {
+        } catch (final ConcurrencyException | IntegrityViolationException e) {
             System.out.println("An error has occurred> " + e.getLocalizedMessage());
             return false;
         }

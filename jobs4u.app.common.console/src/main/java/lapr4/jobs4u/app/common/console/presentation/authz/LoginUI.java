@@ -42,24 +42,24 @@ public class LoginUI extends AbstractUI {
 
 	private final CredentialHandler credentialHandler;
 
-	public LoginUI(CredentialHandler credentialHandler) {
+	public LoginUI(final CredentialHandler credentialHandler) {
 		maxAttempts = DEFAULT_MAX_ATTEMPTS;
 		this.credentialHandler = credentialHandler;
 	}
 
-	public LoginUI(CredentialHandler credentialHandler, final Role onlyWithThis) {
+	public LoginUI(final CredentialHandler credentialHandler, final Role onlyWithThis) {
 		this.onlyWithThis = onlyWithThis;
 		maxAttempts = DEFAULT_MAX_ATTEMPTS;
 		this.credentialHandler = credentialHandler;
 	}
 
-	public LoginUI(CredentialHandler credentialHandler, final Role onlyWithThis, final int maxAttempts) {
+	public LoginUI(final CredentialHandler credentialHandler, final Role onlyWithThis, final int maxAttempts) {
 		this.onlyWithThis = onlyWithThis;
 		this.maxAttempts = maxAttempts;
 		this.credentialHandler = credentialHandler;
 	}
 
-	public LoginUI(CredentialHandler credentialHandler, final int maxAttempts) {
+	public LoginUI(final CredentialHandler credentialHandler, final int maxAttempts) {
 		this.maxAttempts = maxAttempts;
 		this.credentialHandler = credentialHandler;
 	}

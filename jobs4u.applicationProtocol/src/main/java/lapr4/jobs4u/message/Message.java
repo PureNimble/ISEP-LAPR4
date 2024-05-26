@@ -12,7 +12,7 @@ public abstract class Message {
     protected final ProtocolMessage request;
     protected final EventListener eventListener;
     protected final Socket socket;
-    private final DataOutputStream output;
+    protected final DataOutputStream output;
 
     public Message(final ProtocolMessage message, final DataOutputStream output, final Socket socket,
             final EventListener eventListener) {

@@ -52,16 +52,17 @@ public class AddUserController {
         return BaseRoles.nonUserValues();
     }
 
-    public SystemUser addUser(final String email, final String password, final String firstName,
-            final String lastName, final Set<Role> roles, final Calendar createdOn) {
-        authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.ADMIN, BaseRoles.CUSTOMER_MANAGER, BaseRoles.OPERATOR, BaseRoles.POWERUSER);
+    public SystemUser addUser(final String email, final String password, final String firstName, final String lastName,
+            final Set<Role> roles, final Calendar createdOn) {
+        authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.ADMIN, BaseRoles.CUSTOMER_MANAGER, BaseRoles.OPERATOR,
+                BaseRoles.POWERUSER);
 
-        return userSvc.registerNewUser(email, password, firstName, lastName, roles,
-                createdOn);
+        return userSvc.registerNewUser(email, password, firstName, lastName, roles, createdOn);
     }
 
-    public SystemUser addUser(final String email, final String firstName,
-            final String lastName, final Set<Role> roles) {
-        return addUser(email, new RandomRawPassword().toString(), firstName, lastName, roles, CurrentTimeCalendars.now());
+    public SystemUser addUser(final String email, final String firstName, final String lastName,
+            final Set<Role> roles) {
+        return addUser(email, new RandomRawPassword().toString(), firstName, lastName, roles,
+                CurrentTimeCalendars.now());
     }
 }

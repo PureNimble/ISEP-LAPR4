@@ -5,6 +5,7 @@ import eapli.framework.io.util.Console;
 import java.io.File;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -127,5 +128,18 @@ public class Utils {
         }
 
         return null;
+    }
+
+    static public Boolean copyFile(String source, String destination) {
+        try {
+            File sourceFile = new File(source);
+            File destinationFile = new File(destination);
+            java.nio.file.Files.copy(sourceFile.toPath(), destinationFile.toPath(),
+                    StandardCopyOption.REPLACE_EXISTING);
+            return true;
+        } catch (Exception e) {
+            System.out.println("Error copying file");
+            return false;
+        }
     }
 }

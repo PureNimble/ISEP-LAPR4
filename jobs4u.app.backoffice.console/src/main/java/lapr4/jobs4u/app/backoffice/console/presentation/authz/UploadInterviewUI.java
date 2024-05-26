@@ -8,7 +8,6 @@ import lapr4.jobs4u.app.backoffice.console.presentation.authz.printer.JobOpening
 import lapr4.jobs4u.app.common.console.presentation.utils.Utils;
 import lapr4.jobs4u.applicationmanagement.application.ListApplicationsController;
 import lapr4.jobs4u.applicationmanagement.domain.Application;
-import lapr4.jobs4u.applicationmanagement.domain.File;
 import lapr4.jobs4u.applicationmanagement.dto.ApplicationDTO;
 import lapr4.jobs4u.infrastructure.persistence.PersistenceContext;
 import lapr4.jobs4u.interviewmanagement.application.UploadInterviewController;
@@ -22,6 +21,7 @@ public class UploadInterviewUI extends AbstractUI {
     private final UploadInterviewController controller;
     private final ListApplicationsController applicationController;
     private final ListJobOpeningsController jobOpeningsController;
+    private static final String OUTPUT_FOLDER = "./jobs4u.ANTLR/src/main/resources/answers/";
 
     public UploadInterviewUI() {
         controller = new UploadInterviewController(PersistenceContext.repositories().interviews(),
@@ -44,9 +44,10 @@ public class UploadInterviewUI extends AbstractUI {
             return false;
         }
         String file = Utils.getPath(false);
-        i.addFile(File.valueOf(file));
-        checkInterview(); // TODO: LPROG
+        Utils.copyFile(file, OUTPUT_FOLDER);
 
+        checkInterview(file, i);
+        Utils.copyFile(file, OUTPUT_FOLDER);
         controller.save(i);
 
         return false;
@@ -80,7 +81,7 @@ public class UploadInterviewUI extends AbstractUI {
         return "Import Applications";
     }
 
-    private void checkInterview() {
+    private void checkInterview(String file, Interview interview) {
 
     }
 }

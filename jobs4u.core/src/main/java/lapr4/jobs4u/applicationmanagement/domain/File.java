@@ -1,20 +1,28 @@
 package lapr4.jobs4u.applicationmanagement.domain;
 
 import jakarta.persistence.Embeddable;
+import jakarta.persistence.Transient;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.HashMap;
+import java.util.Map;
+
 import eapli.framework.domain.model.ValueObject;
 import eapli.framework.io.util.Files;
 import eapli.framework.validations.Preconditions;
 
 @Embeddable
-public class File implements ValueObject, Comparable<File> {
+public class File implements ValueObject, Comparable<File>, Runnable {
 
     private static final long serialVersionUID = 1L;
     private static final String EXTENSION = ".txt";
 
     private final String path;
+    @Transient
+    private Map<String, Integer> topWords;
 
     protected File(final String file) {
         Preconditions.nonEmpty(file, "File should neither be null nor empty");
@@ -58,35 +66,31 @@ public class File implements ValueObject, Comparable<File> {
         return path.compareTo(arg0.path);
     }
 
-    /* private static boolean isFileValid(final String file) {
+    private static boolean isFileValid(final String file) {
         return java.nio.file.Files.exists(java.nio.file.Paths.get(file));
-    } */
+    }
 
-    /**
-     * Gets the full content of an input stream as a single String encoded as UTF-8.
-     * The input
-     * stream
-     * is still active and open after calling this method.
-     *
-     * @param is
-     *           the input stream
-     * @return the correspondent UTF-8 String
-     * @throws IOException
-     */
-    public static String textFrom(final InputStream is) throws IOException {
-        return Files.textFrom(is);
+    public String fileName() {
+        return this.path.substring(this.path.lastIndexOf('/') + 1);
     }
 
     /**
-     * Simple utility to call the default OS application to open a file.
+     * Gets the full content of an input stream as a single String encoded as
+     * UTF-8. The input stream is still active and open after calling this
+     * method.
      *
-     * @param path
-     * @return the return code of the spawned process
+     * @param is the input stream
+     * @return the correspondent UTF-8 String
      * @throws IOException
-     * @throws InterruptedException
      */
-    public static String textFrom(final InputStream is, final String encoding) throws IOException {
-        return Files.textFrom(is, encoding);
+    public String textFrom() {
+        try {
+            InputStream inputStream = new FileInputStream(this.path);
+            return Files.textFrom(inputStream, "UTF-8");
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null; // Return null or some default value in case of an exception
+        }
     }
 
     /**
@@ -99,5 +103,28 @@ public class File implements ValueObject, Comparable<File> {
      */
     public static int openInOSViewer(final String path) throws IOException, InterruptedException {
         return Files.openInOSViewer(path);
+    }
+
+    @Override
+    public void run() {
+        topWords = new HashMap<>();
+        String text = textFrom();
+        String[] words = text.split("\\s+");
+        Integer value;
+        for (String word : words) {
+            value = 1;
+            if (topWords.containsKey(word))
+                value = topWords.get(word) + 1;
+
+            addCount(word, value);
+        }
+    }
+
+    private synchronized void addCount(String word, Integer value) {
+        topWords.put(word, value);
+    }
+
+    public Map<String, Integer> getTopWords() {
+        return topWords;
     }
 }

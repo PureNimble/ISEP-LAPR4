@@ -54,7 +54,6 @@ public class UploadInterviewUI extends AbstractUI {
     }
 
     private Application selectApplication() {
-        // TODO: accept only jobOpenings in screening phase or interview phase
         final Iterable<JobOpeningDTO> jobOpenings = this.jobOpeningsController.filterWithAvailablePhase();
         final SelectWidget<JobOpeningDTO> selector = new SelectWidget<>("Job Openings:", jobOpenings,
                 new JobOpeningPrinter());

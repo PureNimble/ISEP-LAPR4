@@ -132,15 +132,12 @@ public class ImportApplicationsController {
 
     private List<File> extractFiles(String candidateFolder) throws IOException {
         List<File> files = new ArrayList<>();
-        List<String> filesString = Files.list(Paths.get(candidateFolder))
-                .map(Path::getFileName)
-                .map(Path::toString)
+        List<String> filesString = Files.list(Paths.get(candidateFolder)).map(Path::getFileName).map(Path::toString)
                 .collect(Collectors.toList());
 
         filesString.forEach(file -> {
             file = candidateFolder + "/" + file;
-            if (!file.contains("candidate-data"))
-                files.add(File.valueOf(file));
+            files.add(File.valueOf(file));
         });
         return files;
     }

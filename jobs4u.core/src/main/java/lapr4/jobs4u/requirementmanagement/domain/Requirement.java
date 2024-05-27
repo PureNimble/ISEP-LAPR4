@@ -29,12 +29,6 @@ public class Requirement implements AggregateRoot<Long> {
     @Version
     private Long version;
 
-    @Column(nullable = false)
-    private Date date;
-
-    @Column(nullable = false)
-    private Time time;
-
     @ManyToOne(optional = false)
     @JoinColumn(name = "Application", unique = true)
     private Application application;
@@ -42,10 +36,8 @@ public class Requirement implements AggregateRoot<Long> {
     @Column(nullable = true)
     private File file;
 
-    protected Requirement(final String date, final String time, final Application application) {
-        Preconditions.noneNull(new Object[] { date, time, application });
-        this.date = Date.valueOf(date);
-        this.time = Time.valueOf(time);
+    protected Requirement(final Application application) {
+        Preconditions.noneNull(new Object[] { application });
         this.application = application;
     }
 
@@ -53,8 +45,8 @@ public class Requirement implements AggregateRoot<Long> {
         // for ORM only
     }
 
-    public static Requirement valueOf(final String date, final String time, final Application application) {
-        return new Requirement(date, time, application);
+    public static Requirement valueOf(final Application application) {
+        return new Requirement(application);
     }
 
     public void addFile(final File file) {
@@ -86,7 +78,7 @@ public class Requirement implements AggregateRoot<Long> {
     }
 
     public String toString() {
-        return this.date.toString() + "-" + this.time.toString();
+        return this.id.toString();
     }
 
 }

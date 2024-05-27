@@ -36,6 +36,7 @@ import lapr4.jobs4u.questionmanagement.repositories.RequirementsQuestionReposito
 import lapr4.jobs4u.recruitmentprocessmanagement.repositories.RecruitmentProcessRepository;
 import eapli.framework.domain.repositories.TransactionalContext;
 import eapli.framework.infrastructure.authz.domain.repositories.UserRepository;
+import lapr4.jobs4u.requirementmanagement.repositories.RequirementRepository;
 
 /**
  * @author Paulo Gandra Sousa
@@ -256,5 +257,12 @@ public interface RepositoryFactory {
      * @return
      */
     InterviewRepository interviews();
+
+    /**
+     * repository will be created in auto transaction mode
+     *
+     * @return
+     */
+    RequirementRepository requirements();
 
 }

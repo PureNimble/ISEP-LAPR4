@@ -21,11 +21,11 @@ activate Manager
     Manager -> System : Selects a job opening
     activate System
 
-        System --> Manager : Displays the current phase status of the job opening and asks if the manager wants to go to the next phase
+        System --> Manager : Displays the current phase status of the job opening and asks if the manager wants to go to the next phase or return to the previous phase
 
     deactivate System
 
-    Manager -> System : Confirms the decision to change the phase status
+    Manager -> System : Chooses to go to the next phase or return to the previous phase
     activate System
 
         System --> Manager : Informs success or failure

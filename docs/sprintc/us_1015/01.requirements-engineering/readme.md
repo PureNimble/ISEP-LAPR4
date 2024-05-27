@@ -49,6 +49,24 @@ rejection since the candidate has no degree. The system should provide a justifi
 >
 > **Answer:** In US2003 and US2004 it is the Operator that “downloads” a template file to register the requirements, registers the answers for the requirements in the file, and then uploads the file. It is then the Costumer manager that executes the verification process (US1015) and executes the notification of the results (US1016)
 
+> **Date:** 16/05/2024
+>
+> **Question 167:** US1015 – Deve ser executado o processo para todos os candidatos ou apenas para alguns (segundo algum critério)?
+>
+> **Answer:** Os ficheiros com as respostas aos requisitos vão entrando no sistema gradualmente. Talvez seja mais “simples” que o processo execute (ou seja, faça a verificação dos requisitos) para os candidatos para os quais já foi submetido o ficheiro de requisitos. Nalgum momento o processo irá executar com todos os candidatos já com os ficheiros de requisitos submetidos.
+
+> **Date:** 17/05/2024
+>
+> **Question 180:** US2004 - Candidate Answers - Does US2004 only deals with the upload of the file to the system or also the registration of the candidate's answer by the Operator? I've seen many mentions about the file's answers but I want to understand if that aspect is also part of US2004.
+>
+> **Answer:** In US2003 the Operator downloads a template file that he/she uses to register the candidate requirements. In US 2004, the Operator uploads a file with the requirements and the system should validate the file (verify of the syntax is correct). US 1015 is the one that executes the verification of requirements for the candidates (based on the previously uploaded files).
+
+> **Date:** 22/05/2024
+>
+> **Question 210:** Notify candidates - This user story has a functional dependency with 1015. I would like to know if an error occurs, do I need to delete what happened in US 1015, as if it were a transaction?
+>
+> **Answer:** The process of notification (US1016) must be done after the verification (US1015) but an error in the notification does not invalidate the “results” of the verification process.
+
 ### 1.3. Acceptance Criteria
 
 * **AC 1:** The process of verification of requirements of applications for a job opening is made automatically by the system, being the Customer Manager the one who triggers the operation.

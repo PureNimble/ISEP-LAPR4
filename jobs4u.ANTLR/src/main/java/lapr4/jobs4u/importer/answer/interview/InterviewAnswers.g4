@@ -1,9 +1,10 @@
 grammar InterviewAnswers;
 
-start: 'TITLE:' text NEWLINE 'NAME:' text NEWLINE 'EMAIL:' email content+ EOF;
+start:
+	'TITLE:' text NEWLINE 'NAME:' text NEWLINE 'EMAIL:' email NEWLINE content+ EOF;
 
 content:
-	cotation cotationType NEWLINE 'QUESTION TYPE:' type 'ANSWER:' text NEWLINE;
+	cotation cotationType NEWLINE 'QUESTION TYPE:' type 'ANSWER:' answer? NEWLINE?;
 
 cotation:
 	'COTATION:' (TWO_DIGIT_NUMBER | FRACTIONAL_NUMBER | '100');
@@ -11,9 +12,10 @@ cotation:
 cotationType: ( '%' | 'POINTS' | 'VALUES');
 
 choice: option NEWLINE (option NEWLINE)+;
-option: '[' NUMBER ']' text ('[' text ']' text?)?;
-text: (TEXT | NUMBER | LETTER | MEMBER)+;
-email: TEXT '@' TEXT '.' TEXT ('.' TEXT)?;
+option: '[' NUMBER ']' text;
+answer: text;
+text: (TEXT | NUMBER | LETTER | MEMBER)+ (('[' text? ']')+ text?)?;
+email: TEXT '@' TEXT;
 
 type: (
 		(
@@ -31,7 +33,7 @@ type: (
 			SINGLE_ANSWER_CHOICE_QUESTION
 			| MULTIPLE_ANSWER_CHOICE_QUESTION
 		) NEWLINE 'QUESTION:' text NEWLINE choice
-	) ;
+	);
 
 TRUE_FALSE_QUESTION: 'True/False';
 SHORT_TEXT_ANSWER_QUESTION: 'Short text answer';
@@ -46,7 +48,7 @@ NUMERIC_SCALE_QUESTION: 'Numeric Scale';
 
 NUMBER: [0-9];
 LETTER: [a-zA-Z];
-MEMBER: [.,;:/#+!@?*)(] | '\'' | '|' | '-';
+MEMBER: [.,;:/#+!?*)(] | '\'' | '|' | '-';
 TWO_DIGIT_NUMBER: NUMBER NUMBER?;
 FRACTIONAL_NUMBER:
 	TWO_DIGIT_NUMBER ('.' | ',') TWO_DIGIT_NUMBER;

@@ -89,6 +89,18 @@ public class InterviewAnswersBaseListener implements InterviewAnswersListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterAnswer(InterviewAnswersParser.AnswerContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitAnswer(InterviewAnswersParser.AnswerContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterText(InterviewAnswersParser.TextContext ctx) { }
 	/**
 	 * {@inheritDoc}

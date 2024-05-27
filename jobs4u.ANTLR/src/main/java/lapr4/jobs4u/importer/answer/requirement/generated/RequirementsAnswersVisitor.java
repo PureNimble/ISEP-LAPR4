@@ -29,6 +29,18 @@ public interface RequirementsAnswersVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitEmail(RequirementsAnswersParser.EmailContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link RequirementsAnswersParser#answer}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitAnswer(RequirementsAnswersParser.AnswerContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link RequirementsAnswersParser#question}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitQuestion(RequirementsAnswersParser.QuestionContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link RequirementsAnswersParser#content}.
 	 * @param ctx the parse tree
 	 * @return the visitor result

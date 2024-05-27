@@ -1,15 +1,18 @@
 grammar RequirementsAnswers;
 
-start: 'TITLE:' text NEWLINE 'NAME:' NEWLINE 'EMAIL:' email NEWLINE content+ EOF;
+start:
+	'TITLE:' text NEWLINE 'NAME:' text NEWLINE 'EMAIL:' email NEWLINE content+ EOF;
 
-text: (TEXT | LETTER | NUMBER | MEMBER)+;
-email: TEXT '@' TEXT '.' TEXT ('.' TEXT)?;
+text: (TEXT | LETTER | NUMBER | MEMBER)+ ('#'+ text?)?;
+email: TEXT '@' TEXT;
+answer: text;
+question: text;
 
-content: '#' text ('#' text?)? NEWLINE 'ANSWER:' NEWLINE;
+content: '#' question NEWLINE 'ANSWER:' answer? NEWLINE?;
 
 NUMBER: [0-9];
 LETTER: [a-zA-Z];
-MEMBER: [.,;:/#+!?@*)([\]] | '\'' | '|' | '-';
+MEMBER: [.,;:/#+!?*)([\]] | '\'' | '|' | '-';
 TEXT: (LETTER | NUMBER | MEMBER)+;
 NEWLINE: ('\r'? '\n')+;
-WS: [ \t\r\n]+ -> skip;
+WS: [ \t\n\r]+ -> skip;

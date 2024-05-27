@@ -12,7 +12,7 @@ cotationType: ( '%' | 'POINTS' | 'VALUES');
 
 choice: option NEWLINE (option NEWLINE)+;
 option: '[' NUMBER ']' text ('[' text ']' text?)?;
-text: (TEXT | NUMBER | LETTER | MEMBER)+;
+text: (TEXT | NUMBER | LETTER | MEMBER)+ (('[' text? ']')+ text?)?;
 
 type: (
 		(
@@ -45,7 +45,7 @@ NUMERIC_SCALE_QUESTION: 'Numeric Scale';
 
 NUMBER: [0-9];
 LETTER: [a-zA-Z];
-MEMBER: [.,;:/#+!@?*)(] | '\'' | '|' | '-';
+MEMBER: [.,;:/#+!?*)(] | '\'' | '|' | '-';
 TWO_DIGIT_NUMBER: NUMBER NUMBER?;
 FRACTIONAL_NUMBER:
 	TWO_DIGIT_NUMBER ('.' | ',') TWO_DIGIT_NUMBER;

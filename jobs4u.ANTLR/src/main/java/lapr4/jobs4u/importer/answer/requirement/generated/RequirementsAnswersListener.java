@@ -38,6 +38,26 @@ public interface RequirementsAnswersListener extends ParseTreeListener {
 	 */
 	void exitEmail(RequirementsAnswersParser.EmailContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link RequirementsAnswersParser#answer}.
+	 * @param ctx the parse tree
+	 */
+	void enterAnswer(RequirementsAnswersParser.AnswerContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link RequirementsAnswersParser#answer}.
+	 * @param ctx the parse tree
+	 */
+	void exitAnswer(RequirementsAnswersParser.AnswerContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link RequirementsAnswersParser#question}.
+	 * @param ctx the parse tree
+	 */
+	void enterQuestion(RequirementsAnswersParser.QuestionContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link RequirementsAnswersParser#question}.
+	 * @param ctx the parse tree
+	 */
+	void exitQuestion(RequirementsAnswersParser.QuestionContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link RequirementsAnswersParser#content}.
 	 * @param ctx the parse tree
 	 */

@@ -68,6 +68,16 @@ public interface InterviewAnswersListener extends ParseTreeListener {
 	 */
 	void exitOption(InterviewAnswersParser.OptionContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link InterviewAnswersParser#answer}.
+	 * @param ctx the parse tree
+	 */
+	void enterAnswer(InterviewAnswersParser.AnswerContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link InterviewAnswersParser#answer}.
+	 * @param ctx the parse tree
+	 */
+	void exitAnswer(InterviewAnswersParser.AnswerContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link InterviewAnswersParser#text}.
 	 * @param ctx the parse tree
 	 */

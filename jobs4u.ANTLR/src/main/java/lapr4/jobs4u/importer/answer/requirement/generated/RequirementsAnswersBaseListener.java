@@ -53,6 +53,30 @@ public class RequirementsAnswersBaseListener implements RequirementsAnswersListe
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterAnswer(RequirementsAnswersParser.AnswerContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitAnswer(RequirementsAnswersParser.AnswerContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterQuestion(RequirementsAnswersParser.QuestionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitQuestion(RequirementsAnswersParser.QuestionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterContent(RequirementsAnswersParser.ContentContext ctx) { }
 	/**
 	 * {@inheritDoc}

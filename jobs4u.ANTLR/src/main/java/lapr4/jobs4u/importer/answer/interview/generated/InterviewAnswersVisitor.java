@@ -47,6 +47,12 @@ public interface InterviewAnswersVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitOption(InterviewAnswersParser.OptionContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link InterviewAnswersParser#answer}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitAnswer(InterviewAnswersParser.AnswerContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link InterviewAnswersParser#text}.
 	 * @param ctx the parse tree
 	 * @return the visitor result

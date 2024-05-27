@@ -14,7 +14,6 @@ import jakarta.persistence.Table;
 import jakarta.persistence.Version;
 import lapr4.jobs4u.applicationmanagement.domain.Application;
 import lapr4.jobs4u.applicationmanagement.domain.File;
-import lapr4.jobs4u.recruitmentprocessmanagement.domain.Date;
 
 @Entity
 @Table(name = "T_REQUIREMENT")

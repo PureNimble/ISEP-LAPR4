@@ -25,6 +25,7 @@ import lapr4.jobs4u.infrastructure.persistence.RepositoryFactory;
 import lapr4.jobs4u.interviewmanagement.repositories.InterviewRepository;
 import lapr4.jobs4u.jobopeningmanagement.repositories.JobOpeningInterviewRepository;
 import lapr4.jobs4u.jobopeningmanagement.repositories.JobOpeningRequirementRepository;
+import lapr4.jobs4u.requirementmanagement.repositories.RequirementRepository;
 import eapli.framework.domain.repositories.TransactionalContext;
 import eapli.framework.infrastructure.authz.domain.repositories.UserRepository;
 import eapli.framework.infrastructure.authz.repositories.impl.jpa.JpaAutoTxUserRepository;
@@ -183,7 +184,23 @@ public class JpaRepositoryFactory implements RepositoryFactory {
         return new JpaJobOpeningRequirementRepository(autoTx);
     }
 
+    @Override
     public InterviewRepository interviews() {
         return new JpaInterviewRepository(Application.settings().getPersistenceUnitName());
+    }
+
+    @Override   
+    public InterviewRepository interviews(TransactionalContext autoTx) {
+        return new JpaInterviewRepository(autoTx);
+    }
+
+    @Override
+    public RequirementRepository requirements() {
+        return new JpaRequirementRepository(Application.settings().getPersistenceUnitName());
+    }
+
+    @Override
+    public RequirementRepository requirements(TransactionalContext autoTx) {
+        return new JpaRequirementRepository(autoTx);
     }
 }

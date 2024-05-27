@@ -36,6 +36,7 @@ import lapr4.jobs4u.questionmanagement.repositories.InterviewQuestionRepository;
 import lapr4.jobs4u.questionmanagement.repositories.QuestionTypeRepository;
 import lapr4.jobs4u.questionmanagement.repositories.RequirementsQuestionRepository;
 import lapr4.jobs4u.recruitmentprocessmanagement.repositories.RecruitmentProcessRepository;
+import lapr4.jobs4u.requirementmanagement.repositories.RequirementRepository;
 import eapli.framework.domain.repositories.TransactionalContext;
 import eapli.framework.infrastructure.authz.domain.repositories.UserRepository;
 import eapli.framework.infrastructure.authz.repositories.impl.inmemory.InMemoryUserRepository;
@@ -197,7 +198,23 @@ public class InMemoryRepositoryFactory implements RepositoryFactory {
         return jobOpeningRequirements(null);
     }
 
+    @Override
     public InterviewRepository interviews() {
         return new InMemoryInterviewRepository();
+    }
+
+    @Override
+    public InterviewRepository interviews(TransactionalContext autoTx) {
+        return interviews(null);
+    }
+
+    @Override
+    public RequirementRepository requirements() {
+        return new InMemoryRequirementRepository();
+    }
+
+    @Override
+    public RequirementRepository requirements(TransactionalContext autoTx) {
+        return requirements(null);
     }
 }

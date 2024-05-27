@@ -54,7 +54,12 @@ public class InMemoryJobOpeningRepository extends InMemoryDomainRepository<JobOp
     }
 
     @Override
-    public Iterable<JobOpening> filterWithAvailablePhase(Username username) {
-        return filterWithAvailablePhase(username);
+    public Iterable<JobOpening> filterWithAvailablePhaseForInterviews(Username username) {
+        return filterWithAvailablePhaseForInterviews(username);
+    }
+
+    @Override
+    public Iterable<JobOpening> filterWithAvailablePhaseForRequirements(Username username) {
+        return filterWithAvailablePhaseForRequirements(username);
     }
 }

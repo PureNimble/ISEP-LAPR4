@@ -65,10 +65,16 @@ public class ListJobOpeningsController {
                 .collect(Collectors.toList());
     }
 
-    public Iterable<JobOpeningDTO> filterWithAvailablePhase() {
+    public Iterable<JobOpeningDTO> filterWithAvailablePhaseForInterviews() {
         authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.CUSTOMER_MANAGER, BaseRoles.POWERUSER);
 
-        return jobOpeningsService.filterWithAvailablePhase();
+        return jobOpeningsService.filterWithAvailablePhaseForInterviews();
+    }
+
+    public Iterable<JobOpeningDTO> filterWithAvailablePhaseForRequirements() {
+        authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.OPERATOR, BaseRoles.POWERUSER);
+
+        return jobOpeningsService.filterWithAvailablePhaseForRequirements();
     }
 
 }

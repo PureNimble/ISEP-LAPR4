@@ -30,6 +30,7 @@
     <class>lapr4.jobs4u.questionmanagement.domain.InterviewQuestion</class>
     <class>lapr4.jobs4u.questionmanagement.domain.RequirementsQuestion</class>
     <class>lapr4.jobs4u.interviewmanagement.domain.Interview</class>
+    <class>lapr4.jobs4u.requirementmanagement.domain.Requirement</class>
 
 
     <properties>

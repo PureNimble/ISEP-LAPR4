@@ -251,12 +251,29 @@ public interface RepositoryFactory {
      */
     JobOpeningRequirementRepository jobOpeningRequirements();
 
+     /**
+     *
+     * @param autoTx
+     *               the transactional context to enroll
+     * @return
+     */
+    InterviewRepository interviews(TransactionalContext autoTx);
+
     /**
      * repository will be created in auto transaction mode
      *
      * @return
      */
     InterviewRepository interviews();
+
+    /**
+     *
+     * @param autoTx
+     *               the transactional context to enroll
+     * @return
+     */
+    RequirementRepository requirements(TransactionalContext autoTx);
+
 
     /**
      * repository will be created in auto transaction mode

@@ -86,15 +86,25 @@ public class ListJobOpeningsService {
         return selectedJobOpening;
     }
 
-    public Iterable<JobOpeningDTO> filterWithAvailablePhase() {
+    public Iterable<JobOpeningDTO> filterWithAvailablePhaseForInterviews() {
         final SystemUser manager = authz.loggedinUserWithPermissions(BaseRoles.CUSTOMER_MANAGER, BaseRoles.POWERUSER)
                 .orElseThrow(IllegalStateException::new);
-        final Iterable<JobOpening> jobOpenings = this.jobOpeningRepository.filterWithAvailablePhase(manager.username());
+        final Iterable<JobOpening> jobOpenings = this.jobOpeningRepository.filterWithAvailablePhaseForInterviews(manager.username());
 
         List<JobOpeningDTO> jobOpeningsDTO = new ArrayList<>();
         jobOpenings.forEach(jobOpening -> jobOpeningsDTO.add(jobOpening.toDTO()));
         return jobOpeningsDTO;
 
+    }
+
+    public Iterable<JobOpeningDTO> filterWithAvailablePhaseForRequirements() {
+        final SystemUser manager = authz.loggedinUserWithPermissions(BaseRoles.OPERATOR, BaseRoles.POWERUSER)
+                .orElseThrow(IllegalStateException::new);
+        final Iterable<JobOpening> jobOpenings = this.jobOpeningRepository.filterWithAvailablePhaseForRequirements(manager.username());
+
+        List<JobOpeningDTO> jobOpeningsDTO = new ArrayList<>();
+        jobOpenings.forEach(jobOpening -> jobOpeningsDTO.add(jobOpening.toDTO()));
+        return jobOpeningsDTO;
     }
 
 }

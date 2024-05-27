@@ -13,6 +13,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ * @author 2DI2
+ */
 @DTO
 @Data
 @AllArgsConstructor

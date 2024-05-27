@@ -4,6 +4,9 @@ import java.io.IOException;
 
 import eapli.framework.actions.Action;
 
+/**
+ * @author 2DI2
+ */
 public class DisconnectAction implements Action {
 
     @Override

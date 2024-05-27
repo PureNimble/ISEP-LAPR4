@@ -1,4 +1,3 @@
-
 package lapr4.jobs4u.persistence.impl.jpa;
 
 import java.util.HashMap;
@@ -15,8 +14,7 @@ import eapli.framework.domain.repositories.TransactionalContext;
 import eapli.framework.infrastructure.repositories.impl.jpa.JpaAutoTxRepository;
 
 /**
- *
- * @author Jorge Santos ajs@isep.ipp.pt 02/04/2016
+ * @author 2DI2
  */
 class JpaApplicationRepository extends JpaAutoTxRepository<Application, ApplicationCode, ApplicationCode>
         implements ApplicationRepository {

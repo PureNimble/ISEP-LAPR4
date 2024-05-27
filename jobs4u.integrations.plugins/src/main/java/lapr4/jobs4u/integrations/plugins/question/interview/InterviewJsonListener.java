@@ -14,6 +14,9 @@ import lapr4.jobs4u.questionmanagement.domain.Cotation;
 import lapr4.jobs4u.questionmanagement.domain.InterviewAnswer;
 import lapr4.jobs4u.questionmanagement.dto.InterviewQuestionDTO;
 
+/**
+ * @author 2DI2
+ */
 public class InterviewJsonListener extends InterviewJsonBaseListener {
 
     private final List<InterviewQuestionDTO> questions = new ArrayList<>();

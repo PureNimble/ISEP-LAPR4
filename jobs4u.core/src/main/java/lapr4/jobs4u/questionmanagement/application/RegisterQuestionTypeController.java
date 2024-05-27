@@ -5,6 +5,9 @@ import lapr4.jobs4u.questionmanagement.domain.QuestionType;
 import lapr4.jobs4u.questionmanagement.repositories.QuestionTypeRepository;
 import lapr4.jobs4u.usermanagement.domain.BaseRoles;
 
+/**
+ * @author 2DI2
+ */
 public class RegisterQuestionTypeController {
 
     private final AuthorizationService authz;

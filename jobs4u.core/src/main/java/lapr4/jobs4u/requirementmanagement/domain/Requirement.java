@@ -15,6 +15,9 @@ import jakarta.persistence.Version;
 import lapr4.jobs4u.applicationmanagement.domain.Application;
 import lapr4.jobs4u.applicationmanagement.domain.File;
 
+/**
+ * @author 2DI2
+ */
 @Entity
 @Table(name = "T_REQUIREMENT")
 public class Requirement implements AggregateRoot<Long> {

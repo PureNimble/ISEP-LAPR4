@@ -1,9 +1,6 @@
-
 package lapr4.jobs4u.persistence.impl.jpa;
 
 import lapr4.jobs4u.applicationmanagement.domain.Application;
-import lapr4.jobs4u.interviewmanagement.domain.Interview;
-import lapr4.jobs4u.interviewmanagement.repositories.InterviewRepository;
 import lapr4.jobs4u.requirementmanagement.domain.Requirement;
 import lapr4.jobs4u.requirementmanagement.repositories.RequirementRepository;
 
@@ -15,8 +12,7 @@ import eapli.framework.domain.repositories.TransactionalContext;
 import eapli.framework.infrastructure.repositories.impl.jpa.JpaAutoTxRepository;
 
 /**
- *
- * @author Jorge Santos ajs@isep.ipp.pt 02/04/2016
+ * @author 2DI2
  */
 class JpaRequirementRepository extends JpaAutoTxRepository<Requirement, Long, Long> implements RequirementRepository {
 

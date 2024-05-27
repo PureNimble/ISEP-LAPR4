@@ -8,8 +8,7 @@ import lapr4.jobs4u.requirementmanagement.domain.Requirement;
 import lapr4.jobs4u.requirementmanagement.repositories.RequirementRepository;
 
 /**
- *
- * @author Jorge Santos ajs@isep.ipp.pt 02/04/2016
+ * @author 2DI2
  */
 public class InMemoryRequirementRepository extends InMemoryDomainRepository<Requirement, Long>
         implements RequirementRepository {

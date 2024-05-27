@@ -4,6 +4,9 @@ import jakarta.persistence.Embeddable;
 import eapli.framework.domain.model.ValueObject;
 import eapli.framework.validations.Preconditions;
 
+/**
+ * @author 2DI2
+ */
 @Embeddable
 public class ApplicationCode implements ValueObject, Comparable<ApplicationCode> {
 

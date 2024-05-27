@@ -6,6 +6,9 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.MappedSuperclass;
 
+/**
+ * @author 2DI2
+ */
 @MappedSuperclass
 public abstract class Phase {
     

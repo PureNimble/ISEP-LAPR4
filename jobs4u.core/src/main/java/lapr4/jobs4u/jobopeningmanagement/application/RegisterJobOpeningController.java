@@ -11,6 +11,9 @@ import lapr4.jobs4u.jobopeningmanagement.domain.JobOpeningBuilder;
 import lapr4.jobs4u.jobopeningmanagement.repositories.JobOpeningRepository;
 import lapr4.jobs4u.usermanagement.domain.BaseRoles;
 
+/**
+ * @author 2DI2
+ */
 @UseCaseController
 public class RegisterJobOpeningController {
     private final AuthorizationService authz;

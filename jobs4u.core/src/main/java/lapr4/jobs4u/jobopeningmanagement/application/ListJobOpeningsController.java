@@ -15,13 +15,16 @@ import java.util.stream.Collectors;
 import eapli.framework.application.UseCaseController;
 import eapli.framework.infrastructure.authz.application.AuthorizationService;
 
+/**
+ * @author 2DI2
+ */
 @UseCaseController
 public class ListJobOpeningsController {
 
     private final ListJobOpeningsService jobOpeningsService;
     private final AuthorizationService authz;
 
-    public ListJobOpeningsController(JobOpeningRepository jobOpeningRepository, AuthorizationService authz) {
+    public ListJobOpeningsController(final JobOpeningRepository jobOpeningRepository, final AuthorizationService authz) {
         this.jobOpeningsService = new ListJobOpeningsService(jobOpeningRepository, authz);
         this.authz = authz;
     }

@@ -10,6 +10,9 @@ import org.springframework.stereotype.Component;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @author 2DI2
+ */
 @Component
 public class DisplayCandidateApplicationsService {
 

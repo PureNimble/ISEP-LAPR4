@@ -7,6 +7,9 @@ import org.apache.logging.log4j.Logger;
 
 import lapr4.jobs4u.protocol.ProtocolMessage;
 
+/**
+ * @author 2DI2
+ */
 public class MessageListener implements Runnable {
 
     private static Logger logger = LogManager.getLogger(MessageListener.class);

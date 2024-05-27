@@ -4,6 +4,9 @@ import eapli.framework.actions.Actions;
 import eapli.framework.actions.menu.Menu;
 import lapr4.jobs4u.app.backoffice.console.presentation.authz.action.*;
 
+/**
+ * @author 2DI2
+ */
 public class OperatorMenu extends Menu {
 
     private static final int REGISTER_CANDIDATE = 1;

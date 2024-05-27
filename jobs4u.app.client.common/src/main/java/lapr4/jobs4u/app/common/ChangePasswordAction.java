@@ -7,6 +7,9 @@ import eapli.framework.io.util.Console;
 import lapr4.jobs4u.protocol.MessageCode;
 import lapr4.jobs4u.protocol.ProtocolMessage;
 
+/**
+ * @author 2DI2
+ */
 public class ChangePasswordAction implements Action {
 
     @Override

@@ -13,6 +13,9 @@ import lapr4.jobs4u.exporter.requirement.generated.RequirementsParser;
 import lapr4.jobs4u.questionmanagement.domain.InterviewQuestion;
 import lapr4.jobs4u.questionmanagement.domain.RequirementsQuestion;
 
+/**
+ * @author 2DI2
+ */
 public class RequirementsExporter implements QuestionExporter {
 
     private StringBuilder content;
@@ -68,7 +71,7 @@ public class RequirementsExporter implements QuestionExporter {
             if (parser.getNumberOfSyntaxErrors() > 0) {
                 try {
                     throw new IOException("Syntax error in template file");
-                } catch (IOException e) {
+                } catch (final IOException e) {
                     return false;
                 }
             }

@@ -9,6 +9,9 @@ import lapr4.jobs4u.integration.questions.importer.domain.PluginType;
 import lapr4.jobs4u.integration.questions.importer.domain.QuestionImporterPlugin;
 import lapr4.jobs4u.integration.questions.importer.repositories.QuestionImporterPluginRepository;
 
+/**
+ * @author 2DI2
+ */
 public class InMemoryQuestionImporterPluginRepository
         extends InMemoryDomainRepository<QuestionImporterPlugin, Designation>
         implements QuestionImporterPluginRepository {

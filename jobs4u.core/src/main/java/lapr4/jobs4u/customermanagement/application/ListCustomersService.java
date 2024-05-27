@@ -11,6 +11,9 @@ import lapr4.jobs4u.customermanagement.domain.Customer;
 import lapr4.jobs4u.customermanagement.domain.CustomerCode;
 import lapr4.jobs4u.customermanagement.repositories.CustomerRepository;
 
+/**
+ * @author 2DI2
+ */
 @Component
 public class ListCustomersService {
 

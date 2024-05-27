@@ -18,6 +18,9 @@ import eapli.framework.representations.dto.DTOable;
 import eapli.framework.time.util.CurrentTimeCalendars;
 import eapli.framework.validations.Preconditions;
 
+/**
+ * @author 2DI2
+ */
 @Entity
 @Table(name = "T_JOB_OPENING")
 public class JobOpening implements AggregateRoot<JobReference>, DTOable<JobOpeningDTO> {

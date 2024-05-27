@@ -15,6 +15,9 @@ import lapr4.jobs4u.recruitmentprocessmanagement.domain.RecruitmentProcess;
 import lapr4.jobs4u.recruitmentprocessmanagement.domain.State;
 import lapr4.jobs4u.recruitmentprocessmanagement.repositories.RecruitmentProcessRepository;
 
+/**
+ * @author 2DI2
+ */
 class JpaRecruitmentProcessRepository extends JpaAutoTxRepository<RecruitmentProcess, Long, Long>
         implements RecruitmentProcessRepository {
     public JpaRecruitmentProcessRepository(final TransactionalContext autoTx) {

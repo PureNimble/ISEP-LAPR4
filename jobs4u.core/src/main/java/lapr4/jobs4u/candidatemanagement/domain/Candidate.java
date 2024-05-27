@@ -16,6 +16,9 @@ import eapli.framework.infrastructure.authz.domain.model.Name;
 import eapli.framework.infrastructure.authz.domain.model.SystemUser;
 import eapli.framework.validations.Preconditions;
 
+/**
+ * @author 2DI2
+ */
 @Entity
 @Table(name = "T_CANDIDATE")
 public class Candidate implements AggregateRoot<EmailAddress> {

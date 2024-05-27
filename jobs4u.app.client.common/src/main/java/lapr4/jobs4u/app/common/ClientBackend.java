@@ -9,6 +9,9 @@ import org.apache.logging.log4j.Logger;
 import lapr4.jobs4u.protocol.MessageCode;
 import lapr4.jobs4u.protocol.ProtocolMessage;
 
+/**
+ * @author 2DI2
+ */
 public class ClientBackend {
 
     private final Logger logger = LogManager.getLogger(CredentialAuth.class);

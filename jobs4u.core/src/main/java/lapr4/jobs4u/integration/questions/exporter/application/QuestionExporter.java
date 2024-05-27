@@ -5,6 +5,9 @@ import java.io.IOException;
 import lapr4.jobs4u.questionmanagement.domain.InterviewQuestion;
 import lapr4.jobs4u.questionmanagement.domain.RequirementsQuestion;
 
+/**
+ * @author 2DI2
+ */
 public interface QuestionExporter {
 
     /**

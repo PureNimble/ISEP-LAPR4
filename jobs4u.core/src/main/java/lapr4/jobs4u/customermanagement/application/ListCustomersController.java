@@ -10,8 +10,7 @@ import eapli.framework.application.UseCaseController;
 import eapli.framework.infrastructure.authz.application.AuthorizationService;
 
 /**
- *
- * @author losa
+ * @author 2DI2
  */
 @UseCaseController
 public class ListCustomersController {

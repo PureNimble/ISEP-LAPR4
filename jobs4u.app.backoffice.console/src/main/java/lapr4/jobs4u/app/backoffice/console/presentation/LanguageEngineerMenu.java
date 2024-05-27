@@ -4,6 +4,9 @@ import eapli.framework.actions.Actions;
 import eapli.framework.actions.menu.Menu;
 import lapr4.jobs4u.app.backoffice.console.presentation.authz.action.CreatePluginsAction;
 
+/**
+ * @author 2DI2
+ */
 public class LanguageEngineerMenu extends Menu {
 
     private static final int ADD_PLUGINS = 1;

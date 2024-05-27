@@ -15,6 +15,9 @@ import lapr4.jobs4u.recruitmentprocessmanagement.domain.RecruitmentProcess;
 import lapr4.jobs4u.recruitmentprocessmanagement.repositories.RecruitmentProcessRepository;
 import lapr4.jobs4u.usermanagement.domain.BaseRoles;
 
+/**
+ * @author 2DI2
+ */
 @UseCaseController
 public class OpenOrClosePhaseController {
 
@@ -26,10 +29,12 @@ public class OpenOrClosePhaseController {
     private final ApplicationRepository ApplicationRepository;
     private final TransactionalContext txCtx;
 
-    public OpenOrClosePhaseController(RecruitmentProcessRepository recruitmentProcessRepository,
-            JobOpeningRepository jobOpeningRepository, JobOpeningRequirementRepository jobOpeningRequirementRepository,
-            JobOpeningInterviewRepository JobOpeningInterviewRepository, ApplicationRepository ApplicationRepository,
-            AuthorizationService authz, TransactionalContext txCtx) {
+    public OpenOrClosePhaseController(final RecruitmentProcessRepository recruitmentProcessRepository,
+            final JobOpeningRepository jobOpeningRepository,
+            final JobOpeningRequirementRepository jobOpeningRequirementRepository,
+            final JobOpeningInterviewRepository JobOpeningInterviewRepository,
+            final ApplicationRepository ApplicationRepository,
+            final AuthorizationService authz, final TransactionalContext txCtx) {
         this.recruitmentProcessRepository = recruitmentProcessRepository;
         this.jobOpeningRepository = jobOpeningRepository;
         this.jobOpeningRequirementRepository = jobOpeningRequirementRepository;
@@ -39,7 +44,7 @@ public class OpenOrClosePhaseController {
         this.txCtx = txCtx;
     }
 
-    public String currentPhase(JobOpening jobOpening) {
+    public String currentPhase(final JobOpening jobOpening) {
         authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.CUSTOMER_MANAGER, BaseRoles.POWERUSER);
         Optional<String> phaseOpt = recruitmentProcessRepository.currentPhase(jobOpening);
         if (!phaseOpt.isPresent()) {
@@ -49,7 +54,8 @@ public class OpenOrClosePhaseController {
         return phase;
     }
 
-    public boolean changePhase(String currentPhase, JobOpening theJobOpening, Boolean moveUp) throws Exception {
+    public boolean changePhase(final String currentPhase, final JobOpening theJobOpening, final Boolean moveUp)
+            throws Exception {
         authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.CUSTOMER_MANAGER, BaseRoles.POWERUSER);
         RecruitmentProcess recruitmentProcess = recruitmentProcessRepository.findByJobOpening(theJobOpening).get();
 
@@ -182,15 +188,15 @@ public class OpenOrClosePhaseController {
 
     }
 
-    private boolean hasInterviewModel(JobOpening theJobOpening) {
+    private boolean hasInterviewModel(final JobOpening theJobOpening) {
         return JobOpeningInterviewRepository.findJobOpeningInterviewsByJobOpening(theJobOpening).isPresent();
     }
 
-    private boolean hasRequirements(JobOpening theJobOpening) {
+    private boolean hasRequirements(final JobOpening theJobOpening) {
         return jobOpeningRequirementRepository.findJobOpeningRequirementsByJobOpening(theJobOpening).isPresent();
     }
 
-    private boolean hasApplications(JobOpening theJobOpening) {
+    private boolean hasApplications(final JobOpening theJobOpening) {
         return ApplicationRepository.filterByJobOpening(theJobOpening).iterator().hasNext();
     }
 }

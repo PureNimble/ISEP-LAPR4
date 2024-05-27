@@ -10,6 +10,9 @@ import eapli.framework.domain.repositories.ConcurrencyException;
 import eapli.framework.domain.repositories.IntegrityViolationException;
 import eapli.framework.infrastructure.authz.application.AuthzRegistry;
 
+/**
+ * @author 2DI2
+ */
 public class QuestionTypeBootstrapper implements Action {
 
 	private static final Logger LOGGER = LogManager.getLogger(QuestionTypeBootstrapper.class);

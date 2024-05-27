@@ -10,6 +10,9 @@ import lapr4.jobs4u.customermanagement.domain.CustomerCode;
 import lapr4.jobs4u.jobopeningmanagement.domain.JobOpening;
 import lapr4.jobs4u.jobopeningmanagement.domain.JobReference;
 
+/**
+ * @author 2DI2
+ */
 public interface JobOpeningRepository extends DomainRepository<JobReference, JobOpening> {
 
     Iterable<JobOpening> filterByCostumerManager(final Username username);
@@ -26,8 +29,8 @@ public interface JobOpeningRepository extends DomainRepository<JobReference, Job
 
     Iterable<JobOpening> filterWithInterview();
 
-    Iterable<JobOpening> filterWithAvailablePhaseForInterviews(Username username);
+    Iterable<JobOpening> filterWithAvailablePhaseForInterviews(final Username username);
 
-    Iterable<JobOpening> filterWithAvailablePhaseForRequirements(Username username);
+    Iterable<JobOpening> filterWithAvailablePhaseForRequirements(final Username username);
 
 }

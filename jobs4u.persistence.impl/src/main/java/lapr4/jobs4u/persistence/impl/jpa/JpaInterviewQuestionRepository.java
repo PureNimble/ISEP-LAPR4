@@ -6,6 +6,9 @@ import lapr4.jobs4u.Application;
 import lapr4.jobs4u.questionmanagement.domain.InterviewQuestion;
 import lapr4.jobs4u.questionmanagement.repositories.InterviewQuestionRepository;
 
+/**
+ * @author 2DI2
+ */
 class JpaInterviewQuestionRepository extends JpaAutoTxRepository<InterviewQuestion, Long, Long> implements InterviewQuestionRepository {
 
     public JpaInterviewQuestionRepository(final TransactionalContext autoTx) {

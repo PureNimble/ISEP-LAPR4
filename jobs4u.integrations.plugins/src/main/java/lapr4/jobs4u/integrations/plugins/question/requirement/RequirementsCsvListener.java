@@ -12,6 +12,9 @@ import lapr4.jobs4u.importer.csv.generated.requirement.RequirementsCsvParser;
 import lapr4.jobs4u.questionmanagement.domain.Answer;
 import lapr4.jobs4u.questionmanagement.dto.RequirementsQuestionDTO;
 
+/**
+ * @author 2DI2
+ */
 public class RequirementsCsvListener extends RequirementsCsvBaseListener {
 
     private final List<RequirementsQuestionDTO> questions = new ArrayList<>();

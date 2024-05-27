@@ -3,6 +3,9 @@ package lapr4.jobs4u.applicationmanagement.application;
 import lapr4.jobs4u.applicationmanagement.repositories.ApplicationRepository;
 import lapr4.jobs4u.jobopeningmanagement.domain.JobReference;
 
+/**
+ * @author 2DI2
+ */
 public class ImportApplicationsService {
 
     private final ApplicationRepository applicationRepository;

@@ -16,6 +16,9 @@ import lapr4.jobs4u.usermanagement.domain.BaseRoles;
 import eapli.framework.infrastructure.authz.application.AuthorizationService;
 import eapli.framework.infrastructure.authz.domain.model.SystemUser;
 
+/**
+ * @author 2DI2
+ */
 @Component
 public class ListJobOpeningsService {
 

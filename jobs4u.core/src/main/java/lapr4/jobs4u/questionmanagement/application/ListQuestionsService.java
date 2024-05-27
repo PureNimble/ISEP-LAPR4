@@ -5,6 +5,9 @@ import lapr4.jobs4u.questionmanagement.domain.RequirementsQuestion;
 import lapr4.jobs4u.questionmanagement.repositories.InterviewQuestionRepository;
 import lapr4.jobs4u.questionmanagement.repositories.RequirementsQuestionRepository;
 
+/**
+ * @author 2DI2
+ */
 public class ListQuestionsService {
 
     private final InterviewQuestionRepository interviewQuestionRepository;

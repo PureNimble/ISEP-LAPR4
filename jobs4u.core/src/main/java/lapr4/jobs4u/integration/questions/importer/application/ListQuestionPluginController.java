@@ -7,6 +7,9 @@ import lapr4.jobs4u.integration.questions.importer.domain.QuestionImporterPlugin
 import lapr4.jobs4u.integration.questions.importer.repositories.QuestionImporterPluginRepository;
 import lapr4.jobs4u.usermanagement.domain.BaseRoles;
 
+/**
+ * @author 2DI2
+ */
 @UseCaseController
 public class ListQuestionPluginController  {
 

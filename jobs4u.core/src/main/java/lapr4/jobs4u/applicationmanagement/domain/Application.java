@@ -33,6 +33,9 @@ import lapr4.jobs4u.candidatemanagement.domain.Candidate;
 import lapr4.jobs4u.jobopeningmanagement.domain.JobOpening;
 import lapr4.jobs4u.recruitmentprocessmanagement.domain.Date;
 
+/**
+ * @author 2DI2
+ */
 @Entity
 @Table(name = "T_APPLICATION")
 public class Application implements AggregateRoot<ApplicationCode>, Runnable {

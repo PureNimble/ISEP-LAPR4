@@ -7,6 +7,9 @@ import lapr4.jobs4u.candidatemanagement.dto.CandidateDTO;
 import lapr4.jobs4u.candidatemanagement.repositories.CandidateRepository;
 import lapr4.jobs4u.usermanagement.domain.BaseRoles;
 
+/**
+ * @author 2DI2
+ */
 @UseCaseController
 public class ListCandidatesDataController {
     private final AuthorizationService authz;

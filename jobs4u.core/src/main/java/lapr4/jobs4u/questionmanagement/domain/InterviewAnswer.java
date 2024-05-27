@@ -6,6 +6,9 @@ import jakarta.xml.bind.annotation.XmlAccessorType;
 import jakarta.xml.bind.annotation.XmlValue;
 import jakarta.xml.bind.annotation.XmlAccessType;
 
+/**
+ * @author 2DI2
+ */
 @Embeddable
 @XmlAccessorType(XmlAccessType.FIELD)
 public class InterviewAnswer {

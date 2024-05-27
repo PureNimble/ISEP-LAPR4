@@ -13,6 +13,9 @@ import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.Version;
 
+/**
+ * @author 2DI2
+ */
 @Entity
 @Table(name = "T_CUSTOMER_USER")
 public class CustomerUser implements AggregateRoot<Long> {

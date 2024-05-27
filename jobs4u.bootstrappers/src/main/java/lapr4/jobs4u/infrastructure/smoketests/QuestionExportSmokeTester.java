@@ -14,6 +14,9 @@ import eapli.framework.io.util.Files;
 import lapr4.jobs4u.integration.questions.exporter.application.FileFormat;
 import lapr4.jobs4u.integration.questions.exporter.application.QuestionExporterController;
 
+/**
+ * @author 2DI2
+ */
 public class QuestionExportSmokeTester implements Action {
 
 	private static final Logger LOGGER = LogManager.getLogger(QuestionExportSmokeTester.class);

@@ -6,6 +6,9 @@ import eapli.framework.infrastructure.authz.domain.model.SystemUser;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+/**
+ * @author 2DI2
+ */
 public class CustomerUserBuilder implements DomainFactory<CustomerUser> {
 
     private static final Logger LOGGER = LogManager.getLogger(CustomerUserBuilder.class);

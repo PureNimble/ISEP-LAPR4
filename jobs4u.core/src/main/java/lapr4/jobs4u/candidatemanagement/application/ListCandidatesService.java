@@ -10,6 +10,9 @@ import lapr4.jobs4u.candidatemanagement.repositories.CandidateRepository;
 import lapr4.jobs4u.candidatemanagement.domain.Candidate;
 import lapr4.jobs4u.candidatemanagement.dto.CandidateDTO;
 
+/**
+ * @author 2DI2
+ */
 @Component
 public class ListCandidatesService {
 

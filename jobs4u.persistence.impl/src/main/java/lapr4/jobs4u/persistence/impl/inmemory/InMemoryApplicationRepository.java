@@ -11,8 +11,7 @@ import lapr4.jobs4u.jobopeningmanagement.domain.JobOpening;
 import lapr4.jobs4u.jobopeningmanagement.domain.JobReference;
 
 /**
- *
- * @author Jorge Santos ajs@isep.ipp.pt 02/04/2016
+ * @author 2DI2
  */
 public class InMemoryApplicationRepository extends InMemoryDomainRepository<Application, ApplicationCode>
         implements ApplicationRepository {

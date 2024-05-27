@@ -11,6 +11,9 @@ import eapli.framework.domain.repositories.TransactionalContext;
 import eapli.framework.general.domain.model.EmailAddress;
 import eapli.framework.infrastructure.repositories.impl.jpa.JpaAutoTxRepository;
 
+/**
+ * @author 2DI2
+ */
 class JpaCandidateRepository extends JpaAutoTxRepository<Candidate, EmailAddress, EmailAddress>
         implements CandidateRepository {
 

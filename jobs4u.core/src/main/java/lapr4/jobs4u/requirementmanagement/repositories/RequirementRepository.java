@@ -6,6 +6,9 @@ import eapli.framework.domain.repositories.DomainRepository;
 import lapr4.jobs4u.applicationmanagement.domain.Application;
 import lapr4.jobs4u.requirementmanagement.domain.Requirement;
 
+/**
+ * @author 2DI2
+ */
 public interface RequirementRepository extends DomainRepository<Long, Requirement> {
 
     Optional<Requirement> findRequirement(final Application application);

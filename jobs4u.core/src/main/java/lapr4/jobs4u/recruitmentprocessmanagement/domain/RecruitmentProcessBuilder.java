@@ -6,6 +6,9 @@ import org.apache.logging.log4j.Logger;
 import eapli.framework.domain.model.DomainFactory;
 import lapr4.jobs4u.jobopeningmanagement.domain.JobOpening;
 
+/**
+ * @author 2DI2
+ */
 public class RecruitmentProcessBuilder implements DomainFactory<RecruitmentProcess> {
 
     private static final Logger LOGGER = LogManager.getLogger(RecruitmentProcessBuilder.class);

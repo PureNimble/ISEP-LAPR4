@@ -18,6 +18,9 @@ import javax.swing.JDialog;
 import javax.swing.JFileChooser;
 import javax.swing.UIManager;
 
+/**
+ * @author 2DI2
+ */
 public class Utils {
 
     static public Calendar readDateFromConsole(String prompt, String dateFormat, String regex) {

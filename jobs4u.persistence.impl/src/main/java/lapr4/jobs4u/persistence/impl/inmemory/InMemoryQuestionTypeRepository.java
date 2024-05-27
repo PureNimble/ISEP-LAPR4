@@ -4,6 +4,9 @@ import eapli.framework.infrastructure.repositories.impl.inmemory.InMemoryDomainR
 import lapr4.jobs4u.questionmanagement.domain.QuestionType;
 import lapr4.jobs4u.questionmanagement.repositories.QuestionTypeRepository;
 
+/**
+ * @author 2DI2
+ */
 public class InMemoryQuestionTypeRepository
         extends InMemoryDomainRepository<QuestionType, String>
         implements QuestionTypeRepository {

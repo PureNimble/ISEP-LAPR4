@@ -9,6 +9,9 @@ import java.util.Calendar;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+/**
+ * @author 2DI2
+ */
 public class JobOpeningBuilder implements DomainFactory<JobOpening> {
 
     private static final Logger LOGGER = LogManager.getLogger(JobOpeningBuilder.class);

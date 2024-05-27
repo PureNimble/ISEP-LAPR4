@@ -4,7 +4,6 @@ import jakarta.persistence.Embeddable;
 import jakarta.persistence.Transient;
 
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
@@ -14,6 +13,9 @@ import eapli.framework.domain.model.ValueObject;
 import eapli.framework.io.util.Files;
 import eapli.framework.validations.Preconditions;
 
+/**
+ * @author 2DI2
+ */
 @Embeddable
 public class File implements ValueObject, Comparable<File>, Runnable {
 
@@ -66,9 +68,9 @@ public class File implements ValueObject, Comparable<File>, Runnable {
         return path.compareTo(arg0.path);
     }
 
-    private static boolean isFileValid(final String file) {
+    /* private static boolean isFileValid(final String file) {
         return java.nio.file.Files.exists(java.nio.file.Paths.get(file));
-    }
+    } */
 
     public String fileName() {
         return this.path.substring(this.path.lastIndexOf('/') + 1);

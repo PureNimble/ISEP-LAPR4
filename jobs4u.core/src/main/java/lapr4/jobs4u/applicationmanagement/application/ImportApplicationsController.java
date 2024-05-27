@@ -30,6 +30,9 @@ import lapr4.jobs4u.jobopeningmanagement.domain.JobReference;
 import lapr4.jobs4u.jobopeningmanagement.repositories.JobOpeningRepository;
 import lapr4.jobs4u.recruitmentprocessmanagement.domain.Date;
 
+/**
+ * @author 2DI2
+ */
 @UseCaseController
 public class ImportApplicationsController {
 

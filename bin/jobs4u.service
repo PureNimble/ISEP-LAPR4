@@ -1,0 +1,14 @@
+[Unit]
+Description=My Java forking service
+After=syslog.target network.target
+
+[Service]
+SuccessExitStatus=143
+User=root
+Type=forking
+PIDFile=/root/sem4pi-23-24-2di2/serverapp.pid
+ExecStart=/root/sem4pi-23-24-2di2/bin/run-server.sh
+ExecStop=/bin/kill -15 $MAINPID
+
+[Install]
+WantedBy=multi-user.target

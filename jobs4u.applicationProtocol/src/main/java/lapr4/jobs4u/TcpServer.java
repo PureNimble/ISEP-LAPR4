@@ -7,6 +7,9 @@ import java.net.Socket;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+/**
+ * @author 2DI2
+ */
 public class TcpServer {
 
     private final Logger logger = LogManager.getLogger(TcpServer.class);

@@ -11,6 +11,9 @@ import java.util.Map;
 import eapli.framework.infrastructure.authz.domain.model.SystemUser;
 import lapr4.jobs4u.protocol.ProtocolMessage;
 
+/**
+ * @author 2DI2
+ */
 public class EventListener {
 
     private Map<SystemUser, List<Socket>> clientSockets;

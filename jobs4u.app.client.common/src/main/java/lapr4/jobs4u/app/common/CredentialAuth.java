@@ -9,6 +9,9 @@ import lapr4.jobs4u.infrastructure.authz.CredentialHandler;
 import lapr4.jobs4u.protocol.MessageCode;
 import lapr4.jobs4u.protocol.ProtocolMessage;
 
+/**
+ * @author 2DI2
+ */
 public class CredentialAuth {
 
     private final Logger logger = LogManager.getLogger(CredentialAuth.class);
@@ -32,8 +35,7 @@ public class CredentialAuth {
             final ProtocolMessage response;
             try {
                 response = listener.sendRecv(new ProtocolMessage((byte) 1, MessageCode.AUTH, u, p, r.toString()));
-                logger.info("\n Protocol Version: " + response.protocolVersion() + "\n Message Code: "
-                        + response.code().toString());
+                logger.info(response.toString());
                 if (response.code() == MessageCode.ACK) {
                     email = u;
                     return true;

@@ -16,6 +16,9 @@ import lapr4.jobs4u.infrastructure.authz.AuthenticationCredentialHandler;
 import lapr4.jobs4u.protocol.MessageCode;
 import lapr4.jobs4u.protocol.ProtocolMessage;
 
+/**
+ * @author 2DI2
+ */
 public class ChangePassMessage extends Message {
 
     public ChangePassMessage(final ProtocolMessage protocolMessage, final DataOutputStream output, final Socket socket,

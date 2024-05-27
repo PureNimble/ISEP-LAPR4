@@ -21,6 +21,9 @@ import lapr4.jobs4u.message.Message;
 import lapr4.jobs4u.protocol.MessageCode;
 import lapr4.jobs4u.protocol.ProtocolMessage;
 
+/**
+ * @author 2DI2
+ */
 public class ClientHandler implements Runnable {
 
     private final static Map<MessageCode, Class<? extends Message>> MESSAGE_MAP = new HashMap<>() {

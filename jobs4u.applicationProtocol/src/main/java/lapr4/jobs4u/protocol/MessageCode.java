@@ -3,6 +3,9 @@ package lapr4.jobs4u.protocol;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * @author 2DI2
+ */
 public enum MessageCode {
 
     COMMTEST((byte) 0),

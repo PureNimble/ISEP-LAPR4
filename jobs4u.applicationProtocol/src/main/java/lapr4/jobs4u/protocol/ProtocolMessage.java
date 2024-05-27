@@ -9,6 +9,9 @@ import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @author 2DI2
+ */
 public class ProtocolMessage {
 
     private final byte protocolVersion;

@@ -5,6 +5,9 @@ import eapli.framework.infrastructure.authz.domain.model.PlainTextEncoder;
 import lapr4.jobs4u.usermanagement.domain.BasePasswordPolicy;
 import lapr4.jobs4u.infrastructure.persistence.PersistenceContext;
 
+/**
+ * @author 2DI2
+ */
 public class ServerApp {
     public static void main(String[] args) {
         AuthzRegistry.configure(PersistenceContext.repositories().users(), new BasePasswordPolicy(),

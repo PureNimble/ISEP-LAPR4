@@ -103,42 +103,44 @@ public class Utils {
         return value == 0 ? null : list.get(value - 1);
     }
 
-    static public String getPath(boolean isDirectory) {
+    static public Path getPath(final boolean isDirectory) {
         try {
             // Set system look and feel
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-        } catch (Exception e) {
+        } catch (final Exception e) {
             e.printStackTrace();
         }
 
-        JFileChooser chooser = new JFileChooser();
+        final JFileChooser chooser = new JFileChooser();
         chooser.setCurrentDirectory(new File(System.getProperty("user.dir")));
-        int selectionMode = isDirectory ? JFileChooser.DIRECTORIES_ONLY : JFileChooser.FILES_ONLY;
+        final int selectionMode = isDirectory ? JFileChooser.DIRECTORIES_ONLY : JFileChooser.FILES_ONLY;
         chooser.setFileSelectionMode(selectionMode);
-        JDialog dialog = new JDialog();
+        final JDialog dialog = new JDialog();
         dialog.setIconImage(null); // Remove application icon
-        int returnVal = chooser.showOpenDialog(dialog);
+        final int returnVal = chooser.showOpenDialog(dialog);
 
         if (returnVal == JFileChooser.APPROVE_OPTION) {
-            Path currentPath = Paths.get(System.getProperty("user.dir"));
-            Path absolutePath = Paths.get(chooser.getSelectedFile().getAbsolutePath());
-            Path relativePath = currentPath.relativize(absolutePath);
-            String relativePathStr = relativePath.toString();
-            return relativePathStr.replace("\\", "/");
+            final Path currentPath = Paths.get(System.getProperty("user.dir"));
+            final Path absolutePath = Paths.get(chooser.getSelectedFile().getAbsolutePath());
+            if (currentPath.getRoot().equals(absolutePath.getRoot())) {
+                final Path relativePath = currentPath.relativize(absolutePath);
+                return relativePath;
+            } else {
+                return absolutePath;
+            }
         }
 
         return null;
     }
 
-    static public Boolean copyFile(String source, String destination) {
+    static public Boolean copyFile(final Path source, final String destination) {
         try {
-            File sourceFile = new File(source);
-            File destinationFile = new File(destination);
-            java.nio.file.Files.copy(sourceFile.toPath(), destinationFile.toPath(),
+            final File destinationFile = new File(destination);
+            java.nio.file.Files.copy(source, destinationFile.toPath(),
                     StandardCopyOption.REPLACE_EXISTING);
             return true;
-        } catch (Exception e) {
-            System.out.println("Error copying file");
+        } catch (final Exception e) {
+            System.out.println("Error copying file: " + e.getMessage());
             return false;
         }
     }

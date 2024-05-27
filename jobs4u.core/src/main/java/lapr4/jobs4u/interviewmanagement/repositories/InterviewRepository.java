@@ -8,5 +8,5 @@ import lapr4.jobs4u.interviewmanagement.domain.Interview;
 
 public interface InterviewRepository extends DomainRepository<Long, Interview> {
 
-    Optional<Interview> findInterview(Application application);
+    Optional<Interview> findInterview(final Application application);
 }

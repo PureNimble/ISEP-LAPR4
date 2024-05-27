@@ -1,5 +1,9 @@
 package lapr4.jobs4u.app.backoffice.console.presentation.authz;
 
+import java.io.IOException;
+
+import java.nio.file.Path;
+
 import eapli.framework.infrastructure.authz.application.AuthzRegistry;
 import eapli.framework.presentation.console.AbstractUI;
 import eapli.framework.presentation.console.SelectWidget;
@@ -16,12 +20,15 @@ import lapr4.jobs4u.jobopeningmanagement.application.ListJobOpeningsController;
 import lapr4.jobs4u.jobopeningmanagement.domain.JobOpening;
 import lapr4.jobs4u.jobopeningmanagement.dto.JobOpeningDTO;
 
+/**
+ * @author 2DI2
+ */
 public class UploadInterviewUI extends AbstractUI {
 
     private final UploadInterviewController controller;
     private final ListApplicationsController applicationController;
     private final ListJobOpeningsController jobOpeningsController;
-    private static final String OUTPUT_FOLDER = "./jobs4u.ANTLR/src/main/resources/answers/";
+    private static final String OUTPUT_FOLDER = "./jobs4u.ANTLR/src/main/resources/input/answers/";
 
     public UploadInterviewUI() {
         controller = new UploadInterviewController(PersistenceContext.repositories().interviews(),
@@ -35,21 +42,24 @@ public class UploadInterviewUI extends AbstractUI {
     @Override
     protected boolean doShow() {
 
-        Application app = selectApplication();
+        final Application app = selectApplication();
         if (app == null)
             return false;
-        // list interviews
-        Interview i = controller.findInterview(app);
-        if (i == null) {
+        final Interview interview = controller.findInterview(app);
+        if (interview == null) {
             return false;
         }
-        String file = Utils.getPath(false);
-        Utils.copyFile(file, OUTPUT_FOLDER);
-
-        checkInterview(file, i);
-        Utils.copyFile(file, OUTPUT_FOLDER);
-        controller.save(i);
-
+        final Path file = Utils.getPath(false);
+        final String finalPath = OUTPUT_FOLDER + file.getFileName().toString();
+        if (!Utils.copyFile(file, finalPath))
+            return false;
+        try {
+            if (!controller.isCorrectInterview(interview, finalPath))
+                return false;
+        } catch (final IOException e) {
+            System.out.println("Error reading file: " + e.getMessage());
+        }
+        controller.registerInterview(interview, finalPath);
         return false;
 
     }
@@ -78,10 +88,6 @@ public class UploadInterviewUI extends AbstractUI {
 
     @Override
     public String headline() {
-        return "Import Applications";
-    }
-
-    private void checkInterview(String file, Interview interview) {
-
+        return "Upload Interview";
     }
 }

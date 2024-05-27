@@ -6,6 +6,7 @@ import java.net.Socket;
 import java.nio.charset.StandardCharsets;
 import java.util.Optional;
 
+import eapli.framework.infrastructure.authz.application.AuthorizationService;
 import eapli.framework.infrastructure.authz.application.AuthzRegistry;
 import eapli.framework.infrastructure.authz.application.UserManagementService;
 import eapli.framework.infrastructure.authz.domain.model.Role;
@@ -15,7 +16,6 @@ import lapr4.jobs4u.EventListener;
 import lapr4.jobs4u.infrastructure.authz.AuthenticationCredentialHandler;
 import lapr4.jobs4u.protocol.MessageCode;
 import lapr4.jobs4u.protocol.ProtocolMessage;
-import lapr4.jobs4u.usermanagement.dto.SystemUserDTO;
 
 public class AuthMessage extends Message {
 
@@ -29,11 +29,12 @@ public class AuthMessage extends Message {
 
         final AuthenticationCredentialHandler credentialHandler = new AuthenticationCredentialHandler();
         final UserManagementService userSvc = AuthzRegistry.userService();
+        final AuthorizationService authorizationService = AuthzRegistry.authorizationService();
 
         byte[][] dataChunks = request.datachunks();
 
-        if (dataChunks.length < 2) {
-            new ErrMessage(new ProtocolMessage((byte) 1, MessageCode.BADREQUEST), output, socket, eventListener).handle();
+        if (dataChunks.length < 3) {
+            new ErrMessage(new ProtocolMessage((byte) 1, MessageCode.ERR), output, socket, eventListener).handle();
             return;
         }
 
@@ -53,13 +54,9 @@ public class AuthMessage extends Message {
             return;
         }
 
-        final SystemUser systemUser = optional.get();
+        send(new ProtocolMessage((byte) 1, MessageCode.ACK));
 
-        final SystemUserDTO systemUserDTO = new SystemUserDTO(systemUser.username().toString(),
-                systemUser.name().toString(), systemUser.email().toString(), systemUser.roleTypes().toString());
-
-        send(new ProtocolMessage((byte) 1, MessageCode.ACK, systemUserDTO));
-
-        eventListener.addClient(usernameStr, socket);
+        eventListener.addClient(optional.get(), socket);
+        authorizationService.clearSession();
     }
 }

@@ -33,17 +33,12 @@ public class LogoutAction implements Action {
 
     @Override
     public boolean execute() {
-        boolean disconnected = false;
-        ProtocolMessage response;
         try {
-            do {
-                response = ClientBackend.getInstance().listener()
-                        .sendRecv(new ProtocolMessage((byte) 1, MessageCode.LOGOUT));
-                if (response.code() == MessageCode.ACK) {
-                    disconnected = true;
-                }
-            } while (!disconnected);
+            final ClientBackend client = ClientBackend.getInstance();
+            final ProtocolMessage response = client.listener()
+                    .sendRecv(new ProtocolMessage((byte) 1, MessageCode.LOGOUT));
             System.out.println(response.toString());
+            client.credentialAuth().clear();
             return true;
         } catch (final IOException | ClassNotFoundException e) {
             e.printStackTrace();

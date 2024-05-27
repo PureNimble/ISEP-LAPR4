@@ -12,6 +12,7 @@ import org.apache.logging.log4j.Logger;
 
 import lapr4.jobs4u.message.AckMessage;
 import lapr4.jobs4u.message.AuthMessage;
+import lapr4.jobs4u.message.ChangePassMessage;
 import lapr4.jobs4u.message.CommTestMessage;
 import lapr4.jobs4u.message.DisconnMessage;
 import lapr4.jobs4u.message.ErrMessage;
@@ -29,8 +30,8 @@ public class ClientHandler implements Runnable {
             put(MessageCode.DISCONN, DisconnMessage.class);
             put(MessageCode.ERR, ErrMessage.class);
             put(MessageCode.AUTH, AuthMessage.class);
-            put(MessageCode.BADREQUEST, ErrMessage.class);
             put(MessageCode.LOGOUT, LogoutMessage.class);
+            put(MessageCode.CHANGEPASS, ChangePassMessage.class);
         }
     };
 
@@ -63,9 +64,9 @@ public class ClientHandler implements Runnable {
                     logger.info("\n" + message.toString());
 
                     processMessage(message, output);
-                } catch (Exception e) {
-                    (new ErrMessage(new ProtocolMessage((byte) 1, MessageCode.BADREQUEST), output, socket,
-                            eventListener)).handle();
+                } catch (final Exception e) {
+                    new ErrMessage(new ProtocolMessage((byte) 1, MessageCode.ERR, "Bad Request"), output, socket,
+                            eventListener).handle();
                 }
             }
 
@@ -84,8 +85,8 @@ public class ClientHandler implements Runnable {
         Class<? extends Message> clazz = MESSAGE_MAP.get(message.code());
 
         if (clazz == null) {
-            handleMessage = new ErrMessage(new ProtocolMessage((byte) 1, MessageCode.BADREQUEST), output, socket,
-                    eventListener);
+            handleMessage = new ErrMessage(new ProtocolMessage((byte) 1, MessageCode.ERR, "Bad Request"), output,
+                    socket, eventListener);
 
         } else {
             try {

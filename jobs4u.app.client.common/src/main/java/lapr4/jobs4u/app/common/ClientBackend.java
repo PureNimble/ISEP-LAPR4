@@ -59,13 +59,11 @@ public class ClientBackend {
         listenerThread.start();
     }
 
-    public boolean disconnect() throws IOException, ClassNotFoundException {
+    public void disconnect() throws IOException, ClassNotFoundException {
         final ProtocolMessage response = tcpClient.sendRecv(new ProtocolMessage((byte) 1, MessageCode.DISCONN));
         if (response.code() == MessageCode.ACK) {
             tcpClient.disconnect();
-            logger.info("Disconnected from the server");
-            return true;
+            logger.info(response.toString());
         }
-        return false;
     }
 }

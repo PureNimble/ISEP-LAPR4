@@ -8,17 +8,18 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import eapli.framework.infrastructure.authz.domain.model.SystemUser;
 import lapr4.jobs4u.protocol.ProtocolMessage;
 
 public class EventListener {
 
-    private Map<String, List<Socket>> clientSockets;
+    private Map<SystemUser, List<Socket>> clientSockets;
 
     public EventListener() {
         this.clientSockets = new HashMap<>();
     }
 
-    public void addClient(final String username, final Socket socket) {
+    public void addClient(final SystemUser username, final Socket socket) {
         List<Socket> list = clientSockets.get(username);
 
         if (list == null) {
@@ -31,7 +32,7 @@ public class EventListener {
 
     public void removeClient(final Socket socket) {
 
-        for (String username : clientSockets.keySet()) {
+        for (final SystemUser username : clientSockets.keySet()) {
             List<Socket> list = clientSockets.get(username);
 
             if (list != null)
@@ -39,7 +40,7 @@ public class EventListener {
         }
     }
 
-    public void send(final String id, final ProtocolMessage message) {
+    public void send(final SystemUser id, final ProtocolMessage message) {
         final List<Socket> clients = this.clientSockets.get(id);
         DataOutputStream out;
 
@@ -53,5 +54,16 @@ public class EventListener {
                 }
             }
         }
+    }
+
+    public SystemUser user(final Socket socket) {
+        for (final SystemUser username : clientSockets.keySet()) {
+            List<Socket> list = clientSockets.get(username);
+
+            if (list != null && list.contains(socket))
+                return username;
+        }
+
+        return null;
     }
 }

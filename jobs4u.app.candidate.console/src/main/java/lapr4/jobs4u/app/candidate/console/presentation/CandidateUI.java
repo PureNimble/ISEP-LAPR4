@@ -20,11 +20,8 @@
  */
 package lapr4.jobs4u.app.candidate.console.presentation;
 
-import java.util.Optional;
-
 import eapli.framework.presentation.console.AbstractUI;
 import lapr4.jobs4u.app.common.ClientBackend;
-import lapr4.jobs4u.usermanagement.dto.SystemUserDTO;
 
 /**
  *
@@ -36,8 +33,8 @@ public abstract class CandidateUI extends AbstractUI {
     @Override
     public String headline() {
 
-        Optional<SystemUserDTO> user = ClientBackend.getInstance().credentialAuth().systemUser();
-        return (user.isPresent() ? "Candidate App [ @" + user.get().getName() + " ] " : "Candidate App [ ==Anonymous== ]");
+        final String email = ClientBackend.getInstance().credentialAuth().email();
+        return (email != null ? "Candidate App [ @" + email + " ] " : "Candidate App [ ==Anonymous== ]");
     }
 
     @Override

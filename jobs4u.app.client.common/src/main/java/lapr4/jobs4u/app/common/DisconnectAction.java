@@ -8,11 +8,8 @@ public class DisconnectAction implements Action {
 
     @Override
     public boolean execute() {
-        boolean disconnected = false;
         try {
-            do {
-                disconnected = ClientBackend.getInstance().disconnect();
-            } while (!disconnected);
+            ClientBackend.getInstance().disconnect();
             return true;
         } catch (final IOException | ClassNotFoundException e) {
             e.printStackTrace();

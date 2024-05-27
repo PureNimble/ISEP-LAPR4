@@ -20,9 +20,8 @@
  */
 package lapr4.jobs4u.app.customer.console.presentation;
 
-import eapli.framework.infrastructure.authz.application.AuthorizationService;
-import eapli.framework.infrastructure.authz.application.AuthzRegistry;
 import eapli.framework.presentation.console.AbstractUI;
+import lapr4.jobs4u.app.common.ClientBackend;
 
 /**
  *
@@ -31,13 +30,11 @@ import eapli.framework.presentation.console.AbstractUI;
 @SuppressWarnings("squid:S106")
 public abstract class CustomerUI extends AbstractUI {
 
-    private final AuthorizationService authz = AuthzRegistry.authorizationService();
-
     @Override
     public String headline() {
 
-        return authz.session().map(s -> "Customer App [ @" + s.authenticatedUser().identity() + " ] ")
-                .orElse("Customer App [ ==Anonymous== ]");
+        final String email = ClientBackend.getInstance().credentialAuth().email();
+        return (email != null ? "Customer App [ @" + email + " ] " : "Customer App [ ==Anonymous== ]");
     }
 
     @Override

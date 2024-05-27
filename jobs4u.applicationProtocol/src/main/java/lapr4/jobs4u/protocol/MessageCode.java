@@ -10,8 +10,8 @@ public enum MessageCode {
     ACK((byte) 2),
     ERR((byte) 3),
     AUTH((byte) 4),
-    BADREQUEST((byte) 5),
-    LOGOUT((byte) 6);
+    LOGOUT((byte) 5),
+    CHANGEPASS((byte) 6);
 
     private static final Map<Byte, MessageCode> CODES = new HashMap<>();
 

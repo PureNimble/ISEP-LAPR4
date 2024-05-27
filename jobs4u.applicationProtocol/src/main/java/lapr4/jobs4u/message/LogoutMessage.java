@@ -17,7 +17,6 @@ public class LogoutMessage extends Message {
 
     @Override
     public void handle() throws IOException {
-        eventListener.removeClient(socket);
         send(new ProtocolMessage((byte) 1, MessageCode.ACK));
     }
 }

@@ -20,7 +20,7 @@ public class RecordRequirementController {
     }
 
     public void save(Requirement requirement) {
-        authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.CUSTOMER_MANAGER, BaseRoles.POWERUSER);
+        authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.OPERATOR, BaseRoles.POWERUSER);
         requirementRepository.save(requirement);
     }
 

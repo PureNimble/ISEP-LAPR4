@@ -25,7 +25,7 @@ public class UploadRequirementController {
     }
 
     public void registerRequirement(final Requirement requirement, final String filePath) {
-        authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.CUSTOMER_MANAGER, BaseRoles.POWERUSER);
+        authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.OPERATOR, BaseRoles.POWERUSER);
         final File file = File.valueOf(filePath);
         uploadRequirementService.registerRequirement(requirement, file);
     }
@@ -35,7 +35,7 @@ public class UploadRequirementController {
     }
 
     public Requirement findRequirement(final Application application) {
-        authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.CUSTOMER_MANAGER, BaseRoles.POWERUSER);
+        authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.OPERATOR, BaseRoles.POWERUSER);
         Optional<Requirement> i = uploadRequirementService.findRequirement(application);
 
         if (i.isPresent()) {

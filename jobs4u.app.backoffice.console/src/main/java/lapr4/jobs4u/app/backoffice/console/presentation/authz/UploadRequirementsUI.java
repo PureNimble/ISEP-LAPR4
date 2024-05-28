@@ -10,6 +10,8 @@ import lapr4.jobs4u.app.backoffice.console.presentation.authz.printer.JobOpening
 import lapr4.jobs4u.app.common.console.presentation.utils.Utils;
 import lapr4.jobs4u.applicationmanagement.application.ListApplicationsController;
 import lapr4.jobs4u.applicationmanagement.domain.Application;
+import lapr4.jobs4u.applicationmanagement.domain.OutcomeValue;
+import lapr4.jobs4u.applicationmanagement.domain.Result;
 import lapr4.jobs4u.applicationmanagement.dto.ApplicationDTO;
 import lapr4.jobs4u.infrastructure.persistence.PersistenceContext;
 import lapr4.jobs4u.jobopeningmanagement.application.ListJobOpeningsController;
@@ -87,9 +89,9 @@ public class UploadRequirementsUI extends AbstractUI {
         return applicationController.selectedApplication(theApplicationDTO);
     }
 
-    private Requirement createRequirement(Application app) {
+    private Requirement createRequirement(final Application app) {
         try {
-            return Requirement.valueOf(app);
+            return Requirement.valueOf(app, Result.valueOf(OutcomeValue.PENDING.toString()));
 
         } catch (final ConcurrencyException | IntegrityViolationException e) {
             System.out.println("Invalid data.");

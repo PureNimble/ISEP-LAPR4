@@ -3,6 +3,7 @@ package lapr4.jobs4u.requirementmanagement.domain;
 import eapli.framework.domain.model.AggregateRoot;
 import eapli.framework.domain.model.DomainEntities;
 import eapli.framework.validations.Preconditions;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -10,10 +11,13 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.Version;
 import lapr4.jobs4u.applicationmanagement.domain.Application;
 import lapr4.jobs4u.applicationmanagement.domain.File;
+import lapr4.jobs4u.applicationmanagement.domain.OutcomeValue;
+import lapr4.jobs4u.applicationmanagement.domain.Result;
 
 /**
  * @author 2DI2
@@ -38,25 +42,41 @@ public class Requirement implements AggregateRoot<Long> {
     @Column(nullable = true)
     private File file;
 
-    protected Requirement(final Application application) {
+    @OneToOne(cascade = CascadeType.ALL)
+    private Result result;
+
+    protected Requirement(final Application application, Result result) {
         Preconditions.noneNull(new Object[] { application });
         this.application = application;
+        this.result = result;
     }
 
     protected Requirement() {
         // for ORM only
     }
 
-    public static Requirement valueOf(final Application application) {
-        return new Requirement(application);
+    public static Requirement valueOf(final Application application, final Result result) {
+        return new Requirement(application, result);
     }
 
     public void addFile(final File file) {
         this.file = file;
     }
 
+    public void addResult(String outcome) {
+        this.result.addOutcome(outcome);
+    }
+
+    public void addResult(String outcome, String justification) {
+        this.result.addOutcome(outcome, justification);
+    }
+
     public Application application() {
         return this.application;
+    }
+
+    public File file() {
+        return this.file;
     }
 
     @Override

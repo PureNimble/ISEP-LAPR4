@@ -1,0 +1,1 @@
+java -jar fake-smtp-server-2.2.1.jar -Dspring.config.location=/root/sem4pi-23-24-2di2/bin/application.yaml

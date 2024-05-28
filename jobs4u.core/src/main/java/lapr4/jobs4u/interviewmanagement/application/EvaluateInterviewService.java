@@ -62,8 +62,9 @@ public class EvaluateInterviewService {
         final Iterable<InterviewQuestion> interviewQuestions = interviewQuestionRepository
                 .findQuestionsByPlugin(plugin.identity().toString());
         Map<QuestionBody, Pair<Cotation, List<InterviewAnswer>>> interviewAnswersForQuestion = new HashMap<>();
-        List<InterviewAnswer> interviewAnswers = new ArrayList<>();
+        List<InterviewAnswer> interviewAnswers;
         for (final InterviewQuestion interviewQuestion : interviewQuestions) {
+            interviewAnswers = new ArrayList<>();
             interviewAnswers.addAll(interviewQuestion.possibleAnswers());
             final Pair<Cotation, List<InterviewAnswer>> pair = Pair.of(interviewQuestion.cotation(), interviewAnswers);
             interviewAnswersForQuestion.put(interviewQuestion.questionBody(), pair);
@@ -97,7 +98,6 @@ public class EvaluateInterviewService {
         }
 
         final EvaluateInterviewAnswersVisitor visitor = new EvaluateInterviewAnswersVisitor();
-
         final Map<QuestionBody, Answer> candidateAnswers = visitor.visit(tree);
 
         Double grade = 0.0;
@@ -107,20 +107,19 @@ public class EvaluateInterviewService {
             final Pair<Cotation, List<InterviewAnswer>> pair = entry.getValue();
             final Answer candidateAnswer = candidateAnswers.get(questionBody);
             
-            Double answerRating = 0.0;
+            Double answerCotation = 0.0;
             for (final InterviewAnswer interviewAnswer : pair.getSecond()) {
                 final Answer possibleAnswer = interviewAnswer.answer();
                 if (possibleAnswer.equals(candidateAnswer)) {
-                    answerRating = interviewAnswer.cotation().value();
+                    answerCotation = interviewAnswer.cotation().value();
                     break;
                 }
             }
 
             final Double questionValue = pair.getFirst().value();
 
-            grade += (answerRating / 100) * questionValue;
+            grade += (answerCotation / 100) * questionValue;
         }
-        System.out.println("Grade: " + grade);
         return grade;
     }
 

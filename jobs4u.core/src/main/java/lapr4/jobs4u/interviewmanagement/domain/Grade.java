@@ -16,7 +16,8 @@ public class Grade implements ValueObject, Comparable<Grade> {
 
     protected Grade(final String grade) {
         Preconditions.nonEmpty(grade, "Grade should neither be null nor empty");
-        Preconditions.ensure(grade.matches("^20([.,]0+)?|0([.,][0-9]+)?|([1-9][0-9]?([.,][0-9]+)?)$"), "Grade should be a number between 0 and 20");
+        Preconditions.ensure(grade.matches("^100([.,]0+)?|0([.,][0-9]+)?|([1-9][0-9]?([.,][0-9]+)?)$"),
+                "Grade should be a number between 0 and 100");
         this.grade = Double.parseDouble(grade.replace(',', '.'));
     }
 

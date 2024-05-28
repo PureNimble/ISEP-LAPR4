@@ -4,6 +4,9 @@ import eapli.framework.infrastructure.repositories.impl.inmemory.InMemoryDomainR
 import lapr4.jobs4u.questionmanagement.domain.InterviewQuestion;
 import lapr4.jobs4u.questionmanagement.repositories.InterviewQuestionRepository;
 
+/**
+ * @author 2DI2
+ */
 public class InMemoryInterviewQuestionRepository
         extends InMemoryDomainRepository<InterviewQuestion, Long>
         implements InterviewQuestionRepository {

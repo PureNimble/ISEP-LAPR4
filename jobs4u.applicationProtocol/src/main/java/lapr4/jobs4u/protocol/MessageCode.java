@@ -3,13 +3,18 @@ package lapr4.jobs4u.protocol;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * @author 2DI2
+ */
 public enum MessageCode {
 
     COMMTEST((byte) 0),
     DISCONN((byte) 1),
     ACK((byte) 2),
     ERR((byte) 3),
-    AUTH((byte) 4);
+    AUTH((byte) 4),
+    LOGOUT((byte) 5),
+    CHANGEPASS((byte) 6);
 
     private static final Map<Byte, MessageCode> CODES = new HashMap<>();
 

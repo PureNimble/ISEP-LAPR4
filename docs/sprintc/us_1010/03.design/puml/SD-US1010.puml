@@ -9,7 +9,10 @@ participant "OpenOrClosePhaseUI" as UI
 participant "OpenOrClosePhaseController" as C
 participant "RecruitmentProcessRepository" as R
 participant "JpaRecruitmentProcessRepository" as RJPA
+participant "JobOpeningRepository" as JOR
+participant "JpaJobOpeningRepository" as JOJPA
 participant "RecruitmentProcess" as RP
+participant "JobOpening" as JO
 participant "ApplicationPhase" as AP
 participant "ScreeningPhase" as SP
 participant "InterviewPhase" as IP
@@ -55,176 +58,196 @@ deactivate R
 C -> UI : return phase
 deactivate C
 
-UI --> Manager : Displays the current phase status of the job opening and asks if the manager wants to go to the next phase
+UI --> Manager : Displays the current phase status of the job opening and asks if the manager wants to go to the next phase or go back to the previous phase
 
 deactivate UI
 
-Manager -> UI : Confirms the decision to change the phase status
+Manager -> UI : Chooses to go to the next phase or go back to the previous phase
 activate UI
 
-UI -> C : changePhase(phase)
+UI -> C : changePhase(phase, jobOpening, decision)
 activate C
 alt phase == null
-    C -> AP : open()
-    activate AP
-    AP -> AP : open()
-    AP -> C : return applicationBoolean
-    deactivate AP
-    alt applicationBoolean == true
-        C -> R : save(applicationPhase)
-        activate R
-        R -> RJPA : save(applicationPhase)
-        activate RJPA
-        RJPA -> DB : merge(applicationPhase)
-        DB --> RJPA : return true
-        RJPA --> R : return true
-        deactivate RJPA
-        R --> C : return true
-        deactivate R
-        C -> UI : return true
+    alt jobOpening.state == "PENDING"
+        alt decision == "NEXT"
+            C -> AP : open()
+            activate AP
+            AP -> AP : open()
+            deactivate AP
+            C -> JO: activate()
+            activate JO
+            JO -> JO: activate()
+            deactivate JO
+        else
+            C --> UI: return exception "The job opening is in the initial state! Cannot go to a previous phase"
+        end
+    else jobOpening.state == "CLOSED"
+        alt decision == "NEXT"
+            C --> UI: return exception "The job opening is in the final state! Cannot go to a next phase"
+        else
+            C -> REP : close()
+            activate REP
+            REP -> REP : close()
+            deactivate REP
+            C -> JO: deactivate(currentPhase)
+            activate JO
+            JO -> JO: deactivate(currentPhase)
+            deactivate JO
+        end
     else
-        C -> UI : return false
+        C --> UI: return exception "The job opening is in an invalid state"
     end
-else if phase == "ApplicationPhase"
+else phase == "ApplicationPhase"
     C -> AP : close()
     activate AP
     AP -> AP : close()
-    AP -> C : return applicationBoolean
     deactivate AP
-    C -> SP : open()
-    activate SP
-    SP -> SP : open()
-    SP -> C : return screeningBoolean
-    deactivate SP
-    alt applicationBoolean == true && screeningBoolean == true
-        C -> R : save(applicationPhase, screeningPhase)
-        activate R
-        R -> RJPA : save(applicationPhase, screeningPhase)
-        activate RJPA
-        RJPA -> DB : merge(applicationPhase, screeningPhase)
-        DB --> RJPA : return true
-        RJPA --> R : return true
-        deactivate RJPA
-        R --> C : return true
-        deactivate R
-        C -> UI : return true
+    alt decision == "NEXT"
+        alt !hasApplications(theJobOpening)
+            C --> UI: return exception ""No requirements specifications associated with the job opening: " + theJobOpening.jobReference()"
+        else !hasApplications(theJobOpening)
+            C --> UI: return exception "You cannot move to the screening phase without applications"
+        else 
+            C -> SP : open()
+            activate SP
+            SP -> SP : open()
+            deactivate SP
+        end
     else
-        C -> UI : return false
+        alt !hasApplications(theJobOpening)
+            C -> JO: deactivate()
+            activate JO
+            JO -> JO: deactivate()
+            deactivate JO
+        else
+            C --> UI: return exception "Cannot go to the previous phase! Application phase is already in progress"
+        end
     end
-else if phase == "ScreeningPhase"
+else phase == "ScreeningPhase"
     C -> SP : close()
     activate SP
     SP -> SP : close()
-    SP -> C : return screeningBoolean
     deactivate SP
-    alt recruitmentProcess.InterviewPhase == null
-        C -> ANP : open()
-        activate ANP
-        ANP -> ANP : open()
-        ANP -> C : return analysisBoolean
-        deactivate ANP
-        alt screeningBoolean == true && analysisBoolean == true
-            C -> R : save(screeningPhase, analysisPhase)
-            activate R
-            R -> RJPA : save(screeningPhase, analysisPhase)
-            activate RJPA
-            RJPA -> DB : merge(screeningPhase, analysisPhase)
-            DB --> RJPA : return true
-            RJPA --> R : return true
-            deactivate RJPA
-            R --> C : return true
-            deactivate R
-            C -> UI : return true
+    alt decision == "NEXT"
+        alt recruitmentProcess.interviewPhase() != null
+            alt !hasInterviewModel(theJobOpening)
+                C --> UI: return exception ""No interview model associated with the job opening: " + theJobOpening.jobReference()
+            else 
+                C -> IP : open()
+                activate IP
+                IP -> IP : open()
+                deactivate IP
+            end
         else
-            C -> UI : return false
+            C -> ANP : open()
+            activate ANP
+            ANP -> ANP : open()
+            deactivate ANP
         end
     else
-        C -> IP : open()
-        activate IP
-        IP -> IP : open()
-        IP -> C : return interviewBoolean
-        deactivate IP
-        alt screeningBoolean == true && interviewBoolean == true
-            C -> R : save(screeningPhase, interviewPhase)
-            activate R
-            R -> RJPA : save(screeningPhase, interviewPhase)
-            activate RJPA
-            RJPA -> DB : merge(screeningPhase, interviewPhase)
-            DB --> RJPA : return true
-            RJPA --> R : return true
-            deactivate RJPA
-            R --> C : return true
-            deactivate R
-            C -> UI : return true
+        alt !hasScreeningResults(theJobOpening)
+            C -> AP : open()
+            activate AP
+            AP -> AP : open()
+            deactivate AP
         else
-            C -> UI : return false
-        end
+            C --> UI: return exception "Cannot go to the previous phase! Screening phase is already in progress"
+        end 
     end
-else if phase == "InterviewPhase"
+else phase == "InterviewPhase"
     C -> IP : close()
     activate IP
     IP -> IP : close()
-    IP -> C : return interviewBoolean
     deactivate IP
-    C -> ANP : open()
-    activate ANP
-    ANP -> ANP : open()
-    ANP -> C : return analysisBoolean
-    deactivate ANP
-    alt interviewBoolean == true && analysisBoolean == true
-        C -> R : save(interviewPhase, analysisPhase)
-        activate R
-        R -> RJPA : save(interviewPhase, analysisPhase)
-        activate RJPA
-        RJPA -> DB : merge(interviewPhase, analysisPhase)
-        DB --> RJPA : return true
-        RJPA --> R : return true
-        deactivate RJPA
-        R --> C : return true
-        deactivate R
-        C -> UI : return true
-    else
-        C -> UI : return false
+    alt decision == "NEXT"
+        C -> ANP : open()
+        activate ANP
+        ANP -> ANP : open()
+        deactivate ANP
+    else 
+        alt !hasInterviews(theJobOpening)
+            C -> SP : open()
+            activate SP
+            SP -> SP : open()
+            deactivate SP
+        else
+            C --> UI: return exception "Cannot go to the previous phase! Interview phase is already in progress"
+        end
     end
-else if phase == "AnalysisPhase"
+else phase == "AnalysisPhase"
     C -> ANP : close()
     activate ANP
     ANP -> ANP : close()
-    ANP -> C : return analysisBoolean
     deactivate ANP
-    C -> REP : open()
-    activate REP
-    REP -> REP : open()
-    REP -> C : return resultBoolean
-    deactivate REP
-    alt analysisBoolean == true && resultBoolean == true
-        C -> R : save(analysisPhase, resultPhase)
-        activate R
-        R -> RJPA : save(analysisPhase, resultPhase)
-        activate RJPA
-        RJPA -> DB : merge(analysisPhase, resultPhase)
-        DB --> RJPA : return true
-        RJPA --> R : return true
-        deactivate RJPA
-        R --> C : return true
-        deactivate R
-        C -> UI : return true
+    alt decision == "NEXT"
+        C -> REP : open()
+        activate REP
+        REP -> REP : open()
+        deactivate REP
     else
-        C -> UI : return false
+        alt !hasAnalysisResults(theJobOpening)
+            alt recruitmentProcess.interviewPhase() != null
+                C -> IP : open()
+                activate IP
+                IP -> IP : open()
+                deactivate IP
+            else
+                C -> SP : open()
+                activate SP
+                SP -> SP : open()
+                deactivate SP
+            end
+        else
+            C --> UI: return exception "Cannot go to the previous phase! Analysis phase is already in progress"
+        end
     end
-else if phase == "ResultPhase"
+else phase == "ResultPhase"
     C -> REP : close()
     activate REP
     REP -> REP : close()
-    REP -> C : return resultBoolean
     deactivate REP
-    C -> UI : return resultBoolean
-else
-    C -> UI : return false
+    alt decision == "NEXT"
+        C -> JO: deactivate(currentPhase)
+        activate JO
+        JO -> JO: deactivate(currentPhase)
+        deactivate JO
+    else
+        alt !hasResults(theJobOpening)
+            C -> ANP : open()
+            activate ANP
+            ANP -> ANP : open()
+            deactivate ANP
+        else
+            C --> UI: return exception "Cannot go to the previous phase! Result phase is already in progress"
+        end
+    end
+else default
+    C --> UI: return exception "Invalid phase: " + currentPhase
 end
 
+C -> R : save(recruitmentProcess)
+activate R
+R -> RJPA : save(recruitmentProcess)
+activate RJPA
+RJPA -> DB : merge(recruitmentProcess)
+DB --> RJPA : return recruitmentProcess
+RJPA --> R : return recruitmentProcess
+R --> C : return recruitmentProcess
+deactivate RJPA
+deactivate R
+C -> JOR : save(jobOpening)
+activate JOR
+JOR -> JOJPA : save(jobOpening)
+activate JOJPA
+JOJPA -> DB : merge(jobOpening)
+DB --> JOJPA : return jobOpening
+JOJPA --> JOR : return jobOpening
+JOR --> C : return jobOpening
+deactivate JOJPA
+deactivate JOR
+C --> UI : return true
 
-    UI --> Manager : Informs success or failure
+UI --> Manager : Informs success or failure
 
-    deactivate UI
-    @enduml
+deactivate UI
+@enduml

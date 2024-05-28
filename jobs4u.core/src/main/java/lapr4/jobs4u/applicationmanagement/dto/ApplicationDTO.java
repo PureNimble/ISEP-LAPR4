@@ -5,6 +5,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ * @author 2DI2
+ */
 @DTO
 @Data
 @AllArgsConstructor
@@ -13,5 +16,5 @@ public class ApplicationDTO {
 
     private String applicationCode;
     private String candidate;
-    
+
 }

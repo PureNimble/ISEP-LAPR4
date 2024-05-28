@@ -42,6 +42,12 @@ _N/A_
 >
 > **Answer:** I have no specific requirements for the UX/UI but I want you to follow best practices.
 
+> **Date:** 23/05/2024
+>
+> **Question 213:** Na us 2000b, é suposto ao desativar um candidato, apenas lhe retirar a role e deixa-lo como user ao desativa-lo completamente?
+>
+> **Answer:** Ver Q30. Considero que o objetivo desta US é permitir bloquear e desbloquear o acesso de um candidato ao sistema. Isso não deve invalidar as candidaturas dessa pessoa, apenas o acesso desse candidato ao sistema.
+
 ### 1.3. Acceptance Criteria
 
 * **AC 1:** It must be possible to enable/disable a candidate multiple times.

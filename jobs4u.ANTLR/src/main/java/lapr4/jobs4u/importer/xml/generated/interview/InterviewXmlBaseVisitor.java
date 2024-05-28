@@ -67,6 +67,20 @@ public class InterviewXmlBaseVisitor<T> extends AbstractParseTreeVisitor<T> impl
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
+	@Override public T visitQuestionCotation(InterviewXmlParser.QuestionCotationContext ctx) { return visitChildren(ctx); }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
+	@Override public T visitAnswerCotation(InterviewXmlParser.AnswerCotationContext ctx) { return visitChildren(ctx); }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
 	@Override public T visitPossibleAnswersList(InterviewXmlParser.PossibleAnswersListContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
@@ -75,4 +89,11 @@ public class InterviewXmlBaseVisitor<T> extends AbstractParseTreeVisitor<T> impl
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
 	@Override public T visitPossibleAnswers(InterviewXmlParser.PossibleAnswersContext ctx) { return visitChildren(ctx); }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
+	@Override public T visitAnswer(InterviewXmlParser.AnswerContext ctx) { return visitChildren(ctx); }
 }

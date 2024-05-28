@@ -13,8 +13,7 @@ import eapli.framework.domain.repositories.TransactionalContext;
 import eapli.framework.infrastructure.repositories.impl.jpa.JpaAutoTxRepository;
 
 /**
- *
- * @author Jorge Santos ajs@isep.ipp.pt 02/04/2016
+ * @author 2DI2
  */
 class JpaInterviewRepository extends JpaAutoTxRepository<Interview, Long, Long> implements InterviewRepository {
 

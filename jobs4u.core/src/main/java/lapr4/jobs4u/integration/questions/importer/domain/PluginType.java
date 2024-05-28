@@ -4,6 +4,9 @@ import eapli.framework.domain.model.ValueObject;
 import eapli.framework.validations.Preconditions;
 import jakarta.persistence.Embeddable;
 
+/**
+ * @author 2DI2
+ */
 @Embeddable
 public class PluginType implements ValueObject, Comparable<PluginType>{
 

@@ -11,6 +11,9 @@ import lapr4.jobs4u.jobopeningmanagement.domain.JobOpening;
 import lapr4.jobs4u.jobopeningmanagement.domain.JobReference;
 import lapr4.jobs4u.jobopeningmanagement.repositories.JobOpeningRepository;
 
+/**
+ * @author 2DI2
+ */
 public class InMemoryJobOpeningRepository extends InMemoryDomainRepository<JobOpening, JobReference>
         implements JobOpeningRepository {
 
@@ -54,7 +57,12 @@ public class InMemoryJobOpeningRepository extends InMemoryDomainRepository<JobOp
     }
 
     @Override
-    public Iterable<JobOpening> filterWithAvailablePhase(Username username) {
-        return filterWithAvailablePhase(username);
+    public Iterable<JobOpening> filterWithAvailablePhaseForInterviews(Username username) {
+        return filterWithAvailablePhaseForInterviews(username);
+    }
+
+    @Override
+    public Iterable<JobOpening> filterWithAvailablePhaseForRequirements(Username username) {
+        return filterWithAvailablePhaseForRequirements(username);
     }
 }

@@ -48,6 +48,16 @@ public interface InterviewCsvListener extends ParseTreeListener {
 	 */
 	void exitType(InterviewCsvParser.TypeContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link InterviewCsvParser#questionCotation}.
+	 * @param ctx the parse tree
+	 */
+	void enterQuestionCotation(InterviewCsvParser.QuestionCotationContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link InterviewCsvParser#questionCotation}.
+	 * @param ctx the parse tree
+	 */
+	void exitQuestionCotation(InterviewCsvParser.QuestionCotationContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link InterviewCsvParser#answer}.
 	 * @param ctx the parse tree
 	 */
@@ -57,6 +67,16 @@ public interface InterviewCsvListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitAnswer(InterviewCsvParser.AnswerContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link InterviewCsvParser#answerCotation}.
+	 * @param ctx the parse tree
+	 */
+	void enterAnswerCotation(InterviewCsvParser.AnswerCotationContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link InterviewCsvParser#answerCotation}.
+	 * @param ctx the parse tree
+	 */
+	void exitAnswerCotation(InterviewCsvParser.AnswerCotationContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link InterviewCsvParser#question}.
 	 * @param ctx the parse tree

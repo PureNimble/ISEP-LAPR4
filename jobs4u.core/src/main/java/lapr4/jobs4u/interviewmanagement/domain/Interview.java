@@ -57,9 +57,12 @@ public class Interview implements AggregateRoot<Long> {
         return new Interview(date, time, application);
     }
 
-    public void addFile(File file) {
-        Preconditions.nonNull(file);
+    public void addFile(final File file) {
         this.file = file;
+    }
+
+    public Application application() {
+        return this.application;
     }
 
     @Override

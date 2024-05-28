@@ -7,6 +7,9 @@ import eapli.framework.domain.model.DomainFactory;
 import eapli.framework.general.domain.model.Description;
 import eapli.framework.general.domain.model.Designation;
 
+/**
+ * @author 2DI2
+ */
 public class QuestionImporterPluginBuilder implements DomainFactory<QuestionImporterPlugin> {
 
     private static final Logger LOGGER = LogManager.getLogger(QuestionImporterPluginBuilder.class);

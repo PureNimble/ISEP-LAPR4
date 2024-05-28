@@ -7,12 +7,15 @@ import java.net.Socket;
 import lapr4.jobs4u.EventListener;
 import lapr4.jobs4u.protocol.ProtocolMessage;
 
+/**
+ * @author 2DI2
+ */
 public abstract class Message {
 
     protected final ProtocolMessage request;
     protected final EventListener eventListener;
     protected final Socket socket;
-    private final DataOutputStream output;
+    protected final DataOutputStream output;
 
     public Message(final ProtocolMessage message, final DataOutputStream output, final Socket socket,
             final EventListener eventListener) {

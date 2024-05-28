@@ -5,6 +5,7 @@ import eapli.framework.io.util.Console;
 import java.io.File;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -17,6 +18,9 @@ import javax.swing.JDialog;
 import javax.swing.JFileChooser;
 import javax.swing.UIManager;
 
+/**
+ * @author 2DI2
+ */
 public class Utils {
 
     static public Calendar readDateFromConsole(String prompt, String dateFormat, String regex) {
@@ -102,30 +106,45 @@ public class Utils {
         return value == 0 ? null : list.get(value - 1);
     }
 
-    static public String getPath(boolean isDirectory) {
+    static public Path getPath(final boolean isDirectory) {
         try {
             // Set system look and feel
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-        } catch (Exception e) {
+        } catch (final Exception e) {
             e.printStackTrace();
         }
 
-        JFileChooser chooser = new JFileChooser();
+        final JFileChooser chooser = new JFileChooser();
         chooser.setCurrentDirectory(new File(System.getProperty("user.dir")));
-        int selectionMode = isDirectory ? JFileChooser.DIRECTORIES_ONLY : JFileChooser.FILES_ONLY;
+        final int selectionMode = isDirectory ? JFileChooser.DIRECTORIES_ONLY : JFileChooser.FILES_ONLY;
         chooser.setFileSelectionMode(selectionMode);
-        JDialog dialog = new JDialog();
+        final JDialog dialog = new JDialog();
         dialog.setIconImage(null); // Remove application icon
-        int returnVal = chooser.showOpenDialog(dialog);
+        final int returnVal = chooser.showOpenDialog(dialog);
 
         if (returnVal == JFileChooser.APPROVE_OPTION) {
-            Path currentPath = Paths.get(System.getProperty("user.dir"));
-            Path absolutePath = Paths.get(chooser.getSelectedFile().getAbsolutePath());
-            Path relativePath = currentPath.relativize(absolutePath);
-            String relativePathStr = relativePath.toString();
-            return relativePathStr.replace("\\", "/");
+            final Path currentPath = Paths.get(System.getProperty("user.dir"));
+            final Path absolutePath = Paths.get(chooser.getSelectedFile().getAbsolutePath());
+            if (currentPath.getRoot().equals(absolutePath.getRoot())) {
+                final Path relativePath = currentPath.relativize(absolutePath);
+                return relativePath;
+            } else {
+                return absolutePath;
+            }
         }
 
         return null;
+    }
+
+    static public Boolean copyFile(final Path source, final String destination) {
+        try {
+            final File destinationFile = new File(destination);
+            java.nio.file.Files.copy(source, destinationFile.toPath(),
+                    StandardCopyOption.REPLACE_EXISTING);
+            return true;
+        } catch (final Exception e) {
+            System.out.println("Error copying file: " + e.getMessage());
+            return false;
+        }
     }
 }

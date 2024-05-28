@@ -65,6 +65,18 @@ public class InterviewJsonBaseListener implements InterviewJsonListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterQuestionCotation(InterviewJsonParser.QuestionCotationContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitQuestionCotation(InterviewJsonParser.QuestionCotationContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterAnswer(InterviewJsonParser.AnswerContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -72,6 +84,18 @@ public class InterviewJsonBaseListener implements InterviewJsonListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitAnswer(InterviewJsonParser.AnswerContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterAnswerCotation(InterviewJsonParser.AnswerCotationContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitAnswerCotation(InterviewJsonParser.AnswerCotationContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

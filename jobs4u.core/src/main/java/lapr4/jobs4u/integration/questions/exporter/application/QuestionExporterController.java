@@ -10,6 +10,9 @@ import lapr4.jobs4u.questionmanagement.domain.InterviewQuestion;
 import lapr4.jobs4u.questionmanagement.domain.RequirementsQuestion;
 import lapr4.jobs4u.usermanagement.domain.BaseRoles;
 
+/**
+ * @author 2DI2
+ */
 public class QuestionExporterController {
 
     private final ListQuestionsService listSvc = new ListQuestionsService(PersistenceContext.repositories().interviewQuestion(), PersistenceContext.repositories().requirementsQuestion());

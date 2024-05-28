@@ -12,6 +12,9 @@ import lapr4.jobs4u.customermanagement.repositories.CustomerRepository;
 import lapr4.jobs4u.customermanagement.repositories.CustomerUserRepository;
 import lapr4.jobs4u.usermanagement.domain.BaseRoles;
 
+/**
+ * @author 2DI2
+ */
 @UseCaseController
 public class RegisterCustomerController {
 

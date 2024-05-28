@@ -7,7 +7,7 @@ import lapr4.jobs4u.interviewmanagement.repositories.InterviewRepository;
 import lapr4.jobs4u.usermanagement.domain.BaseRoles;
 
 /**
- * @author Paulo Gandra de Sousa 2024.04.30
+ * @author 2DI2
  */
 @UseCaseController
 public class RecordInterviewController {

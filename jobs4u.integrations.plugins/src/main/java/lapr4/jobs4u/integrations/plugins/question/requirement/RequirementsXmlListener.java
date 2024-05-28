@@ -12,6 +12,9 @@ import lapr4.jobs4u.importer.xml.generated.requirement.RequirementsXmlParser;
 import lapr4.jobs4u.questionmanagement.domain.Answer;
 import lapr4.jobs4u.questionmanagement.dto.RequirementsQuestionDTO;
 
+/**
+ * @author 2DI2
+ */
 public class RequirementsXmlListener extends RequirementsXmlBaseListener {
 
     private final List<RequirementsQuestionDTO> questions = new ArrayList<>();
@@ -42,7 +45,7 @@ public class RequirementsXmlListener extends RequirementsXmlBaseListener {
         current.setPossibleAnswers(answers);
     }
 
-    private String extractValue(ParserRuleContext ctx) {
+    private String extractValue(final ParserRuleContext ctx) {
         final Token startToken = ctx.getStart();
         final Token stopToken = ctx.getStop();
         final Interval interval = new Interval(startToken.getStartIndex(), stopToken.getStopIndex());

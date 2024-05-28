@@ -7,6 +7,9 @@ import java.net.Socket;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+/**
+ * @author 2DI2
+ */
 public class TcpServer {
 
     private final Logger logger = LogManager.getLogger(TcpServer.class);
@@ -14,7 +17,7 @@ public class TcpServer {
     private Class<? extends Runnable> handlerClass;
     private EventListener eventListener;
 
-    public TcpServer(int port, Class<? extends Runnable> handler) {
+    public TcpServer(final int port, final Class<? extends Runnable> handler) {
         this.port = port;
         this.handlerClass = handler;
         this.eventListener = new EventListener();
@@ -28,32 +31,32 @@ public class TcpServer {
         try {
             tcpSocket = new ServerSocket(port);
         } catch (IOException e) {
-            logger.debug("Error creating the tcp socket");
+            logger.info("Error creating the tcp socket");
             return;
         }
 
-        logger.debug("[TCP%s Server] Listening on port %d!\n", port);
-
+        logger.info(String.format("[TCP Server] Listening on port %d!\n", port));
+        
         while (!tcpSocket.isClosed()) {
             try {
 
                 socket = tcpSocket.accept();
 
-                Runnable handler = handlerClass.getConstructor(Socket.class, EventListener.class).newInstance(socket,
-                        this.eventListener);
+                final Runnable handler = handlerClass.getConstructor(Socket.class, EventListener.class).newInstance(
+                        socket, this.eventListener);
 
-                Thread clientHandler = new Thread(handler);
+                final Thread clientHandler = new Thread(handler);
 
                 clientHandler.start();
-            } catch (Exception e) {
-                logger.debug("Error creating the client handler thread");
+            } catch (final Exception e) {
+                logger.info("Error creating the client handler thread");
             }
         }
 
         try {
             tcpSocket.close();
-        } catch (IOException e) {
-            logger.debug("Error closing the tcp socket");
+        } catch (final IOException e) {
+            logger.info("Error closing the tcp socket");
         }
     }
 }

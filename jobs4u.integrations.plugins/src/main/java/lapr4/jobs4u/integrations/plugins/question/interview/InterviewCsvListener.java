@@ -10,15 +10,24 @@ import org.antlr.v4.runtime.misc.Interval;
 import lapr4.jobs4u.importer.csv.generated.interview.InterviewCsvBaseListener;
 import lapr4.jobs4u.importer.csv.generated.interview.InterviewCsvParser;
 import lapr4.jobs4u.questionmanagement.domain.Answer;
+import lapr4.jobs4u.questionmanagement.domain.Cotation;
+import lapr4.jobs4u.questionmanagement.domain.InterviewAnswer;
 import lapr4.jobs4u.questionmanagement.dto.InterviewQuestionDTO;
 
+/**
+ * @author 2DI2
+ */
 public class InterviewCsvListener extends InterviewCsvBaseListener {
 
     private final List<InterviewQuestionDTO> questions = new ArrayList<>();
     private InterviewQuestionDTO current;
+    private List<InterviewAnswer> answers;
+    private Answer answer;
+
 
     @Override
     public void enterQuestion(final InterviewCsvParser.QuestionContext ctx) {
+        answers = new ArrayList<>();
         current = new InterviewQuestionDTO();
     }
 
@@ -33,7 +42,7 @@ public class InterviewCsvListener extends InterviewCsvBaseListener {
     }
 
     @Override
-    public void enterCotation(final InterviewCsvParser.CotationContext ctx) {
+    public void enterQuestionCotation(final InterviewCsvParser.QuestionCotationContext ctx) {
         current.setCotation(extractValue(ctx));
     }
 
@@ -49,16 +58,16 @@ public class InterviewCsvListener extends InterviewCsvBaseListener {
 
     @Override
     public void enterAnswer(final InterviewCsvParser.AnswerContext ctx) {
-        final String value = extractValue(ctx);
-        final String[] answer = value.split("/");
-        final List<Answer> answers = new ArrayList<>();
-        for (String ans : answer) {
-            answers.add(Answer.valueOf(ans));
-        }
+        answer = Answer.valueOf(extractValue(ctx));
+    }
+
+    @Override
+    public void enterAnswerCotation(final InterviewCsvParser.AnswerCotationContext ctx) {
+        answers.add(new InterviewAnswer(answer, Cotation.valueOf(extractValue(ctx))));
         current.setPossibleAnswers(answers);
     }
 
-    private String extractValue(ParserRuleContext ctx) {
+    private String extractValue(final ParserRuleContext ctx) {
         final Token startToken = ctx.getStart();
         final Token stopToken = ctx.getStop();
         final Interval interval = new Interval(startToken.getStartIndex(), stopToken.getStopIndex());

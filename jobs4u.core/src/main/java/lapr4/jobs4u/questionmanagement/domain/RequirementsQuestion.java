@@ -23,6 +23,9 @@ import eapli.framework.domain.model.DomainEntities;
 import eapli.framework.representations.dto.DTOable;
 import eapli.framework.validations.Preconditions;
 
+/**
+ * @author 2DI2
+ */
 @XmlRootElement(name = "RequirementsQuestion")
 @Entity
 @Table(name = "T_REQUIREMENTS_QUESTION")

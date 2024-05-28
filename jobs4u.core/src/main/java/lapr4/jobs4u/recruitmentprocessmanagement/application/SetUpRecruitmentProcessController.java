@@ -14,6 +14,9 @@ import lapr4.jobs4u.recruitmentprocessmanagement.repositories.RecruitmentProcess
 import lapr4.jobs4u.usermanagement.domain.BaseRoles;
 import lapr4.jobs4u.jobopeningmanagement.repositories.JobOpeningRepository;
 
+/**
+ * @author 2DI2
+ */
 @UseCaseController
 public class SetUpRecruitmentProcessController {
         private final AuthorizationService authz;

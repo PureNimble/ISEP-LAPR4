@@ -11,8 +11,10 @@ import eapli.framework.domain.repositories.TransactionalContext;
 import eapli.framework.general.domain.model.EmailAddress;
 import eapli.framework.infrastructure.repositories.impl.jpa.JpaAutoTxRepository;
 
-class JpaCandidateRepository
-        extends JpaAutoTxRepository<Candidate, EmailAddress, EmailAddress>
+/**
+ * @author 2DI2
+ */
+class JpaCandidateRepository extends JpaAutoTxRepository<Candidate, EmailAddress, EmailAddress>
         implements CandidateRepository {
 
     public JpaCandidateRepository(final TransactionalContext autoTx) {
@@ -20,8 +22,7 @@ class JpaCandidateRepository
     }
 
     public JpaCandidateRepository(final String puname) {
-        super(puname, Application.settings().getExtendedPersistenceProperties(),
-                "email");
+        super(puname, Application.settings().getExtendedPersistenceProperties(), "email");
     }
 
     @Override
@@ -35,4 +36,5 @@ class JpaCandidateRepository
     public Iterable<Candidate> sortedAsc() {
         return createQuery("SELECT c FROM Candidate c ORDER BY c.name", Candidate.class).getResultList();
     }
+
 }

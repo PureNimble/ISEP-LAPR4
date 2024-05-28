@@ -6,6 +6,9 @@ import eapli.framework.infrastructure.repositories.impl.jpa.JpaAutoTxRepository;
 import lapr4.jobs4u.Application;
 import lapr4.jobs4u.questionmanagement.repositories.RequirementsQuestionRepository;
 
+/**
+ * @author 2DI2
+ */
 public class JpaRequirementsQuestionRepository extends JpaAutoTxRepository<RequirementsQuestion, Long, Long> implements RequirementsQuestionRepository {
 
     public JpaRequirementsQuestionRepository(final TransactionalContext autoTx) {

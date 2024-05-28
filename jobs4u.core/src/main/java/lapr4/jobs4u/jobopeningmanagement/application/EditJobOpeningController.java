@@ -20,6 +20,9 @@ import lapr4.jobs4u.jobopeningmanagement.repositories.JobOpeningRequirementRepos
 import lapr4.jobs4u.recruitmentprocessmanagement.repositories.RecruitmentProcessRepository;
 import lapr4.jobs4u.usermanagement.domain.BaseRoles;
 
+/**
+ * @author 2DI2
+ */
 @UseCaseController
 public class EditJobOpeningController {
 

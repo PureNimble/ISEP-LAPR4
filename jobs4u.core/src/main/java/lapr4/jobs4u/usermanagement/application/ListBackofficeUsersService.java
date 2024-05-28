@@ -7,6 +7,9 @@ import eapli.framework.infrastructure.authz.domain.model.SystemUser;
 import eapli.framework.infrastructure.authz.domain.repositories.UserRepository;
 import lapr4.jobs4u.usermanagement.domain.BaseRoles;
 
+/**
+ * @author 2DI2
+ */
 public class ListBackofficeUsersService {
     private final UserRepository userRepository;
 

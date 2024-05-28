@@ -24,6 +24,9 @@ import eapli.framework.domain.model.DomainEntities;
 import eapli.framework.representations.dto.DTOable;
 import eapli.framework.validations.Preconditions;
 
+/**
+ * @author 2DI2
+ */
 @XmlRootElement(name = "InterviewQuestion")
 @Entity
 @Table(name = "T_INTERVIEW_QUESTION")
@@ -62,12 +65,12 @@ public class InterviewQuestion implements AggregateRoot<Long>, DTOable<Interview
     @JsonProperty
     @CollectionTable(name = "T_INTERVIEW_QUESTION_POSSIBLE_ANSWERS")
     @ElementCollection
-    private List<Answer> possibleAnswers;
+    private List<InterviewAnswer> possibleAnswers;
 
     @Column(nullable = false)
     private String importerPlugin;
 
-    InterviewQuestion(final QuestionType type, final Cotation cotation, final CotationType cotationType, final QuestionBody body, final List<Answer> possibleAnswers,
+    InterviewQuestion(final QuestionType type, final Cotation cotation, final CotationType cotationType, final QuestionBody body, final List<InterviewAnswer> possibleAnswers,
             final String importerPlugin) {
         Preconditions.noneNull(new Object[] { type, body, possibleAnswers, importerPlugin });
         this.type = type;
@@ -126,7 +129,7 @@ public class InterviewQuestion implements AggregateRoot<Long>, DTOable<Interview
         return this.body;
     }
 
-    public List<Answer> possibleAnswers() {
+    public List<InterviewAnswer> possibleAnswers() {
         return this.possibleAnswers;
     }
 

@@ -1,0 +1,21 @@
+TITLE: Software Engineer Interview
+NAME: Paulo
+EMAIL: micro@email.com
+
+COTATION: 30%
+QUESTION TYPE: Choice, with single answer
+QUESTION: What is the capital of France?
+[1] London
+[2] Paris
+[3] Berlin
+ANSWER: 2
+
+COTATION: 30%
+QUESTION TYPE: True/False
+QUESTION: Python is a statically typed language.
+ANSWER: True
+
+COTATION: 40%
+QUESTION TYPE: Short text answer
+QUESTION: What is the name of the process to find bugs in software?
+ANSWER: Debug

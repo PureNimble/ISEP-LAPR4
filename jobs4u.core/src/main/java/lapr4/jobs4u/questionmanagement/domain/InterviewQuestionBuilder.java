@@ -6,6 +6,9 @@ import java.util.List;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+/**
+ * @author 2DI2
+ */
 public class InterviewQuestionBuilder implements DomainFactory<InterviewQuestion> {
 
     private static final Logger LOGGER = LogManager.getLogger(InterviewQuestionBuilder.class);
@@ -13,10 +16,10 @@ public class InterviewQuestionBuilder implements DomainFactory<InterviewQuestion
     private Cotation cotation;
     private CotationType cotationType;
     private QuestionBody body;
-    private List<Answer> possibleAnswers;
+    private List<InterviewAnswer> possibleAnswers;
     private String importerPlugin;
 
-    public InterviewQuestionBuilder with(final QuestionType type, final String cotation, final String cotationType, final String body, final List<Answer> possibleAnswers, final String importerPlugin) {
+    public InterviewQuestionBuilder with(final QuestionType type, final String cotation, final String cotationType, final String body, final List<InterviewAnswer> possibleAnswers, final String importerPlugin) {
         this.withType(type);
         this.withCotation(cotation);
         this.withCotationType(cotationType);
@@ -50,7 +53,7 @@ public class InterviewQuestionBuilder implements DomainFactory<InterviewQuestion
         return this;
     }
 
-    public InterviewQuestionBuilder withPossibleAnswers(final List<Answer> possibleAnswers) {
+    public InterviewQuestionBuilder withPossibleAnswers(final List<InterviewAnswer> possibleAnswers) {
         this.possibleAnswers = possibleAnswers;
         return this;
     }

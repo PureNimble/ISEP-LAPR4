@@ -17,6 +17,9 @@ import jakarta.xml.bind.annotation.XmlElement;
 import jakarta.xml.bind.annotation.XmlRootElement;
 import lapr4.jobs4u.questionmanagement.dto.QuestionTypeDTO;
 
+/**
+ * @author 2DI2
+ */
 @XmlRootElement
 @Entity
 @Table(name = "T_QUESTION_TYPE")

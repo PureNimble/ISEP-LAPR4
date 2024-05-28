@@ -1,30 +1,8 @@
-/*
- * Copyright (c) 2013-2024 the original author or authors.
- *
- * MIT License
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- * SOFTWARE.
- */
 package lapr4.jobs4u.app.customer.console.presentation;
 
+import lapr4.jobs4u.app.common.ClientBackend;
+import lapr4.jobs4u.app.common.DisconnectAction;
 import lapr4.jobs4u.app.common.console.presentation.authz.LoginUI;
-import lapr4.jobs4u.infrastructure.authz.AuthenticationCredentialHandler;
 import lapr4.jobs4u.usermanagement.domain.BaseRoles;
 import eapli.framework.actions.ChainedAction;
 import eapli.framework.actions.menu.Menu;
@@ -35,7 +13,7 @@ import eapli.framework.presentation.console.menu.MenuRenderer;
 import eapli.framework.presentation.console.menu.VerticalMenuRenderer;
 
 /**
- * @author Paulo Gandra Sousa
+ * @author 2DI2
  */
 public class FrontMenu extends AbstractUI {
 
@@ -55,13 +33,14 @@ public class FrontMenu extends AbstractUI {
     @Override
     public boolean doShow() {
         final Menu menu = new Menu();
-        menu.addItem(LOGIN_OPTION, "Login", new ChainedAction(new LoginUI(new AuthenticationCredentialHandler(),
-                BaseRoles.CUSTOMER)::show, () -> {
+        final ClientBackend clientBackend = ClientBackend.getInstance();
+        menu.addItem(LOGIN_OPTION, "Login", new ChainedAction(new LoginUI(clientBackend.credentialAuth().AUTHENTICATE,
+                BaseRoles.CANDIDATE)::show, () -> {
                     new MainMenu().mainLoop();
                     return true;
                 }));
-        //TODO: instead of leaving the app, return to the main menu again
-        menu.addItem(EXIT_OPTION, "Exit", new ExitWithMessageAction("Goodbye!"));
+        menu.addItem(EXIT_OPTION, "Exit",
+                new ChainedAction(new DisconnectAction(), new ExitWithMessageAction("Goodbye!")));
 
         final MenuRenderer renderer = new VerticalMenuRenderer(menu, MenuItemRenderer.DEFAULT);
         return renderer.render();

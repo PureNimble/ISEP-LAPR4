@@ -7,6 +7,9 @@ import java.util.regex.Pattern;
 import eapli.framework.domain.model.ValueObject;
 import eapli.framework.validations.Preconditions;
 
+/**
+ * @author 2DI2
+ */
 @Embeddable
 public class NumberOfVacancies implements ValueObject, Comparable<NumberOfVacancies> {
 

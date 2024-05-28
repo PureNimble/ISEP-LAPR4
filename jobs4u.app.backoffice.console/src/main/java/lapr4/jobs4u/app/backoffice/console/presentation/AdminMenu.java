@@ -6,6 +6,9 @@ import lapr4.jobs4u.app.backoffice.console.presentation.authz.action.AddBackoffi
 import lapr4.jobs4u.app.backoffice.console.presentation.authz.action.EnableOrDisableBackofficeUserAction;
 import lapr4.jobs4u.app.backoffice.console.presentation.authz.action.ListBackofficeUsersAction;
 
+/**
+ * @author 2DI2
+ */
 public class AdminMenu  extends Menu {
 
     private static final int ADD_USER_OPTION = 1;

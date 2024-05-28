@@ -8,6 +8,9 @@ import lapr4.jobs4u.customermanagement.domain.CustomerCode;
 import lapr4.jobs4u.customermanagement.domain.CustomerUser;
 import lapr4.jobs4u.customermanagement.repositories.CustomerUserRepository;
 
+/**
+ * @author 2DI2
+ */
 public class InMemoryCustomerUserRepository extends InMemoryDomainRepository<CustomerUser, Long>
         implements CustomerUserRepository {
 

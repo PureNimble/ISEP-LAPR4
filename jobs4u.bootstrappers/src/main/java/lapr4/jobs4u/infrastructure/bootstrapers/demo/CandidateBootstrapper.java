@@ -8,6 +8,9 @@ import lapr4.jobs4u.usermanagement.domain.BaseRoles;
 import eapli.framework.actions.Action;
 import eapli.framework.infrastructure.authz.domain.model.Role;
 
+/**
+ * @author 2DI2
+ */
 public class CandidateBootstrapper extends Jobs4UBootstrapperBase implements Action {
 
     @Override

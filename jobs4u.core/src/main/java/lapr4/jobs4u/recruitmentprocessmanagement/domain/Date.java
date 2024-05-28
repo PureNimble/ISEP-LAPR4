@@ -13,6 +13,9 @@ import eapli.framework.domain.model.ValueObject;
 import eapli.framework.time.util.CurrentTimeCalendars;
 import eapli.framework.validations.Preconditions;
 
+/**
+ * @author 2DI2
+ */
 @Embeddable
 public class Date implements ValueObject, Comparable<Date> {
 

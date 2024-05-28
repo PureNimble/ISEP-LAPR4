@@ -10,6 +10,9 @@ import java.util.List;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+/**
+ * @author 2DI2
+ */
 public class ApplicationBuilder implements DomainFactory<Application> {
 
     private static final Logger LOGGER = LogManager.getLogger(ApplicationBuilder.class);

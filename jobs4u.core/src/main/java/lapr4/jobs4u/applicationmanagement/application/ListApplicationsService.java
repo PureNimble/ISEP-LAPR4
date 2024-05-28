@@ -10,6 +10,9 @@ import lapr4.jobs4u.applicationmanagement.dto.ApplicationDTO;
 import lapr4.jobs4u.applicationmanagement.repositories.ApplicationRepository;
 import lapr4.jobs4u.jobopeningmanagement.domain.JobOpening;
 
+/**
+ * @author 2DI2
+ */
 @Component
 public class ListApplicationsService {
 

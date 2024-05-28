@@ -11,6 +11,9 @@ import lapr4.jobs4u.Application;
 import lapr4.jobs4u.candidatemanagement.domain.CandidateUser;
 import lapr4.jobs4u.candidatemanagement.repositories.CandidateUserRepository;
 
+/**
+ * @author 2DI2
+ */
 class JpaCandidateUserRepository extends JpaAutoTxRepository<CandidateUser, Long, Long>
         implements CandidateUserRepository {
 

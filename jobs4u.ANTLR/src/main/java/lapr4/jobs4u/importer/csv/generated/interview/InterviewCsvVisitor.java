@@ -35,11 +35,23 @@ public interface InterviewCsvVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitType(InterviewCsvParser.TypeContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link InterviewCsvParser#questionCotation}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitQuestionCotation(InterviewCsvParser.QuestionCotationContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link InterviewCsvParser#answer}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitAnswer(InterviewCsvParser.AnswerContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link InterviewCsvParser#answerCotation}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitAnswerCotation(InterviewCsvParser.AnswerCotationContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link InterviewCsvParser#question}.
 	 * @param ctx the parse tree

@@ -12,13 +12,18 @@ import org.apache.logging.log4j.Logger;
 
 import lapr4.jobs4u.message.AckMessage;
 import lapr4.jobs4u.message.AuthMessage;
+import lapr4.jobs4u.message.ChangePassMessage;
 import lapr4.jobs4u.message.CommTestMessage;
 import lapr4.jobs4u.message.DisconnMessage;
 import lapr4.jobs4u.message.ErrMessage;
+import lapr4.jobs4u.message.LogoutMessage;
 import lapr4.jobs4u.message.Message;
 import lapr4.jobs4u.protocol.MessageCode;
 import lapr4.jobs4u.protocol.ProtocolMessage;
 
+/**
+ * @author 2DI2
+ */
 public class ClientHandler implements Runnable {
 
     private final static Map<MessageCode, Class<? extends Message>> MESSAGE_MAP = new HashMap<>() {
@@ -28,6 +33,8 @@ public class ClientHandler implements Runnable {
             put(MessageCode.DISCONN, DisconnMessage.class);
             put(MessageCode.ERR, ErrMessage.class);
             put(MessageCode.AUTH, AuthMessage.class);
+            put(MessageCode.LOGOUT, LogoutMessage.class);
+            put(MessageCode.CHANGEPASS, ChangePassMessage.class);
         }
     };
 
@@ -44,7 +51,7 @@ public class ClientHandler implements Runnable {
     @Override
     public void run() {
         try {
-            logger.debug("[Client Handler Thread] Connected to "
+            logger.info("[Client Handler Thread] Connected to "
                     + socket.getInetAddress().getHostAddress() + " port " + socket.getPort() + "!");
 
             final DataInputStream input = new DataInputStream(socket.getInputStream());
@@ -57,21 +64,21 @@ public class ClientHandler implements Runnable {
                     if (message == null)
                         break;
 
-                    logger.debug("\n" + message.toString());
+                    logger.info("\n" + message.toString());
 
                     processMessage(message, output);
-                } catch (Exception e) {
-                    (new ErrMessage(new ProtocolMessage((byte) 1, MessageCode.ERR, "Bad Request"), output, socket,
-                            eventListener)).handle();
+                } catch (final Exception e) {
+                    new ErrMessage(new ProtocolMessage((byte) 1, MessageCode.ERR, "Bad Request"), output, socket,
+                            eventListener).handle();
                 }
             }
 
-            logger.debug("Connection closed.");
+            logger.info("Connection closed.");
 
             output.close();
             input.close();
-        } catch (IOException e) {
-
+        } catch (final IOException e) {
+            logger.error("\n[Client Handler Thread] Error", e.getMessage());
         }
     }
 
@@ -90,7 +97,7 @@ public class ClientHandler implements Runnable {
                         .getDeclaredConstructor(ProtocolMessage.class, DataOutputStream.class, Socket.class,
                                 EventListener.class)
                         .newInstance(message, output, this.socket, this.eventListener);
-            } catch (Exception e) {
+            } catch (final Exception e) {
                 logger.error("\n[Client Handler Thread] Error", e);
                 return;
             }

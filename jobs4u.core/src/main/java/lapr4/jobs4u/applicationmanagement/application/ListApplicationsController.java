@@ -9,13 +9,16 @@ import lapr4.jobs4u.usermanagement.domain.BaseRoles;
 import eapli.framework.application.UseCaseController;
 import eapli.framework.infrastructure.authz.application.AuthorizationService;
 
+/**
+ * @author 2DI2
+ */
 @UseCaseController
 public class ListApplicationsController {
 
     private final ListApplicationsService applicationService;
     private final AuthorizationService authz;
 
-    public ListApplicationsController(ApplicationRepository applicationRepository, AuthorizationService authz) {
+    public ListApplicationsController(final ApplicationRepository applicationRepository, final AuthorizationService authz) {
         this.applicationService = new ListApplicationsService(applicationRepository);
         this.authz = authz;
     }

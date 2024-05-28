@@ -8,6 +8,9 @@ import lapr4.jobs4u.EventListener;
 import lapr4.jobs4u.protocol.MessageCode;
 import lapr4.jobs4u.protocol.ProtocolMessage;
 
+/**
+ * @author 2DI2
+ */
 public class DisconnMessage extends Message {
     public DisconnMessage(final ProtocolMessage protocolMessage, final DataOutputStream output, final Socket socket,
             final EventListener eventListener) {
@@ -16,6 +19,7 @@ public class DisconnMessage extends Message {
 
     @Override
     public void handle() throws IOException {
+        eventListener.removeClient(socket);
         send(new ProtocolMessage((byte) 1, MessageCode.ACK));
         close();
     }

@@ -14,6 +14,9 @@ import jakarta.persistence.Table;
 import jakarta.persistence.Version;
 import lapr4.jobs4u.integration.questions.importer.domain.QuestionImporterPlugin;
 
+/**
+ * @author 2DI2
+ */
 @Entity
 @Table(name = "T_JOB_OPENING_INTERVIEW")
 public class JobOpeningInterview implements AggregateRoot<Long> {

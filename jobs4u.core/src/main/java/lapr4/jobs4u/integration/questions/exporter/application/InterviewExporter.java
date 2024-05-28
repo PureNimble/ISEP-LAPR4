@@ -13,6 +13,9 @@ import lapr4.jobs4u.exporter.interview.generated.InterviewParser;
 import lapr4.jobs4u.questionmanagement.domain.InterviewQuestion;
 import lapr4.jobs4u.questionmanagement.domain.RequirementsQuestion;
 
+/**
+ * @author 2DI2
+ */
 public class InterviewExporter implements QuestionExporter {
 
     private StringBuilder content;
@@ -23,7 +26,7 @@ public class InterviewExporter implements QuestionExporter {
     public void begin(final String filename, final String plugin) throws IOException {
         this.filename = filename;
         content = new StringBuilder();
-        content.append(String.format("TITLE: %s\nNAME:\nGRADE:\n", plugin));
+        content.append(String.format("TITLE: %s\nNAME:\nEMAIL:\n", plugin));
     }
 
     @Override
@@ -47,7 +50,6 @@ public class InterviewExporter implements QuestionExporter {
             content.append("QUESTION: ").append(e.questionBody()).append("\n");
 
         content.append("ANSWER:\n");
-        content.append("GRADE:\n");
     }
 
     @Override
@@ -86,12 +88,12 @@ public class InterviewExporter implements QuestionExporter {
             if (parser.getNumberOfSyntaxErrors() > 0) {
                 try {
                     throw new IOException("Syntax error in template file");
-                } catch (IOException e) {
+                } catch (final IOException e) {
                     return false;
                 }
             }
             return true;
-        } catch (IllegalStateException e) {
+        } catch (final IllegalStateException e) {
             return false;
         }
     }

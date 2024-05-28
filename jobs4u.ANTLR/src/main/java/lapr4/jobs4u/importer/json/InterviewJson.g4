@@ -2,18 +2,23 @@ grammar InterviewJson;
 
 questions: '[' question (',' question)+ ']' EOF;
 
-body: '"' (TEXT | NUMBER | LETTER | MEMBER)+ '"';
+body: '"' (TEXT | NUMBER | LETTER | MEMBER)+ ('"' (TEXT | NUMBER | LETTER | MEMBER)+ '"' ((TEXT | NUMBER | LETTER | MEMBER)+)?)? '"';
 
 questionBody: body;
 
 type: body;
 
+questionCotation: cotation;
+
 answer: body;
 
+answerCotation: cotation;
+
 question:
-	'{' '"type"' ':' type ',' '"cotation"' ':' cotation ',' '"cotationType"' ':' cotationType ','
-		'"body"' ':' questionBody ',' '"possibleAnswers"' ':' '[' answer (
-		',' answer
+	'{' '"type"' ':' type ',' '"cotation"' ':' questionCotation ',' '"cotationType"' ':' cotationType ','
+		'"body"' ':' questionBody ',' '"possibleAnswers"' ':' '[' '{' '"answer"' ':' answer ','
+		'"cotation"' ':' answerCotation '}' (
+		',' '{' '"answer"' ':' answer ',' '"cotation"' ':' answerCotation '}'
 	)* ']' '}';
 
 cotation:
@@ -23,7 +28,7 @@ cotationType: '"' ( '%' | 'POINTS' | 'VALUES') '"';
 
 NUMBER: [0-9];
 LETTER: [a-zA-Z];
-MEMBER: [.,;:/#+!?)([\]] | '\'' | '|' | '-';
+MEMBER: [.,;:/#+!?@*)([\]] | '\'' | '|' | '-';
 TWO_DIGIT_NUMBER: NUMBER NUMBER?;
 FRACTIONAL_NUMBER:
 	TWO_DIGIT_NUMBER ('.' | ',') TWO_DIGIT_NUMBER;

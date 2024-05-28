@@ -7,7 +7,7 @@ import lapr4.jobs4u.questionmanagement.domain.QuestionType;
 import lapr4.jobs4u.questionmanagement.repositories.QuestionTypeRepository;
 
 /**
- * @author MCN 29/03/2016
+ * @author 2DI2
  */
 class JpaQuestionTypeRepository extends JpaAutoTxRepository<QuestionType, String, String>
         implements QuestionTypeRepository {

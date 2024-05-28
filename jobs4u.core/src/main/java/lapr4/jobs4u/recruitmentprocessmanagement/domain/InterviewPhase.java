@@ -8,6 +8,9 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
+/**
+ * @author 2DI2
+ */
 @Entity
 @Table(name = "T_INTERVIEW_PHASE")
 public class InterviewPhase extends Phase implements DomainEntity<Long> {

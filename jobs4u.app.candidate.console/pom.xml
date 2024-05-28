@@ -36,7 +36,7 @@
         </dependency>
         <dependency>
             <groupId>lapr4</groupId>
-            <artifactId>jobs4u.applicationProtocol</artifactId>
+            <artifactId>jobs4u.app.client.common</artifactId>
             <version>${project.parent.version}</version>
         </dependency>
     </dependencies>

@@ -7,6 +7,9 @@ import eapli.framework.domain.model.ValueObject;
 import eapli.framework.validations.Preconditions;
 import jakarta.xml.bind.annotation.XmlAccessType;
 
+/**
+ * @author 2DI2
+ */
 @Embeddable
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Answer implements ValueObject, Comparable<Answer> {

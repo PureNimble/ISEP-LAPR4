@@ -9,6 +9,9 @@ import lapr4.jobs4u.customermanagement.domain.PhoneNumber;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+/**
+ * @author 2DI2
+ */
 public class CandidateBuilder implements DomainFactory<Candidate> {
 
     private static final Logger LOGGER = LogManager.getLogger(CandidateBuilder.class);

@@ -9,6 +9,9 @@ import lapr4.jobs4u.candidatemanagement.domain.Candidate;
 import lapr4.jobs4u.jobopeningmanagement.domain.JobOpening;
 import lapr4.jobs4u.jobopeningmanagement.domain.JobReference;
 
+/**
+ * @author 2DI2
+ */
 public interface ApplicationRepository extends DomainRepository<ApplicationCode, Application> {
     Optional<Application> findByApplicationCode(final ApplicationCode code);
 

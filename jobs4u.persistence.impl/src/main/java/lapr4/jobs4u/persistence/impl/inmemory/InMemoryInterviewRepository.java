@@ -8,8 +8,7 @@ import lapr4.jobs4u.interviewmanagement.domain.Interview;
 import lapr4.jobs4u.interviewmanagement.repositories.InterviewRepository;
 
 /**
- *
- * @author Jorge Santos ajs@isep.ipp.pt 02/04/2016
+ * @author 2DI2
  */
 public class InMemoryInterviewRepository extends InMemoryDomainRepository<Interview, Long>
         implements InterviewRepository {

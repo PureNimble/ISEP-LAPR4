@@ -15,6 +15,9 @@ import jakarta.persistence.Table;
 import jakarta.persistence.Version;
 import lapr4.jobs4u.jobopeningmanagement.domain.JobOpening;
 
+/**
+ * @author 2DI2
+ */
 @Entity
 @Table(name = "T_RECRUITMENT_PROCESS")
 public class RecruitmentProcess implements AggregateRoot<Long> {

@@ -13,6 +13,9 @@ import eapli.framework.general.domain.model.EmailAddress;
 import eapli.framework.infrastructure.authz.domain.model.SystemUser;
 import eapli.framework.validations.Preconditions;
 
+/**
+ * @author 2DI2
+ */
 @Entity
 @Table(name = "T_CUSTOMER")
 public class Customer implements AggregateRoot<CustomerCode> {

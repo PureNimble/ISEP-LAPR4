@@ -16,15 +16,15 @@
 
 ## 3. Analysis
 
-[_`Analysis`_](02.analysis/readme.md)
+_N/A_
 
 ## 4. Design
 
-[_`Design`_](03.design/readme.md)
+_N/A_
 
 ## 5. Tests & Implementation
 
-[_`Tests & Implementation`_](04.tests-and-implementation/readme.md)
+_N/A_
 
 ## 6. Integration/Demonstration
 

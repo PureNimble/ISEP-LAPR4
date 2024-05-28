@@ -12,6 +12,9 @@ import lapr4.jobs4u.importer.csv.generated.requirement.RequirementsCsvParser;
 import lapr4.jobs4u.questionmanagement.domain.Answer;
 import lapr4.jobs4u.questionmanagement.dto.RequirementsQuestionDTO;
 
+/**
+ * @author 2DI2
+ */
 public class RequirementsCsvListener extends RequirementsCsvBaseListener {
 
     private final List<RequirementsQuestionDTO> questions = new ArrayList<>();
@@ -43,7 +46,7 @@ public class RequirementsCsvListener extends RequirementsCsvBaseListener {
         current.setPossibleAnswers(answers);
     }
 
-    private String extractValue(ParserRuleContext ctx) {
+    private String extractValue(final ParserRuleContext ctx) {
         final Token startToken = ctx.getStart();
         final Token stopToken = ctx.getStop();
         final Interval interval = new Interval(startToken.getStartIndex(), stopToken.getStopIndex());

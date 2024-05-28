@@ -11,6 +11,7 @@ import lapr4.jobs4u.jobopeningmanagement.domain.JobReference;
 import lapr4.jobs4u.usermanagement.application.AddUserController;
 import lapr4.jobs4u.usermanagement.domain.BaseRoles;
 
+import java.nio.file.Path;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -50,7 +51,8 @@ public class ImportApplicationsUI extends AbstractUI {
     @Override
     protected boolean doShow() {
         System.out.println("Please insert the folder path");
-        String folder = Utils.getPath(true);
+        final Path path = Utils.getPath(true);
+        final String folder = path.toString();
         if (folder == null && haveReportFile(folder)) {
             System.out.println("Invalid Folder");
             return false;
@@ -90,12 +92,12 @@ public class ImportApplicationsUI extends AbstractUI {
         });
     }
 
-    private Candidate registerCandidates(String folder, String candidateId, String jobOffer) {
+    private Candidate registerCandidates(final String folder, final String candidateId, final String jobOffer) {
         List<String> output = theController.getCandidateInfo(folder, candidateId, jobOffer);
-        String email = output.get(0);
-        String phoneNumber = output.get(1);
-        String firstName = output.get(2);
-        String lastName = output.get(3);
+        final String email = output.get(0);
+        final String phoneNumber = output.get(1);
+        final String firstName = output.get(2);
+        final String lastName = output.get(3);
 
         final Set<Role> roleTypes = new HashSet<>();
         roleTypes.add(BaseRoles.CANDIDATE);
@@ -109,11 +111,11 @@ public class ImportApplicationsUI extends AbstractUI {
         return candidate;
     }
 
-    private void registerApplication(List<File> files, JobOpening job, Candidate candidate) {
+    private void registerApplication(final List<File> files, final JobOpening job, final Candidate candidate) {
         theController.registerApplication(files, job, candidate);
     }
 
-    private boolean haveReportFile(String folder) {
+    private boolean haveReportFile(final String folder) {
         return theController.isPathValid(folder);
     }
 

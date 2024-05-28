@@ -7,6 +7,9 @@ import eapli.framework.infrastructure.repositories.impl.inmemory.InMemoryDomainR
 import lapr4.jobs4u.candidatemanagement.domain.Candidate;
 import lapr4.jobs4u.candidatemanagement.repositories.CandidateRepository;
 
+/**
+ * @author 2DI2
+ */
 public class InMemoryCandidateRepository
         extends InMemoryDomainRepository<Candidate, EmailAddress>
         implements CandidateRepository {

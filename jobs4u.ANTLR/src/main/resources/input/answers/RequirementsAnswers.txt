@@ -1,0 +1,12 @@
+TITLE: Software Engineer Interview
+NAME: Paulo
+EMAIL: micro@email.com
+
+# Enter the number of years of experience (integer)
+ANSWER: 5
+
+# Select one Degree (none | bachelor | master | phD)
+ANSWER: none
+
+# Select one or more Programming Languages (python| java | javascript | scala | swift | ruby | r | sql)
+ANSWER: java, python, sql

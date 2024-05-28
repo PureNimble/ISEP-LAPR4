@@ -5,7 +5,7 @@ questions: '<Questions>' question+ '</Questions>' EOF;
 text: (TEXT | NUMBER | LETTER | MEMBER)+;
 
 question:
-	'<Question>' cotation cotationType type body possibleAnswersList '</Question>';
+	'<Question>' questionCotation cotationType type body possibleAnswersList '</Question>';
 
 cotation:
 	'<Cotation>' (TWO_DIGIT_NUMBER | FRACTIONAL_NUMBER | '100') '</Cotation>';
@@ -13,18 +13,24 @@ cotation:
 cotationType:
 	'<CotationType>' ('%' | 'POINTS' | 'VALUES') '</CotationType>';
 
-type: '<Type>' text '</Type>';
+type: '<Type>' text (('<' | '/' | '>' | '</') text (('<' | '/' | '>' | '</') text)?)? '</Type>';
 
-body: '<Body>' text '</Body>';
+body: '<Body>' text (('<' | '/' | '>' | '</') text (('<' | '/' | '>' | '</') text)?)? '</Body>';
+
+questionCotation: cotation;
+
+answerCotation: cotation;
 
 possibleAnswersList:
 	'<PossibleAnswersList>' possibleAnswers* '</PossibleAnswersList>';
 
-possibleAnswers: '<PossibleAnswers>' text '</PossibleAnswers>';
+possibleAnswers: '<PossibleAnswers>' answer answerCotation '</PossibleAnswers>';
+
+answer: '<Answer>' text '</Answer>';
 
 NUMBER: [0-9];
 LETTER: [a-zA-Z];
-MEMBER: [.,;:/#+!?)([\]] | '\'' | '|' | '-';
+MEMBER: [.,;:/#+!?@*)([\]] | '\'' | '|' | '-';
 TWO_DIGIT_NUMBER: NUMBER NUMBER?;
 FRACTIONAL_NUMBER:
 	TWO_DIGIT_NUMBER ('.' | ',') TWO_DIGIT_NUMBER;

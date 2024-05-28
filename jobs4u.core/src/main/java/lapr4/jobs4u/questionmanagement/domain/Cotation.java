@@ -4,6 +4,9 @@ import eapli.framework.domain.model.ValueObject;
 import eapli.framework.validations.Preconditions;
 import jakarta.persistence.Embeddable;
 
+/**
+ * @author 2DI2
+ */
 @Embeddable
 public class Cotation implements ValueObject, Comparable<Cotation> {
 
@@ -14,7 +17,7 @@ public class Cotation implements ValueObject, Comparable<Cotation> {
     protected Cotation(final String cotation) {
         Preconditions.nonEmpty(cotation, "Cotation should neither be null nor empty");
         Preconditions.ensure(cotation.matches("^100([.,]0+)?|0([.,][0-9]+)?|([1-9][0-9]?([.,][0-9]+)?)$"), "Cotation should be a number between 0 and 100");
-        this.cotation = Double.parseDouble(cotation.replace(',', '.'));    
+        this.cotation = Double.parseDouble(cotation.replace(',', '.'));
     }
 
     protected Cotation() {

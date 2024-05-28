@@ -23,13 +23,13 @@ QUESTION: What is the name of the process to find bugs in software?
 ANSWER:
 GRADE:
 
-COTATION: 30 POINTS
+COTATION: 30%
 QUESTION TYPE: Choice, with single answer
 QUESTION: What is the capital of France?
 ANSWER:
 GRADE:
 
-COTATION: 30 BOAS
+COTATION: 30%
 QUESTION TYPE: True/False
 QUESTION: Python is a statically typed language.
 ANSWER:

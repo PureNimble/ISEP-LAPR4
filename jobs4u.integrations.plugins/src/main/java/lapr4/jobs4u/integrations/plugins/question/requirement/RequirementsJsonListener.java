@@ -12,6 +12,9 @@ import lapr4.jobs4u.importer.json.generated.requirement.RequirementsJsonParser;
 import lapr4.jobs4u.questionmanagement.domain.Answer;
 import lapr4.jobs4u.questionmanagement.dto.RequirementsQuestionDTO;
 
+/**
+ * @author 2DI2
+ */
 public class RequirementsJsonListener extends RequirementsJsonBaseListener {
 
     private final List<RequirementsQuestionDTO> questions = new ArrayList<>();
@@ -41,7 +44,7 @@ public class RequirementsJsonListener extends RequirementsJsonBaseListener {
         answers.add(Answer.valueOf(value));
     }
 
-    private String extractValue(ParserRuleContext ctx) {
+    private String extractValue(final ParserRuleContext ctx) {
         final Token startToken = ctx.getStart();
         final Token stopToken = ctx.getStop();
         final Interval interval = new Interval(startToken.getStartIndex(), stopToken.getStopIndex());

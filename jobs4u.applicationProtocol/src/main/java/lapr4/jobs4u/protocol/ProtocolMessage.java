@@ -1,11 +1,17 @@
 package lapr4.jobs4u.protocol;
 
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.DataInputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @author 2DI2
+ */
 public class ProtocolMessage {
 
     private final byte protocolVersion;
@@ -17,7 +23,7 @@ public class ProtocolMessage {
         this.code = code;
         this.dataChunks = new byte[0][];
     }
-    
+
     public ProtocolMessage(final byte protocolVersion, final MessageCode code, final String... data) {
         this.protocolVersion = protocolVersion;
         this.code = code;
@@ -26,7 +32,7 @@ public class ProtocolMessage {
             this.dataChunks[i] = data[i].getBytes();
         }
     }
-    
+
     public ProtocolMessage(final byte protocolVersion, final MessageCode code, final byte[]... dataChunk) {
         this.protocolVersion = protocolVersion;
         this.code = code;
@@ -37,22 +43,37 @@ public class ProtocolMessage {
         }
     }
 
+    public ProtocolMessage(final byte protocolVersion, final MessageCode code, final Object... dataChunk)
+            throws IOException {
+        this.protocolVersion = protocolVersion;
+        this.code = code;
+        this.dataChunks = new byte[dataChunk.length][];
+        for (int i = 0; i < dataChunk.length; i++) {
+            ByteArrayOutputStream bos = new ByteArrayOutputStream();
+            ObjectOutputStream out = new ObjectOutputStream(bos);
+            out.writeObject(dataChunk[i]);
+            out.flush();
+            this.dataChunks[i] = bos.toByteArray();
+        }
+    }
+
     public static ProtocolMessage fromDataStream(final DataInputStream input) throws IOException {
         final byte protocolVersion = input.readByte();
         final MessageCode code = MessageCode.valueOf(input.readByte());
-    
+
         List<byte[]> dataChunks = new ArrayList<>();
+
         while (true) {
             final int length = input.readUnsignedByte() + input.readUnsignedByte() * 256;
             if (length == 0) {
                 break;
             }
-    
+
             byte[] data = new byte[length];
             input.readFully(data);
             dataChunks.add(data);
         }
-    
+
         return new ProtocolMessage(protocolVersion, code, dataChunks.toArray(new byte[0][]));
     }
 
@@ -79,12 +100,39 @@ public class ProtocolMessage {
         return result.toByteArray();
     }
 
+    public Object[] dataAsObjects() throws IOException, ClassNotFoundException {
+        Object[] objects = new Object[dataChunks.length];
+        for (int i = 0; i < dataChunks.length; i++) {
+            ByteArrayInputStream bis = new ByteArrayInputStream(dataChunks[i]);
+            ObjectInputStream in = new ObjectInputStream(bis);
+            objects[i] = in.readObject();
+            in.close();
+        }
+        return objects;
+    }
+
+    public byte protocolVersion() {
+        return this.protocolVersion;
+    }
+
     public byte[][] datachunks() {
         return this.dataChunks;
     }
 
     public MessageCode code() {
         return this.code;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("Protocol Version: ").append(protocolVersion).append("\n");
+        sb.append("Message Code: ").append(code).append("\n");
+        sb.append("Data Chunks: ").append(dataChunks.length).append("\n");
+        for (byte[] data : dataChunks) {
+            sb.append("Data: ").append(new String(data)).append("\n");
+        }
+        return sb.toString();
     }
 
 }

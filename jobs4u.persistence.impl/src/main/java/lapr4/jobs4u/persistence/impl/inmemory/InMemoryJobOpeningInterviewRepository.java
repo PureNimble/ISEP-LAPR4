@@ -7,6 +7,9 @@ import lapr4.jobs4u.jobopeningmanagement.domain.JobOpening;
 import lapr4.jobs4u.jobopeningmanagement.domain.JobOpeningInterview;
 import lapr4.jobs4u.jobopeningmanagement.repositories.JobOpeningInterviewRepository;
 
+/**
+ * @author 2DI2
+ */
 public class InMemoryJobOpeningInterviewRepository extends InMemoryDomainRepository<JobOpeningInterview, Long>
         implements JobOpeningInterviewRepository {
 

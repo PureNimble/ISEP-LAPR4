@@ -19,7 +19,7 @@ public class ListApplicationsUI extends AbstractListUI<ApplicationDTO> {
 
     private final ListApplicationsController listApplicationsController = new ListApplicationsController(
             PersistenceContext.repositories().applications(), AuthzRegistry.authorizationService());
-    private final ListJobOpeningsController listJobpenincsController = new ListJobOpeningsController(
+    private final ListJobOpeningsController listJobpeningsController = new ListJobOpeningsController(
             PersistenceContext.repositories().jobOpenings(), AuthzRegistry.authorizationService());
 
     @Override
@@ -34,7 +34,7 @@ public class ListApplicationsUI extends AbstractListUI<ApplicationDTO> {
 
     @Override
     protected Iterable<ApplicationDTO> elements() {
-        final Iterable<JobOpeningDTO> jobOpenings = this.listJobpenincsController.filterByCostumerManager();
+        final Iterable<JobOpeningDTO> jobOpenings = this.listJobpeningsController.filterByCostumerManager();
         final SelectWidget<JobOpeningDTO> selector = new SelectWidget<>("Job Openings:", jobOpenings,
                 new JobOpeningPrinter());
         selector.show();
@@ -42,7 +42,7 @@ public class ListApplicationsUI extends AbstractListUI<ApplicationDTO> {
         if (theJobOpeningDTO == null) {
             return Collections.emptyList();
         }
-        JobOpening theJobOpening = listJobpenincsController.selectedJobOpening(theJobOpeningDTO);
+        JobOpening theJobOpening = listJobpeningsController.selectedJobOpening(theJobOpeningDTO);
         return applicationsByJobOpening(theJobOpening);
     }
 

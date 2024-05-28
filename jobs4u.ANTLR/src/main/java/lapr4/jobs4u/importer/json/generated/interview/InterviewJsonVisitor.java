@@ -35,11 +35,23 @@ public interface InterviewJsonVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitType(InterviewJsonParser.TypeContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link InterviewJsonParser#questionCotation}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitQuestionCotation(InterviewJsonParser.QuestionCotationContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link InterviewJsonParser#answer}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitAnswer(InterviewJsonParser.AnswerContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link InterviewJsonParser#answerCotation}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitAnswerCotation(InterviewJsonParser.AnswerCotationContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link InterviewJsonParser#question}.
 	 * @param ctx the parse tree

@@ -5,6 +5,9 @@ import java.util.List;
 import jakarta.xml.bind.annotation.XmlElement;
 import jakarta.xml.bind.annotation.XmlRootElement;
 
+/**
+ * @author 2DI2
+ */
 @XmlRootElement(name = "Questions")
 public class QuestionWrapper<T> {
     private List<T> questions;

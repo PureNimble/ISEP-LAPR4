@@ -12,9 +12,9 @@ cotation:
 cotationType: ( '%' | 'POINTS' | 'VALUES');
 
 choice: option NEWLINE (option NEWLINE)+;
-option: '[' NUMBER ']' text;
+text: (TEXT | TWO_DIGIT_NUMBER | LETTER | MEMBER)+ (('[' text? ']')+ text?)?;
 answer: text;
-text: (TEXT | NUMBER | LETTER | MEMBER)+ (('[' text? ']')+ text?)?;
+option: '[' (TWO_DIGIT_NUMBER | LETTER) ']' text;
 email: TEXT '@' TEXT;
 
 type: (
@@ -46,12 +46,12 @@ DATE_QUESTION: 'Date';
 TIME_QUESTION: 'Time';
 NUMERIC_SCALE_QUESTION: 'Numeric Scale';
 
+TWO_DIGIT_NUMBER: NUMBER NUMBER?;
 NUMBER: [0-9];
 LETTER: [a-zA-Z];
 MEMBER: [.,;:/#+!?*)(] | '\'' | '|' | '-';
-TWO_DIGIT_NUMBER: NUMBER NUMBER?;
 FRACTIONAL_NUMBER:
 	TWO_DIGIT_NUMBER ('.' | ',') TWO_DIGIT_NUMBER;
-TEXT: (LETTER | NUMBER | MEMBER)+;
+TEXT: (LETTER | TWO_DIGIT_NUMBER | MEMBER)+;
 NEWLINE: ('\r'? '\n')+;
 WS: [ \t\n\r]+ -> skip;

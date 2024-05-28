@@ -17,8 +17,8 @@ public class InterviewCsvParser extends Parser {
 	protected static final PredictionContextCache _sharedContextCache =
 		new PredictionContextCache();
 	public static final int
-		T__0=1, T__1=2, T__2=3, T__3=4, T__4=5, T__5=6, NUMBER=7, LETTER=8, MEMBER=9, 
-		TWO_DIGIT_NUMBER=10, FRACTIONAL_NUMBER=11, TEXT=12, NEWLINE=13, WS=14;
+		T__0=1, T__1=2, T__2=3, T__3=4, T__4=5, T__5=6, TWO_DIGIT_NUMBER=7, NUMBER=8, 
+		LETTER=9, MEMBER=10, FRACTIONAL_NUMBER=11, TEXT=12, NEWLINE=13, WS=14;
 	public static final int
 		RULE_questions = 0, RULE_body = 1, RULE_questionBody = 2, RULE_type = 3, 
 		RULE_questionCotation = 4, RULE_answer = 5, RULE_answerCotation = 6, RULE_question = 7, 
@@ -39,8 +39,8 @@ public class InterviewCsvParser extends Parser {
 	private static final String[] _LITERAL_NAMES = makeLiteralNames();
 	private static String[] makeSymbolicNames() {
 		return new String[] {
-			null, null, null, null, null, null, null, "NUMBER", "LETTER", "MEMBER", 
-			"TWO_DIGIT_NUMBER", "FRACTIONAL_NUMBER", "TEXT", "NEWLINE", "WS"
+			null, null, null, null, null, null, null, "TWO_DIGIT_NUMBER", "NUMBER", 
+			"LETTER", "MEMBER", "FRACTIONAL_NUMBER", "TEXT", "NEWLINE", "WS"
 		};
 	}
 	private static final String[] _SYMBOLIC_NAMES = makeSymbolicNames();
@@ -164,9 +164,9 @@ public class InterviewCsvParser extends Parser {
 		public TerminalNode TEXT(int i) {
 			return getToken(InterviewCsvParser.TEXT, i);
 		}
-		public List<TerminalNode> NUMBER() { return getTokens(InterviewCsvParser.NUMBER); }
-		public TerminalNode NUMBER(int i) {
-			return getToken(InterviewCsvParser.NUMBER, i);
+		public List<TerminalNode> TWO_DIGIT_NUMBER() { return getTokens(InterviewCsvParser.TWO_DIGIT_NUMBER); }
+		public TerminalNode TWO_DIGIT_NUMBER(int i) {
+			return getToken(InterviewCsvParser.TWO_DIGIT_NUMBER, i);
 		}
 		public List<TerminalNode> LETTER() { return getTokens(InterviewCsvParser.LETTER); }
 		public TerminalNode LETTER(int i) {
@@ -212,7 +212,7 @@ public class InterviewCsvParser extends Parser {
 				{
 				setState(28);
 				_la = _input.LA(1);
-				if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & 4992L) != 0)) ) {
+				if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & 5760L) != 0)) ) {
 				_errHandler.recoverInline(this);
 				}
 				else {
@@ -225,7 +225,7 @@ public class InterviewCsvParser extends Parser {
 				setState(31); 
 				_errHandler.sync(this);
 				_la = _input.LA(1);
-			} while ( (((_la) & ~0x3f) == 0 && ((1L << _la) & 4992L) != 0) );
+			} while ( (((_la) & ~0x3f) == 0 && ((1L << _la) & 5760L) != 0) );
 			setState(47);
 			_errHandler.sync(this);
 			switch ( getInterpreter().adaptivePredict(_input,5,_ctx) ) {
@@ -241,7 +241,7 @@ public class InterviewCsvParser extends Parser {
 					{
 					setState(34);
 					_la = _input.LA(1);
-					if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & 4992L) != 0)) ) {
+					if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & 5760L) != 0)) ) {
 					_errHandler.recoverInline(this);
 					}
 					else {
@@ -254,13 +254,13 @@ public class InterviewCsvParser extends Parser {
 					setState(37); 
 					_errHandler.sync(this);
 					_la = _input.LA(1);
-				} while ( (((_la) & ~0x3f) == 0 && ((1L << _la) & 4992L) != 0) );
+				} while ( (((_la) & ~0x3f) == 0 && ((1L << _la) & 5760L) != 0) );
 				setState(39);
 				match(T__0);
 				setState(45);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
-				if ((((_la) & ~0x3f) == 0 && ((1L << _la) & 4992L) != 0)) {
+				if ((((_la) & ~0x3f) == 0 && ((1L << _la) & 5760L) != 0)) {
 					{
 					setState(41); 
 					_errHandler.sync(this);
@@ -270,7 +270,7 @@ public class InterviewCsvParser extends Parser {
 						{
 						setState(40);
 						_la = _input.LA(1);
-						if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & 4992L) != 0)) ) {
+						if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & 5760L) != 0)) ) {
 						_errHandler.recoverInline(this);
 						}
 						else {
@@ -283,7 +283,7 @@ public class InterviewCsvParser extends Parser {
 						setState(43); 
 						_errHandler.sync(this);
 						_la = _input.LA(1);
-					} while ( (((_la) & ~0x3f) == 0 && ((1L << _la) & 4992L) != 0) );
+					} while ( (((_la) & ~0x3f) == 0 && ((1L << _la) & 5760L) != 0) );
 					}
 				}
 
@@ -674,7 +674,7 @@ public class InterviewCsvParser extends Parser {
 			match(T__0);
 			setState(81);
 			_la = _input.LA(1);
-			if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & 3080L) != 0)) ) {
+			if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & 2184L) != 0)) ) {
 			_errHandler.recoverInline(this);
 			}
 			else {
@@ -768,42 +768,42 @@ public class InterviewCsvParser extends Parser {
 		"\u0001\u0007\u0004\u0007J\b\u0007\u000b\u0007\f\u0007K\u0001\u0007\u0003"+
 		"\u0007O\b\u0007\u0001\b\u0001\b\u0001\b\u0001\b\u0001\t\u0001\t\u0001"+
 		"\t\u0001\t\u0001\t\u0000\u0000\n\u0000\u0002\u0004\u0006\b\n\f\u000e\u0010"+
-		"\u0012\u0000\u0003\u0002\u0000\u0007\t\f\f\u0002\u0000\u0003\u0003\n\u000b"+
-		"\u0001\u0000\u0004\u0006V\u0000\u0015\u0001\u0000\u0000\u0000\u0002\u001b"+
-		"\u0001\u0000\u0000\u0000\u00043\u0001\u0000\u0000\u0000\u00065\u0001\u0000"+
-		"\u0000\u0000\b7\u0001\u0000\u0000\u0000\n9\u0001\u0000\u0000\u0000\f;"+
-		"\u0001\u0000\u0000\u0000\u000e=\u0001\u0000\u0000\u0000\u0010P\u0001\u0000"+
-		"\u0000\u0000\u0012T\u0001\u0000\u0000\u0000\u0014\u0016\u0003\u000e\u0007"+
-		"\u0000\u0015\u0014\u0001\u0000\u0000\u0000\u0016\u0017\u0001\u0000\u0000"+
-		"\u0000\u0017\u0015\u0001\u0000\u0000\u0000\u0017\u0018\u0001\u0000\u0000"+
-		"\u0000\u0018\u0019\u0001\u0000\u0000\u0000\u0019\u001a\u0005\u0000\u0000"+
-		"\u0001\u001a\u0001\u0001\u0000\u0000\u0000\u001b\u001d\u0005\u0001\u0000"+
-		"\u0000\u001c\u001e\u0007\u0000\u0000\u0000\u001d\u001c\u0001\u0000\u0000"+
-		"\u0000\u001e\u001f\u0001\u0000\u0000\u0000\u001f\u001d\u0001\u0000\u0000"+
-		"\u0000\u001f \u0001\u0000\u0000\u0000 /\u0001\u0000\u0000\u0000!#\u0005"+
-		"\u0001\u0000\u0000\"$\u0007\u0000\u0000\u0000#\"\u0001\u0000\u0000\u0000"+
-		"$%\u0001\u0000\u0000\u0000%#\u0001\u0000\u0000\u0000%&\u0001\u0000\u0000"+
-		"\u0000&\'\u0001\u0000\u0000\u0000\'-\u0005\u0001\u0000\u0000(*\u0007\u0000"+
-		"\u0000\u0000)(\u0001\u0000\u0000\u0000*+\u0001\u0000\u0000\u0000+)\u0001"+
-		"\u0000\u0000\u0000+,\u0001\u0000\u0000\u0000,.\u0001\u0000\u0000\u0000"+
-		"-)\u0001\u0000\u0000\u0000-.\u0001\u0000\u0000\u0000.0\u0001\u0000\u0000"+
-		"\u0000/!\u0001\u0000\u0000\u0000/0\u0001\u0000\u0000\u000001\u0001\u0000"+
-		"\u0000\u000012\u0005\u0001\u0000\u00002\u0003\u0001\u0000\u0000\u0000"+
-		"34\u0003\u0002\u0001\u00004\u0005\u0001\u0000\u0000\u000056\u0003\u0002"+
-		"\u0001\u00006\u0007\u0001\u0000\u0000\u000078\u0003\u0010\b\u00008\t\u0001"+
-		"\u0000\u0000\u00009:\u0003\u0002\u0001\u0000:\u000b\u0001\u0000\u0000"+
-		"\u0000;<\u0003\u0010\b\u0000<\r\u0001\u0000\u0000\u0000=>\u0003\u0006"+
-		"\u0003\u0000>?\u0005\u0002\u0000\u0000?@\u0003\b\u0004\u0000@A\u0005\u0002"+
-		"\u0000\u0000AB\u0003\u0012\t\u0000BC\u0005\u0002\u0000\u0000CI\u0003\u0004"+
-		"\u0002\u0000DE\u0005\u0002\u0000\u0000EF\u0003\n\u0005\u0000FG\u0005\u0002"+
-		"\u0000\u0000GH\u0003\f\u0006\u0000HJ\u0001\u0000\u0000\u0000ID\u0001\u0000"+
-		"\u0000\u0000JK\u0001\u0000\u0000\u0000KI\u0001\u0000\u0000\u0000KL\u0001"+
-		"\u0000\u0000\u0000LN\u0001\u0000\u0000\u0000MO\u0005\r\u0000\u0000NM\u0001"+
-		"\u0000\u0000\u0000NO\u0001\u0000\u0000\u0000O\u000f\u0001\u0000\u0000"+
-		"\u0000PQ\u0005\u0001\u0000\u0000QR\u0007\u0001\u0000\u0000RS\u0005\u0001"+
-		"\u0000\u0000S\u0011\u0001\u0000\u0000\u0000TU\u0005\u0001\u0000\u0000"+
-		"UV\u0007\u0002\u0000\u0000VW\u0005\u0001\u0000\u0000W\u0013\u0001\u0000"+
-		"\u0000\u0000\b\u0017\u001f%+-/KN";
+		"\u0012\u0000\u0003\u0003\u0000\u0007\u0007\t\n\f\f\u0003\u0000\u0003\u0003"+
+		"\u0007\u0007\u000b\u000b\u0001\u0000\u0004\u0006V\u0000\u0015\u0001\u0000"+
+		"\u0000\u0000\u0002\u001b\u0001\u0000\u0000\u0000\u00043\u0001\u0000\u0000"+
+		"\u0000\u00065\u0001\u0000\u0000\u0000\b7\u0001\u0000\u0000\u0000\n9\u0001"+
+		"\u0000\u0000\u0000\f;\u0001\u0000\u0000\u0000\u000e=\u0001\u0000\u0000"+
+		"\u0000\u0010P\u0001\u0000\u0000\u0000\u0012T\u0001\u0000\u0000\u0000\u0014"+
+		"\u0016\u0003\u000e\u0007\u0000\u0015\u0014\u0001\u0000\u0000\u0000\u0016"+
+		"\u0017\u0001\u0000\u0000\u0000\u0017\u0015\u0001\u0000\u0000\u0000\u0017"+
+		"\u0018\u0001\u0000\u0000\u0000\u0018\u0019\u0001\u0000\u0000\u0000\u0019"+
+		"\u001a\u0005\u0000\u0000\u0001\u001a\u0001\u0001\u0000\u0000\u0000\u001b"+
+		"\u001d\u0005\u0001\u0000\u0000\u001c\u001e\u0007\u0000\u0000\u0000\u001d"+
+		"\u001c\u0001\u0000\u0000\u0000\u001e\u001f\u0001\u0000\u0000\u0000\u001f"+
+		"\u001d\u0001\u0000\u0000\u0000\u001f \u0001\u0000\u0000\u0000 /\u0001"+
+		"\u0000\u0000\u0000!#\u0005\u0001\u0000\u0000\"$\u0007\u0000\u0000\u0000"+
+		"#\"\u0001\u0000\u0000\u0000$%\u0001\u0000\u0000\u0000%#\u0001\u0000\u0000"+
+		"\u0000%&\u0001\u0000\u0000\u0000&\'\u0001\u0000\u0000\u0000\'-\u0005\u0001"+
+		"\u0000\u0000(*\u0007\u0000\u0000\u0000)(\u0001\u0000\u0000\u0000*+\u0001"+
+		"\u0000\u0000\u0000+)\u0001\u0000\u0000\u0000+,\u0001\u0000\u0000\u0000"+
+		",.\u0001\u0000\u0000\u0000-)\u0001\u0000\u0000\u0000-.\u0001\u0000\u0000"+
+		"\u0000.0\u0001\u0000\u0000\u0000/!\u0001\u0000\u0000\u0000/0\u0001\u0000"+
+		"\u0000\u000001\u0001\u0000\u0000\u000012\u0005\u0001\u0000\u00002\u0003"+
+		"\u0001\u0000\u0000\u000034\u0003\u0002\u0001\u00004\u0005\u0001\u0000"+
+		"\u0000\u000056\u0003\u0002\u0001\u00006\u0007\u0001\u0000\u0000\u0000"+
+		"78\u0003\u0010\b\u00008\t\u0001\u0000\u0000\u00009:\u0003\u0002\u0001"+
+		"\u0000:\u000b\u0001\u0000\u0000\u0000;<\u0003\u0010\b\u0000<\r\u0001\u0000"+
+		"\u0000\u0000=>\u0003\u0006\u0003\u0000>?\u0005\u0002\u0000\u0000?@\u0003"+
+		"\b\u0004\u0000@A\u0005\u0002\u0000\u0000AB\u0003\u0012\t\u0000BC\u0005"+
+		"\u0002\u0000\u0000CI\u0003\u0004\u0002\u0000DE\u0005\u0002\u0000\u0000"+
+		"EF\u0003\n\u0005\u0000FG\u0005\u0002\u0000\u0000GH\u0003\f\u0006\u0000"+
+		"HJ\u0001\u0000\u0000\u0000ID\u0001\u0000\u0000\u0000JK\u0001\u0000\u0000"+
+		"\u0000KI\u0001\u0000\u0000\u0000KL\u0001\u0000\u0000\u0000LN\u0001\u0000"+
+		"\u0000\u0000MO\u0005\r\u0000\u0000NM\u0001\u0000\u0000\u0000NO\u0001\u0000"+
+		"\u0000\u0000O\u000f\u0001\u0000\u0000\u0000PQ\u0005\u0001\u0000\u0000"+
+		"QR\u0007\u0001\u0000\u0000RS\u0005\u0001\u0000\u0000S\u0011\u0001\u0000"+
+		"\u0000\u0000TU\u0005\u0001\u0000\u0000UV\u0007\u0002\u0000\u0000VW\u0005"+
+		"\u0001\u0000\u0000W\u0013\u0001\u0000\u0000\u0000\b\u0017\u001f%+-/KN";
 	public static final ATN _ATN =
 		new ATNDeserializer().deserialize(_serializedATN.toCharArray());
 	static {

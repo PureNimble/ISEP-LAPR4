@@ -1,5 +1,6 @@
 TITLE: Data Scientist
 NAME:
+EMAIL:
 
 # Enter the number of years of experience (integer)
 ANSWER:

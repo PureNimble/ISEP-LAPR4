@@ -8,7 +8,7 @@ QUESTION: What is the primary use of HTML?
 [1] Styling web pages
 [2] Structuring web pages
 [3] Server-side computations
-ANSWER: Structuring web pages
+ANSWER: 2
 
 COTATION: 20%
 QUESTION TYPE: Choice, with multiple answers
@@ -17,7 +17,7 @@ QUESTION: Which of the following are sorting algorithms?
 [2] Quick Sort
 [3] Binary Search
 [4] Depth-First Search
-ANSWER: 1
+ANSWER: 1 2
 
 COTATION: 10%
 QUESTION TYPE: True/False
@@ -39,7 +39,7 @@ QUESTION: Which of the following are data structures?
 [2] Queue
 [3] Graph
 [4] Gradient
-ANSWER: Array
+ANSWER: 1 2 4
 
 COTATION: 10%
 QUESTION TYPE: True/False

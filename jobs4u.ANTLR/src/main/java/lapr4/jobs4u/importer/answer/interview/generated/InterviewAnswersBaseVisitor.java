@@ -53,7 +53,7 @@ public class InterviewAnswersBaseVisitor<T> extends AbstractParseTreeVisitor<T> 
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitOption(InterviewAnswersParser.OptionContext ctx) { return visitChildren(ctx); }
+	@Override public T visitText(InterviewAnswersParser.TextContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -67,7 +67,7 @@ public class InterviewAnswersBaseVisitor<T> extends AbstractParseTreeVisitor<T> 
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitText(InterviewAnswersParser.TextContext ctx) { return visitChildren(ctx); }
+	@Override public T visitOption(InterviewAnswersParser.OptionContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *

@@ -77,13 +77,13 @@ public class InterviewAnswersBaseListener implements InterviewAnswersListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterOption(InterviewAnswersParser.OptionContext ctx) { }
+	@Override public void enterText(InterviewAnswersParser.TextContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitOption(InterviewAnswersParser.OptionContext ctx) { }
+	@Override public void exitText(InterviewAnswersParser.TextContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -101,13 +101,13 @@ public class InterviewAnswersBaseListener implements InterviewAnswersListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterText(InterviewAnswersParser.TextContext ctx) { }
+	@Override public void enterOption(InterviewAnswersParser.OptionContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitText(InterviewAnswersParser.TextContext ctx) { }
+	@Override public void exitOption(InterviewAnswersParser.OptionContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

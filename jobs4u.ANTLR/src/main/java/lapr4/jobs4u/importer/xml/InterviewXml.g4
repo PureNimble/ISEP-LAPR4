@@ -2,7 +2,7 @@ grammar InterviewXml;
 
 questions: '<Questions>' question+ '</Questions>' EOF;
 
-text: (TEXT | NUMBER | LETTER | MEMBER)+;
+text: (TEXT | TWO_DIGIT_NUMBER | LETTER | MEMBER)+;
 
 question:
 	'<Question>' questionCotation cotationType type body possibleAnswersList '</Question>';
@@ -28,11 +28,11 @@ possibleAnswers: '<PossibleAnswers>' answer answerCotation '</PossibleAnswers>';
 
 answer: '<Answer>' text '</Answer>';
 
+TWO_DIGIT_NUMBER: NUMBER NUMBER?;
 NUMBER: [0-9];
 LETTER: [a-zA-Z];
 MEMBER: [.,;:/#+!?@*)([\]] | '\'' | '|' | '-';
-TWO_DIGIT_NUMBER: NUMBER NUMBER?;
 FRACTIONAL_NUMBER:
 	TWO_DIGIT_NUMBER ('.' | ',') TWO_DIGIT_NUMBER;
-TEXT: (LETTER | NUMBER | MEMBER)+;
+TEXT: (LETTER | TWO_DIGIT_NUMBER | MEMBER)+;
 WS: [ \t\n\r]+ -> skip;

@@ -6,7 +6,7 @@
         <Body>What is the time complexity of binary search? [1] O(1) [2] O(log n) [3] O(n) [4] O(n log n)</Body>
         <PossibleAnswersList>
             <PossibleAnswers>
-                <Answer>O(log n)</Answer>
+                <Answer>4</Answer>
                 <Cotation>100</Cotation>
             </PossibleAnswers>
         </PossibleAnswersList>
@@ -18,7 +18,7 @@
         <Body>Which of the following are not types of inheritance in C++? [1] Multiple [2] Multilevel [3] Hierarchical [4] Hybrid [5] Parallel</Body>
         <PossibleAnswersList>
             <PossibleAnswers>
-                <Answer>Parallel</Answer>
+                <Answer>5</Answer>
                 <Cotation>100</Cotation>
             </PossibleAnswers>
         </PossibleAnswersList>

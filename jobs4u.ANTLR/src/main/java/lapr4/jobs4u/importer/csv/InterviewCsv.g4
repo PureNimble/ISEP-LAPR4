@@ -2,7 +2,7 @@ grammar InterviewCsv;
 
 questions: question+ EOF;
 
-body: '"' (TEXT | NUMBER | LETTER | MEMBER)+ ('"' (TEXT | NUMBER | LETTER | MEMBER)+ '"' ((TEXT | NUMBER | LETTER | MEMBER)+)?)? '"';
+body: '"' (TEXT | TWO_DIGIT_NUMBER | LETTER | MEMBER)+ ('"' (TEXT | TWO_DIGIT_NUMBER | LETTER | MEMBER)+ '"' ((TEXT | TWO_DIGIT_NUMBER | LETTER | MEMBER)+)?)? '"';
 
 questionBody: body;
 
@@ -22,12 +22,12 @@ cotation:
 
 cotationType: '"' ( '%' | 'POINTS' | 'VALUES') '"';
 
+TWO_DIGIT_NUMBER: NUMBER NUMBER?;
 NUMBER: [0-9];
 LETTER: [a-zA-Z];
 MEMBER: [.,;:/#+!?@*)([\]] | '\'' | '|' | '-';
-TWO_DIGIT_NUMBER: NUMBER NUMBER?;
 FRACTIONAL_NUMBER:
 	TWO_DIGIT_NUMBER ('.' | ',') TWO_DIGIT_NUMBER;
-TEXT: (LETTER | NUMBER | MEMBER)+;
+TEXT: (LETTER | TWO_DIGIT_NUMBER | MEMBER)+;
 NEWLINE: ('\r'? '\n')+;
 WS: [ \t\n\r]+ -> skip;

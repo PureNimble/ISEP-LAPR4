@@ -2,7 +2,7 @@ grammar RequirementsXml;
 
 questions: '<Questions>' question+ '</Questions>' EOF;
 
-text: (TEXT | NUMBER | LETTER | MEMBER)+;
+text: (TEXT | TWO_DIGIT_NUMBER | LETTER | MEMBER)+;
 
 question:
 	'<Question>' body possibleAnswersList '</Question>';
@@ -14,11 +14,11 @@ possibleAnswersList:
 
 possibleAnswers: '<PossibleAnswers>' text (('<' | '/' | '>' | '</') text (('<' | '/' | '>' | '</') text)?)? '</PossibleAnswers>';
 
+TWO_DIGIT_NUMBER: NUMBER NUMBER?;
 NUMBER: [0-9];
 LETTER: [a-zA-Z];
 MEMBER: [.,;:/#+!?@*)([\]] | '\'' | '|' | '-';
-TWO_DIGIT_NUMBER: NUMBER NUMBER?;
 FRACTIONAL_NUMBER:
 	TWO_DIGIT_NUMBER ('.' | ',') TWO_DIGIT_NUMBER;
-TEXT: (LETTER | NUMBER | MEMBER)+;
+TEXT: (LETTER | TWO_DIGIT_NUMBER | MEMBER)+;
 WS: [ \t\n\r]+ -> skip;

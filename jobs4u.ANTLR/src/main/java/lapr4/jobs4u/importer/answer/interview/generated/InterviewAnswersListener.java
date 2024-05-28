@@ -58,15 +58,15 @@ public interface InterviewAnswersListener extends ParseTreeListener {
 	 */
 	void exitChoice(InterviewAnswersParser.ChoiceContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link InterviewAnswersParser#option}.
+	 * Enter a parse tree produced by {@link InterviewAnswersParser#text}.
 	 * @param ctx the parse tree
 	 */
-	void enterOption(InterviewAnswersParser.OptionContext ctx);
+	void enterText(InterviewAnswersParser.TextContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link InterviewAnswersParser#option}.
+	 * Exit a parse tree produced by {@link InterviewAnswersParser#text}.
 	 * @param ctx the parse tree
 	 */
-	void exitOption(InterviewAnswersParser.OptionContext ctx);
+	void exitText(InterviewAnswersParser.TextContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link InterviewAnswersParser#answer}.
 	 * @param ctx the parse tree
@@ -78,15 +78,15 @@ public interface InterviewAnswersListener extends ParseTreeListener {
 	 */
 	void exitAnswer(InterviewAnswersParser.AnswerContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link InterviewAnswersParser#text}.
+	 * Enter a parse tree produced by {@link InterviewAnswersParser#option}.
 	 * @param ctx the parse tree
 	 */
-	void enterText(InterviewAnswersParser.TextContext ctx);
+	void enterOption(InterviewAnswersParser.OptionContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link InterviewAnswersParser#text}.
+	 * Exit a parse tree produced by {@link InterviewAnswersParser#option}.
 	 * @param ctx the parse tree
 	 */
-	void exitText(InterviewAnswersParser.TextContext ctx);
+	void exitOption(InterviewAnswersParser.OptionContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link InterviewAnswersParser#email}.
 	 * @param ctx the parse tree

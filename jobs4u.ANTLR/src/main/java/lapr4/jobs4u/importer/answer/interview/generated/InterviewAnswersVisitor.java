@@ -41,11 +41,11 @@ public interface InterviewAnswersVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitChoice(InterviewAnswersParser.ChoiceContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link InterviewAnswersParser#option}.
+	 * Visit a parse tree produced by {@link InterviewAnswersParser#text}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitOption(InterviewAnswersParser.OptionContext ctx);
+	T visitText(InterviewAnswersParser.TextContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link InterviewAnswersParser#answer}.
 	 * @param ctx the parse tree
@@ -53,11 +53,11 @@ public interface InterviewAnswersVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitAnswer(InterviewAnswersParser.AnswerContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link InterviewAnswersParser#text}.
+	 * Visit a parse tree produced by {@link InterviewAnswersParser#option}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitText(InterviewAnswersParser.TextContext ctx);
+	T visitOption(InterviewAnswersParser.OptionContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link InterviewAnswersParser#email}.
 	 * @param ctx the parse tree

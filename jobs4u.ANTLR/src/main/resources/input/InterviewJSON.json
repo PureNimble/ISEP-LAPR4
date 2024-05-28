@@ -6,7 +6,7 @@
         "body": "Which language is primarily used for Android app development? [1] Swift [2] Kotlin [3] JavaScript",
         "possibleAnswers": [
             {
-                "answer": "Kotlin",
+                "answer": "2",
                 "cotation": "100"
             }
         ]
@@ -18,16 +18,20 @@
         "body": "Which of the following are Python libraries for data analysis? [1] Pandas [2] NumPy [3] Matplotlib [4] Express",
         "possibleAnswers": [
             {
-                "answer": "Pandas",
+                "answer": "1",
                 "cotation": "20"
             },
             {
-                "answer": "NumPy",
+                "answer": "2",
                 "cotation": "30"
             },
             {
-                "answer": "Matplotlib",
+                "answer": "3",
                 "cotation": "50"
+            },
+            {
+                "answer": "1 2 3",
+                "cotation": "100"
             }
         ]
     },

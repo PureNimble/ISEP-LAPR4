@@ -1,0 +1,59 @@
+server:
+  port: 2226
+  shutdown: graceful
+
+management:
+  server:
+    port: 2228
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+
+spring:
+  profiles:
+    active: default
+
+  threads:
+    virtual:
+      enabled: true
+
+  datasource:
+    url: jdbc:h2:mem:mail
+    username: admin
+    password: admin
+    driver-class-name: org.h2.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: validate
+
+  data:
+    web:
+      pageable:
+        size-parameter: size
+        page-parameter: page
+        default-page-size: 10
+        one-indexed-parameters: false
+        max-page-size: 1000
+
+  h2:
+    console:
+      enabled: true
+
+  mvc:
+    hiddenmethod:
+      filter:
+        enabled: true
+
+  jackson:
+    serialization:
+      write-dates-as-timestamps: false
+    time-zone: "UTC"
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+
+fakesmtp:
+  port: 2225

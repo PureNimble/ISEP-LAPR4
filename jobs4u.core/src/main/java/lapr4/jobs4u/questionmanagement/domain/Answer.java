@@ -32,8 +32,8 @@ public class Answer implements ValueObject, Comparable<Answer> {
         return new Answer(answer);
     }
 
-    public String text() {
-        return this.text;
+    public Answer answer() {
+        return this;
     }
 
     @Override

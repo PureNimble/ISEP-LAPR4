@@ -4,6 +4,7 @@ import java.util.Optional;
 
 import eapli.framework.infrastructure.repositories.impl.inmemory.InMemoryDomainRepository;
 import lapr4.jobs4u.applicationmanagement.domain.Application;
+import lapr4.jobs4u.jobopeningmanagement.domain.JobOpening;
 import lapr4.jobs4u.requirementmanagement.domain.Requirement;
 import lapr4.jobs4u.requirementmanagement.repositories.RequirementRepository;
 
@@ -18,8 +19,13 @@ public class InMemoryRequirementRepository extends InMemoryDomainRepository<Requ
     }
 
     @Override
-    public Optional<Requirement> findRequirement(Application application) {
+    public Optional<Requirement> findRequirement(final Application application) {
         return findRequirement(application);
+    }
+
+    @Override
+    public Iterable<Requirement> findRequirementsByJobOpening(final JobOpening jobOpening) {
+        return match(e -> e.application().jobOpening().equals(jobOpening));
     }
 
 }

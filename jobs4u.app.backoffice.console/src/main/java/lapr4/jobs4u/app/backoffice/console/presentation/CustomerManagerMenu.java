@@ -4,6 +4,7 @@ import eapli.framework.actions.Actions;
 import eapli.framework.actions.menu.Menu;
 import lapr4.jobs4u.app.backoffice.console.presentation.authz.action.EditJobOpeningAction;
 import lapr4.jobs4u.app.backoffice.console.presentation.authz.action.EvaluateInterviewAction;
+import lapr4.jobs4u.app.backoffice.console.presentation.authz.action.EvaluateRequirementAction;
 import lapr4.jobs4u.app.backoffice.console.presentation.authz.action.ExportInterviewAction;
 import lapr4.jobs4u.app.backoffice.console.presentation.authz.action.ListApplicationsAction;
 import lapr4.jobs4u.app.backoffice.console.presentation.authz.action.ListCandidatesDataAction;
@@ -36,6 +37,7 @@ public class CustomerManagerMenu extends Menu {
     private static final int RECORD_INTERVIEW = 12;
     private static final int UPLOAD_INTERVIEW = 13;
     private static final int EVALUATE_INTERVIEW = 14;
+    private static final int EVALUATE_REQUIREMENT = 15;
     private static final int EXIT_OPTION = 0;
     private static final String RETURN_LABEL = "Return ";
 
@@ -56,6 +58,7 @@ public class CustomerManagerMenu extends Menu {
         addItem(RECORD_INTERVIEW, "Record Interview", new RecordInterviewAction());
         addItem(UPLOAD_INTERVIEW, "Upload Interview", new UploadInterviewAction());
         addItem(EVALUATE_INTERVIEW, "Evaluate Interview", new EvaluateInterviewAction());
+        addItem(EVALUATE_REQUIREMENT, "Evaluate Requirement", new EvaluateRequirementAction());
         addItem(EXIT_OPTION, RETURN_LABEL, Actions.SUCCESS);
     }
 }

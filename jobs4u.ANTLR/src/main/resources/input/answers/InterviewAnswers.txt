@@ -2,20 +2,46 @@ TITLE: Software Engineer Interview
 NAME: Paulo
 EMAIL: micro@email.com
 
-COTATION: 30%
+COTATION: 20%
 QUESTION TYPE: Choice, with single answer
-QUESTION: What is the capital of France?
-[1] London
-[2] Paris
-[3] Berlin
-ANSWER: 2
+QUESTION: What is the primary use of HTML?
+[1] Styling web pages
+[2] Structuring web pages
+[3] Server-side computations
+ANSWER: Structuring web pages
 
-COTATION: 30%
+COTATION: 20%
+QUESTION TYPE: Choice, with multiple answers
+QUESTION: Which of the following are sorting algorithms?
+[1] Bubble Sort
+[2] Quick Sort
+[3] Binary Search
+[4] Depth-First Search
+ANSWER: 1
+
+COTATION: 10%
 QUESTION TYPE: True/False
-QUESTION: Python is a statically typed language.
-ANSWER: True
+QUESTION: Is JavaScript a compiled language?
+ANSWER: False
 
-COTATION: 40%
-QUESTION TYPE: Short text answer
-QUESTION: What is the name of the process to find bugs in software?
-ANSWER: Debug
+COTATION: 20%
+QUESTION TYPE: Choice, with single answer
+QUESTION: Who created the C programming language?
+[1] Dennis Ritchie
+[2] James Gosling
+[3] Guido van Rossum
+ANSWER: 1
+
+COTATION: 20%
+QUESTION TYPE: Choice, with multiple answers
+QUESTION: Which of the following are data structures?
+[1] Array
+[2] Queue
+[3] Graph
+[4] Gradient
+ANSWER: Array
+
+COTATION: 10%
+QUESTION TYPE: True/False
+QUESTION: Is Python an object-oriented programming language?
+ANSWER: True

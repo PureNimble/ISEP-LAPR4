@@ -16,6 +16,9 @@ import lapr4.jobs4u.applicationmanagement.domain.Application;
 import lapr4.jobs4u.applicationmanagement.domain.File;
 import lapr4.jobs4u.recruitmentprocessmanagement.domain.Date;
 
+/**
+ * @author 2DI2
+ */
 @Entity
 @Table(name = "T_INTERVIEW")
 public class Interview implements AggregateRoot<Long> {
@@ -42,6 +45,9 @@ public class Interview implements AggregateRoot<Long> {
     @Column(nullable = true)
     private File file;
 
+    @Column(nullable = true)
+    private Grade grade;
+
     protected Interview(final String date, final String time, final Application application) {
         Preconditions.noneNull(new Object[] { date, time, application });
         this.date = Date.valueOf(date);
@@ -61,8 +67,16 @@ public class Interview implements AggregateRoot<Long> {
         this.file = file;
     }
 
+    public void evaluate(final Grade grade) {
+        this.grade = grade;
+    }
+
     public Application application() {
         return this.application;
+    }
+
+    public File file() {
+        return this.file;
     }
 
     @Override

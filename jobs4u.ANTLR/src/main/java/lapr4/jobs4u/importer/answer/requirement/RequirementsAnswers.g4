@@ -8,7 +8,7 @@ email: TEXT '@' TEXT;
 answer: text;
 question: text;
 
-content: '#' text NEWLINE 'ANSWER:' text NEWLINE;
+content: '#' question NEWLINE 'ANSWER:' answer NEWLINE?;
 
 TWO_DIGIT_NUMBER: NUMBER NUMBER?;
 NUMBER: [0-9];

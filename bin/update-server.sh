@@ -6,6 +6,8 @@ cd ~/sem4pi-23-24-2di2
 # Perform a git pull and capture the output
 pull=$(git pull)
 
+echo "Cron job executed at $(date)"
+
 # Check if the output contains "Already up-to-date."
 if [[ $pull != *"Already up-to-date."* ]]; then
     # If there are changes, check if any of them are in the specific path

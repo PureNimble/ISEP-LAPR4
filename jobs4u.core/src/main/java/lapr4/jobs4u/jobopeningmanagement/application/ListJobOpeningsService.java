@@ -110,4 +110,14 @@ public class ListJobOpeningsService {
         return jobOpeningsDTO;
     }
 
+    public Iterable<JobOpeningDTO> filterWithAvailablePhaseForInterviewEvaluation() {
+        final SystemUser manager = authz.loggedinUserWithPermissions(BaseRoles.OPERATOR, BaseRoles.POWERUSER)
+                .orElseThrow(IllegalStateException::new);
+        final Iterable<JobOpening> jobOpenings = this.jobOpeningRepository.filterWithAvailablePhaseForInterviewEvaluation(manager.username());
+
+        List<JobOpeningDTO> jobOpeningsDTO = new ArrayList<>();
+        jobOpenings.forEach(jobOpening -> jobOpeningsDTO.add(jobOpening.toDTO()));
+        return jobOpeningsDTO;
+    }
+
 }

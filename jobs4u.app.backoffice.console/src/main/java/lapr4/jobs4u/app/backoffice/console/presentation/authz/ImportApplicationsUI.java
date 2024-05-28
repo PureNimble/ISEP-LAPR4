@@ -26,6 +26,9 @@ import eapli.framework.infrastructure.authz.domain.model.Role;
 import eapli.framework.infrastructure.authz.domain.model.SystemUser;
 import eapli.framework.presentation.console.AbstractUI;
 
+/**
+ * @author 2DI2
+ */
 public class ImportApplicationsUI extends AbstractUI {
 
     private static final String EMAIL_ALREADY_REGISTERED = "That E-mail is already registered.";

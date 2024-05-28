@@ -3,6 +3,9 @@ package lapr4.jobs4u.app.backoffice.console.presentation.authz.printer;
 import eapli.framework.visitor.Visitor;
 import lapr4.jobs4u.jobopeningmanagement.dto.JobOpeningDTO;
 
+/**
+ * @author 2DI2
+ */
 public class JobOpeningPrinter implements Visitor<JobOpeningDTO> {
 
     @Override

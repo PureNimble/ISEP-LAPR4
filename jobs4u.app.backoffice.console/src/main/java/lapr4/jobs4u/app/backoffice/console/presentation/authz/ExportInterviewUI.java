@@ -13,6 +13,9 @@ import lapr4.jobs4u.integration.questions.exporter.application.QuestionExporterC
 import lapr4.jobs4u.integration.questions.importer.application.ListQuestionPluginController;
 import lapr4.jobs4u.integration.questions.importer.domain.QuestionImporterPlugin;
 
+/**
+ * @author 2DI2
+ */
 public class ExportInterviewUI extends AbstractUI {
 
     private static final String PATH = "jobs4u.ANTLR/src/main/resources/output/";

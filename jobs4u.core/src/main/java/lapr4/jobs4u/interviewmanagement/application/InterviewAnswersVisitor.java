@@ -11,13 +11,13 @@ public class InterviewAnswersVisitor extends InterviewAnswersBaseVisitor<String>
     private String email;
 
     @Override
-    public String visitStart(InterviewAnswersParser.StartContext ctx) {
+    public String visitStart(final InterviewAnswersParser.StartContext ctx) {
         visitEmail(ctx.email());
         return email;
     }
 
     @Override
-    public String visitEmail(InterviewAnswersParser.EmailContext ctx) {
+    public String visitEmail(final InterviewAnswersParser.EmailContext ctx) {
         email = ctx.getText();
         return email;
     }

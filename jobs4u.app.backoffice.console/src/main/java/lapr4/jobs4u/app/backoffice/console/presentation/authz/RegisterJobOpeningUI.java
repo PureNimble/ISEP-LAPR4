@@ -14,6 +14,9 @@ import lapr4.jobs4u.jobopeningmanagement.application.RegisterJobOpeningControlle
 import lapr4.jobs4u.jobopeningmanagement.domain.ModeTypes;
 import lapr4.jobs4u.jobopeningmanagement.domain.TypesOfContract;
 
+/**
+ * @author 2DI2
+ */
 public class RegisterJobOpeningUI extends AbstractUI {
     private final RegisterJobOpeningController registerJobOpeningController = new RegisterJobOpeningController(
             PersistenceContext.repositories().jobOpenings(), AuthzRegistry.authorizationService());

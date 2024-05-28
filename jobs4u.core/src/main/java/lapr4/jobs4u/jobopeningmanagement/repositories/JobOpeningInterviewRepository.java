@@ -12,5 +12,4 @@ import lapr4.jobs4u.jobopeningmanagement.domain.JobOpeningInterview;
 public interface JobOpeningInterviewRepository extends DomainRepository<Long, JobOpeningInterview> {
     Iterable<JobOpeningInterview> findAll();
     Optional<JobOpeningInterview> findJobOpeningInterviewsByJobOpening(final JobOpening jobOpening);
-
 }

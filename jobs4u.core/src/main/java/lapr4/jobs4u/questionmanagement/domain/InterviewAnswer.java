@@ -59,6 +59,14 @@ public class InterviewAnswer {
         return equals(other);
     }
 
+    public Answer answer() {
+        return this.answer;
+    }
+
+    public Cotation cotation() {
+        return this.cotation;
+    }
+
     @Override
     public String toString() {
         return this.answer.toString();

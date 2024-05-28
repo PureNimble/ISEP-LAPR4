@@ -16,6 +16,9 @@ import lapr4.jobs4u.infrastructure.persistence.PersistenceContext;
 import lapr4.jobs4u.usermanagement.application.AddUserController;
 import lapr4.jobs4u.usermanagement.domain.BaseRoles;
 
+/**
+ * @author 2DI2
+ */
 public class RegisterCustomerUI extends AbstractUI {
 
     private final TransactionalContext txCtx = PersistenceContext.repositories().newTransactionalContext();

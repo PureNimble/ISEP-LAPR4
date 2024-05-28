@@ -15,9 +15,7 @@ import lapr4.jobs4u.jobopeningmanagement.domain.JobOpeningInterview;
 import lapr4.jobs4u.jobopeningmanagement.dto.JobOpeningDTO;
 
 /**
- * UI for adding a user to the application.
- *
- * Created by nuno on 22/03/16.
+ * @author 2DI2
  */
 public class SelectInterviewUI extends AbstractUI {
 

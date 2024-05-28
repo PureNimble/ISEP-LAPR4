@@ -5,15 +5,20 @@ import java.time.format.DateTimeFormatter;
 
 import eapli.framework.domain.model.ValueObject;
 import eapli.framework.validations.Preconditions;
+import jakarta.persistence.Embeddable;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
 
 /**
  * @author 2DI2
  */
+@Embeddable
 public class Time implements ValueObject, Comparable<Time> {
 
     private static final long serialVersionUID = 1L;
     private static final DateTimeFormatter TIME_FORMATTER = DateTimeFormatter.ofPattern("HH:mm");
 
+    @Temporal(TemporalType.TIME)
     private final LocalTime time;
 
     protected Time(final String timeStr) {

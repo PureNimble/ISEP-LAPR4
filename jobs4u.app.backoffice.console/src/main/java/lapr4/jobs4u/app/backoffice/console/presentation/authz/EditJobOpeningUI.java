@@ -27,6 +27,9 @@ import lapr4.jobs4u.jobopeningmanagement.domain.ModeTypes;
 import lapr4.jobs4u.jobopeningmanagement.domain.TypesOfContract;
 import lapr4.jobs4u.jobopeningmanagement.dto.JobOpeningDTO;
 
+/**
+ * @author 2DI2
+ */
 public class EditJobOpeningUI extends AbstractUI {
 
         private final TransactionalContext ctx = PersistenceContext.repositories().newTransactionalContext();

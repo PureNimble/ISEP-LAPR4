@@ -55,7 +55,7 @@ public class UploadInterviewService {
         return true;
     }
 
-    public Optional<Interview> findInterview(final Application application) {
-        return interviewRepository.findInterview(application);
+    public Optional<Interview> findInterviewByApplication(final Application application) {
+        return interviewRepository.findInterviewByApplication(application);
     }
 }

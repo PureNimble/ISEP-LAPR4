@@ -8,6 +8,9 @@ import lapr4.jobs4u.candidatemanagement.application.ListCandidatesController;
 import lapr4.jobs4u.candidatemanagement.dto.CandidateDTO;
 import lapr4.jobs4u.infrastructure.persistence.PersistenceContext;
 
+/**
+ * @author 2DI2
+ */
 public class ListCandidatesUI extends AbstractListUI<CandidateDTO> {
     private ListCandidatesController listCandidatesController = new ListCandidatesController(
             PersistenceContext.repositories().candidates(), AuthzRegistry.authorizationService());

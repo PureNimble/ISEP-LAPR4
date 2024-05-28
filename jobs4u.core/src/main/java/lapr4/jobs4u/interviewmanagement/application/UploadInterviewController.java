@@ -31,12 +31,13 @@ public class UploadInterviewController {
     }
 
     public boolean isCorrectInterview(final Interview interview, final String filePath) throws IOException {
+        authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.CUSTOMER_MANAGER, BaseRoles.POWERUSER);
         return uploadInterviewService.isCorrectInterview(interview, filePath);
     }
 
-    public Interview findInterview(final Application application) {
+    public Interview findInterviewByApplication(final Application application) {
         authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.CUSTOMER_MANAGER, BaseRoles.POWERUSER);
-        Optional<Interview> i = uploadInterviewService.findInterview(application);
+        Optional<Interview> i = uploadInterviewService.findInterviewByApplication(application);
 
         if (i.isPresent()) {
             return i.get();

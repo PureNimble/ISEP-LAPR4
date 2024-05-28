@@ -5,8 +5,7 @@ import eapli.framework.actions.Action;
 import lapr4.jobs4u.app.backoffice.console.presentation.authz.ImportApplicationsUI;
 
 /**
- *
- * @author Fernando
+ * @author 2DI2
  */
 public class ImportApplicationsAction implements Action {
 

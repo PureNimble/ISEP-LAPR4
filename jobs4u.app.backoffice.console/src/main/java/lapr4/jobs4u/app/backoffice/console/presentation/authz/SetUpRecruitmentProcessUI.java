@@ -14,6 +14,9 @@ import lapr4.jobs4u.jobopeningmanagement.domain.JobOpening;
 import lapr4.jobs4u.jobopeningmanagement.dto.JobOpeningDTO;
 import lapr4.jobs4u.recruitmentprocessmanagement.application.SetUpRecruitmentProcessController;
 
+/**
+ * @author 2DI2
+ */
 public class SetUpRecruitmentProcessUI extends AbstractUI {
     private final SetUpRecruitmentProcessController registerCustomerController = new SetUpRecruitmentProcessController(
             PersistenceContext.repositories().recruitmentProcesses(), PersistenceContext.repositories().jobOpenings(),

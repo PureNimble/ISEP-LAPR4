@@ -17,6 +17,9 @@ import lapr4.jobs4u.integration.questions.importer.domain.PluginType;
 import lapr4.jobs4u.integration.questions.importer.domain.QuestionImporterPlugin;
 import lapr4.jobs4u.integration.questions.importer.domain.TypesOfPlugins;
 
+/**
+ * @author 2DI2
+ */
 public class CreatePluginsUI extends AbstractUI {
 
     private static final String INTERVIEW_IMPORTER = "lapr4.jobs4u.integrations.plugins.question.interview.InterviewImporter";

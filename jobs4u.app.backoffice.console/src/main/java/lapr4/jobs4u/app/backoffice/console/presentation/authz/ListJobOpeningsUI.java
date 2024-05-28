@@ -17,6 +17,9 @@ import lapr4.jobs4u.infrastructure.persistence.PersistenceContext;
 import lapr4.jobs4u.jobopeningmanagement.application.ListJobOpeningsController;
 import lapr4.jobs4u.jobopeningmanagement.dto.JobOpeningDTO;
 
+/**
+ * @author 2DI2
+ */
 public class ListJobOpeningsUI extends AbstractListUI<JobOpeningDTO> {
 
     private final ListJobOpeningsController listJobOpeningsController = new ListJobOpeningsController(

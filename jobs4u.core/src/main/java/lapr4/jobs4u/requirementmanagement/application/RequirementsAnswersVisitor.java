@@ -11,13 +11,13 @@ public class RequirementsAnswersVisitor extends RequirementsAnswersBaseVisitor<S
     private String email;
 
     @Override
-    public String visitStart(RequirementsAnswersParser.StartContext ctx) {
+    public String visitStart(final RequirementsAnswersParser.StartContext ctx) {
         visitEmail(ctx.email());
         return email;
     }
 
     @Override
-    public String visitEmail(RequirementsAnswersParser.EmailContext ctx) {
+    public String visitEmail(final RequirementsAnswersParser.EmailContext ctx) {
         email = ctx.getText();
         return email;
     }

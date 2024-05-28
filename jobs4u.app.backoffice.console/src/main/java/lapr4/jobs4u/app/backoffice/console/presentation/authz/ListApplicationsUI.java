@@ -15,6 +15,9 @@ import lapr4.jobs4u.jobopeningmanagement.application.ListJobOpeningsController;
 import lapr4.jobs4u.jobopeningmanagement.domain.JobOpening;
 import lapr4.jobs4u.jobopeningmanagement.dto.JobOpeningDTO;
 
+/**
+ * @author 2DI2
+ */
 public class ListApplicationsUI extends AbstractListUI<ApplicationDTO> {
 
     private final ListApplicationsController listApplicationsController = new ListApplicationsController(

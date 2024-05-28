@@ -15,6 +15,9 @@ import lapr4.jobs4u.jobopeningmanagement.domain.JobOpening;
 import lapr4.jobs4u.jobopeningmanagement.dto.JobOpeningDTO;
 import lapr4.jobs4u.recruitmentprocessmanagement.application.OpenOrClosePhaseController;
 
+/**
+ * @author 2DI2
+ */
 @SuppressWarnings("squid:S106")
 public class OpenOrClosePhaseUI extends AbstractUI {
 

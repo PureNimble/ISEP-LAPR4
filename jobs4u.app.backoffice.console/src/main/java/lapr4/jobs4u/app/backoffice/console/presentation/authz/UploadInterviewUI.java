@@ -45,7 +45,7 @@ public class UploadInterviewUI extends AbstractUI {
         final Application app = selectApplication();
         if (app == null)
             return false;
-        final Interview interview = controller.findInterview(app);
+        final Interview interview = controller.findInterviewByApplication(app);
         if (interview == null) {
             return false;
         }

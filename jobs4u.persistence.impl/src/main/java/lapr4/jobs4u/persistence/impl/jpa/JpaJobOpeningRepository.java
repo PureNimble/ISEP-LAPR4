@@ -119,4 +119,16 @@ public class JpaJobOpeningRepository extends JpaAutoTxRepository<JobOpening, Job
         return query.getResultList();
     }
 
+    @SuppressWarnings("unchecked")
+    @Override
+    public Iterable<JobOpening> filterWithAvailablePhaseForInterviewEvaluation(final Username username) {
+        Query query = createQuery(
+                "SELECT e FROM JobOpening e, RecruitmentProcess r WHERE e.customer.manager.username = :name AND e = r.jobOpening "
+                        + "AND (r.analysisPhase.state = :openPhase)",
+                JobOpening.class);
+        query.setParameter("name", username);
+        query.setParameter("openPhase", State.valueOf(ActivityState.OPEN.toString()));
+        return query.getResultList();
+    }
+
 }

@@ -1,16 +1,11 @@
 package lapr4.jobs4u.app.backoffice.console.presentation.authz;
 
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
 import eapli.framework.infrastructure.authz.application.AuthzRegistry;
-import eapli.framework.io.util.Files;
 import eapli.framework.presentation.console.AbstractUI;
 import eapli.framework.presentation.console.SelectWidget;
-import jakarta.persistence.criteria.CriteriaBuilder.In;
 import lapr4.jobs4u.app.backoffice.console.presentation.authz.printer.CandidatePrinter;
 import lapr4.jobs4u.applicationmanagement.domain.Application;
 import lapr4.jobs4u.applicationmanagement.dto.ApplicationDTO;
@@ -20,6 +15,9 @@ import lapr4.jobs4u.candidatemanagement.domain.Candidate;
 import lapr4.jobs4u.candidatemanagement.dto.CandidateDTO;
 import lapr4.jobs4u.infrastructure.persistence.PersistenceContext;
 
+/**
+ * @author 2DI2
+ */
 public class ListCandidatesDataUI extends AbstractUI {
 
     final private ListCandidatesDataController listCandidatesDataController = new ListCandidatesDataController(

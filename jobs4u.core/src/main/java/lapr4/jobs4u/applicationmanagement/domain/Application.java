@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import lombok.Getter;
 import org.springframework.data.util.Pair;
 
 import java.util.ArrayList;
@@ -58,6 +59,7 @@ public class Application implements AggregateRoot<ApplicationCode>, Runnable {
     @ElementCollection
     private List<File> file;
 
+    @Getter
     @ManyToOne(optional = false)
     @JoinColumn(name = "JobOpening")
     private JobOpening jobOpening;
@@ -112,7 +114,7 @@ public class Application implements AggregateRoot<ApplicationCode>, Runnable {
     }
 
     public ApplicationDTO toDTO() {
-        return new ApplicationDTO(applicationCode.toString(), candidate.toString());
+        return new ApplicationDTO(applicationCode.toString(), candidate.toString(), result.outcome.toString());
     }
 
     public void addResult(String outcome) {

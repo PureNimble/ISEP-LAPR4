@@ -7,17 +7,10 @@ import java.net.Socket;
 import java.util.HashMap;
 import java.util.Map;
 
+import lapr4.jobs4u.message.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import lapr4.jobs4u.message.AckMessage;
-import lapr4.jobs4u.message.AuthMessage;
-import lapr4.jobs4u.message.ChangePassMessage;
-import lapr4.jobs4u.message.CommTestMessage;
-import lapr4.jobs4u.message.DisconnMessage;
-import lapr4.jobs4u.message.ErrMessage;
-import lapr4.jobs4u.message.LogoutMessage;
-import lapr4.jobs4u.message.Message;
 import lapr4.jobs4u.protocol.MessageCode;
 import lapr4.jobs4u.protocol.ProtocolMessage;
 
@@ -35,6 +28,7 @@ public class ClientHandler implements Runnable {
             put(MessageCode.AUTH, AuthMessage.class);
             put(MessageCode.LOGOUT, LogoutMessage.class);
             put(MessageCode.CHANGEPASS, ChangePassMessage.class);
+            put(MessageCode.LISTAPPREQ, ListAppReqMessage.class);
         }
     };
 

@@ -3,6 +3,7 @@ package lapr4.jobs4u.persistence.impl.jpa;
 import eapli.framework.domain.repositories.TransactionalContext;
 import eapli.framework.infrastructure.repositories.impl.jpa.JpaAutoTxRepository;
 import lapr4.jobs4u.Application;
+import lapr4.jobs4u.integration.questions.importer.domain.QuestionImporterPlugin;
 import lapr4.jobs4u.questionmanagement.domain.InterviewQuestion;
 import lapr4.jobs4u.questionmanagement.repositories.InterviewQuestionRepository;
 
@@ -26,7 +27,7 @@ class JpaInterviewQuestionRepository extends JpaAutoTxRepository<InterviewQuesti
     }
 
     @Override
-    public Iterable<InterviewQuestion> findQuestionsByPlugin(final String plugin) {
+    public Iterable<InterviewQuestion> findQuestionsByPlugin(final QuestionImporterPlugin plugin) {
         return match("e.importerPlugin=:plugin", "plugin", plugin);
     }
 }

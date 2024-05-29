@@ -31,10 +31,11 @@ public class CreatePluginsUI extends AbstractUI {
             PersistenceContext.repositories().questionImporterPlugins(txCtx), AuthzRegistry.authorizationService());
     private final ImportQuestionsController importQuestionsController = new ImportQuestionsController(
             PersistenceContext.repositories().questionImporterPlugins(),
-            PersistenceContext.repositories().interviewQuestion(),
-            PersistenceContext.repositories().requirementsQuestion(),
+            PersistenceContext.repositories().interviewQuestion(txCtx),
+            PersistenceContext.repositories().requirementsQuestion(txCtx),
             PersistenceContext.repositories().questionType(), AuthzRegistry.authorizationService());
 
+    @SuppressWarnings("unlikely-arg-type")
     @Override
     protected boolean doShow() {
         final String name = Console.readLine("Plugin Name: ");

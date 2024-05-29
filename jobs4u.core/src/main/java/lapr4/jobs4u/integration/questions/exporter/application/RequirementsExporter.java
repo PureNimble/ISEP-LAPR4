@@ -10,6 +10,7 @@ import org.antlr.v4.runtime.CommonTokenStream;
 
 import lapr4.jobs4u.exporter.requirement.generated.RequirementsLexer;
 import lapr4.jobs4u.exporter.requirement.generated.RequirementsParser;
+import lapr4.jobs4u.integration.questions.importer.domain.QuestionImporterPlugin;
 import lapr4.jobs4u.questionmanagement.domain.InterviewQuestion;
 import lapr4.jobs4u.questionmanagement.domain.RequirementsQuestion;
 
@@ -23,10 +24,10 @@ public class RequirementsExporter implements QuestionExporter {
     private String filename;
 
     @Override
-    public void begin(final String filename, final String plugin) throws IOException {
+    public void begin(final String filename, final QuestionImporterPlugin plugin) throws IOException {
         this.filename = filename;
         content = new StringBuilder();
-        content.append(String.format("TITLE: %s\nNAME:\nEMAIL:\n", plugin));
+        content.append(String.format("TITLE: %s\nNAME:\nEMAIL:\n", plugin.identity().toString()));
     }
 
     @Override

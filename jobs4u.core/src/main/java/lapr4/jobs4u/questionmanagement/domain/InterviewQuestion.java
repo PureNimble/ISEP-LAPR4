@@ -7,12 +7,16 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.Version;
 import jakarta.xml.bind.annotation.XmlElement;
 import jakarta.xml.bind.annotation.XmlElementWrapper;
 import jakarta.xml.bind.annotation.XmlRootElement;
+import lapr4.jobs4u.integration.questions.importer.domain.QuestionImporterPlugin;
 import lapr4.jobs4u.questionmanagement.dto.InterviewQuestionDTO;
 
 import java.util.List;
@@ -67,11 +71,13 @@ public class InterviewQuestion implements AggregateRoot<Long>, DTOable<Interview
     @ElementCollection
     private List<InterviewAnswer> possibleAnswers;
 
-    @Column(nullable = false)
-    private String importerPlugin;
+    @ManyToOne
+    @JoinColumn(name = "plugin")
+    private QuestionImporterPlugin importerPlugin;
 
-    InterviewQuestion(final QuestionType type, final Cotation cotation, final CotationType cotationType, final QuestionBody body, final List<InterviewAnswer> possibleAnswers,
-            final String importerPlugin) {
+    InterviewQuestion(final QuestionType type, final Cotation cotation, final CotationType cotationType,
+            final QuestionBody body, final List<InterviewAnswer> possibleAnswers,
+            final QuestionImporterPlugin importerPlugin) {
         Preconditions.noneNull(new Object[] { type, body, possibleAnswers, importerPlugin });
         this.type = type;
         this.body = body;
@@ -109,7 +115,7 @@ public class InterviewQuestion implements AggregateRoot<Long>, DTOable<Interview
         return this.id;
     }
 
-    public String importerPlugin() {
+    public QuestionImporterPlugin importerPlugin() {
         return this.importerPlugin;
     }
 
@@ -140,7 +146,8 @@ public class InterviewQuestion implements AggregateRoot<Long>, DTOable<Interview
 
     @Override
     public InterviewQuestionDTO toDTO() {
-        return new InterviewQuestionDTO(this.type.toString(), this.cotation.toString(), this.cotationType.toString(), this.body.toString(), this.possibleAnswers,
-                this.importerPlugin.toString());
+        return new InterviewQuestionDTO(this.type.toString(), this.cotation.toString(), this.cotationType.toString(),
+                this.body.toString(), this.possibleAnswers,
+                this.importerPlugin);
     }
 }

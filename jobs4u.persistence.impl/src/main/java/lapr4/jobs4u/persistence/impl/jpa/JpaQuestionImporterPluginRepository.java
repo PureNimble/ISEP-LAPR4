@@ -36,7 +36,7 @@ public class JpaQuestionImporterPluginRepository extends JpaAutoTxRepository<Que
 	}
 
 	@Override
-    public Iterable<QuestionImporterPlugin> findByPluginType(PluginType pluginType) {
+    public Iterable<QuestionImporterPlugin> findByPluginType(final PluginType pluginType) {
         final Map<String, Object> params = new HashMap<>();
 		params.put("pluginType", pluginType);
 		return match("e.pluginType=:pluginType", params);

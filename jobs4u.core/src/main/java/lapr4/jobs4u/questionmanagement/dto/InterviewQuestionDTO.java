@@ -8,6 +8,7 @@ import eapli.framework.representations.dto.DTO;
 import jakarta.xml.bind.annotation.XmlElement;
 import jakarta.xml.bind.annotation.XmlElementWrapper;
 import jakarta.xml.bind.annotation.XmlRootElement;
+import lapr4.jobs4u.integration.questions.importer.domain.QuestionImporterPlugin;
 import lapr4.jobs4u.questionmanagement.domain.InterviewAnswer;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -44,5 +45,5 @@ public class InterviewQuestionDTO {
     @XmlElement(name = "possibleAnswers")
     private List<InterviewAnswer> possibleAnswers;
 
-    private String questionImporterPlugin;
+    private QuestionImporterPlugin questionImporterPlugin;
 }

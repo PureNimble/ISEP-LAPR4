@@ -46,6 +46,11 @@ public class RequirementsCsvListener extends RequirementsCsvBaseListener {
         current.setPossibleAnswers(answers);
     }
 
+    @Override
+    public void enterMinimumRequirement(final RequirementsCsvParser.MinimumRequirementContext ctx) {
+        current.setMinimumRequirement(extractValue(ctx));
+    }
+
     private String extractValue(final ParserRuleContext ctx) {
         final Token startToken = ctx.getStart();
         final Token stopToken = ctx.getStop();

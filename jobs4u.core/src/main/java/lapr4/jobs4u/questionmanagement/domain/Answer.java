@@ -17,23 +17,23 @@ public class Answer implements ValueObject, Comparable<Answer> {
     private static final long serialVersionUID = 1L;
 
     @XmlValue
-    private final String text;
+    private final String answer;
 
-    protected Answer(final String text) {
-        Preconditions.nonEmpty(text, "Answer should neither be null nor empty");
-        this.text = text;
+    protected Answer(final String answer) {
+        Preconditions.nonEmpty(answer, "Answer should neither be null nor empty");
+        this.answer = answer;
     }
 
     protected Answer() {
-        this.text = "";
+        this.answer = "";
     }
 
     public static Answer valueOf(final String answer) {
         return new Answer(answer);
     }
 
-    public String text() {
-        return this.text;
+    public String answer() {
+        return this.answer;
     }
 
     @Override
@@ -46,21 +46,21 @@ public class Answer implements ValueObject, Comparable<Answer> {
         }
 
         final Answer that = (Answer) o;
-        return this.text.equals(that.text);
+        return this.answer.equals(that.answer);
     }
 
     @Override
     public int hashCode() {
-        return this.text.hashCode();
+        return this.answer.hashCode();
     }
 
     @Override
     public String toString() {
-        return this.text;
+        return this.answer;
     }
 
     @Override
     public int compareTo(final Answer arg0) {
-        return text.compareTo(arg0.text);
+        return answer.compareTo(arg0.answer);
     }
 }

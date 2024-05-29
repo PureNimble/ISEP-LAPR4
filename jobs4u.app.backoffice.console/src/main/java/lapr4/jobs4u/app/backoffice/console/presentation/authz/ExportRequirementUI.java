@@ -38,7 +38,7 @@ public class ExportRequirementUI extends AbstractUI {
         try {
             final String filename = PATH + questionImporterPlugin.identity().toString() + ".txt";
             this.questionExporterController.exportRequirements(filename, FileFormat.REQUIREMENT,
-                    questionImporterPlugin.identity().toString());
+                    questionImporterPlugin);
         } catch (final IntegrityViolationException | IOException | ConcurrencyException e) {
             System.out.println("Something went wrong.");
         }

@@ -65,8 +65,8 @@ public class InterviewImporter implements QuestionImporter {
 
 		Iterable<InterviewQuestionDTO> questions = listener.questions();
 
-		for (InterviewQuestionDTO question : questions) {
-			question.setQuestionImporterPlugin(plugin.identity().toString());
+		for (final InterviewQuestionDTO question : questions) {
+			question.setQuestionImporterPlugin(plugin);
 		}
 
 		return questions;
@@ -90,8 +90,8 @@ public class InterviewImporter implements QuestionImporter {
 
 		Iterable<InterviewQuestionDTO> questions = listener.questions();
 
-		for (InterviewQuestionDTO question : questions) {
-			question.setQuestionImporterPlugin(plugin.identity().toString());
+		for (final InterviewQuestionDTO question : questions) {
+			question.setQuestionImporterPlugin(plugin);
 		}
 
 		return questions;
@@ -115,8 +115,8 @@ public class InterviewImporter implements QuestionImporter {
 
 		Iterable<InterviewQuestionDTO> questions = listener.questions();
 
-		for (InterviewQuestionDTO question : questions) {
-			question.setQuestionImporterPlugin(plugin.identity().toString());
+		for (final InterviewQuestionDTO question : questions) {
+			question.setQuestionImporterPlugin(plugin);
 		}
 
 		return questions;

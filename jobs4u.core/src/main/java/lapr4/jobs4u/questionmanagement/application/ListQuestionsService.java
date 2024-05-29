@@ -1,5 +1,6 @@
 package lapr4.jobs4u.questionmanagement.application;
 
+import lapr4.jobs4u.integration.questions.importer.domain.QuestionImporterPlugin;
 import lapr4.jobs4u.questionmanagement.domain.InterviewQuestion;
 import lapr4.jobs4u.questionmanagement.domain.RequirementsQuestion;
 import lapr4.jobs4u.questionmanagement.repositories.InterviewQuestionRepository;
@@ -18,11 +19,11 @@ public class ListQuestionsService {
         this.requirementsQuestionRepository = requirementsQuestionRepository;
     }
 
-    public Iterable<InterviewQuestion> findInterviewQuestionsByPlugin(final String plugin) {
+    public Iterable<InterviewQuestion> findInterviewQuestionsByPlugin(final QuestionImporterPlugin plugin) {
         return this.interviewQuestionRepository.findQuestionsByPlugin(plugin);
     }
 
-    public Iterable<RequirementsQuestion> findRequirementsQuestionsByPlugin(final String plugin) {
+    public Iterable<RequirementsQuestion> findRequirementsQuestionsByPlugin(final QuestionImporterPlugin plugin) {
         return this.requirementsQuestionRepository.findQuestionsByPlugin(plugin);
     }
     

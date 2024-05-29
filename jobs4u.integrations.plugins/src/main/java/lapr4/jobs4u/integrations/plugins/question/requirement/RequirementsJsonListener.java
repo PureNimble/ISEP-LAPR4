@@ -44,6 +44,11 @@ public class RequirementsJsonListener extends RequirementsJsonBaseListener {
         answers.add(Answer.valueOf(value));
     }
 
+    @Override
+    public void enterMinimumRequirement(final RequirementsJsonParser.MinimumRequirementContext ctx) {
+        current.setMinimumRequirement(extractValue(ctx));
+    }
+
     private String extractValue(final ParserRuleContext ctx) {
         final Token startToken = ctx.getStart();
         final Token stopToken = ctx.getStop();

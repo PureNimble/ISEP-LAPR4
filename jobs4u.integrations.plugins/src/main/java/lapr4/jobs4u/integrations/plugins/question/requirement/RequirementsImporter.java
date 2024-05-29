@@ -65,8 +65,8 @@ public class RequirementsImporter implements QuestionImporter {
 
 		Iterable<RequirementsQuestionDTO> questions = listener.questions();
 
-		for (RequirementsQuestionDTO question : questions) {
-			question.setQuestionImporterPlugin(plugin.identity().toString());
+		for (final RequirementsQuestionDTO question : questions) {
+			question.setQuestionImporterPlugin(plugin);
 		}
 
 		return questions;
@@ -90,8 +90,8 @@ public class RequirementsImporter implements QuestionImporter {
 
 		Iterable<RequirementsQuestionDTO> questions = listener.questions();
 
-		for (RequirementsQuestionDTO question : questions) {
-			question.setQuestionImporterPlugin(plugin.identity().toString());
+		for (final RequirementsQuestionDTO question : questions) {
+			question.setQuestionImporterPlugin(plugin);
 		}
 
 		return questions;
@@ -115,8 +115,8 @@ public class RequirementsImporter implements QuestionImporter {
 
 		Iterable<RequirementsQuestionDTO> questions = listener.questions();
 
-		for (RequirementsQuestionDTO question : questions) {
-			question.setQuestionImporterPlugin(plugin.identity().toString());
+		for (final RequirementsQuestionDTO question : questions) {
+			question.setQuestionImporterPlugin(plugin);
 		}
 
 		return questions;

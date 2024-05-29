@@ -38,7 +38,7 @@ public class ExportInterviewUI extends AbstractUI {
         try {
             final String filename = PATH + questionImporterPlugin.identity().toString() + ".txt";
             this.questionExporterController.exportInterview(filename, FileFormat.INTERVIEW,
-                    questionImporterPlugin.identity().toString());
+                    questionImporterPlugin);
         } catch (final IntegrityViolationException | IOException | ConcurrencyException e) {
             System.out.println("Something went wrong.");
         }

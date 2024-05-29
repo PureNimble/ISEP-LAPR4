@@ -6,23 +6,28 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import eapli.framework.util.TemplateMethod;
+import lapr4.jobs4u.integration.questions.importer.domain.QuestionImporterPlugin;
 import lapr4.jobs4u.questionmanagement.domain.InterviewQuestion;
 import lapr4.jobs4u.questionmanagement.domain.RequirementsQuestion;
 
 /**
  * @author 2DI2
  */
-public class QuestionExporterService  {
+public class QuestionExporterService {
     private static final Logger logger = LogManager.getLogger(QuestionExporterService.class);
 
     /**
-     * Exports questions. This a "template method" working in conjunction with a Strategy.
-     * If the {@link InterviewQuestion} interface had just the export method we would be repeating the
+     * Exports questions. This a "template method" working in conjunction with a
+     * Strategy.
+     * If the {@link InterviewQuestion} interface had just the export method we
+     * would be repeating the
      * logic of traversing the dish list in every implementation!
      *
      * <p>
-     * Note that the exporter receives an Iterable and as such you should take attention to the
-     * volume of data to export. If you need to export a large volume of data you should provide
+     * Note that the exporter receives an Iterable and as such you should take
+     * attention to the
+     * volume of data to export. If you need to export a large volume of data you
+     * should provide
      * some kind of cursor-based iterable and not a pure in-memory collection.
      *
      * @param questions
@@ -31,7 +36,8 @@ public class QuestionExporterService  {
      * @throws IOException
      */
     @TemplateMethod
-    public void exportInterviewQuestion(final Iterable<InterviewQuestion> questions, final String filename, final QuestionExporter exporter, final String plugin)
+    public void exportInterviewQuestion(final Iterable<InterviewQuestion> questions, final String filename,
+            final QuestionExporter exporter, final QuestionImporterPlugin plugin)
             throws IOException {
         try {
             exporter.begin(filename, plugin);
@@ -56,13 +62,17 @@ public class QuestionExporterService  {
     }
 
     /**
-     * Exports questions. This a "template method" working in conjunction with a Strategy.
-     * If the {@link RequirementsQuestion} interface had just the export method we would be repeating the
+     * Exports questions. This a "template method" working in conjunction with a
+     * Strategy.
+     * If the {@link RequirementsQuestion} interface had just the export method we
+     * would be repeating the
      * logic of traversing the dish list in every implementation!
      *
      * <p>
-     * Note that the exporter receives an Iterable and as such you should take attention to the
-     * volume of data to export. If you need to export a large volume of data you should provide
+     * Note that the exporter receives an Iterable and as such you should take
+     * attention to the
+     * volume of data to export. If you need to export a large volume of data you
+     * should provide
      * some kind of cursor-based iterable and not a pure in-memory collection.
      *
      * @param questions
@@ -71,7 +81,8 @@ public class QuestionExporterService  {
      * @throws IOException
      */
     @TemplateMethod
-    public void exportRequirementsQuestion(final Iterable<RequirementsQuestion> questions, final String filename, final QuestionExporter exporter, final String plugin)
+    public void exportRequirementsQuestion(final Iterable<RequirementsQuestion> questions, final String filename,
+            final QuestionExporter exporter, final QuestionImporterPlugin plugin)
             throws IOException {
         try {
             exporter.begin(filename, plugin);

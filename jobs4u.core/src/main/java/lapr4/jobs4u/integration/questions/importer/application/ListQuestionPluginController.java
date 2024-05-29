@@ -1,6 +1,9 @@
 package lapr4.jobs4u.integration.questions.importer.application;
 
+import java.util.Optional;
+
 import eapli.framework.application.UseCaseController;
+import eapli.framework.general.domain.model.Designation;
 import eapli.framework.infrastructure.authz.application.AuthorizationService;
 import lapr4.jobs4u.integration.questions.importer.domain.PluginType;
 import lapr4.jobs4u.integration.questions.importer.domain.QuestionImporterPlugin;
@@ -24,5 +27,10 @@ public class ListQuestionPluginController  {
     public Iterable<QuestionImporterPlugin> filterByType(final String plugin) {
         authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.CUSTOMER_MANAGER, BaseRoles.POWERUSER, BaseRoles.OPERATOR);
         return listQuestionPluginService.filterByType(PluginType.valueOf(plugin));
+    }
+
+    public Optional<QuestionImporterPlugin> filterByDesignation(final String plugin) {
+        authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.CUSTOMER_MANAGER, BaseRoles.POWERUSER, BaseRoles.OPERATOR);
+        return listQuestionPluginService.filterByDesignation(Designation.valueOf(plugin));
     }
 }

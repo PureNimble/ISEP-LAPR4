@@ -1,6 +1,7 @@
 package lapr4.jobs4u.questionmanagement.domain;
 
 import eapli.framework.domain.model.DomainFactory;
+import lapr4.jobs4u.integration.questions.importer.domain.QuestionImporterPlugin;
 
 import java.util.List;
 import org.apache.logging.log4j.LogManager;
@@ -14,11 +15,14 @@ public class RequirementsQuestionBuilder implements DomainFactory<RequirementsQu
     private static final Logger LOGGER = LogManager.getLogger(RequirementsQuestionBuilder.class);
     private QuestionBody body;
     private List<Answer> possibleAnswers;
-    private String importerPlugin;
+    private MinimumRequirement minimumRequirement;
+    private QuestionImporterPlugin importerPlugin;
 
-    public RequirementsQuestionBuilder with(final String body, final List<Answer> possibleAnswers, final String importerPlugin) {
+    public RequirementsQuestionBuilder with(final String body, final List<Answer> possibleAnswers,
+            final String minimumRequirement, final QuestionImporterPlugin importerPlugin) {
         this.withBody(body);
         this.withPossibleAnswers(possibleAnswers);
+        this.withMinimumRequirement(minimumRequirement);
         this.withImporterPlugin(importerPlugin);
         return this;
     }
@@ -33,16 +37,23 @@ public class RequirementsQuestionBuilder implements DomainFactory<RequirementsQu
         return this;
     }
 
-    public RequirementsQuestionBuilder withImporterPlugin(final String importerPlugin) {
+    public RequirementsQuestionBuilder withMinimumRequirement(final String minimumRequirement) {
+        this.minimumRequirement = MinimumRequirement.valueOf(minimumRequirement);
+        return this;
+    }
+
+    public RequirementsQuestionBuilder withImporterPlugin(final QuestionImporterPlugin importerPlugin) {
         this.importerPlugin = importerPlugin;
         return this;
     }
 
     @Override
     public RequirementsQuestion build() {
-        final RequirementsQuestion question = new RequirementsQuestion(this.body, this.possibleAnswers, this.importerPlugin);
+        final RequirementsQuestion question = new RequirementsQuestion(this.body, this.possibleAnswers,
+                this.minimumRequirement, this.importerPlugin);
         if (LOGGER.isInfoEnabled()) {
-            LOGGER.info("Registering new question [{}] {} {} {}", question, this.body, this.possibleAnswers, this.importerPlugin);
+            LOGGER.info("Registering new question [{}] {} {} {} {}", question, this.body, this.possibleAnswers,
+                    this.minimumRequirement, this.importerPlugin);
         }
         return question;
     }

@@ -6,6 +6,7 @@
             <PossibleAnswers>Intermediate</PossibleAnswers>
             <PossibleAnswers>Advanced</PossibleAnswers>
         </PossibleAnswersList>
+        <MinimumRequirement>A minimum proficiency level of Intermediate in Unix/Linux is required for the job position.</MinimumRequirement>
     </Question>
     <Question>
         <Body>Which of the following HTTP methods are you familiar with? (GET | POST | PUT | DELETE)</Body>
@@ -15,6 +16,7 @@
             <PossibleAnswers>PUT</PossibleAnswers>
             <PossibleAnswers>DELETE</PossibleAnswers>
         </PossibleAnswersList>
+        <MinimumRequirement>Familiarity with at least two HTTP methods is required for the job position.</MinimumRequirement>
     </Question>
     <Question>
         <Body>Do you have experience with SQL? (Yes | No)</Body>
@@ -22,6 +24,7 @@
             <PossibleAnswers>Yes</PossibleAnswers>
             <PossibleAnswers>No</PossibleAnswers>
         </PossibleAnswersList>
+        <MinimumRequirement>Experience with SQL is a minimum requirement for the job position.</MinimumRequirement>
     </Question>
     <Question>
         <Body>Which of the following JavaScript frameworks have you used in your projects? (React | Angular | Vue | Ember)</Body>
@@ -31,6 +34,7 @@
             <PossibleAnswers>Vue</PossibleAnswers>
             <PossibleAnswers>Ember</PossibleAnswers>
         </PossibleAnswersList>
+        <MinimumRequirement>Experience with at least two JavaScript frameworks is required for the job position.</MinimumRequirement>
     </Question>
     <Question>
         <Body>Do you have experience with Git? (Yes | No)</Body>
@@ -38,5 +42,6 @@
             <PossibleAnswers>Yes</PossibleAnswers>
             <PossibleAnswers>No</PossibleAnswers>
         </PossibleAnswersList>
+        <MinimumRequirement>Experience with Git is a minimum requirement for the job position.</MinimumRequirement>
     </Question>
 </Questions>

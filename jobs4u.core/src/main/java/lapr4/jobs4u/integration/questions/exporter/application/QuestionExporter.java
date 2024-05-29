@@ -2,6 +2,7 @@ package lapr4.jobs4u.integration.questions.exporter.application;
 
 import java.io.IOException;
 
+import lapr4.jobs4u.integration.questions.importer.domain.QuestionImporterPlugin;
 import lapr4.jobs4u.questionmanagement.domain.InterviewQuestion;
 import lapr4.jobs4u.questionmanagement.domain.RequirementsQuestion;
 
@@ -11,12 +12,13 @@ import lapr4.jobs4u.questionmanagement.domain.RequirementsQuestion;
 public interface QuestionExporter {
 
     /**
-     * Initiate the export process. The implementation should open the underlying resource (e.g., file) and create the
+     * Initiate the export process. The implementation should open the underlying
+     * resource (e.g., file) and create the
      * "document start"/"header" for the respective format.
      *
      * @param filename
      */
-    void begin(final String filename, final String plugin) throws IOException;
+    void begin(final String filename, final QuestionImporterPlugin plugin) throws IOException;
 
     /**
      * Export one single element.
@@ -25,7 +27,7 @@ public interface QuestionExporter {
      */
     void element(final InterviewQuestion e);
 
-     /**
+    /**
      * Export one single element.
      *
      * @param e
@@ -38,13 +40,15 @@ public interface QuestionExporter {
     void elementSeparator();
 
     /**
-     * Indicates that there are no more elements to export. The implementation should create any "document closing"
+     * Indicates that there are no more elements to export. The implementation
+     * should create any "document closing"
      * element it might need and close the underlying resource.
      */
     void end();
 
     /**
-     * Gives the exporter implementation a change to cleanup in case some exception has occurred.
+     * Gives the exporter implementation a change to cleanup in case some exception
+     * has occurred.
      */
     void cleanup();
 }

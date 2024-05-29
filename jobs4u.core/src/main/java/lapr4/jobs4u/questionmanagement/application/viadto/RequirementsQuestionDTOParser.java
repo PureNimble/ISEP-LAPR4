@@ -13,6 +13,8 @@ public class RequirementsQuestionDTOParser implements DTOParser<RequirementsQues
     @Override
     public RequirementsQuestion valueOf(final RequirementsQuestionDTO dto) {
         return new RequirementsQuestionBuilder()
-                .with(dto.getBody().toString(), dto.getPossibleAnswers(), dto.getQuestionImporterPlugin()).build();
+                .with(dto.getBody().toString(), dto.getPossibleAnswers(), dto.getMinimumRequirement(),
+                        dto.getQuestionImporterPlugin())
+                .build();
     }
 }

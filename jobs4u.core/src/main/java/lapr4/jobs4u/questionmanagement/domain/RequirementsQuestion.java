@@ -7,11 +7,16 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.Version;
 import jakarta.xml.bind.annotation.XmlElement;
 import jakarta.xml.bind.annotation.XmlElementWrapper;
 import jakarta.xml.bind.annotation.XmlRootElement;
+import lapr4.jobs4u.integration.questions.importer.domain.QuestionImporterPlugin;
 import lapr4.jobs4u.questionmanagement.dto.RequirementsQuestionDTO;
 
 import java.util.List;
@@ -53,13 +58,22 @@ public class RequirementsQuestion implements AggregateRoot<Long>, DTOable<Requir
     @ElementCollection
     private List<Answer> possibleAnswers;
 
-    @Column(nullable = false)
-    private String importerPlugin;
+    @XmlElement
+    @JsonProperty
+    @Column(nullable = false, name = "minimumRequirement")
+    private MinimumRequirement minimumRequirement;
 
-    RequirementsQuestion(final QuestionBody body, final List<Answer> possibleAnswers, final String importerPlugin) {
+    @ManyToOne
+    @JoinColumn(name = "plugin")
+    private QuestionImporterPlugin importerPlugin;
+
+    RequirementsQuestion(final QuestionBody body, final List<Answer> possibleAnswers,
+            final MinimumRequirement minimumRequirement,
+            final QuestionImporterPlugin importerPlugin) {
         Preconditions.noneNull(new Object[] { body, possibleAnswers, importerPlugin });
         this.body = body;
         this.possibleAnswers = possibleAnswers;
+        this.minimumRequirement = minimumRequirement;
         this.importerPlugin = importerPlugin;
     }
 
@@ -81,7 +95,7 @@ public class RequirementsQuestion implements AggregateRoot<Long>, DTOable<Requir
     public boolean sameAs(final Object other) {
         return DomainEntities.areEqual(this, other);
     }
-    
+
     public Long ofIdentity() {
         return identity();
     }
@@ -91,7 +105,7 @@ public class RequirementsQuestion implements AggregateRoot<Long>, DTOable<Requir
         return this.id;
     }
 
-    public String importerPlugin() {
+    public QuestionImporterPlugin importerPlugin() {
         return this.importerPlugin;
     }
 
@@ -110,6 +124,7 @@ public class RequirementsQuestion implements AggregateRoot<Long>, DTOable<Requir
 
     @Override
     public RequirementsQuestionDTO toDTO() {
-        return new RequirementsQuestionDTO(this.body.toString(), this.possibleAnswers, this.importerPlugin.toString());
+        return new RequirementsQuestionDTO(this.body.toString(), this.possibleAnswers,
+                this.minimumRequirement.toString(), this.importerPlugin);
     }
 }

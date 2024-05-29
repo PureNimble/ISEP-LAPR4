@@ -4,15 +4,31 @@ questions: '<Questions>' question+ '</Questions>' EOF;
 
 text: (TEXT | TWO_DIGIT_NUMBER | LETTER | MEMBER)+;
 
-question:
-	'<Question>' body possibleAnswersList '</Question>';
+question: '<Question>' body possibleAnswersList minimumRequirement '</Question>';
 
-body: '<Body>' text (('<' | '/' | '>' | '</') text (('<' | '/' | '>' | '</') text)?)? '</Body>';
+body:
+	'<Body>' text (
+		('<' | '/' | '>' | '</') text (
+			('<' | '/' | '>' | '</') text
+		)?
+	)? '</Body>';
 
 possibleAnswersList:
 	'<PossibleAnswersList>' possibleAnswers* '</PossibleAnswersList>';
 
-possibleAnswers: '<PossibleAnswers>' text (('<' | '/' | '>' | '</') text (('<' | '/' | '>' | '</') text)?)? '</PossibleAnswers>';
+possibleAnswers:
+	'<PossibleAnswers>' text (
+		('<' | '/' | '>' | '</') text (
+			('<' | '/' | '>' | '</') text
+		)?
+	)? '</PossibleAnswers>';
+
+minimumRequirement:
+	'<MinimumRequirement>' text (
+		('<' | '/' | '>' | '</') text (
+			('<' | '/' | '>' | '</') text
+		)?
+	)? '</MinimumRequirement>';
 
 TWO_DIGIT_NUMBER: NUMBER NUMBER?;
 NUMBER: [0-9];

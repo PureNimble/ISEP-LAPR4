@@ -48,6 +48,16 @@ public interface RequirementsJsonListener extends ParseTreeListener {
 	 */
 	void exitAnswer(RequirementsJsonParser.AnswerContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link RequirementsJsonParser#minimumRequirement}.
+	 * @param ctx the parse tree
+	 */
+	void enterMinimumRequirement(RequirementsJsonParser.MinimumRequirementContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link RequirementsJsonParser#minimumRequirement}.
+	 * @param ctx the parse tree
+	 */
+	void exitMinimumRequirement(RequirementsJsonParser.MinimumRequirementContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link RequirementsJsonParser#question}.
 	 * @param ctx the parse tree
 	 */

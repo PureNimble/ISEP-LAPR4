@@ -46,4 +46,10 @@ public interface RequirementsXmlVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitPossibleAnswers(RequirementsXmlParser.PossibleAnswersContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link RequirementsXmlParser#minimumRequirement}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitMinimumRequirement(RequirementsXmlParser.MinimumRequirementContext ctx);
 }

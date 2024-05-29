@@ -67,4 +67,14 @@ public interface RequirementsXmlListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitPossibleAnswers(RequirementsXmlParser.PossibleAnswersContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link RequirementsXmlParser#minimumRequirement}.
+	 * @param ctx the parse tree
+	 */
+	void enterMinimumRequirement(RequirementsXmlParser.MinimumRequirementContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link RequirementsXmlParser#minimumRequirement}.
+	 * @param ctx the parse tree
+	 */
+	void exitMinimumRequirement(RequirementsXmlParser.MinimumRequirementContext ctx);
 }

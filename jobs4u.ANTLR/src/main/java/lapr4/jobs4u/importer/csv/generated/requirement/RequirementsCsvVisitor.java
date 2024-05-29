@@ -35,6 +35,12 @@ public interface RequirementsCsvVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitAnswer(RequirementsCsvParser.AnswerContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link RequirementsCsvParser#minimumRequirement}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitMinimumRequirement(RequirementsCsvParser.MinimumRequirementContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link RequirementsCsvParser#question}.
 	 * @param ctx the parse tree
 	 * @return the visitor result

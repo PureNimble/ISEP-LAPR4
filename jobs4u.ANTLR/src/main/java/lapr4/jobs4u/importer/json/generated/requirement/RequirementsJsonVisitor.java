@@ -35,6 +35,12 @@ public interface RequirementsJsonVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitAnswer(RequirementsJsonParser.AnswerContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link RequirementsJsonParser#minimumRequirement}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitMinimumRequirement(RequirementsJsonParser.MinimumRequirementContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link RequirementsJsonParser#question}.
 	 * @param ctx the parse tree
 	 * @return the visitor result

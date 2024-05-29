@@ -54,4 +54,11 @@ public class RequirementsXmlBaseVisitor<T> extends AbstractParseTreeVisitor<T> i
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
 	@Override public T visitPossibleAnswers(RequirementsXmlParser.PossibleAnswersContext ctx) { return visitChildren(ctx); }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
+	@Override public T visitMinimumRequirement(RequirementsXmlParser.MinimumRequirementContext ctx) { return visitChildren(ctx); }
 }

@@ -2,13 +2,21 @@ grammar RequirementsCsv;
 
 questions: question+ EOF;
 
-body: '"' (TEXT | TWO_DIGIT_NUMBER | LETTER | MEMBER)+ ('"' (TEXT | TWO_DIGIT_NUMBER | LETTER | MEMBER)+ '"' ((TEXT | TWO_DIGIT_NUMBER | LETTER | MEMBER)+)?)? '"';
+body:
+	'"' (TEXT | TWO_DIGIT_NUMBER | LETTER | MEMBER)+ (
+		'"' (TEXT | TWO_DIGIT_NUMBER | LETTER | MEMBER)+ '"' (
+			(TEXT | TWO_DIGIT_NUMBER | LETTER | MEMBER)+
+		)?
+	)? '"';
 
 questionBody: body;
 
 answer: body;
 
-question: questionBody ';' answer (NEWLINE)?;
+minimumRequirement: body;
+
+question:
+	questionBody ';' answer ';' minimumRequirement (NEWLINE)?;
 
 TWO_DIGIT_NUMBER: NUMBER NUMBER?;
 NUMBER: [0-9];

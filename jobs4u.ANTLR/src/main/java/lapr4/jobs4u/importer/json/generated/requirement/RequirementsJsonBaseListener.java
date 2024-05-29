@@ -65,6 +65,18 @@ public class RequirementsJsonBaseListener implements RequirementsJsonListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterMinimumRequirement(RequirementsJsonParser.MinimumRequirementContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitMinimumRequirement(RequirementsJsonParser.MinimumRequirementContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterQuestion(RequirementsJsonParser.QuestionContext ctx) { }
 	/**
 	 * {@inheritDoc}

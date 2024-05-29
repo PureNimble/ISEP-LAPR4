@@ -21,10 +21,11 @@ public class RequirementsCsvParser extends Parser {
 		NEWLINE=8, WS=9;
 	public static final int
 		RULE_questions = 0, RULE_body = 1, RULE_questionBody = 2, RULE_answer = 3, 
-		RULE_question = 4;
+		RULE_minimumRequirement = 4, RULE_question = 5;
 	private static String[] makeRuleNames() {
 		return new String[] {
-			"questions", "body", "questionBody", "answer", "question"
+			"questions", "body", "questionBody", "answer", "minimumRequirement", 
+			"question"
 		};
 	}
 	public static final String[] ruleNames = makeRuleNames();
@@ -127,21 +128,21 @@ public class RequirementsCsvParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(11); 
+			setState(13); 
 			_errHandler.sync(this);
 			_la = _input.LA(1);
 			do {
 				{
 				{
-				setState(10);
+				setState(12);
 				question();
 				}
 				}
-				setState(13); 
+				setState(15); 
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 			} while ( _la==T__0 );
-			setState(15);
+			setState(17);
 			match(EOF);
 			}
 		}
@@ -200,15 +201,15 @@ public class RequirementsCsvParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(17);
+			setState(19);
 			match(T__0);
-			setState(19); 
+			setState(21); 
 			_errHandler.sync(this);
 			_la = _input.LA(1);
 			do {
 				{
 				{
-				setState(18);
+				setState(20);
 				_la = _input.LA(1);
 				if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & 232L) != 0)) ) {
 				_errHandler.recoverInline(this);
@@ -220,24 +221,24 @@ public class RequirementsCsvParser extends Parser {
 				}
 				}
 				}
-				setState(21); 
+				setState(23); 
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 			} while ( (((_la) & ~0x3f) == 0 && ((1L << _la) & 232L) != 0) );
-			setState(37);
+			setState(39);
 			_errHandler.sync(this);
 			switch ( getInterpreter().adaptivePredict(_input,5,_ctx) ) {
 			case 1:
 				{
-				setState(23);
+				setState(25);
 				match(T__0);
-				setState(25); 
+				setState(27); 
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 				do {
 					{
 					{
-					setState(24);
+					setState(26);
 					_la = _input.LA(1);
 					if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & 232L) != 0)) ) {
 					_errHandler.recoverInline(this);
@@ -249,24 +250,24 @@ public class RequirementsCsvParser extends Parser {
 					}
 					}
 					}
-					setState(27); 
+					setState(29); 
 					_errHandler.sync(this);
 					_la = _input.LA(1);
 				} while ( (((_la) & ~0x3f) == 0 && ((1L << _la) & 232L) != 0) );
-				setState(29);
+				setState(31);
 				match(T__0);
-				setState(35);
+				setState(37);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 				if ((((_la) & ~0x3f) == 0 && ((1L << _la) & 232L) != 0)) {
 					{
-					setState(31); 
+					setState(33); 
 					_errHandler.sync(this);
 					_la = _input.LA(1);
 					do {
 						{
 						{
-						setState(30);
+						setState(32);
 						_la = _input.LA(1);
 						if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & 232L) != 0)) ) {
 						_errHandler.recoverInline(this);
@@ -278,7 +279,7 @@ public class RequirementsCsvParser extends Parser {
 						}
 						}
 						}
-						setState(33); 
+						setState(35); 
 						_errHandler.sync(this);
 						_la = _input.LA(1);
 					} while ( (((_la) & ~0x3f) == 0 && ((1L << _la) & 232L) != 0) );
@@ -288,7 +289,7 @@ public class RequirementsCsvParser extends Parser {
 				}
 				break;
 			}
-			setState(39);
+			setState(41);
 			match(T__0);
 			}
 		}
@@ -333,7 +334,7 @@ public class RequirementsCsvParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(41);
+			setState(43);
 			body();
 			}
 		}
@@ -378,7 +379,52 @@ public class RequirementsCsvParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(43);
+			setState(45);
+			body();
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
+	@SuppressWarnings("CheckReturnValue")
+	public static class MinimumRequirementContext extends ParserRuleContext {
+		public BodyContext body() {
+			return getRuleContext(BodyContext.class,0);
+		}
+		public MinimumRequirementContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_minimumRequirement; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof RequirementsCsvListener ) ((RequirementsCsvListener)listener).enterMinimumRequirement(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof RequirementsCsvListener ) ((RequirementsCsvListener)listener).exitMinimumRequirement(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof RequirementsCsvVisitor ) return ((RequirementsCsvVisitor<? extends T>)visitor).visitMinimumRequirement(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+
+	public final MinimumRequirementContext minimumRequirement() throws RecognitionException {
+		MinimumRequirementContext _localctx = new MinimumRequirementContext(_ctx, getState());
+		enterRule(_localctx, 8, RULE_minimumRequirement);
+		try {
+			enterOuterAlt(_localctx, 1);
+			{
+			setState(47);
 			body();
 			}
 		}
@@ -400,6 +446,9 @@ public class RequirementsCsvParser extends Parser {
 		}
 		public AnswerContext answer() {
 			return getRuleContext(AnswerContext.class,0);
+		}
+		public MinimumRequirementContext minimumRequirement() {
+			return getRuleContext(MinimumRequirementContext.class,0);
 		}
 		public TerminalNode NEWLINE() { return getToken(RequirementsCsvParser.NEWLINE, 0); }
 		public QuestionContext(ParserRuleContext parent, int invokingState) {
@@ -423,23 +472,27 @@ public class RequirementsCsvParser extends Parser {
 
 	public final QuestionContext question() throws RecognitionException {
 		QuestionContext _localctx = new QuestionContext(_ctx, getState());
-		enterRule(_localctx, 8, RULE_question);
+		enterRule(_localctx, 10, RULE_question);
 		int _la;
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(45);
-			questionBody();
-			setState(46);
-			match(T__1);
-			setState(47);
-			answer();
 			setState(49);
+			questionBody();
+			setState(50);
+			match(T__1);
+			setState(51);
+			answer();
+			setState(52);
+			match(T__1);
+			setState(53);
+			minimumRequirement();
+			setState(55);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
 			if (_la==NEWLINE) {
 				{
-				setState(48);
+				setState(54);
 				match(NEWLINE);
 				}
 			}
@@ -458,40 +511,43 @@ public class RequirementsCsvParser extends Parser {
 	}
 
 	public static final String _serializedATN =
-		"\u0004\u0001\t4\u0002\u0000\u0007\u0000\u0002\u0001\u0007\u0001\u0002"+
-		"\u0002\u0007\u0002\u0002\u0003\u0007\u0003\u0002\u0004\u0007\u0004\u0001"+
-		"\u0000\u0004\u0000\f\b\u0000\u000b\u0000\f\u0000\r\u0001\u0000\u0001\u0000"+
-		"\u0001\u0001\u0001\u0001\u0004\u0001\u0014\b\u0001\u000b\u0001\f\u0001"+
-		"\u0015\u0001\u0001\u0001\u0001\u0004\u0001\u001a\b\u0001\u000b\u0001\f"+
-		"\u0001\u001b\u0001\u0001\u0001\u0001\u0004\u0001 \b\u0001\u000b\u0001"+
-		"\f\u0001!\u0003\u0001$\b\u0001\u0003\u0001&\b\u0001\u0001\u0001\u0001"+
-		"\u0001\u0001\u0002\u0001\u0002\u0001\u0003\u0001\u0003\u0001\u0004\u0001"+
-		"\u0004\u0001\u0004\u0001\u0004\u0003\u00042\b\u0004\u0001\u0004\u0000"+
-		"\u0000\u0005\u0000\u0002\u0004\u0006\b\u0000\u0001\u0002\u0000\u0003\u0003"+
-		"\u0005\u00075\u0000\u000b\u0001\u0000\u0000\u0000\u0002\u0011\u0001\u0000"+
-		"\u0000\u0000\u0004)\u0001\u0000\u0000\u0000\u0006+\u0001\u0000\u0000\u0000"+
-		"\b-\u0001\u0000\u0000\u0000\n\f\u0003\b\u0004\u0000\u000b\n\u0001\u0000"+
-		"\u0000\u0000\f\r\u0001\u0000\u0000\u0000\r\u000b\u0001\u0000\u0000\u0000"+
-		"\r\u000e\u0001\u0000\u0000\u0000\u000e\u000f\u0001\u0000\u0000\u0000\u000f"+
-		"\u0010\u0005\u0000\u0000\u0001\u0010\u0001\u0001\u0000\u0000\u0000\u0011"+
-		"\u0013\u0005\u0001\u0000\u0000\u0012\u0014\u0007\u0000\u0000\u0000\u0013"+
-		"\u0012\u0001\u0000\u0000\u0000\u0014\u0015\u0001\u0000\u0000\u0000\u0015"+
-		"\u0013\u0001\u0000\u0000\u0000\u0015\u0016\u0001\u0000\u0000\u0000\u0016"+
-		"%\u0001\u0000\u0000\u0000\u0017\u0019\u0005\u0001\u0000\u0000\u0018\u001a"+
-		"\u0007\u0000\u0000\u0000\u0019\u0018\u0001\u0000\u0000\u0000\u001a\u001b"+
-		"\u0001\u0000\u0000\u0000\u001b\u0019\u0001\u0000\u0000\u0000\u001b\u001c"+
-		"\u0001\u0000\u0000\u0000\u001c\u001d\u0001\u0000\u0000\u0000\u001d#\u0005"+
-		"\u0001\u0000\u0000\u001e \u0007\u0000\u0000\u0000\u001f\u001e\u0001\u0000"+
-		"\u0000\u0000 !\u0001\u0000\u0000\u0000!\u001f\u0001\u0000\u0000\u0000"+
-		"!\"\u0001\u0000\u0000\u0000\"$\u0001\u0000\u0000\u0000#\u001f\u0001\u0000"+
-		"\u0000\u0000#$\u0001\u0000\u0000\u0000$&\u0001\u0000\u0000\u0000%\u0017"+
-		"\u0001\u0000\u0000\u0000%&\u0001\u0000\u0000\u0000&\'\u0001\u0000\u0000"+
-		"\u0000\'(\u0005\u0001\u0000\u0000(\u0003\u0001\u0000\u0000\u0000)*\u0003"+
-		"\u0002\u0001\u0000*\u0005\u0001\u0000\u0000\u0000+,\u0003\u0002\u0001"+
-		"\u0000,\u0007\u0001\u0000\u0000\u0000-.\u0003\u0004\u0002\u0000./\u0005"+
-		"\u0002\u0000\u0000/1\u0003\u0006\u0003\u000002\u0005\b\u0000\u000010\u0001"+
-		"\u0000\u0000\u000012\u0001\u0000\u0000\u00002\t\u0001\u0000\u0000\u0000"+
-		"\u0007\r\u0015\u001b!#%1";
+		"\u0004\u0001\t:\u0002\u0000\u0007\u0000\u0002\u0001\u0007\u0001\u0002"+
+		"\u0002\u0007\u0002\u0002\u0003\u0007\u0003\u0002\u0004\u0007\u0004\u0002"+
+		"\u0005\u0007\u0005\u0001\u0000\u0004\u0000\u000e\b\u0000\u000b\u0000\f"+
+		"\u0000\u000f\u0001\u0000\u0001\u0000\u0001\u0001\u0001\u0001\u0004\u0001"+
+		"\u0016\b\u0001\u000b\u0001\f\u0001\u0017\u0001\u0001\u0001\u0001\u0004"+
+		"\u0001\u001c\b\u0001\u000b\u0001\f\u0001\u001d\u0001\u0001\u0001\u0001"+
+		"\u0004\u0001\"\b\u0001\u000b\u0001\f\u0001#\u0003\u0001&\b\u0001\u0003"+
+		"\u0001(\b\u0001\u0001\u0001\u0001\u0001\u0001\u0002\u0001\u0002\u0001"+
+		"\u0003\u0001\u0003\u0001\u0004\u0001\u0004\u0001\u0005\u0001\u0005\u0001"+
+		"\u0005\u0001\u0005\u0001\u0005\u0001\u0005\u0003\u00058\b\u0005\u0001"+
+		"\u0005\u0000\u0000\u0006\u0000\u0002\u0004\u0006\b\n\u0000\u0001\u0002"+
+		"\u0000\u0003\u0003\u0005\u0007:\u0000\r\u0001\u0000\u0000\u0000\u0002"+
+		"\u0013\u0001\u0000\u0000\u0000\u0004+\u0001\u0000\u0000\u0000\u0006-\u0001"+
+		"\u0000\u0000\u0000\b/\u0001\u0000\u0000\u0000\n1\u0001\u0000\u0000\u0000"+
+		"\f\u000e\u0003\n\u0005\u0000\r\f\u0001\u0000\u0000\u0000\u000e\u000f\u0001"+
+		"\u0000\u0000\u0000\u000f\r\u0001\u0000\u0000\u0000\u000f\u0010\u0001\u0000"+
+		"\u0000\u0000\u0010\u0011\u0001\u0000\u0000\u0000\u0011\u0012\u0005\u0000"+
+		"\u0000\u0001\u0012\u0001\u0001\u0000\u0000\u0000\u0013\u0015\u0005\u0001"+
+		"\u0000\u0000\u0014\u0016\u0007\u0000\u0000\u0000\u0015\u0014\u0001\u0000"+
+		"\u0000\u0000\u0016\u0017\u0001\u0000\u0000\u0000\u0017\u0015\u0001\u0000"+
+		"\u0000\u0000\u0017\u0018\u0001\u0000\u0000\u0000\u0018\'\u0001\u0000\u0000"+
+		"\u0000\u0019\u001b\u0005\u0001\u0000\u0000\u001a\u001c\u0007\u0000\u0000"+
+		"\u0000\u001b\u001a\u0001\u0000\u0000\u0000\u001c\u001d\u0001\u0000\u0000"+
+		"\u0000\u001d\u001b\u0001\u0000\u0000\u0000\u001d\u001e\u0001\u0000\u0000"+
+		"\u0000\u001e\u001f\u0001\u0000\u0000\u0000\u001f%\u0005\u0001\u0000\u0000"+
+		" \"\u0007\u0000\u0000\u0000! \u0001\u0000\u0000\u0000\"#\u0001\u0000\u0000"+
+		"\u0000#!\u0001\u0000\u0000\u0000#$\u0001\u0000\u0000\u0000$&\u0001\u0000"+
+		"\u0000\u0000%!\u0001\u0000\u0000\u0000%&\u0001\u0000\u0000\u0000&(\u0001"+
+		"\u0000\u0000\u0000\'\u0019\u0001\u0000\u0000\u0000\'(\u0001\u0000\u0000"+
+		"\u0000()\u0001\u0000\u0000\u0000)*\u0005\u0001\u0000\u0000*\u0003\u0001"+
+		"\u0000\u0000\u0000+,\u0003\u0002\u0001\u0000,\u0005\u0001\u0000\u0000"+
+		"\u0000-.\u0003\u0002\u0001\u0000.\u0007\u0001\u0000\u0000\u0000/0\u0003"+
+		"\u0002\u0001\u00000\t\u0001\u0000\u0000\u000012\u0003\u0004\u0002\u0000"+
+		"23\u0005\u0002\u0000\u000034\u0003\u0006\u0003\u000045\u0005\u0002\u0000"+
+		"\u000057\u0003\b\u0004\u000068\u0005\b\u0000\u000076\u0001\u0000\u0000"+
+		"\u000078\u0001\u0000\u0000\u00008\u000b\u0001\u0000\u0000\u0000\u0007"+
+		"\u000f\u0017\u001d#%\'7";
 	public static final ATN _ATN =
 		new ATNDeserializer().deserialize(_serializedATN.toCharArray());
 	static {

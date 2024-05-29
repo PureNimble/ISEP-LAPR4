@@ -84,6 +84,18 @@ public class RequirementsXmlBaseListener implements RequirementsXmlListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitPossibleAnswers(RequirementsXmlParser.PossibleAnswersContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterMinimumRequirement(RequirementsXmlParser.MinimumRequirementContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitMinimumRequirement(RequirementsXmlParser.MinimumRequirementContext ctx) { }
 
 	/**
 	 * {@inheritDoc}

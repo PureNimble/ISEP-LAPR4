@@ -65,6 +65,18 @@ public class RequirementsCsvBaseListener implements RequirementsCsvListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterMinimumRequirement(RequirementsCsvParser.MinimumRequirementContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitMinimumRequirement(RequirementsCsvParser.MinimumRequirementContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterQuestion(RequirementsCsvParser.QuestionContext ctx) { }
 	/**
 	 * {@inheritDoc}

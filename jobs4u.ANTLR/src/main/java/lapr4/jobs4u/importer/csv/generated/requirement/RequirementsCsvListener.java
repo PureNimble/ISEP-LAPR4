@@ -48,6 +48,16 @@ public interface RequirementsCsvListener extends ParseTreeListener {
 	 */
 	void exitAnswer(RequirementsCsvParser.AnswerContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link RequirementsCsvParser#minimumRequirement}.
+	 * @param ctx the parse tree
+	 */
+	void enterMinimumRequirement(RequirementsCsvParser.MinimumRequirementContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link RequirementsCsvParser#minimumRequirement}.
+	 * @param ctx the parse tree
+	 */
+	void exitMinimumRequirement(RequirementsCsvParser.MinimumRequirementContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link RequirementsCsvParser#question}.
 	 * @param ctx the parse tree
 	 */

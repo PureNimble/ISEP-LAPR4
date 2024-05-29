@@ -41,6 +41,7 @@ public class EvaluateInterviewUI extends AbstractUI {
 
         try {
             this.evaluateInterviewController.evaluateInterview(theJobOpening);
+            System.out.println("The interviews have been successfully evaluated");
         } catch (final Exception e) {
             System.out.println("Something went wrong: " + e.getMessage());
         }

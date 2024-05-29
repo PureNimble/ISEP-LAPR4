@@ -55,6 +55,8 @@ public class ImportApplicationsUI extends AbstractUI {
     protected boolean doShow() {
         System.out.println("Please insert the folder path");
         final Path path = Utils.getPath(true);
+        if (path == null)
+            return false;
         final String folder = path.toString();
         if (folder == null && haveReportFile(folder)) {
             System.out.println("Invalid Folder");

@@ -41,6 +41,7 @@ public class EvaluateRequirementUI extends AbstractUI {
 
         try {
             this.evaluateRequirementController.evaluateRequirement(theJobOpening);
+            System.out.println("The requirements have been successfully evaluated");
         } catch (final Exception e) {
             System.out.println("Something went wrong: " + e.getMessage());
         }

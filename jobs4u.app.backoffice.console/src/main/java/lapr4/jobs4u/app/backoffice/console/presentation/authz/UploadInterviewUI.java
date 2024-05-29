@@ -50,6 +50,8 @@ public class UploadInterviewUI extends AbstractUI {
             return false;
         }
         final Path file = Utils.getPath(false);
+        if (file == null)
+            return false;
         final String finalPath = OUTPUT_FOLDER + file.getFileName().toString();
         if (!Utils.copyFile(file, finalPath))
             return false;

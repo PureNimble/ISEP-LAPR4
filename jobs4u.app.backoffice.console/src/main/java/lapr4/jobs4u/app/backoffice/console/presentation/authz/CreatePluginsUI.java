@@ -39,6 +39,8 @@ public class CreatePluginsUI extends AbstractUI {
     protected boolean doShow() {
 
         final Path file = Utils.getPath(false);
+        if (file == null)
+            return false;
         final String finalPath = OUTPUT_FOLDER + file.getFileName().toString();
         if (!Utils.copyFile(file, finalPath))
             return false;

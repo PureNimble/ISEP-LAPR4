@@ -1,6 +1,7 @@
 package lapr4.jobs4u.persistence.impl.jpa;
 
 import lapr4.jobs4u.applicationmanagement.domain.Application;
+import lapr4.jobs4u.jobopeningmanagement.domain.JobOpening;
 import lapr4.jobs4u.requirementmanagement.domain.Requirement;
 import lapr4.jobs4u.requirementmanagement.repositories.RequirementRepository;
 
@@ -29,6 +30,13 @@ class JpaRequirementRepository extends JpaAutoTxRepository<Requirement, Long, Lo
         final Map<String, Object> params = new HashMap<>();
         params.put("application", application);
         return matchOne("e.application=:application", params);
+    }
+
+    @Override
+    public Iterable<Requirement> findRequirementsByJobOpening(JobOpening jobOpening) {
+        final Map<String, Object> params = new HashMap<>();
+        params.put("jobOpening", jobOpening);
+        return match("e.application.jobOpening=:jobOpening", params);
     }
 
 }

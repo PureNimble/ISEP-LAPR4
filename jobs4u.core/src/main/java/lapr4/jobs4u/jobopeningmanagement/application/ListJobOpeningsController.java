@@ -86,4 +86,10 @@ public class ListJobOpeningsController {
         return jobOpeningsService.filterWithAvailablePhaseForInterviewEvaluation();
     }
 
+    public Iterable<JobOpeningDTO> filterWithAvailablePhaseForRequirementsEvaluation() {
+        authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.OPERATOR, BaseRoles.POWERUSER);
+
+        return jobOpeningsService.filterWithAvailablePhaseForRequirementsEvaluation();
+    }
+
 }

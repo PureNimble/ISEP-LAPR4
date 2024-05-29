@@ -16,7 +16,7 @@ public class Jobs4UDemoSmokeTester implements Action {
 
     @Override
     public boolean execute() {
-        return ChainedAction.first(new QuestionImportThruPluginSmokeTester()).then(new QuestionExportSmokeTester())
+        return ChainedAction.first(new QuestionImportThruPluginSmokeTester()).then(new QuestionExportThruSmokeTester())
                 .execute();
     }
 }

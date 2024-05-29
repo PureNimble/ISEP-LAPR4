@@ -25,8 +25,8 @@ public class QuestionImportThruPluginSmokeTester implements Action {
 	private final TransactionalContext txCtx = PersistenceContext.repositories().newTransactionalContext();
 	private final ImportQuestionsController importQuestionsController = new ImportQuestionsController(
 			PersistenceContext.repositories().questionImporterPlugins(),
-			PersistenceContext.repositories().interviewQuestion(),
-			PersistenceContext.repositories().requirementsQuestion(),
+			PersistenceContext.repositories().interviewQuestion(txCtx),
+			PersistenceContext.repositories().requirementsQuestion(txCtx),
 			PersistenceContext.repositories().questionType(), AuthzRegistry.authorizationService());
 
 	private final RegisterQuestionImporterPluginController registerQuestionImporterPluginController = new RegisterQuestionImporterPluginController(
@@ -38,8 +38,7 @@ public class QuestionImportThruPluginSmokeTester implements Action {
 		try {
 			txCtx.beginTransaction();
 			QuestionImporterPlugin plugin = register("InterviewCSV", "Interview question csv format", "csv",
-					INTERVIEW_IMPORTER,
-					"INTERVIEW");
+					INTERVIEW_IMPORTER, "INTERVIEW");
 			testImportInterviewFrom("jobs4u.ANTLR/src/main/resources/input/InterviewCSV.csv", plugin);
 
 			plugin = register("InterviewJSON", "Interview question json format", "json", INTERVIEW_IMPORTER,

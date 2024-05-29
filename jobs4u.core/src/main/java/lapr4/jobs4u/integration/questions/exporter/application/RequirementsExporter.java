@@ -8,8 +8,8 @@ import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CodePointCharStream;
 import org.antlr.v4.runtime.CommonTokenStream;
 
-import lapr4.jobs4u.exporter.requirement.generated.RequirementsLexer;
-import lapr4.jobs4u.exporter.requirement.generated.RequirementsParser;
+import lapr4.jobs4u.exporter.requirement.template.generated.RequirementsLexer;
+import lapr4.jobs4u.exporter.requirement.template.generated.RequirementsParser;
 import lapr4.jobs4u.integration.questions.importer.domain.QuestionImporterPlugin;
 import lapr4.jobs4u.questionmanagement.domain.InterviewQuestion;
 import lapr4.jobs4u.questionmanagement.domain.RequirementsQuestion;

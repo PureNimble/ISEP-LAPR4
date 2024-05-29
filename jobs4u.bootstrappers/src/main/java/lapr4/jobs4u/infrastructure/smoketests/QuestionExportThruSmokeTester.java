@@ -29,6 +29,7 @@ public class QuestionExportThruSmokeTester implements Action {
 	private final QuestionExporterController questionExporterController = new QuestionExporterController();
 	private final ListQuestionPluginController listQuestionPluginController = new ListQuestionPluginController(
 			PersistenceContext.repositories().questionImporterPlugins(), AuthzRegistry.authorizationService());
+	private static final String OUTPUT_FOLDER = "jobs4u.ANTLR/src/main/resources/output/template/";
 
 	@Override
 	public boolean execute() {
@@ -44,7 +45,7 @@ public class QuestionExportThruSmokeTester implements Action {
 	}
 
 	private void testExportInterviewTo(final FileFormat format, final String plugin) {
-		final var filename = "jobs4u.ANTLR/src/main/resources/output/" + plugin + ".txt";
+		final var filename = OUTPUT_FOLDER + plugin + ".txt";
 		try {
 			final Optional<QuestionImporterPlugin> questionPlugin = listQuestionPluginController.filterByDesignation(plugin);
 			final QuestionImporterPlugin questionImporterPlugin = questionPlugin.get();
@@ -56,11 +57,11 @@ public class QuestionExportThruSmokeTester implements Action {
 	}
 
 	private void testExportRequirementsTo(final FileFormat format, final String plugin) {
-		final var filename = "jobs4u.ANTLR/src/main/resources/output/" + plugin + ".txt";
+		final var filename = OUTPUT_FOLDER + plugin + ".txt";
 		try {
 			final Optional<QuestionImporterPlugin> questionPlugin = listQuestionPluginController.filterByDesignation(plugin);
 			final QuestionImporterPlugin questionImporterPlugin = questionPlugin.get();
-			questionExporterController.exportInterview(filename, format, questionImporterPlugin);
+			questionExporterController.exportRequirements(filename, format, questionImporterPlugin);
 			outputExportedContent(format, filename, plugin);
 		} catch (final IOException e) {
 			LOGGER.error(e);

@@ -17,8 +17,8 @@ import org.antlr.v4.runtime.tree.ParseTree;
 import org.springframework.data.util.Pair;
 
 import lapr4.jobs4u.applicationmanagement.domain.OutcomeValue;
-import lapr4.jobs4u.importer.answer.requirement.generated.RequirementsAnswersLexer;
-import lapr4.jobs4u.importer.answer.requirement.generated.RequirementsAnswersParser;
+import lapr4.jobs4u.importer.requirement.answer.generated.RequirementsAnswersLexer;
+import lapr4.jobs4u.importer.requirement.answer.generated.RequirementsAnswersParser;
 import lapr4.jobs4u.integration.questions.importer.domain.QuestionImporterPlugin;
 import lapr4.jobs4u.jobopeningmanagement.domain.JobOpening;
 import lapr4.jobs4u.jobopeningmanagement.domain.JobOpeningRequirement;

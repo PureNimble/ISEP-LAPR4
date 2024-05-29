@@ -9,12 +9,12 @@ import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.tree.ParseTree;
 import org.antlr.v4.runtime.tree.ParseTreeWalker;
 
-import lapr4.jobs4u.importer.csv.generated.interview.InterviewCsvLexer;
-import lapr4.jobs4u.importer.csv.generated.interview.InterviewCsvParser;
-import lapr4.jobs4u.importer.json.generated.interview.InterviewJsonLexer;
-import lapr4.jobs4u.importer.json.generated.interview.InterviewJsonParser;
-import lapr4.jobs4u.importer.xml.generated.interview.InterviewXmlLexer;
-import lapr4.jobs4u.importer.xml.generated.interview.InterviewXmlParser;
+import lapr4.jobs4u.importer.interview.template.csv.generated.InterviewCsvLexer;
+import lapr4.jobs4u.importer.interview.template.csv.generated.InterviewCsvParser;
+import lapr4.jobs4u.importer.interview.template.json.generated.InterviewJsonLexer;
+import lapr4.jobs4u.importer.interview.template.json.generated.InterviewJsonParser;
+import lapr4.jobs4u.importer.interview.template.xml.generated.InterviewXmlLexer;
+import lapr4.jobs4u.importer.interview.template.xml.generated.InterviewXmlParser;
 import lapr4.jobs4u.integration.questions.importer.application.QuestionImporter;
 import lapr4.jobs4u.integration.questions.importer.domain.QuestionImporterPlugin;
 import lapr4.jobs4u.questionmanagement.dto.InterviewQuestionDTO;

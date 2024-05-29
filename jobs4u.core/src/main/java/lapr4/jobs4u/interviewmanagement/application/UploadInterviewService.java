@@ -12,8 +12,8 @@ import org.antlr.v4.runtime.tree.ParseTree;
 
 import lapr4.jobs4u.applicationmanagement.domain.Application;
 import lapr4.jobs4u.applicationmanagement.domain.File;
-import lapr4.jobs4u.importer.answer.interview.generated.InterviewAnswersLexer;
-import lapr4.jobs4u.importer.answer.interview.generated.InterviewAnswersParser;
+import lapr4.jobs4u.importer.interview.answer.generated.InterviewAnswersLexer;
+import lapr4.jobs4u.importer.interview.answer.generated.InterviewAnswersParser;
 import lapr4.jobs4u.interviewmanagement.domain.Interview;
 import lapr4.jobs4u.interviewmanagement.repositories.InterviewRepository;
 

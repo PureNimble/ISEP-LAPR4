@@ -1,7 +1,7 @@
 package lapr4.jobs4u.requirementmanagement.application;
 
-import lapr4.jobs4u.importer.answer.requirement.generated.RequirementsAnswersBaseVisitor;
-import lapr4.jobs4u.importer.answer.requirement.generated.RequirementsAnswersParser;
+import lapr4.jobs4u.importer.requirement.answer.generated.RequirementsAnswersBaseVisitor;
+import lapr4.jobs4u.importer.requirement.answer.generated.RequirementsAnswersParser;
 
 /**
  * @author 2DI2

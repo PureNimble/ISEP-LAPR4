@@ -1,0 +1,54 @@
+TITLE: Software Engineer Interview
+NAME: Paulo
+EMAIL: micro@email.com
+FINAL GRADE: 100%
+
+COTATION: 20%
+QUESTION TYPE: Choice, with single answer
+QUESTION: What is the primary use of HTML?
+[1] Styling web pages
+[2] Structuring web pages
+[3] Server-side computations
+ANSWER: 2
+GRADE: 100%
+
+COTATION: 20%
+QUESTION TYPE: Choice, with multiple answers
+QUESTION: Which of the following are sorting algorithms?
+[1] Bubble Sort
+[2] Quick Sort
+[3] Binary Search
+[4] Depth-First Search
+ANSWER: 1 2
+GRADE: 100%
+
+COTATION: 10%
+QUESTION TYPE: True/False
+QUESTION: Is JavaScript a compiled language?
+ANSWER: False
+GRADE: 100%
+
+COTATION: 20%
+QUESTION TYPE: Choice, with single answer
+QUESTION: Who created the C programming language?
+[1] Dennis Ritchie
+[2] James Gosling
+[3] Guido van Rossum
+ANSWER: 1
+GRADE: 100%
+
+COTATION: 20%
+QUESTION TYPE: Choice, with multiple answers
+QUESTION: Which of the following are data structures?
+[1] Array
+[2] Queue
+[3] Graph
+[4] Gradient
+ANSWER: 1 2 4
+GRADE: 100%
+
+COTATION: 10%
+QUESTION TYPE: True/False
+QUESTION: Is Python an object-oriented programming language?
+ANSWER: True
+GRADE: 100%

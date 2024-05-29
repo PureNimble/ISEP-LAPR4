@@ -28,7 +28,7 @@ public class UploadInterviewUI extends AbstractUI {
     private final UploadInterviewController controller;
     private final ListApplicationsController applicationController;
     private final ListJobOpeningsController jobOpeningsController;
-    private static final String OUTPUT_FOLDER = "./jobs4u.ANTLR/src/main/resources/input/answers/";
+    private static final String OUTPUT_FOLDER = "jobs4u.ANTLR/src/main/resources/input/answer/";
 
     public UploadInterviewUI() {
         controller = new UploadInterviewController(PersistenceContext.repositories().interviews(),

@@ -5,8 +5,6 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Optional;
 
-import lapr4.jobs4u.importer.answer.requirement.generated.RequirementsAnswersLexer;
-import lapr4.jobs4u.importer.answer.requirement.generated.RequirementsAnswersParser;
 import lapr4.jobs4u.requirementmanagement.domain.Requirement;
 import lapr4.jobs4u.requirementmanagement.repositories.RequirementRepository;
 import org.antlr.v4.runtime.CharStream;
@@ -16,6 +14,8 @@ import org.antlr.v4.runtime.tree.ParseTree;
 
 import lapr4.jobs4u.applicationmanagement.domain.Application;
 import lapr4.jobs4u.applicationmanagement.domain.File;
+import lapr4.jobs4u.importer.requirement.answer.generated.RequirementsAnswersLexer;
+import lapr4.jobs4u.importer.requirement.answer.generated.RequirementsAnswersParser;
 /**
  * @author 2DI2
  */

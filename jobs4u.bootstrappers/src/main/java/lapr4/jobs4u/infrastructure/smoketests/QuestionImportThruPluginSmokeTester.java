@@ -31,6 +31,8 @@ public class QuestionImportThruPluginSmokeTester implements Action {
 
 	private final RegisterQuestionImporterPluginController registerQuestionImporterPluginController = new RegisterQuestionImporterPluginController(
 			PersistenceContext.repositories().questionImporterPlugins(txCtx), AuthzRegistry.authorizationService());
+	
+	private static final String INPUT_FOLDER = "jobs4u.ANTLR/src/main/resources/input/template/";
 
 	@Override
 	public boolean execute() {
@@ -39,26 +41,26 @@ public class QuestionImportThruPluginSmokeTester implements Action {
 			txCtx.beginTransaction();
 			QuestionImporterPlugin plugin = register("InterviewCSV", "Interview question csv format", "csv",
 					INTERVIEW_IMPORTER, "INTERVIEW");
-			testImportInterviewFrom("jobs4u.ANTLR/src/main/resources/input/InterviewCSV.csv", plugin);
+			testImportInterviewFrom(INPUT_FOLDER + "InterviewCSV.csv", plugin);
 
 			plugin = register("InterviewJSON", "Interview question json format", "json", INTERVIEW_IMPORTER,
 					"INTERVIEW");
-			testImportInterviewFrom("jobs4u.ANTLR/src/main/resources/input/InterviewJSON.json", plugin);
+			testImportInterviewFrom(INPUT_FOLDER + "InterviewJSON.json", plugin);
 
 			plugin = register("InterviewXML", "Interview question xml format", "xml", INTERVIEW_IMPORTER, "INTERVIEW");
-			testImportInterviewFrom("jobs4u.ANTLR/src/main/resources/input/InterviewXML.xml", plugin);
+			testImportInterviewFrom(INPUT_FOLDER + "InterviewXML.xml", plugin);
 
 			plugin = register("RequirementsCSV", "Requirements question csv format", "csv", REQUIREMENTS_IMPORTER,
 					"REQUIREMENT");
-			testImportRequirementsFrom("jobs4u.ANTLR/src/main/resources/input/RequirementsCSV.csv", plugin);
+			testImportRequirementsFrom(INPUT_FOLDER + "RequirementsCSV.csv", plugin);
 
 			plugin = register("RequirementsJSON", "Requirements question json format", "json", REQUIREMENTS_IMPORTER,
 					"REQUIREMENT");
-			testImportRequirementsFrom("jobs4u.ANTLR/src/main/resources/input/RequirementsJSON.json", plugin);
+			testImportRequirementsFrom(INPUT_FOLDER + "RequirementsJSON.json", plugin);
 
 			plugin = register("RequirementsXML", "Requirements question xml format", "xml", REQUIREMENTS_IMPORTER,
 					"REQUIREMENT");
-			testImportRequirementsFrom("jobs4u.ANTLR/src/main/resources/input/RequirementsXML.xml", plugin);
+			testImportRequirementsFrom(INPUT_FOLDER + "RequirementsXML.xml", plugin);
 			txCtx.commit();
 		} catch (final IOException e) {
 			txCtx.rollback();

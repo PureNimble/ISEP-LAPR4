@@ -1,7 +1,7 @@
 package lapr4.jobs4u.interviewmanagement.application;
 
-import lapr4.jobs4u.importer.answer.interview.generated.InterviewAnswersBaseVisitor;
-import lapr4.jobs4u.importer.answer.interview.generated.InterviewAnswersParser;
+import lapr4.jobs4u.importer.interview.answer.generated.InterviewAnswersBaseVisitor;
+import lapr4.jobs4u.importer.interview.answer.generated.InterviewAnswersParser;
 
 /**
  * @author 2DI2

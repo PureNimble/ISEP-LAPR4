@@ -9,12 +9,12 @@ import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.tree.ParseTree;
 import org.antlr.v4.runtime.tree.ParseTreeWalker;
 
-import lapr4.jobs4u.importer.csv.generated.requirement.RequirementsCsvLexer;
-import lapr4.jobs4u.importer.csv.generated.requirement.RequirementsCsvParser;
-import lapr4.jobs4u.importer.json.generated.requirement.RequirementsJsonLexer;
-import lapr4.jobs4u.importer.json.generated.requirement.RequirementsJsonParser;
-import lapr4.jobs4u.importer.xml.generated.requirement.RequirementsXmlLexer;
-import lapr4.jobs4u.importer.xml.generated.requirement.RequirementsXmlParser;
+import lapr4.jobs4u.importer.requirement.template.csv.generated.RequirementsCsvLexer;
+import lapr4.jobs4u.importer.requirement.template.csv.generated.RequirementsCsvParser;
+import lapr4.jobs4u.importer.requirement.template.json.generated.RequirementsJsonLexer;
+import lapr4.jobs4u.importer.requirement.template.json.generated.RequirementsJsonParser;
+import lapr4.jobs4u.importer.requirement.template.xml.generated.RequirementsXmlLexer;
+import lapr4.jobs4u.importer.requirement.template.xml.generated.RequirementsXmlParser;
 import lapr4.jobs4u.integration.questions.importer.application.QuestionImporter;
 import lapr4.jobs4u.integration.questions.importer.domain.QuestionImporterPlugin;
 import lapr4.jobs4u.questionmanagement.dto.RequirementsQuestionDTO;

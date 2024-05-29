@@ -7,8 +7,8 @@ import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.Token;
 import org.antlr.v4.runtime.misc.Interval;
 
-import lapr4.jobs4u.importer.csv.generated.interview.InterviewCsvBaseListener;
-import lapr4.jobs4u.importer.csv.generated.interview.InterviewCsvParser;
+import lapr4.jobs4u.importer.interview.template.csv.generated.InterviewCsvBaseListener;
+import lapr4.jobs4u.importer.interview.template.csv.generated.InterviewCsvParser;
 import lapr4.jobs4u.questionmanagement.domain.Answer;
 import lapr4.jobs4u.questionmanagement.domain.Cotation;
 import lapr4.jobs4u.questionmanagement.domain.InterviewAnswer;

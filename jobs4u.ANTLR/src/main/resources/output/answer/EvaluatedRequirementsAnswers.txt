@@ -1,0 +1,51 @@
+TITLE: Software Engineer Requirements
+NAME: Paulo
+EMAIL: micro@email.com
+RESULT:
+
+# How long have you been involved in web development? (1 | 2 | 3 | 4 | 5+ years)
+ANSWER: 5+ years
+
+# Can you list the programming languages you've utilized in your projects? (Ruby | PHP | TypeScript | Go)
+ANSWER: RubyPlus
+JUSTIFICATION:
+
+# Have you ever developed a mobile app? (Yes | No)
+ANSWER: Yes
+JUSTIFICATION:
+
+# Could you tell us which databases you've worked with in your projects? (Oracle | Firebase | MariaDB | CouchDB)
+ANSWER: Oracle, Firebase
+JUSTIFICATION:
+
+# Which version control systems are you familiar with? (Perforce | Bazaar | CVS)
+ANSWER: Perforce
+JUSTIFICATION:
+
+# Have you ever administered a database? (Yes | No)
+ANSWER: Yes
+JUSTIFICATION:
+
+# Could you tell us which cloud platforms you've used in your projects? (IBM Cloud | DigitalOcean | Heroku)
+ANSWER: IBM Cloud, Heroku
+JUSTIFICATION:
+
+# Are you familiar with any of these containerization platforms? (LXC | rkt | Podman)
+ANSWER: LXC, Podman
+JUSTIFICATION:
+
+# Do you have any experience in DevOps? (Yes | No)
+ANSWER: Yes
+JUSTIFICATION:
+
+# Which CI/CD tools have you used in your projects? (GitLab CI | Bamboo | TeamCity)
+ANSWER: GitLab CI, Bamboo
+JUSTIFICATION:
+
+# Could you tell us which testing frameworks you've used in your projects? (Mocha | Jest | PyTest | RSpec)
+ANSWER: Mocha, Jest
+JUSTIFICATION:
+
+# Which programming paradigms have you used in your projects? (Event-driven | Logic | Aspect-oriented)
+ANSWER: Event-driven, Aspect-oriented
+JUSTIFICATION:

@@ -18,7 +18,7 @@ import lapr4.jobs4u.integration.questions.importer.domain.QuestionImporterPlugin
  */
 public class ExportInterviewUI extends AbstractUI {
 
-    private static final String PATH = "jobs4u.ANTLR/src/main/resources/output/";
+    private static final String PATH = "jobs4u.ANTLR/src/main/resources/input/template/";
     private final QuestionExporterController questionExporterController = new QuestionExporterController();
     private final ListQuestionPluginController listQuestionPluginController = new ListQuestionPluginController(
             PersistenceContext.repositories().questionImporterPlugins(), AuthzRegistry.authorizationService());

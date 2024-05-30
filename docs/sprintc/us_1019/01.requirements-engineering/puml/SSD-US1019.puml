@@ -13,13 +13,21 @@ participant ":System" as System
 
 activate CustomerManager
 
-CustomerManager -> System : Asks for a list of candidates by job interview points
+CustomerManager -> System : Asks for a list of candidates by interview points
 activate System
 
-System --> CustomerManager : Displays list of candidates and provides sorting options
+System --> CustomerManager : Displays list of Job Openings
 deactivate System
 
-note right of CustomerManager: The list of candidates is ordered by points in ascending\norder by default
+note right of CustomerManager: The list of Job Openings contains the onesthat have candidates\nwith interview points assigned to them
+
+
+CustomerManager -> System : Selects a Job Opening
+
+System --> CustomerManager : Displays list of candidates for that Job Opening and provides sorting options
+deactivate System
+
+note right of CustomerManager: The list of candidates is ordered by points in descending\norder by default
 
 loop until Customer Manager decides to exit
     opt sorts list

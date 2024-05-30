@@ -115,6 +115,10 @@ public class RequirementsQuestion implements AggregateRoot<Long>, DTOable<Requir
         return this.possibleAnswers;
     }
 
+    public MinimumRequirement minimumRequirement() {
+        return this.minimumRequirement;
+    }
+
     @Override
     public String toString() {
         return body.toString();

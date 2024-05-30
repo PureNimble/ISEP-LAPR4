@@ -37,11 +37,15 @@ public class FrontMenu extends AbstractUI {
                     return true;
                 }));
         menu.addItem(EXIT_OPTION, "Exit", new ExitWithMessageAction("Goodbye!"));
-
-        final MenuRenderer renderer = new VerticalMenuRenderer(menu, MenuItemRenderer.DEFAULT);
-        return renderer.render();
+    
+        boolean loginSuccessful;
+        do {
+            final MenuRenderer renderer = new VerticalMenuRenderer(menu, MenuItemRenderer.DEFAULT);
+            loginSuccessful = renderer.render();
+        } while (!loginSuccessful);
+        return loginSuccessful;
     }
-
+    
     @Override
     public String headline() {
         return "Jobs4U - BackOffice App";

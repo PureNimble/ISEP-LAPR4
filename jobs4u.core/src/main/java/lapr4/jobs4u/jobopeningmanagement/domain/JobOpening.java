@@ -189,7 +189,7 @@ public class JobOpening implements AggregateRoot<JobReference>, DTOable<JobOpeni
         return new JobOpeningDTO(this.jobReference.toString(), this.titleOrFunction.toString(),
                 this.contractType.toString(), this.mode.toString(), this.address.toString(),
                 this.customer.customerCode().toString(), this.customer.companyName().toString(),
-                this.jobDescription.toString());
+                this.jobDescription.toString(), this.registeredOn.toString());
     }
 
     public JobReference jobReference() {

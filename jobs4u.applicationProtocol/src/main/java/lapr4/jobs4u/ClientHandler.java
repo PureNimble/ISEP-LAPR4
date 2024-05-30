@@ -29,6 +29,7 @@ public class ClientHandler implements Runnable {
             put(MessageCode.LOGOUT, LogoutMessage.class);
             put(MessageCode.CHANGEPASS, ChangePassMessage.class);
             put(MessageCode.LISTAPPREQ, ListAppReqMessage.class);
+            put(MessageCode.LISTJOBREQ, ListJobReqMessage.class);
         }
     };
 

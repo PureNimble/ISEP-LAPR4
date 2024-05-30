@@ -39,21 +39,21 @@ public class ListCandidatesDataUI extends AbstractUI {
                 return false;
             }
             printCandidateData(selectedCandidateDTO);
-            Candidate selectedCandidate = listCandidatesDataController.selectedCandidate(selectedCandidateDTO);
+            final Candidate selectedCandidate = listCandidatesDataController.selectedCandidate(selectedCandidateDTO);
             final Iterable<ApplicationDTO> applicationDTOS = this.displayCandidateApplicationsController
                     .findApplicationsFromCandidate(selectedCandidate);
             printApplications(applicationDTOS);
         }
     }
 
-    private void printCandidateData(CandidateDTO candidate) {
+    private void printCandidateData(final CandidateDTO candidate) {
         System.out.printf("\nCandidate Details:\n");
         System.out.printf("Name: %s\n", candidate.getName());
         System.out.printf("Email: %s\n", candidate.getEmail());
         System.out.printf("Phone Number: %s\n", candidate.getPhoneNumber());
     }
 
-    private void printApplications(Iterable<ApplicationDTO> app) {
+    private void printApplications(final Iterable<ApplicationDTO> app) {
         if (!app.iterator().hasNext())
             return;
         List<Application> applications = new ArrayList<>();

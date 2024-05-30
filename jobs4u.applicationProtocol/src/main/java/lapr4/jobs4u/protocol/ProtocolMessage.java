@@ -49,8 +49,8 @@ public class ProtocolMessage {
         this.code = code;
         this.dataChunks = new byte[dataChunk.length][];
         for (int i = 0; i < dataChunk.length; i++) {
-            ByteArrayOutputStream bos = new ByteArrayOutputStream();
-            ObjectOutputStream out = new ObjectOutputStream(bos);
+            final ByteArrayOutputStream bos = new ByteArrayOutputStream();
+            final ObjectOutputStream out = new ObjectOutputStream(bos);
             out.writeObject(dataChunk[i]);
             out.flush();
             this.dataChunks[i] = bos.toByteArray();

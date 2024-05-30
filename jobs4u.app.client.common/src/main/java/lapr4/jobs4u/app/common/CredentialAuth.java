@@ -14,7 +14,7 @@ import lapr4.jobs4u.protocol.ProtocolMessage;
  */
 public class CredentialAuth {
 
-    private final Logger logger = LogManager.getLogger(CredentialAuth.class);
+    private final Logger LOGGER = LogManager.getLogger(CredentialAuth.class);
 
     private String email;
 
@@ -35,7 +35,7 @@ public class CredentialAuth {
             final ProtocolMessage response;
             try {
                 response = listener.sendRecv(new ProtocolMessage((byte) 1, MessageCode.AUTH, u, p, r.toString()));
-                logger.info(response.toString());
+                LOGGER.info(response.toString());
                 if (response.code() == MessageCode.ACK) {
                     email = u;
                     return true;
@@ -46,7 +46,7 @@ public class CredentialAuth {
 
             return false;
         } catch (final IOException e) {
-            logger.error("Error while authenticating", e.getMessage());
+            LOGGER.error("Error while authenticating", e.getMessage());
             return false;
         }
     };

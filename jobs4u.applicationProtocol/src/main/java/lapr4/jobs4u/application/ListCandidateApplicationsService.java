@@ -12,6 +12,7 @@ import org.springframework.stereotype.Component;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.StreamSupport;
 
 /**
  * @author 2DI2
@@ -22,7 +23,8 @@ public class ListCandidateApplicationsService {
     private final ApplicationRepository applicationRepository;
     private final CandidateRepository candidateRepository;
 
-    public ListCandidateApplicationsService(ApplicationRepository applicationRepository, CandidateRepository candidateRepository) {
+    public ListCandidateApplicationsService(ApplicationRepository applicationRepository,
+            CandidateRepository candidateRepository) {
         this.applicationRepository = applicationRepository;
         this.candidateRepository = candidateRepository;
     }
@@ -30,7 +32,8 @@ public class ListCandidateApplicationsService {
     public Iterable<ApplicationDTO> findApplicationsFromCandidate(final EmailAddress emailAddress) {
         final Optional<Candidate> candidate = this.candidateRepository.findByEmail(emailAddress);
         if (candidate.isPresent()) {
-            final Iterable<Application> applications = this.applicationRepository.findApplicationsFromCandidate(candidate.get());
+            final Iterable<Application> applications = this.applicationRepository
+                    .findApplicationsFromCandidate(candidate.get());
             List<ApplicationDTO> applicationsDTO = new ArrayList<>();
             applications.forEach(application -> applicationsDTO.add(application.toDTO()));
             return applicationsDTO;
@@ -39,17 +42,15 @@ public class ListCandidateApplicationsService {
         }
     }
 
-    public Integer numApplicants(ApplicationDTO applicationDTO) {
-        Application selectedCandidate = applicationRepository
+    public Integer numApplicants(final ApplicationDTO applicationDTO) {
+        final Application selectedCandidate = applicationRepository
                 .ofIdentity(ApplicationCode.valueOf(applicationDTO.getApplicationCode()))
                 .orElseThrow(IllegalArgumentException::new);
 
-        Iterable<Application> iterable = applicationRepository.findApplicationWithInterviewRecord(selectedCandidate.getJobOpening());
-        int returnValue = 0;
-        for (Application ignored : iterable) {
-             returnValue++;
-        }
-        return returnValue;
+        final Iterable<Application> iterable = applicationRepository.findApplicationWithInterviewRecord(selectedCandidate.jobOpening());
+        final int size = (int) StreamSupport.stream(iterable.spliterator(), false).count();
+
+        return size;
     }
 
 }

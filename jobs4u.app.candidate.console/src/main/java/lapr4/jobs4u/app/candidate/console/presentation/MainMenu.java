@@ -1,5 +1,6 @@
 package lapr4.jobs4u.app.candidate.console.presentation;
 
+import lapr4.jobs4u.app.candidate.console.presentation.authz.action.ListCandidateApplicationsAction;
 import lapr4.jobs4u.app.common.ChangePasswordAction;
 import lapr4.jobs4u.app.common.LogoutAction;
 import eapli.framework.actions.Actions;
@@ -18,9 +19,10 @@ class MainMenu extends CandidateUI {
     private static final String SEPARATOR_LABEL = "--------------";
     private static final String RETURN_LABEL = "Return ";
     private static final int EXIT_OPTION = 0;
-    private static final int MENU_OPTION = 1;
+    private static final int MENU_OPTION = 0;
     private static final int CHANGE_PASSWORD_OPTION = 1;
     private static final int LOGOUT_OPTION = 2;
+    private static final int LIST_APP_REQ = 1;
 
     @Override
     public boolean show() {
@@ -42,6 +44,7 @@ class MainMenu extends CandidateUI {
         final Menu mainMenu = new Menu();
         final Menu usersMenu = optionsMenu();
         mainMenu.addItem(MenuItem.separator(SEPARATOR_LABEL));
+        mainMenu.addItem(LIST_APP_REQ, "List my Applications", new ListCandidateApplicationsAction());
         mainMenu.addSubMenu(MENU_OPTION, usersMenu);
 
         return mainMenu;

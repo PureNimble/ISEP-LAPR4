@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.StreamSupport;
 
 /**
  * @author 2DI2
@@ -21,36 +22,36 @@ import java.util.List;
 public class ListAppReqMessage extends Message {
 
     public ListAppReqMessage(final ProtocolMessage protocolMessage, final DataOutputStream output, final Socket socket,
-                             final EventListener eventListener) {
+            final EventListener eventListener) {
         super(protocolMessage, output, socket, eventListener);
     }
 
     @Override
     public void handle() throws IOException {
-        ListCandidateApplicationsService listCandidateApplicationsService = new ListCandidateApplicationsService(PersistenceContext.repositories().applications(), PersistenceContext.repositories().candidates());
+
+        final ListCandidateApplicationsService listCandidateApplicationsService = new ListCandidateApplicationsService(
+                PersistenceContext.repositories().applications(), PersistenceContext.repositories().candidates());
         final SystemUser user = eventListener.user(socket);
 
-        if (!user.hasAny(BaseRoles.CANDIDATE)){
+        if (!user.hasAny(BaseRoles.CANDIDATE)) {
             new ErrMessage(new ProtocolMessage((byte) 1, MessageCode.ERR, "Invalid Authentication"), output, socket,
                     eventListener).handle();
             return;
         }
 
-        Iterable<ApplicationDTO> applications = listCandidateApplicationsService.findApplicationsFromCandidate(user.email());
+        final Iterable<ApplicationDTO> applications = listCandidateApplicationsService
+                        .findApplicationsFromCandidate(user.email());
+        
+        final int size = (int) StreamSupport.stream(applications.spliterator(), false).count();
 
-        int size = 0;
-        for (ApplicationDTO ignored : applications) {
-            size++;
+        List<String> data = new ArrayList<>();
+        data.add(Integer.toString(size));
+        for (final ApplicationDTO application : applications) {
+            data.add(application.getApplicationCode());
+            data.add(application.getStatus());
+            data.add(listCandidateApplicationsService.numApplicants(application).toString());
         }
 
-        List<byte[]> dataChunks = new ArrayList<>();
-        dataChunks.add(Integer.toString(size).getBytes());
-        for (ApplicationDTO application : applications) {
-            dataChunks.add(application.getApplicationCode().getBytes());
-            dataChunks.add(application.getStatus().getBytes());
-            dataChunks.add(listCandidateApplicationsService.numApplicants(application).toString().getBytes());
-        }
-
-        send(new ProtocolMessage((byte) 1, MessageCode.LISTAPPRES, dataChunks.toArray(new byte[dataChunks.size()][])));
+        send(new ProtocolMessage((byte) 1, MessageCode.LISTAPPRES, data.toArray(new String[0])));
     }
 }

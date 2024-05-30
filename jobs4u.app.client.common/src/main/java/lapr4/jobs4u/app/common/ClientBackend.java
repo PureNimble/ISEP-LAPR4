@@ -14,7 +14,7 @@ import lapr4.jobs4u.protocol.ProtocolMessage;
  */
 public class ClientBackend {
 
-    private final Logger logger = LogManager.getLogger(CredentialAuth.class);
+    private final Logger LOGGER = LogManager.getLogger(ClientBackend.class);
 
     private static ClientBackend instance;
     private MessageListener listener;
@@ -47,13 +47,13 @@ public class ClientBackend {
     public void connect(final String host, final int port) throws UnknownHostException, IOException {
 
         tcpClient.connect(host, port);
-        logger.info("Sending a test message to the server");
+        LOGGER.info("Sending a test message to the server");
         final ProtocolMessage response;
         try {
             response = tcpClient.sendRecv(new ProtocolMessage((byte) 1, MessageCode.COMMTEST));
-            logger.info("Received response from server: " + response.toString());
+            LOGGER.info("Received response from server: " + response.toString());
         } catch (ClassNotFoundException | IOException e) {
-            logger.error("Error sending test message to server: " + e.getMessage());
+            LOGGER.error("Error sending test message to server: " + e.getMessage());
         }
 
         listener = new MessageListener(tcpClient);
@@ -66,7 +66,7 @@ public class ClientBackend {
         final ProtocolMessage response = tcpClient.sendRecv(new ProtocolMessage((byte) 1, MessageCode.DISCONN));
         if (response.code() == MessageCode.ACK) {
             tcpClient.disconnect();
-            logger.info(response.toString());
+            LOGGER.info(response.toString());
         }
     }
 }

@@ -22,5 +22,5 @@ public class JobOpeningDTO {
     private String customerCode;
     private String customerName;
     private String jobDescription;
-    
+    private String activeSince;
 }

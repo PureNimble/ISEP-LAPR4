@@ -117,8 +117,9 @@ public class EvaluateRequirementsService {
                     .entrySet()) {
                 final QuestionBody questionBody = entry.getKey();
                 final List<Answer> answers = entry.getValue();
+                final Optional<RequirementsQuestion> question = requirementsQuestionRepository.findQuestionByBody(questionBody);
                 final Answer candidateAnswer = candidateAnswers.get(questionBody);
-                individualPair = Pair.of("NOT MET", candidateAnswer.toString());
+                individualPair = Pair.of("NOT MET", question.get().minimumRequirement().toString());
 
                 for (final Answer answer : answers) {
                     final Answer possibleAnswer = answer.answer();

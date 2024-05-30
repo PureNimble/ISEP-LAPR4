@@ -1,7 +1,10 @@
 package lapr4.jobs4u.persistence.impl.inmemory;
 
+import java.util.Optional;
+
 import eapli.framework.infrastructure.repositories.impl.inmemory.InMemoryDomainRepository;
 import lapr4.jobs4u.integration.questions.importer.domain.QuestionImporterPlugin;
+import lapr4.jobs4u.questionmanagement.domain.QuestionBody;
 import lapr4.jobs4u.questionmanagement.domain.RequirementsQuestion;
 import lapr4.jobs4u.questionmanagement.repositories.RequirementsQuestionRepository;
 
@@ -23,5 +26,10 @@ public class InMemoryRequirementsQuestionRepository extends InMemoryDomainReposi
     @Override
     public Iterable<RequirementsQuestion> findQuestionsByPlugin(final QuestionImporterPlugin plugin) {
         return match(e -> e.importerPlugin().equals(plugin));
+    }
+
+    @Override
+    public Optional<RequirementsQuestion> findQuestionByBody(QuestionBody questionBody) {
+        return findQuestionByBody(questionBody);
     }
 }

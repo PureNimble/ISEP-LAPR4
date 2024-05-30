@@ -53,5 +53,19 @@ public class EvaluateRequirementsAnswersBaseVisitor<T> extends AbstractParseTree
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
+	@Override public T visitResult(EvaluateRequirementsAnswersParser.ResultContext ctx) { return visitChildren(ctx); }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
+	@Override public T visitJustification(EvaluateRequirementsAnswersParser.JustificationContext ctx) { return visitChildren(ctx); }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
 	@Override public T visitContent(EvaluateRequirementsAnswersParser.ContentContext ctx) { return visitChildren(ctx); }
 }

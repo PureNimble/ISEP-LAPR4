@@ -58,6 +58,26 @@ public interface EvaluateRequirementsAnswersListener extends ParseTreeListener {
 	 */
 	void exitQuestion(EvaluateRequirementsAnswersParser.QuestionContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link EvaluateRequirementsAnswersParser#result}.
+	 * @param ctx the parse tree
+	 */
+	void enterResult(EvaluateRequirementsAnswersParser.ResultContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link EvaluateRequirementsAnswersParser#result}.
+	 * @param ctx the parse tree
+	 */
+	void exitResult(EvaluateRequirementsAnswersParser.ResultContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link EvaluateRequirementsAnswersParser#justification}.
+	 * @param ctx the parse tree
+	 */
+	void enterJustification(EvaluateRequirementsAnswersParser.JustificationContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link EvaluateRequirementsAnswersParser#justification}.
+	 * @param ctx the parse tree
+	 */
+	void exitJustification(EvaluateRequirementsAnswersParser.JustificationContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link EvaluateRequirementsAnswersParser#content}.
 	 * @param ctx the parse tree
 	 */

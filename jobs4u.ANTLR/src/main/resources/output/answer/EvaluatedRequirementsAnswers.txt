@@ -1,51 +1,53 @@
 TITLE: Software Engineer Requirements
 NAME: Paulo
 EMAIL: micro@email.com
-RESULT:
+RESULT: REJECTED
 
 # How long have you been involved in web development? (1 | 2 | 3 | 4 | 5+ years)
 ANSWER: 5+ years
+REQUIREMENT RESULT: MET
 
 # Can you list the programming languages you've utilized in your projects? (Ruby | PHP | TypeScript | Go)
 ANSWER: RubyPlus
-JUSTIFICATION:
+REQUIREMENT RESULT: NOT MET
+JUSTIFICATION: RubyPlus
 
 # Have you ever developed a mobile app? (Yes | No)
 ANSWER: Yes
-JUSTIFICATION:
+REQUIREMENT RESULT: MET
 
 # Could you tell us which databases you've worked with in your projects? (Oracle | Firebase | MariaDB | CouchDB)
 ANSWER: Oracle, Firebase
-JUSTIFICATION:
+REQUIREMENT RESULT: MET
 
 # Which version control systems are you familiar with? (Perforce | Bazaar | CVS)
 ANSWER: Perforce
-JUSTIFICATION:
+REQUIREMENT RESULT: MET
 
 # Have you ever administered a database? (Yes | No)
 ANSWER: Yes
-JUSTIFICATION:
+REQUIREMENT RESULT: MET
 
 # Could you tell us which cloud platforms you've used in your projects? (IBM Cloud | DigitalOcean | Heroku)
 ANSWER: IBM Cloud, Heroku
-JUSTIFICATION:
+REQUIREMENT RESULT: MET
 
 # Are you familiar with any of these containerization platforms? (LXC | rkt | Podman)
 ANSWER: LXC, Podman
-JUSTIFICATION:
+REQUIREMENT RESULT: MET
 
 # Do you have any experience in DevOps? (Yes | No)
 ANSWER: Yes
-JUSTIFICATION:
+REQUIREMENT RESULT: MET
 
 # Which CI/CD tools have you used in your projects? (GitLab CI | Bamboo | TeamCity)
 ANSWER: GitLab CI, Bamboo
-JUSTIFICATION:
+REQUIREMENT RESULT: MET
 
 # Could you tell us which testing frameworks you've used in your projects? (Mocha | Jest | PyTest | RSpec)
 ANSWER: Mocha, Jest
-JUSTIFICATION:
+REQUIREMENT RESULT: MET
 
 # Which programming paradigms have you used in your projects? (Event-driven | Logic | Aspect-oriented)
 ANSWER: Event-driven, Aspect-oriented
-JUSTIFICATION:
+REQUIREMENT RESULT: MET

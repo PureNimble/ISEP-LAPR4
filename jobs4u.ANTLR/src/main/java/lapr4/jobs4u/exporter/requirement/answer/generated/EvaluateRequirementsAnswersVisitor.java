@@ -41,6 +41,18 @@ public interface EvaluateRequirementsAnswersVisitor<T> extends ParseTreeVisitor<
 	 */
 	T visitQuestion(EvaluateRequirementsAnswersParser.QuestionContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link EvaluateRequirementsAnswersParser#result}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitResult(EvaluateRequirementsAnswersParser.ResultContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link EvaluateRequirementsAnswersParser#justification}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitJustification(EvaluateRequirementsAnswersParser.JustificationContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link EvaluateRequirementsAnswersParser#content}.
 	 * @param ctx the parse tree
 	 * @return the visitor result

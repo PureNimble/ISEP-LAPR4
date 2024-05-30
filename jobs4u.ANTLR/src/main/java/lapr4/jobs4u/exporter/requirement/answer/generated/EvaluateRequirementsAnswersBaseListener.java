@@ -77,6 +77,30 @@ public class EvaluateRequirementsAnswersBaseListener implements EvaluateRequirem
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterResult(EvaluateRequirementsAnswersParser.ResultContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitResult(EvaluateRequirementsAnswersParser.ResultContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterJustification(EvaluateRequirementsAnswersParser.JustificationContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitJustification(EvaluateRequirementsAnswersParser.JustificationContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterContent(EvaluateRequirementsAnswersParser.ContentContext ctx) { }
 	/**
 	 * {@inheritDoc}

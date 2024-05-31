@@ -36,7 +36,7 @@ public class JpaRequirementsQuestionRepository extends JpaAutoTxRepository<Requi
     }
 
     @Override
-    public Optional<RequirementsQuestion> findQuestionByBody(QuestionBody questionBody) {
+    public Optional<RequirementsQuestion> findQuestionByBody(final QuestionBody questionBody) {
         RequirementsQuestion question = createQuery("SELECT e FROM RequirementsQuestion e WHERE e.body=:questionBody", RequirementsQuestion.class)
                 .setParameter("questionBody", questionBody)
                 .getSingleResult();

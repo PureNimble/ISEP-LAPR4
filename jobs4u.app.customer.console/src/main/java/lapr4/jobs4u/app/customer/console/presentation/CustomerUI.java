@@ -13,7 +13,7 @@ public abstract class CustomerUI extends AbstractUI {
     public String headline() {
 
         final String email = ClientBackend.getInstance().credentialAuth().email();
-        return (email != null ? "Customer App [ @" + email + " ] " : "Customer App [ ==Anonymous== ]");
+        return (email != null ? "Customer App [ @" + email + " ] " : "Jobs4U - Customer App");
     }
 
     @Override

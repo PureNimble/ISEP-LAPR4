@@ -89,9 +89,8 @@ public class ListJobOpeningsUI extends AbstractListUI<JobOpeningDTO> {
             String var10001 = this.emptyMessage();
             var10000.println(var10001);
             return false;
-        } else {
-            (new ListWidget(this.listHeader(), elems, this.elementPrinter())).show();
         }
+        new ListWidget(this.listHeader(), elems, this.elementPrinter()).show();
         return true;
     }
 
@@ -115,7 +114,8 @@ public class ListJobOpeningsUI extends AbstractListUI<JobOpeningDTO> {
     }
 
     protected Iterable<JobOpeningDTO> jobOpeningsWithRecruitmentProcess(final boolean hasRecruitmentProcess) {
-        return listJobOpeningsController.getIntersection(listJobOpeningsController.hasRecruitmentProcess(hasRecruitmentProcess));
+        return listJobOpeningsController
+                .getIntersection(listJobOpeningsController.hasRecruitmentProcess(hasRecruitmentProcess));
     }
 
     protected Iterable<JobOpeningDTO> jobOpeningsByDate(final Calendar initialDate, final Calendar finalDate) {

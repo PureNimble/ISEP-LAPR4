@@ -34,7 +34,7 @@ public class FrontMenu extends AbstractUI {
         menu.addItem(LOGIN_OPTION, "Login",
                 new ChainedAction(new LoginUI(new AuthenticationCredentialHandler())::show, () -> {
                     new MainMenu().mainLoop();
-                    return true;
+                    return false;
                 }));
         menu.addItem(EXIT_OPTION, "Exit", new ExitWithMessageAction("Goodbye!"));
     

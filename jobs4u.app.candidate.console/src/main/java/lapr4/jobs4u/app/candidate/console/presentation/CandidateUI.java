@@ -13,12 +13,12 @@ public abstract class CandidateUI extends AbstractUI {
     public String headline() {
 
         final String email = ClientBackend.getInstance().credentialAuth().email();
-        return (email != null ? "Candidate App [ @" + email + " ] " : "Candidate App [ ==Anonymous== ]");
+        return (email != null ? "Candidate App [ @" + email + " ] " : "");
     }
 
     @Override
     protected void drawFormTitle(final String title) {
-        final String titleBorder = BORDER.substring(0, 2) + " " + title;
+        final String titleBorder = BORDER.substring(0, 2) + "Jobs4U - Candidate App" + title;
         System.out.println(titleBorder);
         drawFormBorder();
     }

@@ -37,13 +37,17 @@ public class FrontMenu extends AbstractUI {
         menu.addItem(LOGIN_OPTION, "Login", new ChainedAction(new LoginUI(clientBackend.credentialAuth().AUTHENTICATE,
                 BaseRoles.CANDIDATE)::show, () -> {
                     new MainMenu().mainLoop();
-                    return true;
+                    return false;
                 }));
         menu.addItem(EXIT_OPTION, "Exit",
                 new ChainedAction(new DisconnectAction(), new ExitWithMessageAction("Goodbye!")));
 
-        final MenuRenderer renderer = new VerticalMenuRenderer(menu, MenuItemRenderer.DEFAULT);
-        return renderer.render();
+        boolean loginSuccessful;
+        do {
+            final MenuRenderer renderer = new VerticalMenuRenderer(menu, MenuItemRenderer.DEFAULT);
+            loginSuccessful = renderer.render();
+        } while (!loginSuccessful);
+        return loginSuccessful;
     }
 
     @Override

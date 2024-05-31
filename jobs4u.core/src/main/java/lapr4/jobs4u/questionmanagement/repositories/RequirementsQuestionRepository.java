@@ -14,5 +14,5 @@ public interface RequirementsQuestionRepository extends DomainRepository<Long, R
 
 	Iterable<RequirementsQuestion> findAll();
 	Iterable<RequirementsQuestion> findQuestionsByPlugin(final QuestionImporterPlugin plugin);
-    Optional<RequirementsQuestion> findQuestionByBody(QuestionBody questionBody);
+    Optional<RequirementsQuestion> findQuestionByBody(final QuestionBody questionBody);
 }

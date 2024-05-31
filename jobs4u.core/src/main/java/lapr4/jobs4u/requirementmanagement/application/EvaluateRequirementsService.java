@@ -164,12 +164,10 @@ public class EvaluateRequirementsService {
             }
 
             if (line.contains("EMAIL:")) {
-                String result = resultPair.getFirst();
+                final String result = resultPair.getFirst();
                 content.append(String.format("RESULT: %s", result)).append("\n");
             }
         }
-
-        System.out.println(content.toString());
 
         final CodePointCharStream charStream = CharStreams.fromString(content.toString());
         final EvaluateRequirementsAnswersLexer lexer = new EvaluateRequirementsAnswersLexer(charStream);

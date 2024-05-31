@@ -29,7 +29,7 @@ public class InMemoryRequirementsQuestionRepository extends InMemoryDomainReposi
     }
 
     @Override
-    public Optional<RequirementsQuestion> findQuestionByBody(QuestionBody questionBody) {
+    public Optional<RequirementsQuestion> findQuestionByBody(final QuestionBody questionBody) {
         return findQuestionByBody(questionBody);
     }
 }

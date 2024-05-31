@@ -26,14 +26,14 @@ class JpaRequirementRepository extends JpaAutoTxRepository<Requirement, Long, Lo
     }
 
     @Override
-    public Optional<Requirement> findRequirement(Application application) {
+    public Optional<Requirement> findRequirement(final Application application) {
         final Map<String, Object> params = new HashMap<>();
         params.put("application", application);
         return matchOne("e.application=:application", params);
     }
 
     @Override
-    public Iterable<Requirement> findRequirementsByJobOpening(JobOpening jobOpening) {
+    public Iterable<Requirement> findRequirementsByJobOpening(final JobOpening jobOpening) {
         final Map<String, Object> params = new HashMap<>();
         params.put("jobOpening", jobOpening);
         return match("e.application.jobOpening=:jobOpening", params);

@@ -44,4 +44,9 @@ public class InMemoryApplicationRepository extends InMemoryDomainRepository<Appl
     public Iterable<Application> findApplicationWithInterviewRecord(JobOpening jobOpening) {
         return match(e -> e.jobOpening().equals(jobOpening));
     }
+
+    @Override
+    public Iterable<Application> findApplicationsWithResult(JobOpening jobOpening) {
+        return match(e -> e.jobOpening().equals(jobOpening) && !e.result().outcome().toString().equals("PENDING"));
+    }
 }

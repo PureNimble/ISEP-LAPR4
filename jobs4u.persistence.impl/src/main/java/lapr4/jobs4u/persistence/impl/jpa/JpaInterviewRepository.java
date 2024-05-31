@@ -5,6 +5,7 @@ import lapr4.jobs4u.applicationmanagement.domain.Application;
 import lapr4.jobs4u.interviewmanagement.domain.Interview;
 import lapr4.jobs4u.interviewmanagement.repositories.InterviewRepository;
 import lapr4.jobs4u.jobopeningmanagement.domain.JobOpening;
+import lapr4.jobs4u.requirementmanagement.domain.Requirement;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -12,6 +13,7 @@ import java.util.Optional;
 
 import eapli.framework.domain.repositories.TransactionalContext;
 import eapli.framework.infrastructure.repositories.impl.jpa.JpaAutoTxRepository;
+import jakarta.persistence.Query;
 
 /**
  * @author 2DI2
@@ -46,6 +48,14 @@ class JpaInterviewRepository extends JpaAutoTxRepository<Interview, Long, Long> 
         final Map<String, Object> params = new HashMap<>();
         params.put("jobOpening", jobOpening);
         return match("e.application.jobOpening=:jobOpening ORDER BY e.grade " + order, params);
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public Iterable<Interview> findEvaluatedInterviewsByJobOpening(JobOpening jobOpening) {
+        Query query = createQuery("SELECT e FROM Interview e WHERE e.application.jobOpening=:jobOpening AND e.grade IS NOT NULL", Requirement.class);
+        query.setParameter("jobOpening", jobOpening);
+        return query.getResultList();
     }
 
 }

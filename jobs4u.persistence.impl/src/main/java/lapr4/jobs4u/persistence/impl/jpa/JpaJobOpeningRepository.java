@@ -124,7 +124,7 @@ public class JpaJobOpeningRepository extends JpaAutoTxRepository<JobOpening, Job
     public Iterable<JobOpening> filterWithAvailablePhaseForInterviewEvaluation(final Username username) {
         Query query = createQuery(
                 "SELECT DISTINCT e FROM JobOpening e, RecruitmentProcess r, Application a, Interview i WHERE e.customer.manager.username = :name "
-                        + "AND e = r.jobOpening AND (r.analysisPhase.state = :openPhase) AND a.jobOpening = e AND i.application = a",
+                        + "AND e = r.jobOpening AND (r.interviewPhase.state = :openPhase) AND a.jobOpening = e AND i.application = a",
                 JobOpening.class);
         query.setParameter("name", username);
         query.setParameter("openPhase", State.valueOf(ActivityState.OPEN.toString()));
@@ -136,7 +136,7 @@ public class JpaJobOpeningRepository extends JpaAutoTxRepository<JobOpening, Job
     public Iterable<JobOpening> filterWithAvailablePhaseForRequirementEvaluation(final Username username) {
         Query query = createQuery(
                 "SELECT DISTINCT e FROM JobOpening e, RecruitmentProcess rp, Application a, Requirement r WHERE e.customer.manager.username = :name "
-                        + "AND e = rp.jobOpening AND (rp.analysisPhase.state = :openPhase) AND a.jobOpening = e AND r.application = a",
+                        + "AND e = rp.jobOpening AND (rp.screeningPhase.state = :openPhase OR rp.applicationPhase.state = :openPhase) AND a.jobOpening = e AND r.application = a",
                 JobOpening.class);
         query.setParameter("name", username);
         query.setParameter("openPhase", State.valueOf(ActivityState.OPEN.toString()));

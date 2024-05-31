@@ -65,4 +65,11 @@ class JpaApplicationRepository extends JpaAutoTxRepository<Application, Applicat
         params.put("candidate", candidate);
         return match("e.candidate=:candidate", params);
     }
+
+    @Override
+    public Iterable<Application> findApplicationsWithResult(JobOpening jobOpening) {
+        return createQuery(
+                "SELECT a FROM Application a WHERE a.jobOpening = :jobOpening AND a.result.outcome.outComeValue NOT LIKE 'PENDING'",
+                Application.class).setParameter("jobOpening", jobOpening).getResultList();
+    }
 }

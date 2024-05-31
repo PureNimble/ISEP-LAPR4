@@ -14,5 +14,6 @@ public interface RequirementRepository extends DomainRepository<Long, Requiremen
 
     Optional<Requirement> findRequirement(final Application application);
     Iterable<Requirement> findRequirementsByJobOpening(JobOpening jobOpening);
+    Iterable<Requirement> findEvaluatedRequirementsByJobOpening(JobOpening jobOpening);
 
 }

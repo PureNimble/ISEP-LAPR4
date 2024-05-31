@@ -131,7 +131,7 @@ public class JobOpening implements AggregateRoot<JobReference>, DTOable<JobOpeni
         } else {
             if (recruitmentProcessPhase.equals("ApplicationPhase")) {
                 this.jobOpeningState = JobOpeningState.valueOf(TypesOfJobOpeningStates.PENDING.toString());
-            } else if (recruitmentProcessPhase.equals("ResultsPhase")) {
+            } else if (recruitmentProcessPhase.equals("ResultPhase")) {
                 this.jobOpeningState = JobOpeningState.valueOf(TypesOfJobOpeningStates.CLOSED.toString());
             }
         }

@@ -15,4 +15,5 @@ public interface InterviewRepository extends DomainRepository<Long, Interview> {
     Optional<Interview> findInterviewByApplication(final Application application);
     Iterable<Interview> findInterviewsByJobOpening(final JobOpening jobOpening);
     Iterable<Interview> sortedInterviewsByJobOpening(final JobOpening jobOpening, final boolean ascending);
+    Iterable<Interview> findEvaluatedInterviewsByJobOpening(final JobOpening jobOpening);
 }

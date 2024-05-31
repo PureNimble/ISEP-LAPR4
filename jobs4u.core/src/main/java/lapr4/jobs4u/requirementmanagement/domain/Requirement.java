@@ -3,7 +3,6 @@ package lapr4.jobs4u.requirementmanagement.domain;
 import eapli.framework.domain.model.AggregateRoot;
 import eapli.framework.domain.model.DomainEntities;
 import eapli.framework.validations.Preconditions;
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -11,12 +10,12 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.Version;
 import lapr4.jobs4u.applicationmanagement.domain.Application;
 import lapr4.jobs4u.applicationmanagement.domain.File;
-import lapr4.jobs4u.applicationmanagement.domain.Result;
+import lapr4.jobs4u.applicationmanagement.domain.Justification;
+import lapr4.jobs4u.applicationmanagement.domain.Outcome;
 
 /**
  * @author 2DI2
@@ -41,33 +40,47 @@ public class Requirement implements AggregateRoot<Long> {
     @Column(nullable = true)
     private File file;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    private Result result;
+    @Column(nullable = false)
+    private Outcome outcome;
 
-    protected Requirement(final Application application, Result result) {
+    @Column(nullable = true)
+    private Justification justification;
+
+
+    protected Requirement(final Application application, final Outcome outcome, final Justification justification) {
         Preconditions.noneNull(new Object[] { application });
         this.application = application;
-        this.result = result;
+        this.outcome = outcome;
+        this.justification = justification;
     }
 
     protected Requirement() {
         // for ORM only
     }
 
-    public static Requirement valueOf(final Application application, final Result result) {
-        return new Requirement(application, result);
+    public static Requirement valueOf(final Application application, final Outcome outcome, final Justification justification) {
+        return new Requirement(application, outcome, justification);
     }
 
     public void addFile(final File file) {
         this.file = file;
     }
 
-    public void addResult(String outcome) {
-        this.result.addOutcome(outcome);
+    public void addResult(final Outcome outcome){
+        this.outcome = outcome;
     }
 
-    public void addResult(String outcome, String justification) {
-        this.result.addOutcome(outcome, justification);
+    public void addResult(final Outcome outcome, final Justification justification) {
+        this.outcome = outcome;
+        this.justification = justification;
+    }
+
+    public Outcome outcome() {
+        return this.outcome;
+    }
+
+    public Justification justification() {
+        return this.justification;
     }
 
     public Application application() {

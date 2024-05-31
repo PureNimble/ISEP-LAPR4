@@ -111,6 +111,10 @@ public class Application implements AggregateRoot<ApplicationCode>, Runnable {
         return this.file;
     }
 
+    public Result result() {
+        return this.result;
+    }
+
     public ApplicationDTO toDTO() {
         return new ApplicationDTO(applicationCode.toString(), candidate.toString(), result.outcome.toString());
     }

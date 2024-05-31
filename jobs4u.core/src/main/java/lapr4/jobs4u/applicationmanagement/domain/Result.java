@@ -63,6 +63,14 @@ public class Result implements DomainEntity<Long> {
         return identity();
     }
 
+    public Outcome outcome() {
+        return this.outcome;
+    }
+
+    public Justification justification() {
+        return this.justification;
+    }
+
     public void addOutcome(String outcome, String justification) {
         Preconditions.nonEmpty(outcome, justification);
         this.outcome = new Outcome(outcome);

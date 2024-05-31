@@ -3,7 +3,9 @@ package lapr4.jobs4u.requirementmanagement.application;
 import java.util.Optional;
 
 import eapli.framework.application.UseCaseController;
+import eapli.framework.domain.repositories.TransactionalContext;
 import eapli.framework.infrastructure.authz.application.AuthorizationService;
+import lapr4.jobs4u.applicationmanagement.repositories.ApplicationRepository;
 import lapr4.jobs4u.jobopeningmanagement.domain.JobOpening;
 import lapr4.jobs4u.jobopeningmanagement.repositories.JobOpeningRequirementRepository;
 import lapr4.jobs4u.questionmanagement.repositories.RequirementsQuestionRepository;
@@ -25,9 +27,11 @@ public class EvaluateRequirementsController {
             final RecruitmentProcessRepository recruitmentProcessRepository,
             final JobOpeningRequirementRepository jobOpeningRequirementRepository,
             final RequirementRepository RequirementRepository,
+            final ApplicationRepository applicationRepository,
+            final TransactionalContext ctx,
             final AuthorizationService authz) {
         this.recruitmentProcessRepository = recruitmentProcessRepository;
-        this.evaluateRequirementsService = new EvaluateRequirementsService(RequirementRepository, jobOpeningRequirementRepository, RequirementsQuestionRepository);
+        this.evaluateRequirementsService = new EvaluateRequirementsService(RequirementRepository, jobOpeningRequirementRepository, RequirementsQuestionRepository, applicationRepository, ctx);
         this.authz = authz;
     }
 

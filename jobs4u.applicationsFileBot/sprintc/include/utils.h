@@ -13,7 +13,7 @@ void removeSemaphore(char *name);
 // -----------------------------
 // Shared memory related functions
 // -----------------------------
-CircularBuffer *createSharedMemory(char *name, int *fd);
+CircularBuffer *createSharedMemory(char *name, int *fd, Config *config);
 void removeSharedMemory(char *name);
 void close_shared_memory(int fd, CircularBuffer *shm);
 // ----------------------------------

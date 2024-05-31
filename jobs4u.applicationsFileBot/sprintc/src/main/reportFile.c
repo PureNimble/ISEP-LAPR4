@@ -20,22 +20,22 @@
  *
  * @param config A pointer to the Config struct containing the configuration settings.
  */
-void reportFile(Config *config, CircularBuffer *shared_memory)
+void reportFile(Config *config, CircularBuffer *shared_memory, sem_t *sem_sharedMemory_mutex)
 {
-    CandidateInfo *files = NULL;
-    int numberOfCandidates = 0;
-    while (!isEmpty(shared_memory))
-    {
-        CandidateInfo file = readFromBuffer(shared_memory);
-        files = createRealloc(files, (numberOfCandidates + 1) * sizeof(CandidateInfo));
-        files[numberOfCandidates] = file;
-        numberOfCandidates++;
-    }
+    sem_wait(sem_sharedMemory_mutex); // acess shared memory
+    CandidateInfo candidateInfo = checkFinishedFiles(shared_memory);
+    shared_memory->numberOfCandidates--;
+    sem_post(sem_sharedMemory_mutex); // release shared memory
 
+    if (candidateInfo.candidateID == -1)
+    {
+        return;
+    }
     char buffer[3000];
     sprintf(buffer, "%sreport.txt", config->outputPath);
 
-    files = checkIfCandidateFilesExist(files, &numberOfCandidates, buffer);
+    if (checkIfCandidateFileExists(candidateInfo, buffer))
+        return;
 
     FILE *file = fopen(buffer, "a");
     if (file == NULL)
@@ -43,64 +43,41 @@ void reportFile(Config *config, CircularBuffer *shared_memory)
         errorMessages("Failed to create file.\n");
         exit(EXIT_FAILURE);
     }
-    for (int i = 0; i < numberOfCandidates; i++)
+    // Print Info
+    fprintf(file, "Candidate ID: %d\n", candidateInfo.candidateID);
+    fprintf(file, "Job Offer: %s\n", candidateInfo.jobOffer_dir);
+    fprintf(file, "\tFiles:\n");
+    for (int j = 0; j < candidateInfo.numFiles; j++)
     {
-        if (files[i].numFiles == 0)
-            continue;
-
-        fprintf(file, "Candidate ID: %d\n", files[i].candidateID);
-        fprintf(file, "Job Offer: %s\n", files[i].jobOffer_dir);
-        fprintf(file, "\tFiles:\n");
-        for (int j = 0; j < files[i].numFiles; j++)
-        {
-            fprintf(file, "\t\t%s\n", files[i].files[j]);
-        }
-        fprintf(file, "\n");
+        fprintf(file, "\t\t%s\n", candidateInfo.files[j]);
     }
+    fprintf(file, "\n");
+
     fclose(file);
-    free(files);
-    printf("-> Report file has been generated\n\n");
+    printf("-> Report file has been generated for candidate:%d\n\n", candidateInfo.candidateID);
 }
 
-CandidateInfo *checkIfCandidateFilesExist(CandidateInfo *files, int *numberOfCandidates, char *buffer)
+int checkIfCandidateFileExists(CandidateInfo candidate, char *buffer)
 {
     FILE *file = fopen(buffer, "r");
     if (file == NULL)
-    {
-        CandidateInfo *newFiles = malloc(*numberOfCandidates * sizeof(CandidateInfo));
-        memcpy(newFiles, files, *numberOfCandidates * sizeof(CandidateInfo));
-        free(files);
-        return newFiles;
-    }
+        return 0;
 
-    int validIndex = 0;
     int id;
-    char jobOffer[256];
-    CandidateInfo *newFiles = malloc(*numberOfCandidates * sizeof(CandidateInfo));
+    char line[500];
 
-    for (int i = 0; i < *numberOfCandidates; i++)
+    while (fgets(line, sizeof(line), file) != NULL)
     {
-        rewind(file); // Go back to the start of the file for each candidate
-        int found = 0;
-        while (fscanf(file, "Candidate ID: %d\nJob Offer: %s\n", &id, jobOffer) == 2)
+        if (sscanf(line, "Candidate ID: %d", &id) == 1)
         {
-            if (files[i].candidateID == id && strcmp(files[i].jobOffer_dir, jobOffer) == 0)
+            if (candidate.candidateID == id)
             {
-                found = 1;
-                break;
+                printf("-> Candidate id:%d already exists in the report file.\n", id);
+                return 1;
             }
         }
-
-        if (found) // If no match was found in the file
-        {
-            newFiles[validIndex++] = files[i];
-        }
     }
+
     fclose(file);
-
-    free(files);                                                      // Free the old files array
-    newFiles = realloc(newFiles, validIndex * sizeof(CandidateInfo)); // Resize the newFiles array
-    *numberOfCandidates = validIndex;
-
-    return newFiles;
+    return 0;
 }

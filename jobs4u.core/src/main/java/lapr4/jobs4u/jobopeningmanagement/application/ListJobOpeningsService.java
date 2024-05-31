@@ -130,4 +130,14 @@ public class ListJobOpeningsService {
         return jobOpeningsDTO;
     }
 
+    public Iterable<JobOpeningDTO> filterWithEvaluatedInterviews() {
+        final SystemUser manager = authz.loggedinUserWithPermissions(BaseRoles.CUSTOMER_MANAGER, BaseRoles.POWERUSER)
+                .orElseThrow(IllegalStateException::new);
+        final Iterable<JobOpening> jobOpenings = this.jobOpeningRepository.filterWithEvaluatedInterviews(manager.username());
+
+        List<JobOpeningDTO> jobOpeningsDTO = new ArrayList<>();
+        jobOpenings.forEach(jobOpening -> jobOpeningsDTO.add(jobOpening.toDTO()));
+        return jobOpeningsDTO;
+    }
+
 }

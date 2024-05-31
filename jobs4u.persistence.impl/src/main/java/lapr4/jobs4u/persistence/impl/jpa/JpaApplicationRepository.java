@@ -37,8 +37,8 @@ class JpaApplicationRepository extends JpaAutoTxRepository<Application, Applicat
     @Override
     public String findHighestSequenceForCustomer(final JobReference jobReference) {
 
-        Long count = createQuery(
-                "SELECT COUNT(jo) FROM Application jo WHERE jo.jobOpening.jobReference = :jobReference", Long.class)
+        final Long count = createQuery(
+                "SELECT COUNT(a) FROM Application a WHERE a.jobOpening.jobReference = :jobReference", Long.class)
                 .setParameter("jobReference", jobReference).getSingleResult()
                 + 1;
         return count.toString();
@@ -71,5 +71,12 @@ class JpaApplicationRepository extends JpaAutoTxRepository<Application, Applicat
         return createQuery(
                 "SELECT a FROM Application a WHERE a.jobOpening = :jobOpening AND a.result.outcome.outComeValue NOT LIKE 'PENDING'",
                 Application.class).setParameter("jobOpening", jobOpening).getResultList();
+    }
+
+    @Override
+    public Long numApplicationsForJobOpening(final JobOpening jobOpening) {
+        return createQuery(
+                "SELECT COUNT (a) FROM Application a WHERE a.jobOpening = :jobOpening",
+                Long.class).setParameter("jobOpening", jobOpening).getSingleResult();
     }
 }

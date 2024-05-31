@@ -12,7 +12,6 @@ import org.springframework.stereotype.Component;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.StreamSupport;
 
 /**
  * @author 2DI2
@@ -42,15 +41,11 @@ public class ListCandidateApplicationsService {
         }
     }
 
-    public Integer numApplicants(final ApplicationDTO applicationDTO) {
+    public Long numApplicants(final ApplicationDTO applicationDTO) {
         final Application selectedCandidate = applicationRepository
                 .ofIdentity(ApplicationCode.valueOf(applicationDTO.getApplicationCode()))
                 .orElseThrow(IllegalArgumentException::new);
-
-        final Iterable<Application> iterable = applicationRepository.findApplicationWithInterviewRecord(selectedCandidate.jobOpening());
-        final int size = (int) StreamSupport.stream(iterable.spliterator(), false).count();
-
-        return size;
+        return applicationRepository.numApplicationsForJobOpening(selectedCandidate.jobOpening());
     }
 
 }

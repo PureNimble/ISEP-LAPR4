@@ -103,8 +103,8 @@ public class ProtocolMessage {
     public Object[] dataAsObjects() throws IOException, ClassNotFoundException {
         Object[] objects = new Object[dataChunks.length];
         for (int i = 0; i < dataChunks.length; i++) {
-            ByteArrayInputStream bis = new ByteArrayInputStream(dataChunks[i]);
-            ObjectInputStream in = new ObjectInputStream(bis);
+            final ByteArrayInputStream bis = new ByteArrayInputStream(dataChunks[i]);
+            final ObjectInputStream in = new ObjectInputStream(bis);
             objects[i] = in.readObject();
             in.close();
         }

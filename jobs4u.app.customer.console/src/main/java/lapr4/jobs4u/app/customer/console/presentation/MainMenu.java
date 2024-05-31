@@ -5,7 +5,6 @@ import lapr4.jobs4u.app.common.ChangePasswordAction;
 import lapr4.jobs4u.app.common.ClientBackend;
 import lapr4.jobs4u.app.common.LogoutAction;
 import eapli.framework.actions.Actions;
-import eapli.framework.actions.ChainedAction;
 import eapli.framework.actions.menu.Menu;
 import eapli.framework.actions.menu.MenuItem;
 import eapli.framework.presentation.console.menu.HorizontalMenuRenderer;
@@ -61,14 +60,13 @@ class MainMenu extends CustomerUI {
         mainMenu.addItem(MenuItem.separator(SEPARATOR_LABEL));
         mainMenu.addItem(LIST_JOB_REQ, "List my JobOpenings", new ListJobOpeningsAction());
         mainMenu.addSubMenu(MENU_OPTION, usersMenu);
-
         return true;
     }
 
     private Menu optionsMenu() {
         final Menu optionsMenu = new Menu("Options Menu");
         optionsMenu.addItem(CHANGE_PASSWORD_OPTION, "Change Password", new ChangePasswordAction());
-        optionsMenu.addItem(LOGOUT_OPTION, "Logout", new ChainedAction(new LogoutAction(), new FrontMenu()::show));
+        optionsMenu.addItem(LOGOUT_OPTION, "Logout", new LogoutAction());
         optionsMenu.addItem(EXIT_OPTION, RETURN_LABEL, Actions.SUCCESS);
         return optionsMenu;
     }

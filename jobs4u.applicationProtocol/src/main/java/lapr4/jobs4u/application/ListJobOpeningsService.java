@@ -1,7 +1,6 @@
 package lapr4.jobs4u.application;
 
 import eapli.framework.general.domain.model.EmailAddress;
-import lapr4.jobs4u.applicationmanagement.domain.Application;
 import lapr4.jobs4u.applicationmanagement.repositories.ApplicationRepository;
 import lapr4.jobs4u.customermanagement.domain.Customer;
 import lapr4.jobs4u.customermanagement.repositories.CustomerRepository;
@@ -14,7 +13,6 @@ import org.springframework.stereotype.Component;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.StreamSupport;
 
 /**
  * @author 2DI2
@@ -27,7 +25,7 @@ public class ListJobOpeningsService {
     private final ApplicationRepository applicationRepository;
 
     public ListJobOpeningsService(JobOpeningRepository jobOpeningRepository,
-                                  CustomerRepository customerRepository, ApplicationRepository applicationRepository) {
+            CustomerRepository customerRepository, ApplicationRepository applicationRepository) {
         this.jobOpeningRepository = jobOpeningRepository;
         this.customerRepository = customerRepository;
         this.applicationRepository = applicationRepository;
@@ -45,14 +43,11 @@ public class ListJobOpeningsService {
         }
     }
 
-    public Integer numApplicants(final JobOpeningDTO jobOpeningDTO) {
+    public Long numApplicants(final JobOpeningDTO jobOpeningDTO) {
         final JobOpening jobOpening = jobOpeningRepository
                 .ofIdentity(JobReference.valueOf(jobOpeningDTO.getJobReference()))
                 .orElseThrow(IllegalArgumentException::new);
-
-        final Iterable<Application> iterable = applicationRepository.findApplicationWithInterviewRecord(jobOpening);
-
-        return (int) StreamSupport.stream(iterable.spliterator(), false).count();
+        return applicationRepository.numApplicationsForJobOpening(jobOpening);
     }
 
 }

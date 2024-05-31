@@ -19,7 +19,7 @@ public class ListJobOpeningsUI extends AbstractUI {
 
     @Override
     public String headline() {
-        return "My Applications";
+        return "My Job Openings";
     }
 
     @Override
@@ -32,13 +32,15 @@ public class ListJobOpeningsUI extends AbstractUI {
                 LOGGER.info("Received response from server: " + response.toString());
                 String numJobOpenings = new String(response.datachunks()[0], StandardCharsets.US_ASCII);
                 System.out.println("Number of Job Openings: " + numJobOpenings);
-                System.out.printf("#  %-30s%-20s%-10s%-5s\n", "JOB REF.", "POSITION", "ACTIVE SINCE", "Nº APPLICANTS");
+                System.out.printf("#  %-15s%-30s%-15s%-15s\n", "JOB REF.", "POSITION", "ACTIVE SINCE", "NUM APPLICANTS");
+                int line = 1;
                 for (int i = 1; i < response.datachunks().length; i += 4) {
                     final String jobRef = new String(response.datachunks()[i], StandardCharsets.US_ASCII);
                     final String position = new String(response.datachunks()[i + 1], StandardCharsets.US_ASCII);
                     final String activeSince = new String(response.datachunks()[i + 2], StandardCharsets.US_ASCII);
                     final String nApplicants = new String(response.datachunks()[i + 3], StandardCharsets.US_ASCII);
-                    System.out.printf("#  %-30s%-20s%-10s%-5s\n", jobRef, position, activeSince, nApplicants);
+                    System.out.printf("%d  %-15s%-30s%-15s%-15s\n", line, jobRef, position, activeSince, nApplicants);
+                    line++;
                 }
             }
         } catch (final ClassNotFoundException | IOException e) {

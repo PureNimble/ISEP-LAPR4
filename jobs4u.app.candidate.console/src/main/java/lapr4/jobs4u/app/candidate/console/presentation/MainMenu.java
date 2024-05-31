@@ -5,6 +5,7 @@ import lapr4.jobs4u.app.candidate.console.presentation.authz.action.ListCandidat
 import lapr4.jobs4u.app.common.ChangePasswordAction;
 import lapr4.jobs4u.app.common.ClientBackend;
 import lapr4.jobs4u.app.common.LogoutAction;
+import eapli.framework.actions.Actions;
 import eapli.framework.actions.menu.Menu;
 import eapli.framework.actions.menu.MenuItem;
 import eapli.framework.presentation.console.menu.HorizontalMenuRenderer;
@@ -18,6 +19,8 @@ import eapli.framework.presentation.console.menu.VerticalMenuRenderer;
 class MainMenu extends CandidateUI {
 
     private static final String SEPARATOR_LABEL = "--------------";
+    private static final String RETURN_LABEL = "Return ";
+    private static final int EXIT_OPTION = 0;
     private static final int MENU_OPTION = 0;
     private static final int CHANGE_PASSWORD_OPTION = 1;
     private static final int LOGOUT_OPTION = 2;
@@ -64,6 +67,7 @@ class MainMenu extends CandidateUI {
         final Menu optionsMenu = new Menu("Options Menu");
         optionsMenu.addItem(CHANGE_PASSWORD_OPTION, "Change Password", new ChangePasswordAction());
         optionsMenu.addItem(LOGOUT_OPTION, "Logout", new LogoutAction());
+        optionsMenu.addItem(EXIT_OPTION, RETURN_LABEL, Actions.SUCCESS);
         return optionsMenu;
     }
 }

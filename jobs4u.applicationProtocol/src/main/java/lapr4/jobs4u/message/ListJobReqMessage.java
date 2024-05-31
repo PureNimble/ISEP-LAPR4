@@ -3,7 +3,6 @@ package lapr4.jobs4u.message;
 import eapli.framework.infrastructure.authz.domain.model.SystemUser;
 import lapr4.jobs4u.EventListener;
 import lapr4.jobs4u.application.ListJobOpeningsService;
-import lapr4.jobs4u.applicationmanagement.dto.ApplicationDTO;
 import lapr4.jobs4u.infrastructure.persistence.PersistenceContext;
 import lapr4.jobs4u.jobopeningmanagement.dto.JobOpeningDTO;
 import lapr4.jobs4u.protocol.MessageCode;

@@ -23,4 +23,6 @@ public interface ApplicationRepository extends DomainRepository<ApplicationCode,
 
     Iterable<Application> findApplicationWithInterviewRecord(final JobOpening jobOpening);
 
+    Long numApplicationsForJobOpening(final JobOpening jobOpening);
+
 }

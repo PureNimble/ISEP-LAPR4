@@ -40,7 +40,7 @@ public class EnableOrDisableBackofficeUserUI extends AbstractUI {
         selector.show();
         final SystemUser theBackofficeUser = selector.selectedElement();
         if (theBackofficeUser != null) {
-            if(Utils.confirm("Do you want to deactivate the user: " + theBackofficeUser.name() + "?")) {
+            if (Utils.confirm("Do you want to deactivate the user: " + theBackofficeUser.name() + "?")) {
                 try {
                     theController.enableOrDisableUser(theBackofficeUser, "disable");
                 } catch (final ConcurrencyException ex) {
@@ -59,7 +59,7 @@ public class EnableOrDisableBackofficeUserUI extends AbstractUI {
         selector.show();
         final SystemUser theBackofficeUser = selector.selectedElement();
         if (theBackofficeUser != null) {
-            if(Utils.confirm("Do you want to activate the user: " + theBackofficeUser.name() + "?")) {
+            if (Utils.confirm("Do you want to activate the user: " + theBackofficeUser.name() + "?")) {
                 try {
                     theController.enableOrDisableUser(theBackofficeUser, "enable");
                 } catch (final ConcurrencyException ex) {

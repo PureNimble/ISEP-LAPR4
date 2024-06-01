@@ -4,7 +4,7 @@
 
 ## 1. Context
 
-- `Description:`  As Operator, I want to enable/disable a candidate
+- `Description:` As Operator, I want to enable/disable a candidate
 
 - `Sprint:` This US makes part of the final stage of development of the integrative project of this semester, Sprint C.
 

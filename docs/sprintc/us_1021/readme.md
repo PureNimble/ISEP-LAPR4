@@ -1,14 +1,14 @@
 <img width=100% src="https://capsule-render.vercel.app/api?type=waving&height=120&color=4E1764"/>
 
-# US 2000a -  Register a candidate and create a corresponding user.
+# US 1021 - Display all the data of an application.
 
 ## 1. Context
 
-- `Description:`  As Operator, I want to register a candidate and create a corresponding user
+- `Description:` As Customer Manager, I want to display all the data of an application.
 
-- `Sprint:` This US makes part of the intermediary stage of development of the integrative project of this semester, Sprint B.
+- `Sprint:` This US makes part of the intermediary stage of development of the integrative project of this semester, Sprint C.
 
-- `Objectives:` The team must make sure that the system can list all applications for a job opening.
+- `Objectives:` The team must make sure that the system can display all the data of an application.
 
 ## 2. Requirements
 

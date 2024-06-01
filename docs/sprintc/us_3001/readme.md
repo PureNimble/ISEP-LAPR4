@@ -1,14 +1,14 @@
 <img width=100% src="https://capsule-render.vercel.app/api?type=waving&height=120&color=4E1764"/>
 
-# US 2000a -  Register a candidate and create a corresponding user.
+# US 3001 - Notification in application when the state of one of the applications changes.
 
 ## 1. Context
 
-- `Description:`  As Operator, I want to register a candidate and create a corresponding user
+- `Description:` As Candidate, I want to be notified in my application when the state of one of my applications changes.
 
-- `Sprint:` This US makes part of the intermediary stage of development of the integrative project of this semester, Sprint B.
+- `Sprint:` This US makes part of the intermediary stage of development of the integrative project of this semester, Sprint C.
 
-- `Objectives:` The team must make sure that the system can list all applications for a job opening.
+- `Objectives:` The team must make sure that the system notifies the candidate in the application when the state of one of the applications changes.
 
 ## 2. Requirements
 

@@ -1,6 +1,6 @@
 <img width=100% src="https://capsule-render.vercel.app/api?type=waving&height=120&color=4E1764"/>
 
-# US 1004 - Edit a Job Opening
+# US 1014 - Record the time and date for an interview
 
 ## 1. Requirements Engineering
 
@@ -40,10 +40,9 @@
 
 * **AC2:** The date and time must follow this format: `YYYY-MM-DD HH:MM`.
 
-
 ### 1.4. Found out Dependencies
 
-* No dependencies found.
+_N/A_
 
 ### 1.5 Input and Output Data
 

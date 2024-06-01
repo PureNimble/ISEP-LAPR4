@@ -4,11 +4,12 @@
 
 ## 1. Context
 
-- `Description:`  As Customer, I want to list all my job openings, including job reference, position, active since, number of applicants.
+- `Description:` As Customer, I want to list all my job openings, including job reference, position, active since, number of applicants.
 
 - `Sprint:` This US makes part of the final stage of development of the integrative project of this semester, Sprint C.
 
 - `Objectives:` The team must make sure that the customer app supports the listing of all job openings of a customer.
+
 ## 2. Requirements
 
 [_`Requirements Engineering`_](01.requirements-engineering/readme.md)

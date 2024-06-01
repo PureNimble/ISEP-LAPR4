@@ -7,6 +7,7 @@
 ### 1.1. User Story Description
 
 * As Operator, I want to upload a text file with the data fields (requirements ) of a candidate for its verification.
+
 ### 1.2. Customer Specifications and Clarifications
 
 **From the specifications document:**

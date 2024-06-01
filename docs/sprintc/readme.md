@@ -12,7 +12,13 @@ This folder contains all the functional requirements for your project, split by 
 
 [_`US 1013 - Rank the candidates for a job opening`_](us_1013/readme.md)
 
+[_`US 1014 - Record the time and date for an interview`_](us_1014/readme.md)
+
 [_`US 1015 - Execute the process of verification of requirements of applications for a job opening`_](us_1015/readme.md)
+
+[_`US 1016 - Notify candidates, by email, of the result of the verification process`_](us_1016/readme.md)
+
+[_`US 1017 - Upload a text file with the candidate responses for an interview`_](us_1017/readme.md)
 
 [_`US 1018 - Execute the process that evaluates (grades) the interviews for a job opening`_](us_1018/readme.md)
 
@@ -23,6 +29,8 @@ This folder contains all the functional requirements for your project, split by 
 [_`US 1021 - Display all the data of an application`_](us_1021/readme.md)
 
 [_`US 2000b - Enable/disable a candidate`_](us_2000b/readme.md)
+
+[_`US 2001b - Continuously process files produced by the Applications Email Bot`_](us_2001b/readme.md)
 
 [_`US 2004 - Upload a text file with the data fields (requirements ) of a candidate for its verification`_](us_2004/readme.md)
 

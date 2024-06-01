@@ -1,14 +1,14 @@
 <img width=100% src="https://capsule-render.vercel.app/api?type=waving&height=120&color=4E1764"/>
 
-# US 2000a -  Register a candidate and create a corresponding user.
+# US 3003 - Notification of application when the state of my job openings changes.
 
 ## 1. Context
 
-- `Description:`  As Operator, I want to register a candidate and create a corresponding user
+- `Description:` As Customer, I want to be notified in my application when the state (phase) of my job openings changes.
 
-- `Sprint:` This US makes part of the intermediary stage of development of the integrative project of this semester, Sprint B.
+- `Sprint:` This US makes part of the intermediary stage of development of the integrative project of this semester, Sprint C.
 
-- `Objectives:` The team must make sure that the system can list all applications for a job opening.
+- `Objectives:` The team must make sure that the system notifies the customer in the application when the state of one of the job openings changes.
 
 ## 2. Requirements
 

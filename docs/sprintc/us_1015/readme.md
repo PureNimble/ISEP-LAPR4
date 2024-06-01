@@ -4,7 +4,7 @@
 
 ## 1. Context
 
-- `Description:`  As Customer Manager, I want to execute the process of verification of requirements of applications for a job opening.
+- `Description:` As Customer Manager, I want to execute the process of verification of requirements of applications for a job opening.
 
 - `Sprint:` This US makes part of the final stage of development of the integrative project of this semester, Sprint C.
 

@@ -28,5 +28,6 @@ int contains(HashSet *set, int key);
 int getArray(HashSet *set, int *array);
 int getValue(HashSet *set);
 int isSetEmpty(HashSet *set);
+int size(HashSet *set);
 
 #endif // HASH_SET_H

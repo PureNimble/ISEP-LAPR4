@@ -5,9 +5,9 @@ typedef struct
 {
     char jobOffer_dir[100];
     int candidateID;
-    int numFiles;
-    int isDone;
-    int index;
+    unsigned int numFiles;
+    unsigned int isDone;
+    unsigned int index;
     char files[MAX_FILES][100];
 
 } CandidateInfo;

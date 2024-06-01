@@ -8,6 +8,7 @@
 #define TEST_CHILDREN 5
 #define TEST_FREQUENCY 5
 #define DELETE_FOLDER_TIME 5
+#define TEST_BUFFER_SIZE 5
 
 #include "config.h"
 
@@ -18,6 +19,6 @@ void newFileChecker_test(Config config);
 void copyFiles_test(Config config, CircularBuffer *shared_data, sem_t *sem_shared_memory, sem_t *sem_barrier, sem_t *sem_barrier_mutex);
 
 // Test functions for reporting files
-void reportFile_test(Config config, CircularBuffer *shared_data);
+void reportFile_test(Config config, CircularBuffer *shared_data, sem_t *sem);
 
 #endif // TEST_H

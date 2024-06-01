@@ -321,6 +321,7 @@ void printFiles(CandidateInfo file)
     printf("Job Offer Directory: %s\n", file.jobOffer_dir);
     printf("Number of files: %d\n", file.numFiles);
     printf("Is Done: %d\n", file.isDone);
+    printf("Index: %d\n", file.index);
     for (int i = 0; i < file.numFiles; i++)
     {
         printf("File %d: %s\n", i + 1, file.files[i]);

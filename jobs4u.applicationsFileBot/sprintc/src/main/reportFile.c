@@ -20,17 +20,17 @@
  *
  * @param config A pointer to the Config struct containing the configuration settings.
  */
-void reportFile(Config *config, CircularBuffer *shared_memory, sem_t *sem_sharedMemory_mutex)
+void reportFile(Config *config, CircularBuffer *shared_memory, sem_t *sem_numberOfCandidates, sem_t *sem_files)
 {
-    sem_wait(sem_sharedMemory_mutex); // acess shared memory
+    sem_wait(sem_files); // acess shared memory
     CandidateInfo candidateInfo = checkFinishedFiles(shared_memory);
+    sem_post(sem_files); // release shared memory
+    sem_wait(sem_numberOfCandidates);
     shared_memory->numberOfCandidates--;
-    sem_post(sem_sharedMemory_mutex); // release shared memory
-
+    sem_post(sem_numberOfCandidates);
     if (candidateInfo.candidateID == -1)
-    {
         return;
-    }
+
     char buffer[3000];
     sprintf(buffer, "%sreport.txt", config->outputPath);
 
@@ -54,7 +54,7 @@ void reportFile(Config *config, CircularBuffer *shared_memory, sem_t *sem_shared
     fprintf(file, "\n");
 
     fclose(file);
-    printf("-> Report file has been generated for candidate:%d\n\n", candidateInfo.candidateID);
+    printf("-> Report file has been generated for candidate:%d\n", candidateInfo.candidateID);
 }
 
 int checkIfCandidateFileExists(CandidateInfo candidate, char *buffer)
@@ -72,7 +72,7 @@ int checkIfCandidateFileExists(CandidateInfo candidate, char *buffer)
         {
             if (candidate.candidateID == id)
             {
-                printf("-> Candidate id:%d already exists in the report file.\n", id);
+                printf("-> Candidate ID: %d already exists in the report file.\n", id);
                 return 1;
             }
         }

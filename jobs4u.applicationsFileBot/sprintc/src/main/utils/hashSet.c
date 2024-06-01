@@ -87,14 +87,7 @@ int getValue(HashSet *set)
     return -1;
 }
 
-/**
- * Retrieves all the keys in the HashSet and stores them in an array.
- *
- * @param set The HashSet to retrieve the keys from.
- * @param array The array to store the keys in.
- * @return The number of keys stored in the array.
- */
-int getArray(HashSet *set, int *array)
+int size(HashSet *set)
 {
     int counter = 0;
     for (int i = 0; i < HASH_SET_SIZE; i++)
@@ -102,7 +95,6 @@ int getArray(HashSet *set, int *array)
         Node *node = set->buckets[i];
         while (node)
         {
-            array[counter] = node->key;
             node = node->next;
             counter++;
         }

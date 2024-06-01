@@ -47,7 +47,7 @@ void readConfigFile(Config *config)
         exit(EXIT_FAILURE);
     }
     // Read and validate the VERIFY_NEW_FILES_FREQUENCY
-    if (fscanf(file, "CIRCULAR_BUFFER_SIZE=%d\n", &(config->bufferSize)) == -1 || config->bufferSize > 20)
+    if (fscanf(file, "CIRCULAR_BUFFER_SIZE=%d\n", &(config->bufferSize)) == -1 || (config->bufferSize > 20 || config->bufferSize <= 0))
 
     {
         errorMessages("Invalid format for CIRCULAR_BUFFER_SIZE (MAX VALUE= 20)\n");

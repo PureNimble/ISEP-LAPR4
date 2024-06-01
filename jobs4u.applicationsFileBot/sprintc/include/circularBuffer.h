@@ -3,6 +3,7 @@
 #define BUFFER_SIZE 21
 #include "candidateInfo.h"
 #include "config.h"
+#include <semaphore.h>
 typedef struct
 {
     CandidateInfo buffer[BUFFER_SIZE];
@@ -13,7 +14,7 @@ typedef struct
 } CircularBuffer;
 
 void initBuffer(CircularBuffer *buf, Config *config);
-int addToBuffer(CircularBuffer *buf, int candidateID);
+int addToBuffer(CircularBuffer *buf, int candidateID, sem_t *sem_isDone_mutex, sem_t *sem_addToBuffer_mutex);
 CandidateInfo readFromBuffer(CircularBuffer *buf);
 int isEmpty(CircularBuffer *buf);
 int isFull(CircularBuffer *buf);

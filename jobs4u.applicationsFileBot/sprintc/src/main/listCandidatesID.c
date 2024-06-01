@@ -18,7 +18,7 @@
  * @param config The configuration settings for the application.
  * @return The number of candidate IDs found.
  */
-HashSet *listCandidatesID(Config *config)
+HashSet *listCandidatesID(Config *config, CircularBuffer *sharedMemory)
 {
     struct dirent *dir;
     DIR *d = opendir(config->inputPath);
@@ -41,6 +41,7 @@ HashSet *listCandidatesID(Config *config)
         {
             add(set, atoi(token));
         }
+        sharedMemory->numberOfCandidates = size(set);
     }
     return set;
 }

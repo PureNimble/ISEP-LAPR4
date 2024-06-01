@@ -17,8 +17,10 @@
 int main()
 {
     Config config;
-    sem_t *sem_newFile, *sem_startWorkers, *sem_reportFile, *sem_sharedMemory_mutex;
     CircularBuffer *sharedMemory;
+    sem_t *sem_newFile, *sem_startWorkers, *sem_reportFile,
+        *sem_addToBuffer_mutex, *sem_numberOfCandidates_mutex,
+        *sem_isDone_mutex, *sem_files_mutex;
     int fd;
     readConfigFile(&config);
     printConfig(&config);
@@ -30,12 +32,16 @@ int main()
         newFileChecker(&config, sem_newFile);
 
     sharedMemory = createSharedMemory(SHARED_MEMORY, &fd, &config); // Comunication between workers and main process
-    sem_startWorkers = createSemaphore(SEM_SHARED_MEMORY, 0);       // for shared memory acess
-    sem_sharedMemory_mutex = createSemaphore(SEM_BARRIER_MUTEX, 1); // To protect the barrier counter
-    sem_reportFile = createSemaphore(SEM_BARRIER, 0);               // To wait for all workers to finish
+    sem_startWorkers = createSemaphore(SEM_START_WORKERS, 0);       // Know when to start the workers
+    sem_reportFile = createSemaphore(SEM_REPORT_FILE, 0);           // Know when to generate the report file for each candidate
+    // Write On shared memory
+    sem_addToBuffer_mutex = createSemaphore(SEM_ADD_TO_BUFFER, 1);               // Write On Buffer:Head; CandidateInfo:candidateID
+    sem_numberOfCandidates_mutex = createSemaphore(SEM_NUMBER_OF_CANDIDATES, 1); // Write On Buffer:numberOfCandidates
+    sem_isDone_mutex = createSemaphore(SEM_IS_DONE, 1);                          // Write On Buffer:isDone
+    sem_files_mutex = createSemaphore(SEM_FILES, 1);                             // Write On CandidateInfo:files,numFiles
 
-    createWorkers(&config, sharedMemory, sem_startWorkers, sem_reportFile, sem_sharedMemory_mutex);
-    parentWork(&config, sharedMemory, sem_startWorkers, sem_newFile, sem_reportFile, sem_sharedMemory_mutex);
+    createWorkers(&config, sharedMemory, sem_startWorkers, sem_reportFile, sem_isDone_mutex, sem_files_mutex);
+    parentWork(&config, sharedMemory, sem_startWorkers, sem_newFile, sem_reportFile, sem_addToBuffer_mutex, sem_isDone_mutex, sem_numberOfCandidates_mutex);
 
     return 0;
 }
@@ -47,13 +53,13 @@ int main()
  * @param send_work_fd Pointer to the send_work_fd pipe.
  * @param recive_work Pointer to the recive_work pipe.
  */
-void createWorkers(Config *config, CircularBuffer *shared_data, sem_t *sem_startWorkers, sem_t *sem_reportFile, sem_t *sem_sharedMemory_mutex)
+void createWorkers(Config *config, CircularBuffer *shared_data, sem_t *sem_startWorkers, sem_t *sem_reportFile, sem_t *sem_isDone_mutex, sem_t *sem_files_mutex)
 {
     unsigned int i;
     for (i = 0; i < config->numberOfChildren; i++)
     {
         if (createChildProcess() == 0)
-            copyFiles(config, shared_data, sem_startWorkers, sem_sharedMemory_mutex, sem_reportFile);
+            copyFiles(config, shared_data, sem_startWorkers, sem_isDone_mutex, sem_files_mutex, sem_reportFile);
     }
 }
 
@@ -68,30 +74,32 @@ void createWorkers(Config *config, CircularBuffer *shared_data, sem_t *sem_start
  * @param sem_startWorkers The semaphore for shared memory synchronization.
  * @param sem_newFile The semaphore for signaling a new file.
  */
-void parentWork(Config *config, CircularBuffer *sharedMemory, sem_t *sem_startWorkers, sem_t *sem_newFile, sem_t *sem_reportFile, sem_t *sem_sharedMemory_mutex)
+void parentWork(Config *config, CircularBuffer *sharedMemory, sem_t *sem_startWorkers, sem_t *sem_newFile, sem_t *sem_reportFile, sem_t *sem_addToBuffer_mutex, sem_t *sem_isDone_mutex, sem_t *sem_numberOfCandidates)
 {
     HashSet *candidateList;
-    int isThereCandidatesToSend = 1;
+    int isThereCandidatesToSend;
     while (1)
     {
+        isThereCandidatesToSend = 1; // flag to check if there are candidates to send
         sem_wait(sem_newFile);
         // loop
-        candidateList = listCandidatesID(config);
+        candidateList = listCandidatesID(config, sharedMemory);
         while (1)
         {
             if (isThereCandidatesToSend)
-                isThereCandidatesToSend = sendWork(candidateList, sharedMemory, sem_sharedMemory_mutex, sem_startWorkers);
+                isThereCandidatesToSend = sendWork(candidateList, sharedMemory, sem_addToBuffer_mutex, sem_isDone_mutex, sem_startWorkers);
             sem_wait(sem_reportFile);
-            reportFile(config, sharedMemory, sem_sharedMemory_mutex);
+            reportFile(config, sharedMemory, sem_addToBuffer_mutex, sem_numberOfCandidates);
             if (sharedMemory->numberOfCandidates == 0)
                 break;
         }
         printf("-> All Work is Done!\n");
+        fflush(stdout);
         freeHashSet(candidateList);
     }
 }
 
-int sendWork(HashSet *candidateList, CircularBuffer *sharedMemory, sem_t *sem_sharedMemory_mutex, sem_t *sem_startWorkers)
+int sendWork(HashSet *candidateList, CircularBuffer *sharedMemory, sem_t *sem_addToBuffer, sem_t *sem_isDone, sem_t *sem_startWorkers)
 {
     int isBufferFull = 0;
     int candidateID;
@@ -99,10 +107,9 @@ int sendWork(HashSet *candidateList, CircularBuffer *sharedMemory, sem_t *sem_sh
     {
         if ((candidateID = getValue(candidateList)) == -1)
             break;
-        sem_wait(sem_sharedMemory_mutex);
-        isBufferFull = addToBuffer(sharedMemory, candidateID);
-        sharedMemory->numberOfCandidates++;
-        sem_post(sem_sharedMemory_mutex);
+        isBufferFull = addToBuffer(sharedMemory, candidateID, sem_isDone, sem_addToBuffer);
+        if (isBufferFull)
+            add(candidateList, candidateID);
     }
 
     sem_post(sem_startWorkers);

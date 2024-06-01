@@ -16,7 +16,7 @@
  * @param fd The file descriptor for the pipe.
  * @param config The configuration struct.
  */
-void copyFiles(Config *config, CircularBuffer *sharedMemory, sem_t *sem_startWorkers, sem_t *sem_sharedMemory_mutex, sem_t *sem_reportFile)
+void copyFiles(Config *config, CircularBuffer *sharedMemory, sem_t *sem_startWorkers, sem_t *sem_isDone, sem_t *sem_files, sem_t *sem_reportFile)
 {
     int candidateID, status;
     char buffer[300];
@@ -26,22 +26,23 @@ void copyFiles(Config *config, CircularBuffer *sharedMemory, sem_t *sem_startWor
     {
         sem_wait(sem_startWorkers); // acess shared memory
         files = readFromBuffer(sharedMemory);
+
         if (files.candidateID == -1)
             continue;
-        sem_post(sem_startWorkers);      // release shared memory
-        candidateID = files.candidateID; // Working with the candidateID
-        printf("-> Candidate ID: %d PID:%d\n", candidateID, getpid());
+        sem_post(sem_startWorkers); // release shared memory
+        candidateID = files.candidateID;
+        printf("-> Candidate ID: %d PID:%d\n", candidateID, getpid()); // Working with the candidateID
 
         sprintf(buffer, "%s%d-candidate-data.txt", config->inputPath, candidateID);
         if (isFileOrDirectory(buffer) != 1 || (jobOffer = readFirstLine(buffer, candidateID)) == NULL)
         {
+
             sprintf(buffer, "Failed to read the job Opening ID from Candidate:%d\n", candidateID);
-            files.candidateID = -1;
             errorMessages(buffer);
+            files.candidateID = -1;
         }
         else
         {
-
             strcpy(files.jobOffer_dir, jobOffer);
             files.jobOffer_dir[strlen(files.jobOffer_dir) - 1] = '\0';
             sprintf(buffer, "%s%s/%d", config->outputPath, files.jobOffer_dir, candidateID);
@@ -81,11 +82,12 @@ void copyFiles(Config *config, CircularBuffer *sharedMemory, sem_t *sem_startWor
                 }
             }
         }
-
-        sem_wait(sem_sharedMemory_mutex); // protect the shared memory
+        sem_wait(sem_isDone); // protect the shared memory
         files.isDone = 1;
+        sem_post(sem_isDone); // release the shared memory
+        sem_wait(sem_files);  // protect the shared memory
         addInfo(sharedMemory, files);
-        sem_post(sem_sharedMemory_mutex); // release the shared memory
+        sem_post(sem_files); // release the shared memory
         sem_post(sem_reportFile);
     }
 }

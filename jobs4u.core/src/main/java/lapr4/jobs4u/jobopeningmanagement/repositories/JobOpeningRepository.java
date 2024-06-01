@@ -36,4 +36,6 @@ public interface JobOpeningRepository extends DomainRepository<JobReference, Job
     Iterable<JobOpening> filterWithAvailablePhaseForInterviewEvaluation(final Username username);
 
     Iterable<JobOpening> filterWithAvailablePhaseForRequirementEvaluation(final Username username);
+
+    Iterable<JobOpening> filterWithEvaluatedInterviews(final Username username);
 }

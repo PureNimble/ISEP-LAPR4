@@ -26,5 +26,7 @@ void freeHashSet(HashSet *set);
 void add(HashSet *set, int key);
 int contains(HashSet *set, int key);
 int getArray(HashSet *set, int *array);
+int getValue(HashSet *set);
+int isSetEmpty(HashSet *set);
 
 #endif // HASH_SET_H

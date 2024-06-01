@@ -14,6 +14,7 @@ import jakarta.persistence.Table;
 import jakarta.persistence.Version;
 import lapr4.jobs4u.applicationmanagement.domain.Application;
 import lapr4.jobs4u.applicationmanagement.domain.File;
+import lapr4.jobs4u.interviewmanagement.dto.InterviewDTO;
 import lapr4.jobs4u.recruitmentprocessmanagement.domain.Date;
 
 /**
@@ -101,6 +102,12 @@ public class Interview implements AggregateRoot<Long> {
     @Override
     public Long identity() {
         return this.id;
+    }
+
+    public InterviewDTO toDTO() {
+        return new InterviewDTO(this.application.applicationCode().toString(),
+                this.application.candidate().emailAddress().toString(),
+                this.grade.toString());
     }
 
     public String toString() {

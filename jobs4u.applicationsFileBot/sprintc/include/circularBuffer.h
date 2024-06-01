@@ -1,22 +1,24 @@
 #ifndef CIRCULAR_BUFFER_H
 #define CIRCULAR_BUFFER_H
-#define BUFFER_SIZE 10
+#define BUFFER_SIZE 21
 #include "candidateInfo.h"
+#include "config.h"
 typedef struct
 {
     CandidateInfo buffer[BUFFER_SIZE];
-    int head;
-    int tail;
-    int count;
-    int count2;
-    int barrierCounter;
+    unsigned int head;
+    unsigned int tail;
+    unsigned int numberOfCandidates;
+    unsigned int size;
 } CircularBuffer;
 
-void initBuffer(CircularBuffer *buf);
-void addToBuffer(CircularBuffer *buf, CandidateInfo data);
-void addToBuffer2(CircularBuffer *buf, CandidateInfo data);
+void initBuffer(CircularBuffer *buf, Config *config);
+int addToBuffer(CircularBuffer *buf, int candidateID);
 CandidateInfo readFromBuffer(CircularBuffer *buf);
 int isEmpty(CircularBuffer *buf);
+int isFull(CircularBuffer *buf);
 void printBuffer(CircularBuffer *buf);
-
+void addInfo(CircularBuffer *candidates, CandidateInfo data);
+CandidateInfo checkFinishedFiles(CircularBuffer *candidates);
+void removeFromBuffer(CircularBuffer *candidates, int index);
 #endif // CIRCULAR_BUFFER_H

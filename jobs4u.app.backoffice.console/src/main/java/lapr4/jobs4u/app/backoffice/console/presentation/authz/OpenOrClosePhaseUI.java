@@ -12,6 +12,8 @@ import lapr4.jobs4u.app.common.console.presentation.utils.Utils;
 import lapr4.jobs4u.infrastructure.persistence.PersistenceContext;
 import lapr4.jobs4u.jobopeningmanagement.application.ListJobOpeningsController;
 import lapr4.jobs4u.jobopeningmanagement.domain.JobOpening;
+import lapr4.jobs4u.jobopeningmanagement.domain.JobOpeningState;
+import lapr4.jobs4u.jobopeningmanagement.domain.TypesOfJobOpeningStates;
 import lapr4.jobs4u.jobopeningmanagement.dto.JobOpeningDTO;
 import lapr4.jobs4u.recruitmentprocessmanagement.application.OpenOrClosePhaseController;
 
@@ -29,6 +31,7 @@ public class OpenOrClosePhaseUI extends AbstractUI {
             PersistenceContext.repositories().jobOpenings(ctx),
             PersistenceContext.repositories().jobOpeningRequirements(),
             PersistenceContext.repositories().jobOpeningInterviews(), PersistenceContext.repositories().applications(),
+            PersistenceContext.repositories().requirements(), PersistenceContext.repositories().interviews(),
             AuthzRegistry.authorizationService(), ctx);
 
     @Override
@@ -49,9 +52,15 @@ public class OpenOrClosePhaseUI extends AbstractUI {
         if (currentPhase == null) {
             options.add("Yes");
             options.add("No");
-            option = Utils.showAndSelectIndex(options,
-                    "There is no open phase for this job opening. Do you wish to start the recruitment process?");
-            if (option == 1) {
+            if (theJobOpening.jobOpeningState()
+                    .equals(JobOpeningState.valueOf(TypesOfJobOpeningStates.PENDING.toString()))) {
+                option = Utils.showAndSelectIndex(options,
+                        "There is no open phase for this job opening. Do you wish to start the recruitment process?");
+            } else {
+                option = Utils.showAndSelectIndex(options,
+                        "The job opening is already closed. Do you wish to reopen it and go to back to the result phase?");
+            }
+            if (option != 0) {
                 System.out.println("No changes were made.");
                 return false;
             }
@@ -61,6 +70,10 @@ public class OpenOrClosePhaseUI extends AbstractUI {
             option = Utils.showAndSelectIndex(options,
                     "The current phase is: " + currentPhase
                             + ". Do you wish to go to the next one or go back to the previous state?");
+        }
+        if (option == -1) {
+            System.out.println("No changes were made.");
+            return false;
         }
         try {
             openOrClosePhaseController.changePhase(currentPhase, theJobOpening, option == 0);

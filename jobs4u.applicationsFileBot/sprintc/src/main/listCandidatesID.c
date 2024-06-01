@@ -18,7 +18,7 @@
  * @param config The configuration settings for the application.
  * @return The number of candidate IDs found.
  */
-void listCandidatesID(Config *config, CircularBuffer *sharedData, sem_t *sem_shared_memory)
+HashSet *listCandidatesID(Config *config)
 {
     struct dirent *dir;
     DIR *d = opendir(config->inputPath);
@@ -42,17 +42,5 @@ void listCandidatesID(Config *config, CircularBuffer *sharedData, sem_t *sem_sha
             add(set, atoi(token));
         }
     }
-    closedir(d);
-    int array[20];
-    int size = getArray(set, array);
-    freeHashSet(set);
-
-    sharedData->barrierCounter = size;
-    printf("Number of candidates: %d\n", size);
-    for (int i = 0; i < size; i++)
-    {
-        CandidateInfo file = createFiles(array[i]);
-        addToBuffer(sharedData, file);
-    }
-    sem_post(sem_shared_memory);
+    return set;
 }

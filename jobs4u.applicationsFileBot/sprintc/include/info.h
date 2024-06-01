@@ -27,18 +27,15 @@ void newFileChecker(Config *config, sem_t *sem);
 // -----------------------------
 // Parent process functions
 // -----------------------------
-CandidateInfo *checkIfCandidateFilesExist(CandidateInfo *files, int *numberOfCandidates, char *buffer);
-void reportFile(Config *config, CircularBuffer *sharedMemory);
-void parentWork(Config *config, CircularBuffer *sharedMemory, sem_t *sem_shared_memory, sem_t *sem_newFile, sem_t *sem_barrier);
-void listCandidatesID(Config *config, CircularBuffer *sharedData, sem_t *sem_shared_memory);
+int checkIfCandidateFileExists(CandidateInfo candidate, char *buffer);
+void reportFile(Config *config, CircularBuffer *shared_memory, sem_t *sem_sharedMemory_mutex);
+void parentWork(Config *config, CircularBuffer *sharedMemory, sem_t *sem_shared_memory, sem_t *sem_newFile, sem_t *sem_reportFile, sem_t *sem_sharedMemory_mutex);
+HashSet *listCandidatesID(Config *config);
 void createWorkers(Config *config, CircularBuffer *shared_data, sem_t *sem_shared_memory, sem_t *sem_barrier, sem_t *sem_barrier_mutex);
+int sendWork(HashSet *candidateList, CircularBuffer *sharedMemory, sem_t *sem_sharedMemory_mutex, sem_t *sem_shared_memory);
 // -----------------------------
 // Child process functions
 // -----------------------------
 void copyFiles(Config *config, CircularBuffer *shared_data, sem_t *sem_shared_memory, sem_t *sem_barrier, sem_t *sem_barrier_mutex);
-// -----------------------------
-// Utility functions
-// -----------------------------
-char *readFirstLine(char *file_path, int candidateID);
 
 #endif // INFO_H

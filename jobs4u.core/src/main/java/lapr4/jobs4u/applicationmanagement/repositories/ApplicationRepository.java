@@ -13,6 +13,7 @@ import lapr4.jobs4u.jobopeningmanagement.domain.JobReference;
  * @author 2DI2
  */
 public interface ApplicationRepository extends DomainRepository<ApplicationCode, Application> {
+
     Optional<Application> findByApplicationCode(final ApplicationCode code);
 
     Iterable<Application> filterByJobOpening(final JobOpening jobOpening);
@@ -22,5 +23,9 @@ public interface ApplicationRepository extends DomainRepository<ApplicationCode,
     String findHighestSequenceForCustomer(final JobReference jobReference);
 
     Iterable<Application> findApplicationWithInterviewRecord(final JobOpening jobOpening);
+
+    Iterable<Application> findApplicationsWithResult(final JobOpening jobOpening);
+
+    Long numApplicationsForJobOpening(final JobOpening jobOpening);
 
 }

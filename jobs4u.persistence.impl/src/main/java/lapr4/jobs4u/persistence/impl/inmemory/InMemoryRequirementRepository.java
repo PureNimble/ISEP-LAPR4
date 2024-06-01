@@ -28,4 +28,9 @@ public class InMemoryRequirementRepository extends InMemoryDomainRepository<Requ
         return match(e -> e.application().jobOpening().equals(jobOpening));
     }
 
+    @Override
+    public Iterable<Requirement> findEvaluatedRequirementsByJobOpening(JobOpening jobOpening) {
+        return match(e -> e.application().jobOpening().equals(jobOpening) && !e.outcome().toString().equals("PENDING"));
+    }
+
 }

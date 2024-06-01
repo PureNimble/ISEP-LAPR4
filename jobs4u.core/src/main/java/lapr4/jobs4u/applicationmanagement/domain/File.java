@@ -6,7 +6,9 @@ import jakarta.persistence.Transient;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import eapli.framework.domain.model.ValueObject;
@@ -21,6 +23,7 @@ public class File implements ValueObject, Comparable<File>, Runnable {
 
     private static final long serialVersionUID = 1L;
     private static final String EXTENSION = ".txt";
+    private static final Integer LENGTH_PER_THREAD = 500;
 
     private final String path;
     @Transient
@@ -109,17 +112,49 @@ public class File implements ValueObject, Comparable<File>, Runnable {
 
     @Override
     public void run() {
-        topWords = new HashMap<>();
-        String text = textFrom();
-        String[] words = text.split("\\s+");
-        Integer value;
-        for (String word : words) {
-            value = 1;
-            if (topWords.containsKey(word))
-                value = topWords.get(word) + 1;
+        String file = textFrom();
+        int length = file.length();
+        int n = length / LENGTH_PER_THREAD;
+        int lengthPerThread;
+        if (n > 20) {
+            n = 20;
+            lengthPerThread = length / n;
 
-            addCount(word, value);
+        } else {
+            lengthPerThread = LENGTH_PER_THREAD;
+
         }
+        List<Thread> threads = new ArrayList<>();
+        List<FilePartition> fileParts = new ArrayList<>();
+        topWords = new HashMap<>();
+
+        // Divide the file into n parts and create a thread for each part
+        for (int i = 0; i < n; i++) {
+            int start = i * lengthPerThread;
+            int end = (i + 1) * lengthPerThread;
+            if (i == n - 1) // for the last part
+                end = length;
+            FilePartition filePart = new FilePartition(file.substring(start, end));
+            fileParts.add(filePart);
+            Thread thread = new Thread(filePart);
+            threads.add(thread);
+            thread.start();
+        }
+        // wait for all threads to finish
+        threads.forEach(t -> {
+            try {
+                t.join();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        });
+        fileParts.forEach(f -> {
+            f.getTopWords().entrySet().forEach(entry -> {
+                Integer value = topWords.getOrDefault(entry.getKey(), 0) + entry.getValue();
+                addCount(entry.getKey(), value);
+            });
+        });
+
     }
 
     private synchronized void addCount(String word, Integer value) {

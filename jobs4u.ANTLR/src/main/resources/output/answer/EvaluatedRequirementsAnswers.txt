@@ -10,7 +10,7 @@ REQUIREMENT RESULT: MET
 # Can you list the programming languages you've utilized in your projects? (Ruby | PHP | TypeScript | Go)
 ANSWER: RubyPlus
 REQUIREMENT RESULT: NOT MET
-JUSTIFICATION: RubyPlus
+JUSTIFICATION: Knowledge of multiple programming languages shows versatility and adaptability.
 
 # Have you ever developed a mobile app? (Yes | No)
 ANSWER: Yes

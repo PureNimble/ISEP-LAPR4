@@ -38,7 +38,7 @@ sem_t *createSemaphore(char *name, unsigned value)
  * @param fd A pointer to an integer that will hold the file descriptor of the shared memory region.
  * @return A pointer to the created shared memory region.
  */
-CircularBuffer *createSharedMemory(char *name, int *fd)
+CircularBuffer *createSharedMemory(char *name, int *fd, Config *config)
 {
     CircularBuffer *shm;
 
@@ -60,7 +60,7 @@ CircularBuffer *createSharedMemory(char *name, int *fd)
         perror("mmap");
         exit(3);
     }
-    initBuffer(shm);
+    initBuffer(shm, config);
     return shm;
 }
 
@@ -270,8 +270,6 @@ char *readFirstLine(char *file_path, int candidateID)
 
     if (fgets(line, 256, file) == NULL)
     { // Read the first line
-        sprintf(buffer, "Failed to read the job Opening ID from Candidate:%d\n", candidateID);
-        errorMessages(buffer);
         free(line);
         line = NULL;
     }
@@ -322,6 +320,7 @@ void printFiles(CandidateInfo file)
     printf("Candidate ID: %d\n", file.candidateID);
     printf("Job Offer Directory: %s\n", file.jobOffer_dir);
     printf("Number of files: %d\n", file.numFiles);
+    printf("Is Done: %d\n", file.isDone);
     for (int i = 0; i < file.numFiles; i++)
     {
         printf("File %d: %s\n", i + 1, file.files[i]);
@@ -338,8 +337,6 @@ CandidateInfo createFiles(int candidateID)
 {
     CandidateInfo file;
     file.candidateID = candidateID;
-    file.numFiles = 0;
-    file.jobOffer_dir[0] = '\0';
     return file;
 }
 

@@ -63,6 +63,29 @@ void add(HashSet *set, int key)
     node->next = set->buckets[index];
     set->buckets[index] = node;
 }
+int getValue(HashSet *set)
+{
+    for (unsigned int index = 0; index < HASH_SET_SIZE; index++)
+    {
+        Node *node = set->buckets[index];
+        if (node != NULL)
+        {
+            // Get the value of the node
+            int value = node->key;
+
+            // Remove the node from the bucket
+            set->buckets[index] = node->next;
+
+            // Free the memory of the node
+            free(node);
+
+            return value;
+        }
+    }
+
+    // If the HashSet is empty
+    return -1;
+}
 
 /**
  * Retrieves all the keys in the HashSet and stores them in an array.
@@ -100,4 +123,17 @@ void freeHashSet(HashSet *set)
         }
     }
     free(set);
+}
+
+// check if hashset is empty
+int isSetEmpty(HashSet *set)
+{
+    for (int i = 0; i < HASH_SET_SIZE; i++)
+    {
+        if (set->buckets[i] != NULL)
+        {
+            return 0;
+        }
+    }
+    return 1;
 }

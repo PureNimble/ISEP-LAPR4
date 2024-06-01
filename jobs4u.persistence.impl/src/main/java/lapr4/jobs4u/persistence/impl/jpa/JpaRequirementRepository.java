@@ -2,6 +2,7 @@ package lapr4.jobs4u.persistence.impl.jpa;
 
 import lapr4.jobs4u.applicationmanagement.domain.Application;
 import lapr4.jobs4u.jobopeningmanagement.domain.JobOpening;
+import lapr4.jobs4u.questionmanagement.domain.RequirementsQuestion;
 import lapr4.jobs4u.requirementmanagement.domain.Requirement;
 import lapr4.jobs4u.requirementmanagement.repositories.RequirementRepository;
 
@@ -11,6 +12,7 @@ import java.util.Optional;
 
 import eapli.framework.domain.repositories.TransactionalContext;
 import eapli.framework.infrastructure.repositories.impl.jpa.JpaAutoTxRepository;
+import jakarta.persistence.Query;
 
 /**
  * @author 2DI2
@@ -26,17 +28,24 @@ class JpaRequirementRepository extends JpaAutoTxRepository<Requirement, Long, Lo
     }
 
     @Override
-    public Optional<Requirement> findRequirement(Application application) {
+    public Optional<Requirement> findRequirement(final Application application) {
         final Map<String, Object> params = new HashMap<>();
         params.put("application", application);
         return matchOne("e.application=:application", params);
     }
 
     @Override
-    public Iterable<Requirement> findRequirementsByJobOpening(JobOpening jobOpening) {
+    public Iterable<Requirement> findRequirementsByJobOpening(final JobOpening jobOpening) {
         final Map<String, Object> params = new HashMap<>();
         params.put("jobOpening", jobOpening);
         return match("e.application.jobOpening=:jobOpening", params);
     }
 
+    @SuppressWarnings("unchecked")
+    @Override
+    public Iterable<Requirement> findEvaluatedRequirementsByJobOpening(final JobOpening jobOpening) {
+        Query query = createQuery("SELECT e FROM Requirement e WHERE e.application.jobOpening=:jobOpening AND e.outcome.outComeValue NOT LIKE 'PENDING'", Requirement.class);
+        query.setParameter("jobOpening", jobOpening);
+        return query.getResultList();
+    }
 }

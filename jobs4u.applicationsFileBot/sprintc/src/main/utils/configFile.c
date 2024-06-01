@@ -22,14 +22,14 @@ void readConfigFile(Config *config)
     // Read and validate the INPUT_PATH
     if (fscanf(file, "INPUT_PATH=%s\n", config->inputPath) == -1 || isFileOrDirectory(config->inputPath) != 2)
     {
-        errorMessages("Invalid format for INPUT_PATH\n");
+        errorMessages("Invalid format for INPUT_PATH (The Folder need to be created)\n");
         exit(EXIT_FAILURE);
     }
 
     // Read and validate the OUTPUT_PATH
     if (fscanf(file, "OUTPUT_PATH=%s\n", config->outputPath) == -1 || isFileOrDirectory(config->outputPath) != 2)
     {
-        errorMessages("Invalid format for OUTPUT_PATH\n");
+        errorMessages("Invalid format for OUTPUT_PATH (The Folder need to be created)\n");
         exit(EXIT_FAILURE);
     }
 
@@ -41,9 +41,16 @@ void readConfigFile(Config *config)
     }
 
     // Read and validate the VERIFY_NEW_FILES_FREQUENCY
-    if (fscanf(file, "VERIFY_NEW_FILES_FREQUENCY=%d\n", &(config->verifyNewFilesFrequency)) == -1 || config->verifyNewFilesFrequency == 0)
+    if (fscanf(file, "VERIFY_NEW_FILES_FREQUENCY=%d\n", &(config->verifyNewFilesFrequency)) == -1 || config->verifyNewFilesFrequency <= 0)
     {
         errorMessages("Invalid format for VERIFY_NEW_FILES_FREQUENCY\n");
+        exit(EXIT_FAILURE);
+    }
+    // Read and validate the VERIFY_NEW_FILES_FREQUENCY
+    if (fscanf(file, "CIRCULAR_BUFFER_SIZE=%d\n", &(config->bufferSize)) == -1 || config->bufferSize > 20)
+
+    {
+        errorMessages("Invalid format for CIRCULAR_BUFFER_SIZE (MAX VALUE= 20)\n");
         exit(EXIT_FAILURE);
     }
 
@@ -67,8 +74,9 @@ void printConfig(Config *config)
     printf("\033[1;32mOutput Path:\033[0m %s\n", config->outputPath);
     printf("\033[1;32mNumber of Children:\033[0m %d\n", config->numberOfChildren);
     printf("\033[1;32mVerify New Files Frequency:\033[0m %d\n", config->verifyNewFilesFrequency);
+    printf("\033[1;32mCircular Buffer Size(Max=20):\033[0m %d\n", config->bufferSize);
     printf("\033[1;36m--------------------------------\033[0m\n");
-
+    config->bufferSize++;
     printf("\n\033[1;33mWarning:\033[0m \033[1;31mIf you want to change the program\n\t settings, you must change the config\n\t file located in the resources folder\033[0m\n");
     // type any key to continue
     printf("\nPress enter to continue...\n");

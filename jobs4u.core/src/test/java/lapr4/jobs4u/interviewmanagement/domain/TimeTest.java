@@ -10,20 +10,20 @@ public class TimeTest {
     private final String INVALID_TIME = "10:00:00";
 
     @Test
-    public void testAddressCreation() {
+    public void testTimeCreation() {
         Time time = Time.valueOf(VALID_TIME);
         assertEquals(time.toString(), VALID_TIME);
     }
 
     @Test
-    public void testAddressCreationWithInvalidEmptyValue() {
+    public void testTimeCreationWithInvalidEmptyValue() {
         assertThrows(IllegalArgumentException.class, () -> {
             Time.valueOf(INVALID_TIME);
         });
     }
 
     @Test
-    public void testAddressCreationWithNullValue() {
+    public void testTimeCreationWithNullValue() {
         assertThrows(IllegalArgumentException.class, () -> {
             Time.valueOf(null);
         });

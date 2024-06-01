@@ -85,6 +85,10 @@ public class Customer implements AggregateRoot<CustomerCode> {
         return this.manager;
     }
 
+    public EmailAddress email() {
+        return this.email;
+    }
+
     @Override
     public CustomerCode identity() {
         return this.customerCode;

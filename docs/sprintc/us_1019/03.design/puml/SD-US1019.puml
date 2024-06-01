@@ -3,22 +3,135 @@ skinparam monochrome true
 skinparam packageStyle rectangle
 skinparam shadowing false
 
-title System Sequence Diagram (SSD) - Get an ordered list of candidates, using the job interview points
+title UI Sequence Diagram (SSD) - Get an ordered list of candidates, using the job interview points
 
 autonumber
 
-actor "Operator" as Manager
-participant "RegisterCandidateCreateUserUI" as System
-participant "RegisterCandidateCreateUserController" as Controller
-participant "Candidate" as candidate
-participant "CandidateRepository" as repository
-participant "JpaCandidateRepository" as jpa
-participant "CustomerUserController" as CustomerUserController
-participant "ManagementService" as ManagementService
-participant "Factory" as Factory
-participant "UserRepository" as UserRepository
-participant "JpaUserRepository" as JpaUserRepository
+actor "Customer Manager" as CustomerManager
+participant "ListCandidatesByInterviewPointsUI" as UI
+participant "ListCandidatesByInterviewPointsController" as listCandidatesByInterviewPointsController
+participant "ListInterviewsService" as service
+participant "InterviewRepository" as repository
+participant "JpaInterviewRepository" as jpa
+participant "Interview" as Interview
+participant "InterviewDTO" as InterviewDTO
 database "Database" as DB
 
-    
+activate CustomerManager
+
+CustomerManager -> UI : Asks for a list of candidates by interview points
+activate UI
+
+ref over UI, DB: US1003 - List Job Openings
+
+UI -> CustomerManager : Shows list of available Job Openings
+deactivate UI
+
+CustomerManager -> UI : Selects a Job Opening
+activate UI
+UI -> listCandidatesByInterviewPointsController : sortedCandidatesByInterviewPointsForJobOpening(jobOpening, false)
+activate listCandidatesByInterviewPointsController
+
+listCandidatesByInterviewPointsController -> service : allCandidatesSortedByInterviewPointsForJobOpening(jobOpening, false)
+activate service
+
+service -> repository : sortedInterviewsByJobOpening(jobOpening, false)
+activate repository
+
+repository -> jpa : sortedInterviewsByJobOpening(jobOpening, false)
+activate jpa
+
+jpa -> DB : match("e.application.jobOpening=:jobOpening ORDER BY e.grade " + order, params)
+activate DB
+DB --> jpa : Iterable<Interview>
+deactivate DB
+jpa --> repository : Iterable<Interview>
+deactivate jpa
+
+repository --> service : Iterable<Interview>
+deactivate repository
+
+loop for each interview
+    service -> Interview : toDTO()
+    activate Interview
+    Interview --> InterviewDTO : create
+    activate InterviewDTO
+    Interview <-- InterviewDTO : InterviewDTO
+    deactivate InterviewDTO
+    service <-- Interview : InterviewDTO
+    deactivate Interview
+end
+
+service --> listCandidatesByInterviewPointsController : Iterable<InterviewDTO>
+deactivate service
+
+listCandidatesByInterviewPointsController --> UI : Iterable<InterviewDTO>
+deactivate listCandidatesByInterviewPointsController
+
+UI --> CustomerManager : List of candidates by interview points
+deactivate UI
+
+opt sorts list
+    loop until Customer Manager decides to exit
+
+        CustomerManager -> UI : Asks to sort the list of candidates
+        activate UI
+
+        UI --> CustomerManager : Provides sorting options
+        deactivate UI
+
+        alt by ascending order
+            CustomerManager -> UI : Asks to sort list by ascending order
+            activate UI
+        else by descending order
+            CustomerManager -> UI : Asks to sort list by descending order
+        end
+
+        note right of UI: The boolean parameter is true if the list is to be sorted in ascending order,\nfalse otherwise
+
+        UI -> listCandidatesByInterviewPointsController : sortedCandidatesByInterviewPointsForJobOpening(jobOpening, boolean)
+        activate listCandidatesByInterviewPointsController
+
+        listCandidatesByInterviewPointsController -> service : allCandidatesSortedByInterviewPointsForJobOpening(jobOpening, boolean)
+        activate service
+
+        service -> repository : sortedInterviewsByJobOpening(jobOpening, boolean)
+        activate repository
+
+        repository -> jpa : sortedInterviewsByJobOpening(jobOpening, boolean)
+        activate jpa
+
+        jpa -> DB : match("e.application.jobOpening=:jobOpening ORDER BY e.grade " + order, params)
+        activate DB
+        DB --> jpa : Iterable<Interview>
+        deactivate DB
+        jpa --> repository : Iterable<Interview>
+        deactivate jpa
+
+        repository --> service : Iterable<Interview>
+        deactivate repository
+
+        loop for each interview
+            service -> Interview : toDTO()
+            activate Interview
+            Interview --> InterviewDTO : create
+            activate InterviewDTO
+            Interview <-- InterviewDTO : InterviewDTO
+            deactivate InterviewDTO
+            service <-- Interview : InterviewDTO
+            deactivate Interview
+        end
+
+        service --> listCandidatesByInterviewPointsController : Iterable<InterviewDTO>
+        deactivate service
+
+        listCandidatesByInterviewPointsController --> UI : Iterable<InterviewDTO>
+        deactivate listCandidatesByInterviewPointsController
+
+        UI --> CustomerManager : List of candidates by interview points
+        deactivate UI
+    end
+end
+deactivate CustomerManager
+
 @enduml

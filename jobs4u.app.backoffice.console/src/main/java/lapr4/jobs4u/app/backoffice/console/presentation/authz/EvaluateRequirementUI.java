@@ -20,6 +20,8 @@ public class EvaluateRequirementUI extends AbstractUI {
             PersistenceContext.repositories().recruitmentProcesses(),
             PersistenceContext.repositories().jobOpeningRequirements(),
             PersistenceContext.repositories().requirements(),
+            PersistenceContext.repositories().applications(),
+            PersistenceContext.repositories().newTransactionalContext(),
             AuthzRegistry.authorizationService());
     private final ListJobOpeningsController listJobpeningsController = new ListJobOpeningsController(
             PersistenceContext.repositories().jobOpenings(), AuthzRegistry.authorizationService());

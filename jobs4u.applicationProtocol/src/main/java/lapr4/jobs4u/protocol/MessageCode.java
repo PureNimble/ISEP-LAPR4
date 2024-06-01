@@ -16,7 +16,9 @@ public enum MessageCode {
     LOGOUT((byte) 5),
     CHANGEPASS((byte) 6),
     LISTAPPREQ((byte) 7),
-    LISTAPPRES((byte) 8);
+    LISTAPPRES((byte) 8),
+    LISTJOBREQ((byte) 9),
+    LISTJOBRES((byte) 10);
 
     private static final Map<Byte, MessageCode> CODES = new HashMap<>();
 

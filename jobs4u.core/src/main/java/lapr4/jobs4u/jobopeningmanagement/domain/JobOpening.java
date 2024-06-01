@@ -11,7 +11,10 @@ import jakarta.persistence.Version;
 import lapr4.jobs4u.customermanagement.domain.Address;
 import lapr4.jobs4u.customermanagement.domain.Customer;
 import lapr4.jobs4u.jobopeningmanagement.dto.JobOpeningDTO;
+
+import java.text.DateFormat;
 import java.util.Calendar;
+
 import eapli.framework.domain.model.AggregateRoot;
 import eapli.framework.domain.model.DomainEntities;
 import eapli.framework.representations.dto.DTOable;
@@ -126,12 +129,13 @@ public class JobOpening implements AggregateRoot<JobReference>, DTOable<JobOpeni
     }
 
     public void deactivate(String recruitmentProcessPhase) {
-        if (this.jobOpeningState.equals(JobOpeningState.valueOf(TypesOfJobOpeningStates.PENDING.toString())) || this.jobOpeningState.equals(JobOpeningState.valueOf(TypesOfJobOpeningStates.CLOSED.toString()))) {
+        if (this.jobOpeningState.equals(JobOpeningState.valueOf(TypesOfJobOpeningStates.PENDING.toString()))
+                || this.jobOpeningState.equals(JobOpeningState.valueOf(TypesOfJobOpeningStates.CLOSED.toString()))) {
             throw new IllegalStateException("Cannot deactivate a pending/closed job opening");
         } else {
             if (recruitmentProcessPhase.equals("ApplicationPhase")) {
                 this.jobOpeningState = JobOpeningState.valueOf(TypesOfJobOpeningStates.PENDING.toString());
-            } else if (recruitmentProcessPhase.equals("ResultsPhase")) {
+            } else if (recruitmentProcessPhase.equals("ResultPhase")) {
                 this.jobOpeningState = JobOpeningState.valueOf(TypesOfJobOpeningStates.CLOSED.toString());
             }
         }
@@ -186,10 +190,12 @@ public class JobOpening implements AggregateRoot<JobReference>, DTOable<JobOpeni
     }
 
     public JobOpeningDTO toDTO() {
+        final DateFormat formatter = DateFormat.getDateInstance();
+        final String formattedDate = formatter.format(this.registeredOn.getTime());
         return new JobOpeningDTO(this.jobReference.toString(), this.titleOrFunction.toString(),
                 this.contractType.toString(), this.mode.toString(), this.address.toString(),
                 this.customer.customerCode().toString(), this.customer.companyName().toString(),
-                this.jobDescription.toString());
+                this.jobDescription.toString(), formattedDate);
     }
 
     public JobReference jobReference() {

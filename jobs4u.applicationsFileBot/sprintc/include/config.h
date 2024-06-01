@@ -5,6 +5,7 @@ typedef struct Config
 {
     unsigned int verifyNewFilesFrequency;
     unsigned int numberOfChildren;
+    unsigned int bufferSize;
     char inputPath[100];
     char outputPath[100];
 } Config;

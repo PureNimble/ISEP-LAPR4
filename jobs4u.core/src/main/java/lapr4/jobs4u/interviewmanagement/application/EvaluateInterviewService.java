@@ -72,10 +72,10 @@ public class EvaluateInterviewService {
             interviewAnswersForQuestion.put(interviewQuestion.questionBody(), pair);
         }
 
-        final Iterable<Interview> interview = interviewRepository.findInterviewsByJobOpening(jobOpening);
+        final Iterable<Interview> interview = interviewRepository.findNonGradedInterviewsByJobOpening(jobOpening);
 
         if (!interview.iterator().hasNext()) {
-            throw new Exception("Interview not found");
+            throw new Exception("There are no Interviews to evaluate");
         }
 
         for (final Interview theInterview : interview) {

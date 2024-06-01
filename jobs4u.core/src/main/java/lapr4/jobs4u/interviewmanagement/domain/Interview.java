@@ -79,6 +79,10 @@ public class Interview implements AggregateRoot<Long> {
         return this.file;
     }
 
+    public Grade grade() {
+        return this.grade;
+    }
+
     @Override
     public int hashCode() {
         return DomainEntities.hashCode(this);

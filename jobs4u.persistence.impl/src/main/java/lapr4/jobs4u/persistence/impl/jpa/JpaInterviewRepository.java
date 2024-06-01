@@ -34,10 +34,10 @@ class JpaInterviewRepository extends JpaAutoTxRepository<Interview, Long, Long> 
     }
 
     @Override
-    public Iterable<Interview> findInterviewsByJobOpening(final JobOpening jobOpening) {
+    public Iterable<Interview> findNonGradedInterviewsByJobOpening(final JobOpening jobOpening) {
         final Map<String, Object> params = new HashMap<>();
         params.put("jobOpening", jobOpening);
-        return match("e.application.jobOpening=:jobOpening", params);
+        return match("e.application.jobOpening=:jobOpening AND e.grade IS NULL", params);
     }
 
 }

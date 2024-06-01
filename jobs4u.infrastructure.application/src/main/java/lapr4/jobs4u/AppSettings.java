@@ -26,6 +26,9 @@ public class AppSettings {
     private static final String SCHEMA_GENERATION_KEY = "jakarta.persistence.schema-generation.database.action";
     private static final String SERVER_HOST_KEY = "jobs4u.server.host";
     private static final String SERVER_PORT_KEY = "jobs4u.server.port";
+    private static final String EMAIL_HOST = "spring.mail.host";
+    private static final String EMAIL_PORT = "spring.mail.port";
+    private static final String EMAIL_STARTTLS = "spring.mail.properties.mail.smtp.starttls.enable";
 
     private final Properties applicationProperties = new Properties();
 
@@ -83,10 +86,22 @@ public class AppSettings {
     }
 
     public String serverHost() {
-        return applicationProperties.getProperty(SERVER_HOST_KEY);
+        return this.applicationProperties.getProperty(SERVER_HOST_KEY);
     }
 
     public Integer serverPort() {
-        return Integer.parseInt(applicationProperties.getProperty(SERVER_PORT_KEY));
+        return Integer.parseInt(this.applicationProperties.getProperty(SERVER_PORT_KEY));
+    }
+
+    public String emailHost() {
+        return this.applicationProperties.getProperty(EMAIL_HOST);
+    }
+
+    public Integer emailPort() {
+        return Integer.parseInt(this.applicationProperties.getProperty(EMAIL_PORT));
+    }
+
+    public Boolean isEmailStarttlsEnabled() {
+        return Boolean.parseBoolean(this.applicationProperties.getProperty(EMAIL_STARTTLS));
     }
 }

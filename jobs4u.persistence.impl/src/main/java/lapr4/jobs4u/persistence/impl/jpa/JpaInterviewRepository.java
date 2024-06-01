@@ -58,4 +58,11 @@ class JpaInterviewRepository extends JpaAutoTxRepository<Interview, Long, Long> 
         return query.getResultList();
     }
 
+    @Override
+    public Iterable<Interview> findInterviewsByJobOpening(final JobOpening jobOpening) {
+        final Map<String, Object> params = new HashMap<>();
+        params.put("jobOpening", jobOpening);
+        return match("e.application.jobOpening=:jobOpening", params);
+    }
+
 }

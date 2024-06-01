@@ -38,6 +38,9 @@ public class InMemoryInterviewRepository extends InMemoryDomainRepository<Interv
         return match(e -> e.application().jobOpening().equals(jobOpening) && !e.grade().toString().isEmpty());
     }
 
-
+    @Override
+    public Iterable<Interview> findInterviewsByJobOpening(final JobOpening jobOpening) {
+        return match(e -> e.application().jobOpening().equals(jobOpening));
+    }
 
 }

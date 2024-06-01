@@ -5,7 +5,6 @@ import lapr4.jobs4u.app.common.console.presentation.authz.LoginUI;
 import lapr4.jobs4u.app.common.console.presentation.authz.LogoutUI;
 import lapr4.jobs4u.infrastructure.authz.AuthenticationCredentialHandler;
 import eapli.framework.actions.Actions;
-import eapli.framework.actions.ChainedAction;
 import eapli.framework.actions.menu.Menu;
 import eapli.framework.actions.menu.MenuItem;
 import eapli.framework.infrastructure.authz.application.AuthorizationService;

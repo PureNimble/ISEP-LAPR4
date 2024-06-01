@@ -10,7 +10,7 @@ echo "Cron job executed at $(date)" >> $logfile
 # Perform a git pull and capture the output
 pull=$(git pull)
 # Check if the output contains "Already up-to-date."
-if [[ $pull != *"Already up-to-date."* ]]; then
+if [[ $pull != *"Already up to date."* ]]; then
     chmod +x /root/sem4pi-23-24-2di2/bin/*
     echo "-> Stopping the server" >> $logfile
     systemctl stop jobs4u 

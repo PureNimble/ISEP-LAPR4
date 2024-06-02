@@ -27,6 +27,7 @@ import lapr4.jobs4u.applicationmanagement.domain.Justification;
 import lapr4.jobs4u.applicationmanagement.domain.Outcome;
 import lapr4.jobs4u.applicationmanagement.domain.OutcomeValue;
 import lapr4.jobs4u.applicationmanagement.repositories.ApplicationRepository;
+import lapr4.jobs4u.candidatemanagement.domain.Candidate;
 import lapr4.jobs4u.exporter.requirement.answer.generated.EvaluateRequirementsAnswersLexer;
 import lapr4.jobs4u.exporter.requirement.answer.generated.EvaluateRequirementsAnswersParser;
 import lapr4.jobs4u.importer.requirement.answer.generated.RequirementsAnswersLexer;
@@ -65,7 +66,9 @@ public class EvaluateRequirementsService {
         this.tc = tc;
     }
 
-    public void evaluateRequirement(final JobOpening jobOpening) throws Exception {
+    public List<Pair<Candidate, Pair<String, String>>> evaluateRequirement(final JobOpening jobOpening) throws Exception {
+
+        List<Pair<Candidate, Pair<String, String>>> emailsInfo = new ArrayList<>();
 
         final Optional<JobOpeningRequirement> jobOpeningRequirement = jobOpeningRequirementRepository
                 .findJobOpeningRequirementsByJobOpening(jobOpening);
@@ -94,9 +97,12 @@ public class EvaluateRequirementsService {
         for (final Requirement theRequirement : requirement) {
             final Pair<Outcome, List<Pair<String, Justification>>> result = decideResult(requirementAnswersForQuestion,
                     theRequirement.file().toString());
-            exportResult(result, theRequirement.file().toString());
+            final String path = exportResult(result, theRequirement.file().toString());
             saveResult(theRequirement, result);
+            emailsInfo.add(Pair.of(theRequirement.application().candidate(), Pair.of(result.getFirst().toString(), path)));
         }
+
+        return emailsInfo;
     }
 
     private Pair<Outcome, List<Pair<String, Justification>>> decideResult(
@@ -155,7 +161,7 @@ public class EvaluateRequirementsService {
         return resultPair;
     }
 
-    private void exportResult(final Pair<Outcome, List<Pair<String, Justification>>> resultPair, final String file)
+    private String exportResult(final Pair<Outcome, List<Pair<String, Justification>>> resultPair, final String file)
             throws IOException {
 
         StringBuilder content = new StringBuilder();
@@ -188,7 +194,6 @@ public class EvaluateRequirementsService {
         final CommonTokenStream tokens = new CommonTokenStream(lexer);
         final EvaluateRequirementsAnswersParser parser = new EvaluateRequirementsAnswersParser(tokens);
 
-        System.out.println(content.toString());
         parser.start();
         if (parser.getNumberOfSyntaxErrors() > 0) {
             throw new IOException("Syntax error in template file");
@@ -199,6 +204,8 @@ public class EvaluateRequirementsService {
         final PrintWriter stream = new PrintWriter(new FileWriter(newFileName));
         stream.print(content.toString());
         stream.close();
+
+        return newFileName;
     }
 
     @Transactional

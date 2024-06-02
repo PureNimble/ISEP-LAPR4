@@ -11,10 +11,14 @@
 #include <unistd.h>
 
 /**
- * @brief Copy all files from new Candidates to the output directory.
+ * Copies files for a given candidate based on their candidate ID.
  *
- * @param fd The file descriptor for the pipe.
- * @param config The configuration struct.
+ * @param config The configuration settings.
+ * @param sharedMemory The shared circular buffer for inter-process communication.
+ * @param sem_startWorkers The semaphore for synchronizing worker processes.
+ * @param sem_isDone The semaphore for indicating completion of file copying.
+ * @param sem_files The semaphore for accessing the shared memory.
+ * @param sem_reportFile The semaphore for indicating completion of file reporting.
  */
 void copyFiles(Config *config, CircularBuffer *sharedMemory, sem_t *sem_startWorkers, sem_t *sem_isDone, sem_t *sem_files, sem_t *sem_reportFile)
 {
@@ -22,18 +26,21 @@ void copyFiles(Config *config, CircularBuffer *sharedMemory, sem_t *sem_startWor
     char buffer[300];
     CandidateInfo files;
     char *jobOffer;
+
     while (1)
     {
-        sem_wait(sem_startWorkers); // acess shared memory
+        sem_wait(sem_startWorkers);
         files = readFromBuffer(sharedMemory);
 
         if (files.candidateID == -1)
             continue;
-        sem_post(sem_startWorkers); // release shared memory
+        sem_post(sem_startWorkers);
+
         candidateID = files.candidateID;
         printf("-> Candidate ID: %d PID:%d\n", candidateID, getpid()); // Working with the candidateID
 
         sprintf(buffer, "%s%d-candidate-data.txt", config->inputPath, candidateID);
+
         if (isFileOrDirectory(buffer) != 1 || (jobOffer = readFirstLine(buffer, candidateID)) == NULL)
         {
 
@@ -45,8 +52,10 @@ void copyFiles(Config *config, CircularBuffer *sharedMemory, sem_t *sem_startWor
         {
             strcpy(files.jobOffer_dir, jobOffer);
             files.jobOffer_dir[strlen(files.jobOffer_dir) - 1] = '\0';
+
             sprintf(buffer, "%s%s/%d", config->outputPath, files.jobOffer_dir, candidateID);
             replaceChar(buffer, "\r", "");
+
             if (createChildProcess() == 0)
             {
                 char command[1024];
@@ -82,12 +91,14 @@ void copyFiles(Config *config, CircularBuffer *sharedMemory, sem_t *sem_startWor
                 }
             }
         }
-        sem_wait(sem_isDone); // protect the shared memory
+        sem_wait(sem_isDone);
         files.isDone = 1;
-        sem_post(sem_isDone); // release the shared memory
-        sem_wait(sem_files);  // protect the shared memory
+        sem_post(sem_isDone);
+
+        sem_wait(sem_files);
         addInfo(sharedMemory, files);
-        sem_post(sem_files); // release the shared memory
+        sem_post(sem_files);
+
         sem_post(sem_reportFile);
     }
 }

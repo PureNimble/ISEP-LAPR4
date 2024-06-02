@@ -7,16 +7,13 @@
 #include "hashSet.h"
 #include "config.h"
 #include "utils.h"
+
 /**
- * @brief Lists the IDs of the candidates found in the specified directory.
+ * Lists the IDs of the candidates found in the specified directory.
  *
- * This function opens the specified directory and reads the names of the files in it.
- * It extracts the candidate IDs from the file names and adds them to a hash set.
- * Finally, it writes the candidate IDs to a file descriptor and returns the number of candidate IDs found.
- *
- * @param fd The file descriptor to write the candidate IDs to.
- * @param config The configuration settings for the application.
- * @return The number of candidate IDs found.
+ * @param config The configuration settings.
+ * @param sharedMemory The shared memory buffer.
+ * @return A HashSet containing the IDs of the candidates.
  */
 HashSet *listCandidatesID(Config *config, CircularBuffer *sharedMemory)
 {

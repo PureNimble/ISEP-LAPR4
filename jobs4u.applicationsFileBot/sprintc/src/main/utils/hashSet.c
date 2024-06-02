@@ -63,6 +63,12 @@ void add(HashSet *set, int key)
     node->next = set->buckets[index];
     set->buckets[index] = node;
 }
+/**
+ * Retrieves and removes the value from the HashSet.
+ *
+ * @param set The HashSet from which to retrieve the value.
+ * @return The value retrieved from the HashSet, or -1 if the HashSet is empty.
+ */
 int getValue(HashSet *set)
 {
     for (unsigned int index = 0; index < HASH_SET_SIZE; index++)
@@ -87,6 +93,12 @@ int getValue(HashSet *set)
     return -1;
 }
 
+/**
+ * Returns the number of elements in the HashSet.
+ *
+ * @param set The HashSet to get the size of.
+ * @return The number of elements in the HashSet.
+ */
 int size(HashSet *set)
 {
     int counter = 0;
@@ -102,6 +114,11 @@ int size(HashSet *set)
     return counter;
 }
 
+/**
+ * Frees the memory allocated for a HashSet and its elements.
+ *
+ * @param set The HashSet to be freed.
+ */
 void freeHashSet(HashSet *set)
 {
     for (int i = 0; i < HASH_SET_SIZE; i++)
@@ -117,7 +134,12 @@ void freeHashSet(HashSet *set)
     free(set);
 }
 
-// check if hashset is empty
+/**
+ * Checks if a HashSet is empty.
+ *
+ * @param set The HashSet to check.
+ * @return 1 if the HashSet is empty, 0 otherwise.
+ */
 int isSetEmpty(HashSet *set)
 {
     for (int i = 0; i < HASH_SET_SIZE; i++)

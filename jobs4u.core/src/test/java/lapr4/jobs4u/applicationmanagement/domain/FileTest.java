@@ -1,15 +1,18 @@
 package lapr4.jobs4u.applicationmanagement.domain;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import java.util.Map;
 
 import org.junit.Test;
 
 import eapli.framework.io.util.Files;
 
 public class FileTest {
-    String valid_format = "jobs4u.applicationsFileBot/sprintc/resources/input";
-    String VALID_FILE = valid_format + "/1-big-file-1.txt";
+    String valid_format = "jobs4u.applicationsFileBot/sprintc/resources/input/";
+    String VALID_FILE = valid_format + "3-file-1.txt";
     String VALID_FILE2 = valid_format + "/1-candidate-data.txt";
     static final String INVALID_FILE = "temo/sharedfolder";
 
@@ -67,6 +70,18 @@ public class FileTest {
         final boolean expected = file.equals(getNewDummyFile(VALID_FILE));
 
         assertTrue(expected);
+    }
+
+    @Test
+    public void ensureAllFilesGetTopWords() throws Exception {
+        final File file = getNewDummyFile(VALID_FILE);
+        Thread t = new Thread(file);
+        t.start();
+        t.join();
+        Map<String, Integer> output = file.getTopWords();
+        assertFalse(output.isEmpty());
+        assertTrue(output.get("numerous").equals(1));
+        assertEquals(380, output.size());
     }
 
 }

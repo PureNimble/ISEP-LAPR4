@@ -42,12 +42,12 @@ public class SetUpRecruitmentProcessUI extends AbstractUI {
         JobOpening jobOpening = this.listJobOpeningsController.selectedJobOpening(jobOpeningDTO);
 
         System.out.println("\nApplication Phase:");
-        final String applicationInitialDate = Console.readLine("Initial Date:");
-        final String applicationFinalDate = Console.readLine("Final Date:");
+        final String applicationInitialDate = Console.readNonEmptyLine("Initial Date:", "Please insert a date");
+        final String applicationFinalDate = Console.readNonEmptyLine("Final Date:", "Please insert a date");
 
         System.out.println("\nScreening Phase:");
-        final String screeningInitialDate = Console.readLine("Initial Date:");
-        final String screeningFinalDate = Console.readLine("Final Date:");
+        final String screeningInitialDate = Console.readNonEmptyLine("Initial Date:", "Please insert a date");
+        final String screeningFinalDate = Console.readNonEmptyLine("Final Date:", "Please insert a date");
 
         final boolean interviewPhase = Utils.confirm("\nDo you wish to register an Interview Phase?");
 
@@ -56,17 +56,17 @@ public class SetUpRecruitmentProcessUI extends AbstractUI {
 
         if (interviewPhase) {
             System.out.println("Interview Phase:");
-            interviewInitialDate = Console.readLine("Initial Date:");
-            interviewFinalDate = Console.readLine("Final Date:");
+            interviewInitialDate = Console.readNonEmptyLine("Initial Date:", "Please insert a date");
+            interviewFinalDate = Console.readNonEmptyLine("Final Date:", "Please insert a date");
         }
 
         System.out.println("\nAnalysis Phase:");
-        final String analysisInitialDate = Console.readLine("Initial Date:");
-        final String analysisFinalDate = Console.readLine("Final Date:");
+        final String analysisInitialDate = Console.readNonEmptyLine("Initial Date:", "Please insert a date");
+        final String analysisFinalDate = Console.readNonEmptyLine("Final Date:", "Please insert a date");
 
         System.out.println("\nResult Phase:");
-        final String resultInitialDate = Console.readLine("Initial Date:");
-        final String resultFinalDate = Console.readLine("Final Date:");
+        final String resultInitialDate = Console.readNonEmptyLine("Initial Date:", "Please insert a date");
+        final String resultFinalDate = Console.readNonEmptyLine("Final Date:", "Please insert a date");
 
         try {
             if (interviewPhase) {

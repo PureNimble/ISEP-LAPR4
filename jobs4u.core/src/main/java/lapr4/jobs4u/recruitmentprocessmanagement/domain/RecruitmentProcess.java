@@ -136,4 +136,12 @@ public class RecruitmentProcess implements AggregateRoot<Long> {
     public JobOpening jobOpening() {
         return this.jobOpening;
     }
+
+    @Override
+    public String toString() {
+        return "Application Phase:\n" + applicationPhase.toString() + "\n\nScreening Phase:\n"
+                + screeningPhase.toString()
+                + (interviewPhase == null ? "" : "\n\nInterview Phase:\n" + interviewPhase.toString())
+                + "\n\nAnalysis Phase:\n" + analysisPhase.toString() + "\n\nResult Phase:\n" + resultPhase.toString();
+    }
 }

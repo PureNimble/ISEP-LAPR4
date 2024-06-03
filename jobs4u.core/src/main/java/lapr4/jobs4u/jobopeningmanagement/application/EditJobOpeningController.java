@@ -17,6 +17,7 @@ import lapr4.jobs4u.jobopeningmanagement.domain.TitleOrFunction;
 import lapr4.jobs4u.jobopeningmanagement.repositories.JobOpeningInterviewRepository;
 import lapr4.jobs4u.jobopeningmanagement.repositories.JobOpeningRepository;
 import lapr4.jobs4u.jobopeningmanagement.repositories.JobOpeningRequirementRepository;
+import lapr4.jobs4u.recruitmentprocessmanagement.domain.RecruitmentProcess;
 import lapr4.jobs4u.recruitmentprocessmanagement.repositories.RecruitmentProcessRepository;
 import lapr4.jobs4u.usermanagement.domain.BaseRoles;
 
@@ -104,12 +105,53 @@ public class EditJobOpeningController {
                 return jobOpeningRequirementRepository.save(jobOpeningRequirement);
         }
 
+        public RecruitmentProcess editJobOpeningRecruitmentProcess(
+                        final RecruitmentProcess jobOpeningRecruitmentProcess, final String applicationInitialDate,
+                        final String applicationFinalDate, final String screeningInitialDate,
+                        final String screeningFinalDate, final String interviewInitialDate,
+                        final String interviewFinalDate, final String analysisInitialDate,
+                        final String analysisFinalDate, final String resultInitialDate, final String resultFinalDate) {
+                authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.CUSTOMER_MANAGER, BaseRoles.POWERUSER);
+                if (applicationInitialDate != jobOpeningRecruitmentProcess.applicationPhase().initialDate().toString())
+                        jobOpeningRecruitmentProcess.applicationPhase().changeInitialDate(applicationInitialDate);
+                if (applicationFinalDate != jobOpeningRecruitmentProcess.applicationPhase().finalDate().toString())
+                        jobOpeningRecruitmentProcess.applicationPhase().changeFinalDate(applicationFinalDate);
+                if (screeningInitialDate != jobOpeningRecruitmentProcess.screeningPhase().initialDate().toString())
+                        jobOpeningRecruitmentProcess.screeningPhase().changeInitialDate(screeningInitialDate);
+                if (screeningFinalDate != jobOpeningRecruitmentProcess.screeningPhase().finalDate().toString())
+                        jobOpeningRecruitmentProcess.screeningPhase().changeFinalDate(screeningFinalDate);
+                if (interviewInitialDate != null && interviewInitialDate != jobOpeningRecruitmentProcess
+                                .interviewPhase().initialDate().toString())
+                        jobOpeningRecruitmentProcess.interviewPhase().changeInitialDate(interviewInitialDate);
+                if (interviewFinalDate != null && interviewFinalDate != jobOpeningRecruitmentProcess.interviewPhase()
+                                .finalDate().toString())
+                        jobOpeningRecruitmentProcess.interviewPhase().changeFinalDate(interviewFinalDate);
+                if (analysisInitialDate != jobOpeningRecruitmentProcess.analysisPhase().initialDate().toString())
+                        jobOpeningRecruitmentProcess.analysisPhase().changeInitialDate(analysisInitialDate);
+                if (analysisFinalDate != jobOpeningRecruitmentProcess.analysisPhase().finalDate().toString())
+                        jobOpeningRecruitmentProcess.analysisPhase().changeFinalDate(analysisFinalDate);
+                if (resultInitialDate != jobOpeningRecruitmentProcess.resultPhase().initialDate().toString())
+                        jobOpeningRecruitmentProcess.resultPhase().changeInitialDate(resultInitialDate);
+                if (resultFinalDate != jobOpeningRecruitmentProcess.resultPhase().finalDate().toString())
+                        jobOpeningRecruitmentProcess.resultPhase().changeFinalDate(resultFinalDate);
+                return doEditJobOpeningRecruitmentProcess(jobOpeningRecruitmentProcess);
+        }
+
+        private RecruitmentProcess doEditJobOpeningRecruitmentProcess(
+                        final RecruitmentProcess jobOpeningRecruitmentProcess) {
+                return recruitmentProcessRepository.save(jobOpeningRecruitmentProcess);
+        }
+
         public Optional<JobOpeningInterview> interviewModel(final JobOpening jobOpening) {
                 return jobOpeningInterviewRepository.findJobOpeningInterviewsByJobOpening(jobOpening);
         }
 
         public Optional<JobOpeningRequirement> requirementModel(final JobOpening jobOpening) {
                 return jobOpeningRequirementRepository.findJobOpeningRequirementsByJobOpening(jobOpening);
+        }
+
+        public Optional<RecruitmentProcess> recruitmentProcess(final JobOpening jobOpening) {
+                return recruitmentProcessRepository.findByJobOpening(jobOpening);
         }
 
         public String currentPhase(JobOpening jobOpening) {

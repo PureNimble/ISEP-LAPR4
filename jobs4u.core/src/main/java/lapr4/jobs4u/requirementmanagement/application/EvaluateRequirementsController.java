@@ -4,11 +4,9 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.util.Pair;
-import org.springframework.mail.javamail.JavaMailSender;
 
 import eapli.framework.application.UseCaseController;
 import eapli.framework.domain.repositories.TransactionalContext;
-import eapli.framework.general.domain.model.EmailAddress;
 import eapli.framework.infrastructure.authz.application.AuthorizationService;
 import jakarta.mail.MessagingException;
 import lapr4.jobs4u.applicationmanagement.repositories.ApplicationRepository;
@@ -76,7 +74,7 @@ public class EvaluateRequirementsController {
         else {
             body = "Hello Mr/Mrs " + candidateName + ", \n\nWe regret to inform you that your result for the requirements specification has been rejected. Please check the attachment for further information and details. \n\nBest regards, \nJobs4U Team";
         }
-        emailService.sendEmailWithAttachment("vscosousa@gmail.com", "Evaluation Result", body, pathToAttachment);
+        emailService.sendEmailWithAttachment(candidate.emailAddress().toString(), "Evaluation Result", body, pathToAttachment);
     }
 
 }

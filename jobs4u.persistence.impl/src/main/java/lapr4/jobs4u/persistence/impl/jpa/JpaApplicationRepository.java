@@ -79,4 +79,12 @@ class JpaApplicationRepository extends JpaAutoTxRepository<Application, Applicat
                 "SELECT COUNT (a) FROM Application a WHERE a.jobOpening = :jobOpening",
                 Long.class).setParameter("jobOpening", jobOpening).getSingleResult();
     }
+
+    @Override
+    public Iterable<Application> findApplicationsWithRanking(JobOpening theJobOpening) {
+        return createQuery(
+                "SELECT a FROM Application a, Rank r WHERE a.jobOpening = :theJobOpening AND a = r.application",
+                Application.class).setParameter("theJobOpening", theJobOpening).getResultList();
+    }
+        
 }

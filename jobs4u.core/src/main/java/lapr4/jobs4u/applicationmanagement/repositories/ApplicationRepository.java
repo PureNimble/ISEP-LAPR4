@@ -28,4 +28,6 @@ public interface ApplicationRepository extends DomainRepository<ApplicationCode,
 
     Long numApplicationsForJobOpening(final JobOpening jobOpening);
 
+    Iterable<Application> findApplicationsWithRanking(JobOpening theJobOpening);
+
 }

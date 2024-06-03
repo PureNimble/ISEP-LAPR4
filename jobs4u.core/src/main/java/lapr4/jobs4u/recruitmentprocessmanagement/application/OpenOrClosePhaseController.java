@@ -220,7 +220,6 @@ public class OpenOrClosePhaseController {
     }
 
     private boolean hasRanking(final JobOpening theJobOpening) {
-        //TODO: Implement this method
-        return false;
+        return ApplicationRepository.findApplicationsWithRanking(theJobOpening).iterator().hasNext();
     }
 }

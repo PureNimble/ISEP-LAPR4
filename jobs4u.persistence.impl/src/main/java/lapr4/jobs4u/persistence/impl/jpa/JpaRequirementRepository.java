@@ -40,11 +40,8 @@ class JpaRequirementRepository extends JpaAutoTxRepository<Requirement, Long, Lo
         return match("e.application.jobOpening=:jobOpening", params);
     }
 
-    @SuppressWarnings("unchecked")
     @Override
     public Iterable<Requirement> findEvaluatedRequirementsByJobOpening(final JobOpening jobOpening) {
-        Query query = createQuery("SELECT e FROM Requirement e WHERE e.application.jobOpening=:jobOpening AND e.outcome.outComeValue NOT LIKE 'PENDING'", Requirement.class);
-        query.setParameter("jobOpening", jobOpening);
-        return query.getResultList();
+        return createQuery("SELECT e FROM Requirement e WHERE e.application.jobOpening=:jobOpening AND e.outcome.outComeValue NOT LIKE 'PENDING'", Requirement.class).setParameter("jobOpening", jobOpening).getResultList();
     }
 }

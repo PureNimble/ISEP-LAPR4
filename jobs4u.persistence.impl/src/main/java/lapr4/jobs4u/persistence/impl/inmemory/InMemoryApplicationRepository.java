@@ -54,4 +54,9 @@ public class InMemoryApplicationRepository extends InMemoryDomainRepository<Appl
     public Long numApplicationsForJobOpening(final JobOpening jobOpening) {
         return numApplicationsForJobOpening(jobOpening);
     }
+
+    @Override
+    public Iterable<Application> findApplicationsWithRanking(JobOpening theJobOpening) {
+        return findApplicationsWithRanking(theJobOpening);
+    }
 }

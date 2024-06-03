@@ -54,30 +54,23 @@ public class JpaJobOpeningRepository extends JpaAutoTxRepository<JobOpening, Job
         return count.toString();
     }
 
-    @SuppressWarnings("unchecked")
     @Override
     public Iterable<JobOpening> hasRecruitmentProcess(final boolean hasRecruitmentProcess) {
-        Query query = null;
         if (hasRecruitmentProcess) {
-            query = createQuery(
+            return createQuery(
                     "SELECT e FROM JobOpening e, RecruitmentProcess RP WHERE e.jobReference = RP.jobOpening.jobReference",
-                    JobOpening.class);
-        } else {
-            query = createQuery(
-                    "SELECT e FROM JobOpening e LEFT JOIN RecruitmentProcess RP ON e.jobReference = RP.jobOpening.jobReference WHERE RP.jobOpening.jobReference IS NULL",
-                    JobOpening.class);
+                    JobOpening.class).getResultList();
         }
-        return query.getResultList();
+        return createQuery(
+                "SELECT e FROM JobOpening e LEFT JOIN RecruitmentProcess RP ON e.jobReference = RP.jobOpening.jobReference WHERE RP.jobOpening.jobReference IS NULL",
+                JobOpening.class).getResultList();
     }
 
-    @SuppressWarnings("unchecked")
     @Override
     public Iterable<JobOpening> filterByPeriod(final Calendar initialDate, final Calendar finalDate) {
-        Query query = createQuery("SELECT e FROM JobOpening e WHERE e.registeredOn BETWEEN :startDate AND :endDate",
-                JobOpening.class);
-        query.setParameter("startDate", initialDate, TemporalType.TIMESTAMP);
-        query.setParameter("endDate", finalDate, TemporalType.TIMESTAMP);
-        return query.getResultList();
+        return createQuery("SELECT e FROM JobOpening e WHERE e.registeredOn BETWEEN :startDate AND :endDate",
+                JobOpening.class).setParameter("startDate", initialDate, TemporalType.TIMESTAMP)
+                .setParameter("endDate", finalDate, TemporalType.TIMESTAMP).getResultList();
     }
 
     public Optional<JobOpening> findJobOpeningByReference(final JobReference jobReference) {
@@ -86,85 +79,65 @@ public class JpaJobOpeningRepository extends JpaAutoTxRepository<JobOpening, Job
         return matchOne("e.jobReference=:jobReference", params);
     }
 
-    @SuppressWarnings("unchecked")
     @Override
     public Iterable<JobOpening> filterWithInterview() {
-        Query query = createQuery(
+        return createQuery(
                 "SELECT e FROM JobOpening e, RecruitmentProcess RP WHERE e.jobReference = RP.jobOpening.jobReference AND RP.interviewPhase IS NOT NULL",
-                JobOpening.class);
-        return query.getResultList();
+                JobOpening.class).getResultList();
     }
 
-    @SuppressWarnings("unchecked")
     @Override
     public Iterable<JobOpening> filterWithAvailablePhaseForInterviews(final Username username) {
-        Query query = createQuery(
+        return createQuery(
                 "SELECT e FROM JobOpening e, RecruitmentProcess r WHERE e.customer.manager.username = :name AND e = r.jobOpening "
                         + "AND (r.screeningPhase.state = :openPhase OR r.interviewPhase.state = :openPhase)",
-                JobOpening.class);
-        query.setParameter("name", username);
-        query.setParameter("openPhase", State.valueOf(ActivityState.OPEN.toString()));
-        return query.getResultList();
+                JobOpening.class).setParameter("name", username)
+                .setParameter("openPhase", State.valueOf(ActivityState.OPEN.toString())).getResultList();
     }
 
-    @SuppressWarnings("unchecked")
     @Override
     public Iterable<JobOpening> filterWithAvailablePhaseForRequirements(final Username username) {
-        Query query = createQuery(
+        return createQuery(
                 "SELECT e FROM JobOpening e, RecruitmentProcess r WHERE e.customer.manager.username = :name AND e = r.jobOpening "
                         + "AND (r.screeningPhase.state = :openPhase OR r.applicationPhase.state = :openPhase)",
-                JobOpening.class);
-        query.setParameter("name", username);
-        query.setParameter("openPhase", State.valueOf(ActivityState.OPEN.toString()));
-        return query.getResultList();
+                JobOpening.class).setParameter("name", username)
+                .setParameter("openPhase", State.valueOf(ActivityState.OPEN.toString())).getResultList();
     }
 
-    @SuppressWarnings("unchecked")
     @Override
     public Iterable<JobOpening> filterWithAvailablePhaseForInterviewEvaluation(final Username username) {
-        Query query = createQuery(
+        return createQuery(
                 "SELECT DISTINCT e FROM JobOpening e, RecruitmentProcess r, Application a, Interview i WHERE e.customer.manager.username = :name "
                         + "AND e = r.jobOpening AND (r.interviewPhase.state = :openPhase) AND a.jobOpening = e AND i.application = a",
-                JobOpening.class);
-        query.setParameter("name", username);
-        query.setParameter("openPhase", State.valueOf(ActivityState.OPEN.toString()));
-        return query.getResultList();
+                JobOpening.class).setParameter("name", username)
+                .setParameter("openPhase", State.valueOf(ActivityState.OPEN.toString())).getResultList();
     }
 
-    @SuppressWarnings("unchecked")
     @Override
     public Iterable<JobOpening> filterWithAvailablePhaseForRequirementEvaluation(final Username username) {
-        Query query = createQuery(
+        return createQuery(
                 "SELECT DISTINCT e FROM JobOpening e, RecruitmentProcess rp, Application a, Requirement r WHERE e.customer.manager.username = :name "
                         + "AND e = rp.jobOpening AND (rp.screeningPhase.state = :openPhase OR rp.applicationPhase.state = :openPhase) AND a.jobOpening = e AND r.application = a",
-                JobOpening.class);
-        query.setParameter("name", username);
-        query.setParameter("openPhase", State.valueOf(ActivityState.OPEN.toString()));
-        return query.getResultList();
+                JobOpening.class).setParameter("name", username)
+                .setParameter("openPhase", State.valueOf(ActivityState.OPEN.toString())).getResultList();
     }
 
-    @SuppressWarnings("unchecked")
     @Override
     public Iterable<JobOpening> filterWithEvaluatedInterviews(final Username username) {
-        Query query = createQuery(
+        return createQuery(
                 "SELECT DISTINCT e FROM JobOpening e, RecruitmentProcess r, Application a, Interview i WHERE e.customer.manager.username = :name "
                         + "AND e = r.jobOpening AND (r.analysisPhase.state = :openPhase) AND a.jobOpening = e AND i.application = a AND i.grade IS NOT NULL",
-                JobOpening.class);
-        query.setParameter("name", username);
-        query.setParameter("openPhase", State.valueOf(ActivityState.OPEN.toString()));
-        return query.getResultList();
+                JobOpening.class).setParameter("name", username)
+                .setParameter("openPhase", State.valueOf(ActivityState.OPEN.toString())).getResultList();
     }
 
-    @SuppressWarnings("unchecked")
     @Override
     public Iterable<JobOpening> filterWithAvailablePhaseForRanking(final Username username) {
-        Query query = createQuery(
+        return createQuery(
                 "SELECT e FROM JobOpening e, RecruitmentProcess r WHERE e.customer.manager.username = :name "
                         + "AND e = r.jobOpening AND (r.analysisPhase.state = :openPhase)",
-                JobOpening.class);
-        query.setParameter("name", username);
-        query.setParameter("openPhase", State.valueOf(ActivityState.OPEN.toString()));
-        return query.getResultList();
+                JobOpening.class).setParameter("name", username)
+                .setParameter("openPhase", State.valueOf(ActivityState.OPEN.toString())).getResultList();
     }
 
 }

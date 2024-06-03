@@ -50,12 +50,11 @@ class JpaInterviewRepository extends JpaAutoTxRepository<Interview, Long, Long> 
         return match("e.application.jobOpening=:jobOpening ORDER BY e.grade " + order, params);
     }
 
-    @SuppressWarnings("unchecked")
     @Override
     public Iterable<Interview> findEvaluatedInterviewsByJobOpening(JobOpening jobOpening) {
-        Query query = createQuery("SELECT e FROM Interview e WHERE e.application.jobOpening=:jobOpening AND e.grade IS NOT NULL", Requirement.class);
-        query.setParameter("jobOpening", jobOpening);
-        return query.getResultList();
+        return createQuery(
+                "SELECT e FROM Interview e WHERE e.application.jobOpening=:jobOpening AND e.grade IS NOT NULL",
+                Interview.class).setParameter("jobOpening", jobOpening).getResultList();
     }
 
     @Override

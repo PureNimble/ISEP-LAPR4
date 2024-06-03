@@ -65,7 +65,7 @@ public class OpenOrClosePhaseController {
     public boolean changePhase(final String currentPhase, final JobOpening theJobOpening, final Boolean moveUp)
             throws Exception {
         authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.CUSTOMER_MANAGER, BaseRoles.POWERUSER);
-        RecruitmentProcess recruitmentProcess = recruitmentProcessRepository.findByJobOpening(theJobOpening).get();
+        final RecruitmentProcess recruitmentProcess = recruitmentProcessRepository.findByJobOpening(theJobOpening).get();
 
         txCtx.beginTransaction();
         switch (currentPhase) {
@@ -180,7 +180,6 @@ public class OpenOrClosePhaseController {
 
             default -> throw new Exception("Invalid phase: " + currentPhase);
         }
-        ;
 
         recruitmentProcessRepository.save(recruitmentProcess);
         jobOpeningRepository.save(theJobOpening);

@@ -67,7 +67,7 @@ class JpaApplicationRepository extends JpaAutoTxRepository<Application, Applicat
     }
 
     @Override
-    public Iterable<Application> findApplicationsWithResult(JobOpening jobOpening) {
+    public Iterable<Application> findApplicationsWithResult(final JobOpening jobOpening) {
         return createQuery(
                 "SELECT a FROM Application a WHERE a.jobOpening = :jobOpening AND a.result.outcome.outComeValue NOT LIKE 'PENDING'",
                 Application.class).setParameter("jobOpening", jobOpening).getResultList();

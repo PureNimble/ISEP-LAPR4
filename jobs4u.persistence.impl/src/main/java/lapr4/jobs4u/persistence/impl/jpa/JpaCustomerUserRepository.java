@@ -28,10 +28,10 @@ class JpaCustomerUserRepository extends JpaAutoTxRepository<CustomerUser, Long, 
     }
 
     @Override
-    public Optional<CustomerUser> findByCustomerCode(final CustomerCode number) {
+    public Optional<CustomerUser> findByCustomerCode(final CustomerCode code) {
         final Map<String, Object> params = new HashMap<>();
-        params.put("number", number);
-        return matchOne("e.customerCode=:number", params);
+        params.put("code", code);
+        return matchOne("e.customer.customerCode=:code", params);
     }
 
     @Override

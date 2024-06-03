@@ -23,9 +23,8 @@ public class InMemoryCustomerUserRepository extends InMemoryDomainRepository<Cus
         return matchOne(e -> e.user().username().equals(email));
     }
 
-    @SuppressWarnings("unlikely-arg-type")
     @Override
-    public Optional<CustomerUser> findByCustomerCode(final CustomerCode number) {
-        return Optional.of(data().get(number));
+    public Optional<CustomerUser> findByCustomerCode(final CustomerCode code) {
+        return matchOne(e -> e.customer().customerCode().equals(code));
     }
 }

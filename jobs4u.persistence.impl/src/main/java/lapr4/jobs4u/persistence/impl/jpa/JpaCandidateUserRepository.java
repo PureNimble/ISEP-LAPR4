@@ -5,9 +5,10 @@ import java.util.Map;
 import java.util.Optional;
 
 import eapli.framework.domain.repositories.TransactionalContext;
-import eapli.framework.infrastructure.authz.domain.model.Username;
+import eapli.framework.infrastructure.authz.domain.model.SystemUser;
 import eapli.framework.infrastructure.repositories.impl.jpa.JpaAutoTxRepository;
 import lapr4.jobs4u.Application;
+import lapr4.jobs4u.candidatemanagement.domain.Candidate;
 import lapr4.jobs4u.candidatemanagement.domain.CandidateUser;
 import lapr4.jobs4u.candidatemanagement.repositories.CandidateUserRepository;
 
@@ -27,10 +28,17 @@ class JpaCandidateUserRepository extends JpaAutoTxRepository<CandidateUser, Long
     }
 
     @Override
-    public Optional<CandidateUser> findByEmail(final Username email) {
+    public Optional<CandidateUser> findByCandidate(final Candidate candidate) {
         final Map<String, Object> params = new HashMap<>();
-        params.put("email", email);
-        return matchOne("e.systemUser.username=:email", params);
+        params.put("candidate", candidate);
+        return matchOne("e.Candidate=:candidate", params);
+    }
+
+    @Override
+    public Optional<CandidateUser> findBySystemUser(final SystemUser user) {
+        final Map<String, Object> params = new HashMap<>();
+        params.put("user", user);
+        return matchOne("e.SystemUser=:user", params);
     }
 
 }

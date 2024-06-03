@@ -30,43 +30,44 @@ class JpaRecruitmentProcessRepository extends JpaAutoTxRepository<RecruitmentPro
     }
 
     @Override
-    public Optional<String> currentPhase(JobOpening jobOpening) {
+    public Optional<String> currentPhase(final JobOpening jobOpening) {
         TypedQuery<String> phase = createQuery("SELECT 'AnalysisPhase' AS phase "
-        + "FROM AnalysisPhase a "
-        + "JOIN RecruitmentProcess r ON a.pk = r.analysisPhase.pk "
-        + "WHERE r.jobOpening.jobReference = :jobReference "
-        + "AND a.state = :openState "
-        + "UNION ALL "
-        + "SELECT 'ApplicationPhase' AS phase "
-        + "FROM ApplicationPhase ap "
-        + "JOIN RecruitmentProcess r ON ap.pk = r.applicationPhase.pk "
-        + "WHERE r.jobOpening.jobReference = :jobReference "
-        + "AND ap.state = :openState "
-        + "UNION ALL "
-        + "SELECT 'InterviewPhase' AS phase "
-        + "FROM InterviewPhase ip "
-        + "JOIN RecruitmentProcess r ON ip.pk = r.interviewPhase.pk "
-        + "WHERE r.jobOpening.jobReference = :jobReference "
-        + "AND ip.state = :openState "
-        + "UNION ALL "
-        + "SELECT 'ResultPhase' AS phase "
-        + "FROM ResultPhase rp "
-        + "JOIN RecruitmentProcess r ON rp.pk = r.resultPhase.pk "
-        + "WHERE r.jobOpening.jobReference = :jobReference "
-        + "AND rp.state = :openState "
-        + "UNION ALL "
-        + "SELECT 'ScreeningPhase' AS phase "
-        + "FROM ScreeningPhase sp "
-        + "JOIN RecruitmentProcess r ON sp.pk = r.screeningPhase.pk "
-        + "WHERE r.jobOpening.jobReference = :jobReference "
-        + "AND sp.state = :openState", String.class)
-        .setParameter("jobReference", jobOpening.jobReference())
-        .setParameter("openState", State.valueOf(ActivityState.OPEN.toString()));
+                + "FROM AnalysisPhase a "
+                + "JOIN RecruitmentProcess r ON a.pk = r.analysisPhase.pk "
+                + "WHERE r.jobOpening.jobReference = :jobReference "
+                + "AND a.state = :openState "
+                + "UNION ALL "
+                + "SELECT 'ApplicationPhase' AS phase "
+                + "FROM ApplicationPhase ap "
+                + "JOIN RecruitmentProcess r ON ap.pk = r.applicationPhase.pk "
+                + "WHERE r.jobOpening.jobReference = :jobReference "
+                + "AND ap.state = :openState "
+                + "UNION ALL "
+                + "SELECT 'InterviewPhase' AS phase "
+                + "FROM InterviewPhase ip "
+                + "JOIN RecruitmentProcess r ON ip.pk = r.interviewPhase.pk "
+                + "WHERE r.jobOpening.jobReference = :jobReference "
+                + "AND ip.state = :openState "
+                + "UNION ALL "
+                + "SELECT 'ResultPhase' AS phase "
+                + "FROM ResultPhase rp "
+                + "JOIN RecruitmentProcess r ON rp.pk = r.resultPhase.pk "
+                + "WHERE r.jobOpening.jobReference = :jobReference "
+                + "AND rp.state = :openState "
+                + "UNION ALL "
+                + "SELECT 'ScreeningPhase' AS phase "
+                + "FROM ScreeningPhase sp "
+                + "JOIN RecruitmentProcess r ON sp.pk = r.screeningPhase.pk "
+                + "WHERE r.jobOpening.jobReference = :jobReference "
+                + "AND sp.state = :openState", String.class)
+                .setParameter("jobReference", jobOpening.jobReference())
+                .setParameter("openState", State.valueOf(ActivityState.OPEN.toString()));
         List<String> results = phase.getResultList();
-        return results.isEmpty() ? Optional.empty() : Optional.ofNullable(results.get(0));    }
+        return results.isEmpty() ? Optional.empty() : Optional.ofNullable(results.get(0));
+    }
 
     @Override
-    public Optional<RecruitmentProcess> findByJobOpening(JobOpening theJobOpening) {
+    public Optional<RecruitmentProcess> findByJobOpening(final JobOpening theJobOpening) {
         final Map<String, Object> params = new HashMap<>();
         params.put("jobOpening", theJobOpening);
         return matchOne("e.jobOpening=:jobOpening", params);

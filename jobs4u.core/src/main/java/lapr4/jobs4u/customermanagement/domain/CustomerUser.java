@@ -72,12 +72,20 @@ public class CustomerUser implements AggregateRoot<Long> {
         return DomainEntities.areEqual(this, other);
     }
 
-    public Long customerCode() {
+    public Long pk() {
         return identity();
     }
 
     @Override
     public Long identity() {
         return this.pk;
+    }
+
+    public Customer customer() {
+        return this.customer;
+    }
+
+    public SystemUser systemUser() {
+        return this.systemUser;
     }
 }

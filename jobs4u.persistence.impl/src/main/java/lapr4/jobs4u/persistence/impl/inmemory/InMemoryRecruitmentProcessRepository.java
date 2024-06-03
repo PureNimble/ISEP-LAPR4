@@ -17,12 +17,12 @@ public class InMemoryRecruitmentProcessRepository extends InMemoryDomainReposito
     }
 
     @Override
-    public Optional<String> currentPhase(JobOpening jobOpening) {
+    public Optional<String> currentPhase(final JobOpening jobOpening) {
         return currentPhase(jobOpening);
     }
 
     @Override
-    public Optional<RecruitmentProcess> findByJobOpening(JobOpening theJobOpening) {
+    public Optional<RecruitmentProcess> findByJobOpening(final JobOpening theJobOpening) {
         return matchOne(e -> e.jobOpening().equals(theJobOpening));
     }
 }

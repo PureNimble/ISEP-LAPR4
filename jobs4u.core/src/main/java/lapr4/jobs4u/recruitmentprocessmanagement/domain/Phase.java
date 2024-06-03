@@ -22,42 +22,36 @@ public abstract class Phase {
     
     @Embedded
     private State state;
-
-    @Column(name = "in_progress")
-    private boolean inProgress;
     
     protected Phase(final String initialDate, final String finalDate) {
         Preconditions.noneNull(new Object[] { initialDate, finalDate});
-        Date initialDateTemp = Date.valueOf(initialDate);
-        Date finalDateTemp = Date.valueOf(finalDate);
+        final Date initialDateTemp = Date.valueOf(initialDate);
+        final Date finalDateTemp = Date.valueOf(finalDate);
         if (initialDateTemp.isAfter(finalDateTemp)) {
             throw new IllegalArgumentException("Initial date cannot be after final date");
         }
         this.initialDate = initialDateTemp;
         this.finalDate = finalDateTemp;
         this.state = State.valueOf(ActivityState.CLOSED.toString());
-        this.inProgress = false;
     }
 
     protected Phase(final String initialDate, final String finalDate, final String minDate) {
         Preconditions.noneNull(new Object[] { initialDate, finalDate, minDate });
-        Date initialDateTemp = Date.valueOf(initialDate);
-        Date finalDateTemp = Date.valueOf(finalDate);
-        Date minDateTemp = Date.valueOf(minDate);
+        final Date initialDateTemp = Date.valueOf(initialDate);
+        final Date finalDateTemp = Date.valueOf(finalDate);
+        final Date minDateTemp = Date.valueOf(minDate);
         if (initialDateTemp.isAfter(finalDateTemp) || initialDateTemp.isBefore(minDateTemp)){
             throw new IllegalArgumentException("Initial date cannot be after final date or before min date");
         }
         this.initialDate = initialDateTemp;
         this.finalDate = finalDateTemp;
         this.state = State.valueOf(ActivityState.CLOSED.toString());
-        this.inProgress = false;
     }
 
     protected Phase() {
         this.initialDate = null;
         this.finalDate = null;
         this.state = null;
-        this.inProgress = false;
     }
 
     public Date initialDate() {
@@ -70,10 +64,6 @@ public abstract class Phase {
 
     public State state() {
         return state;
-    }
-
-    public boolean inProgress() {
-        return inProgress;
     }
 
     public void open() {

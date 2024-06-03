@@ -72,7 +72,15 @@ public class CandidateUser implements AggregateRoot<Long> {
         return DomainEntities.areEqual(this, other);
     }
 
-    public Long customerCode() {
+    public Candidate candidate() {
+        return this.candidate;
+    }
+
+    public SystemUser systemUser() {
+        return this.systemUser;
+    }
+
+    public Long pk() {
         return identity();
     }
 

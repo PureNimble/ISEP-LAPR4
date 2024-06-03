@@ -23,7 +23,7 @@ public class MyCandidateUserService {
         final UserSession s = authz.session().orElseThrow(IllegalStateException::new);
         final SystemUser myUser = s.authenticatedUser();
         // TODO cache the client user object
-        final Optional<CandidateUser> me = repo.findByEmail(myUser.identity());
+        final Optional<CandidateUser> me = repo.findBySystemUser(myUser);
         return me.orElseThrow(IllegalStateException::new);
     }
 
@@ -31,7 +31,7 @@ public class MyCandidateUserService {
         authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.CUSTOMER);
         final UserSession s = authz.session().orElseThrow(IllegalStateException::new);
         final SystemUser me = s.authenticatedUser();
-        return repo.findByEmail(me.identity()).orElseThrow(IllegalStateException::new);
+        return repo.findBySystemUser(me).orElseThrow(IllegalStateException::new);
     }
 
 }

@@ -14,7 +14,6 @@ import lapr4.jobs4u.customermanagement.domain.CustomerCode;
 public interface CustomerRepository extends DomainRepository<CustomerCode, Customer> {
     Optional<Customer> findByCustomerCode(final CustomerCode number);
     Optional<Customer> findByEmail(final EmailAddress email);
-    Iterable<Customer> findAll();
     Iterable<Customer> filterByCostumerManager(final Username name);
 }
 

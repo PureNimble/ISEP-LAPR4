@@ -3,7 +3,6 @@ package lapr4.jobs4u.applicationmanagement.application;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 
 import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -16,7 +15,6 @@ import java.util.List;
 import lapr4.jobs4u.applicationmanagement.domain.Application;
 import lapr4.jobs4u.applicationmanagement.domain.ApplicationBuilder;
 import lapr4.jobs4u.applicationmanagement.domain.File;
-import lapr4.jobs4u.applicationmanagement.dto.ApplicationDTO;
 import lapr4.jobs4u.applicationmanagement.repositories.ApplicationRepository;
 import lapr4.jobs4u.candidatemanagement.domain.Candidate;
 import lapr4.jobs4u.candidatemanagement.domain.CandidateBuilder;
@@ -55,6 +53,7 @@ public class DisplayCandidateApplicationsControllerTest {
         verify(authz).ensureAuthenticatedUserHasAnyOf(any());
     }
 
+    @SuppressWarnings({ "unchecked", "rawtypes" })
     @Test
     public void testPrintFrequentlyUsedWords() {
         List<Application> applications = new ArrayList<>();

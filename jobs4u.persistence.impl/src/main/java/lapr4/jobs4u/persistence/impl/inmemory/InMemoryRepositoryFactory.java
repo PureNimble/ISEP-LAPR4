@@ -15,6 +15,7 @@ import lapr4.jobs4u.jobopeningmanagement.repositories.JobOpeningRequirementRepos
 import lapr4.jobs4u.questionmanagement.repositories.InterviewQuestionRepository;
 import lapr4.jobs4u.questionmanagement.repositories.QuestionTypeRepository;
 import lapr4.jobs4u.questionmanagement.repositories.RequirementsQuestionRepository;
+import lapr4.jobs4u.rankmanagement.repositories.RankRepository;
 import lapr4.jobs4u.recruitmentprocessmanagement.repositories.RecruitmentProcessRepository;
 import lapr4.jobs4u.requirementmanagement.repositories.RequirementRepository;
 import eapli.framework.domain.repositories.TransactionalContext;
@@ -195,5 +196,15 @@ public class InMemoryRepositoryFactory implements RepositoryFactory {
     @Override
     public RequirementRepository requirements(TransactionalContext autoTx) {
         return requirements(null);
+    }
+
+    @Override
+    public RankRepository ranks() {
+        return new InMemoryRankRepository();
+    }
+
+    @Override
+    public RankRepository ranks(TransactionalContext autoTx) {
+        return ranks(null);
     }
 }

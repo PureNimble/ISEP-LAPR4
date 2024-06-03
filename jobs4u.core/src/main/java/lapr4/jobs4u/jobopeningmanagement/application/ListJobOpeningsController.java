@@ -59,7 +59,7 @@ public class ListJobOpeningsController {
         return jobOpeningsService.selectedJobOpening(jobOpeningDTO);
     }
 
-    public Iterable<JobOpeningDTO> getIntersection(Iterable<JobOpeningDTO> list1) {
+    public Iterable<JobOpeningDTO> getIntersection(final Iterable<JobOpeningDTO> list1) {
         Collection<JobOpeningDTO> list2 = (Collection<JobOpeningDTO>) filterByCostumerManager();
         List<JobOpeningDTO> list1AsList = new ArrayList<>();
         list1.forEach(list1AsList::add);
@@ -96,6 +96,12 @@ public class ListJobOpeningsController {
         authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.CUSTOMER_MANAGER, BaseRoles.POWERUSER);
 
         return jobOpeningsService.filterWithEvaluatedInterviews();
+    }
+
+    public Iterable<JobOpeningDTO> filterWithAvailablePhaseForRanking() {
+        authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.OPERATOR, BaseRoles.POWERUSER);
+
+        return jobOpeningsService.filterWithAvailablePhaseForRanking();
     }
 
 }

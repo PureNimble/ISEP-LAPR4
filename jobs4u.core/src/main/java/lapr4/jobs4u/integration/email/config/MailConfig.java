@@ -1,4 +1,4 @@
-package lapr4.jobs4u.emailmanagement.config;
+package lapr4.jobs4u.integration.email.config;
 
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;

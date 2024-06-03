@@ -1,9 +1,13 @@
 package lapr4.jobs4u.rankmanagement.repositories;
 
+import java.util.Optional;
+
 import eapli.framework.domain.repositories.DomainRepository;
 import lapr4.jobs4u.rankmanagement.domain.Rank;
-import lapr4.jobs4u.rankmanagement.domain.RankReference;
 
-public interface RankRepository extends DomainRepository<RankReference, Rank> {
-    String findHighestSequence();
+/**
+ * @author 2DI2
+ */
+public interface RankRepository extends DomainRepository<Long, Rank> {
+    Optional<String> findHighestSequence();
 }

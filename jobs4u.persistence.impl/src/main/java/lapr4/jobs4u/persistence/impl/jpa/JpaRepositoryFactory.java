@@ -5,6 +5,7 @@ import lapr4.jobs4u.infrastructure.persistence.RepositoryFactory;
 import lapr4.jobs4u.interviewmanagement.repositories.InterviewRepository;
 import lapr4.jobs4u.jobopeningmanagement.repositories.JobOpeningInterviewRepository;
 import lapr4.jobs4u.jobopeningmanagement.repositories.JobOpeningRequirementRepository;
+import lapr4.jobs4u.rankmanagement.repositories.RankRepository;
 import lapr4.jobs4u.requirementmanagement.repositories.RequirementRepository;
 import eapli.framework.domain.repositories.TransactionalContext;
 import eapli.framework.infrastructure.authz.domain.repositories.UserRepository;
@@ -181,5 +182,15 @@ public class JpaRepositoryFactory implements RepositoryFactory {
     @Override
     public RequirementRepository requirements(TransactionalContext autoTx) {
         return new JpaRequirementRepository(autoTx);
+    }
+
+    @Override
+    public RankRepository ranks() {
+        return new JpaRankRepository(Application.settings().getPersistenceUnitName());
+    }
+
+    @Override
+    public RankRepository ranks(TransactionalContext autoTx) {
+        return new JpaRankRepository(autoTx);
     }
 }

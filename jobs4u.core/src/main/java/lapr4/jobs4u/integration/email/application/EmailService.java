@@ -1,4 +1,4 @@
-package lapr4.jobs4u.emailmanagement.application;
+package lapr4.jobs4u.integration.email.application;
 
 import java.io.File;
 

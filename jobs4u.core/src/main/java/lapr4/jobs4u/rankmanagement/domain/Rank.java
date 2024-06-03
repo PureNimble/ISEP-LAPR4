@@ -2,39 +2,47 @@ package lapr4.jobs4u.rankmanagement.domain;
 
 import eapli.framework.domain.model.AggregateRoot;
 import eapli.framework.domain.model.DomainEntities;
-import jakarta.persistence.*;
+import eapli.framework.validations.Preconditions;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToOne;
+import jakarta.persistence.Table;
+import jakarta.persistence.Version;
 import lapr4.jobs4u.applicationmanagement.domain.Application;
-import lapr4.jobs4u.jobopeningmanagement.domain.JobOpening;
 
+/**
+ * @author 2DI2
+ */
 @Entity
 @Table(name = "T_RANK")
-public class Rank implements AggregateRoot<RankReference> {
+public class Rank implements AggregateRoot<Long> {
+    
     private static final long serialVersionUID = 1L;
 
     @Version
     private Long version;
 
-    @EmbeddedId
-    private RankReference rankReference;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long pk;
 
-    @Column (nullable = false)
+    @Column(nullable = false)
     private RankPlacement rankPlacement;
-
-    @OneToOne
-    private JobOpening jobOpening;
 
     @OneToOne
     private Application application;
 
-    Rank(final RankReference rankReference, final RankPlacement rankPlacement, final JobOpening jobOpening, final Application application) {
-        this.rankReference = rankReference;
+    Rank(final RankPlacement rankPlacement, final Application application) {
+        Preconditions.noneNull(new Object[] { rankPlacement, application });
         this.rankPlacement = rankPlacement;
-        this.jobOpening = jobOpening;
         this.application = application;
     }
 
     protected Rank() {
-        //for ORM only
+        // for ORM only
     }
 
     @Override
@@ -53,12 +61,12 @@ public class Rank implements AggregateRoot<RankReference> {
     }
 
     @Override
-    public RankReference identity() {
-        return this.rankReference;
+    public Long identity() {
+        return this.pk;
     }
 
     @Override
     public String toString() {
-        return rankReference.toString();
+        return pk.toString();
     }
 }

@@ -1,16 +1,30 @@
 package lapr4.jobs4u.rankmanagement.domain;
 
+import java.util.regex.Pattern;
+
 import eapli.framework.domain.model.ValueObject;
 import eapli.framework.validations.Preconditions;
+import jakarta.persistence.Embeddable;
 
+/**
+ * @author 2DI2
+ */
+@Embeddable
 public class RankPlacement implements ValueObject, Comparable<RankPlacement> {
-    private static final long serialVersionUID = 1L;
 
-    private final String rankPlacement;
+    private static final long serialVersionUID = 1L;
+    private static final Pattern NUMBER_PATTERN = Pattern.compile("\\d+");
+
+    private final Integer rankPlacement;
 
     protected RankPlacement(final String rankPlacement) {
-        Preconditions.nonEmpty(rankPlacement, "rankPlacement should neither be null nor empty");
-        this.rankPlacement = rankPlacement;
+        Preconditions.nonEmpty(rankPlacement, "Rank Placement should neither be null nor empty");
+        Preconditions.matches(NUMBER_PATTERN, rankPlacement, "Rank Placement must be a number");
+        this.rankPlacement = Integer.parseInt(rankPlacement);
+    }
+
+    protected RankPlacement() {
+        this.rankPlacement = null;
     }
 
     public static RankPlacement valueOf(final String rankPlacement) {
@@ -37,7 +51,7 @@ public class RankPlacement implements ValueObject, Comparable<RankPlacement> {
 
     @Override
     public String toString() {
-        return this.rankPlacement;
+        return this.rankPlacement.toString();
     }
 
     @Override

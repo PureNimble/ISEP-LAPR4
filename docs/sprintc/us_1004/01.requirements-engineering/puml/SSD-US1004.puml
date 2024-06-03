@@ -25,7 +25,7 @@ activate System
 loop until the Customer Manager is satisfied with the changes
     System --> CustomerManager : Shows list of job opening attributes
 
-    note right of CustomerManager : Attributes are: Title or function, Contract Type, Mode, Address,\nNumber of vacancies, Description, Requirement Specification, start and end date of the phases\ndepending on the phase that the recruitment process is in.
+    note right of CustomerManager : Attributes are: Title or function, Contract Type, Mode, Address,\nNumber of vacancies, Description, Requirement Specification,\nInterview Model, start and end date of the phases depending\n on the phase that the recruitment process is in.
 
     CustomerManager -> System : Chooses an attribute to edit
 

@@ -20,6 +20,9 @@ participant "JpaJobOpeningInterviewRepository" as JpaJobOpeningInterviewReposito
 participant "JobOpeningRequirement" as JobOpeningRequirement
 participant "JobOpeningRequirementRepository" as JobOpeningRequirementRepository
 participant "JpaJobOpeningRequirementRepository" as JpaJobOpeningRequirementRepository
+participant "RecruitmentProcess" as RecruitmentProcess
+participant "RecruitmentProcessRepository" as RecruitmentProcessRepository
+participant "JpaRecruitmentRepository" as JpaRecruitmentProcessRepository
 database "Database" as DB
 
 activate Manager
@@ -117,6 +120,46 @@ activate EditJobOpeningController
         JobOpeningRequirementRepository --> EditJobOpeningController : jobOpeningRequirement
     deactivate JobOpeningRequirementRepository
     EditJobOpeningController --> EditJobOpeningUI : jobOpeningRequirement
+deactivate EditJobOpeningController
+alt Job Opening has Recruitment Process
+    EditJobOpeningUI -> EditJobOpeningController : editJobOpeningRecruitmentProcess(jobOpeningRecruitmentProcess, applicationInitialDate, applicationFinalDate,\nscreeningInitialDate, screeningFinalDate,interviewInitialDate, interviewFinalDate,\nanalysisIntialDate, analysisFinalDate, resultInitialDate, resultFinalDate)
+    activate EditJobOpeningController
+        alt Application Initial Date is updated
+            EditJobOpeningController -> RecruitmentProcess : recruitmenProcess.applicationPhase().editInitialDate(applicationInitialDate)
+        else Application Final Date is updated
+            EditJobOpeningController -> RecruitmentProcess : recruitmenProcess.applicationPhase().editFinalDate(applicationFinalDate)
+        else Screening Initial Date is updated
+            EditJobOpeningController -> RecruitmentProcess : recruitmenProcess.screeningPhase().editInitialDate(screeningInitialDate)
+        else Screening Final Date is updated
+            EditJobOpeningController -> RecruitmentProcess : recruitmenProcess.screeningPhase().editFinalDate(screeningFinalDate)
+        else Interview Initial Date exists and is updated
+            EditJobOpeningController -> RecruitmentProcess : recruitmenProcess.interviewPhase().editInitialDate(interviewInitialDate)
+        else Interview Final Date exists and is updated
+            EditJobOpeningController -> RecruitmentProcess : recruitmenProcess.interviewPhase().editFinalDate(interviewFinalDate)
+        else Analysis Initial Date is updated
+            EditJobOpeningController -> RecruitmentProcess : recruitmenProcess.analysisPhase().editInitialDate(analysisInitialDate)
+        else Analysis Final Date is updated
+            EditJobOpeningController -> RecruitmentProcess : recruitmenProcess.analysisPhase().editFinalDate(analysisFinalDate)
+        else Result Initial Date is updated
+            EditJobOpeningController -> RecruitmentProcess : recruitmenProcess.resultPhase().editInitialDate(resultInitialDate)
+        else Result Final Date is updated
+            EditJobOpeningController -> RecruitmentProcess : recruitmenProcess.resultPhase().editFinalDate(resultFinalDate)
+        end
+        EditJobOpeningController -> RecruitmentProcessRepository : save(jobOpeningInterview)
+        activate RecruitmentProcessRepository
+            RecruitmentProcessRepository -> JpaRecruitmentProcessRepository : save(jobOpeningInterview)
+            activate JpaRecruitmentProcessRepository
+                JpaRecruitmentProcessRepository -> DB : save(jobOpeningInterview)
+                activate DB
+                    DB --> JpaRecruitmentProcessRepository : JobOpeningInterview
+                deactivate DB
+                JpaRecruitmentProcessRepository --> RecruitmentProcessRepository : jobOpeningInterview
+            deactivate JpaRecruitmentProcessRepository
+            RecruitmentProcessRepository --> EditJobOpeningController : jobOpeningInterview
+        deactivate RecruitmentProcessRepository
+        EditJobOpeningController --> EditJobOpeningUI : jobOpeningInterview
+    deactivate EditJobOpeningController
+end
 
 EditJobOpeningUI --> Manager : Informs success or failure of update
 deactivate EditJobOpeningUI

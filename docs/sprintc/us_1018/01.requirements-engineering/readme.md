@@ -48,6 +48,12 @@ In this case, if the answer is 1 and 2 the grade is 0% of 10, therefore 0. If th
 >
 > **Answer:** O caso mencionado deve ser considerado um erro de validação do ficheiro (ou seja, o ficheiro submetido não corresponde à gramática definida).
 
+> **Date:** 2024-06-02
+>
+> **Question 237:** Pontuação de questões em interviews - Todos os tipos de questões têm uma cotação associada ou uma questão do tipo Date, por exemplo, não necessita de cotação associada?
+>
+> **Answer:** Secção 2.2.4: “A job interview is a form with a set of questions. Each question has a value associated. The sum of the values for all the questions should be 100.“ Pela descrição parece claro que cada pergunta deve ser avaliada. No entanto, o importante é que a soma das avaliações de todas as perguntas resulte em 100 (nota máxima). Ou seja, seria possivel definir perguntas que não são avaliadas (ou são sempre avaliadas em 0). O facto da perguntas ser do tipo data não a torma particular/especial.
+
 
 ### 1.3. Acceptance Criteria
 

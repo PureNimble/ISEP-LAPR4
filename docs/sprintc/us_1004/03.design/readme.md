@@ -20,6 +20,9 @@
 | 			  		 |	... editing the job opening requirement?						 | JobOpeningRequirement	         | Information Expert: The JobOpeningRequirement knows how to edit a JobOpeningRequirement. |
 | 			  		 |	... saving the job opening requirement?						 | JobOpeningRequirementRepository	         | Information Expert: The repository knows how to save a job opening requirement. |
 | 			  		 |	... querying the database for job opening requirements?						 | JpaJobOpeningRequirementRepository	         | Information Expert: The JpaJobOpeningRequirementRepository knows how to interact with the database. |
+| 			  		 |	... editing the recruitment process?						 | RecruitmentProcess	         | Information Expert: The RecruitmentProcess knows how to edit a RecruitmentProcess. |
+| 			  		 |	... saving the recruitment process?						 | RecruitmentProcessRepository	         | Information Expert: The repository knows how to save a recruitment process. |
+| 			  		 |	... querying the database for recruitment processes?						 | JpaRecruitmentProcessRepository	         | Information Expert: The JpaRecruitmentProcessRepository knows how to interact with the database. |
 
 
 ### Systematization ##
@@ -29,6 +32,7 @@ According to the taken rationale, the conceptual classes promoted to software cl
 * JobOpening
 * JobOpeningInterview
 * JobOpeningRequirement
+* RecruitmentProcess
 
 Other software classes (i.e. Pure Fabrication) identified:
 
@@ -40,8 +44,10 @@ Other software classes (i.e. Pure Fabrication) identified:
 * JpaJobOpeningInterviewRepository
 * JobOpeningRequirementRepository
 * JpaJobOpeningRequirementRepository
+* RecruitmentProcessRepository
+* JpaRecruitmentProcessRepository
 
-These classes are responsible for the user interface, controlling the use cases, editing and saving the job openings, job opening interviews, and job opening requirements, and interacting with the database, respectively.
+These classes are responsible for the user interface, controlling the use cases, editing and saving the job openings, job opening interviews, job opening requirements, and recruitment processes, and interacting with the database, respectively.
 
 ## 3.2. Sequence Diagram (SD)
 

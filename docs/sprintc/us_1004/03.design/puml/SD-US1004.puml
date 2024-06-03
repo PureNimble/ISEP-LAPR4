@@ -145,19 +145,19 @@ alt Job Opening has Recruitment Process
         else Result Final Date is updated
             EditJobOpeningController -> RecruitmentProcess : recruitmenProcess.resultPhase().editFinalDate(resultFinalDate)
         end
-        EditJobOpeningController -> RecruitmentProcessRepository : save(jobOpeningInterview)
+        EditJobOpeningController -> RecruitmentProcessRepository : save(recruitmentProcess)
         activate RecruitmentProcessRepository
-            RecruitmentProcessRepository -> JpaRecruitmentProcessRepository : save(jobOpeningInterview)
+            RecruitmentProcessRepository -> JpaRecruitmentProcessRepository : save(recruitmentProcess)
             activate JpaRecruitmentProcessRepository
-                JpaRecruitmentProcessRepository -> DB : save(jobOpeningInterview)
+                JpaRecruitmentProcessRepository -> DB : save(recruitmentProcess)
                 activate DB
-                    DB --> JpaRecruitmentProcessRepository : JobOpeningInterview
+                    DB --> JpaRecruitmentProcessRepository : recruitmentProcess
                 deactivate DB
-                JpaRecruitmentProcessRepository --> RecruitmentProcessRepository : jobOpeningInterview
+                JpaRecruitmentProcessRepository --> RecruitmentProcessRepository : recruitmentProcess
             deactivate JpaRecruitmentProcessRepository
-            RecruitmentProcessRepository --> EditJobOpeningController : jobOpeningInterview
+            RecruitmentProcessRepository --> EditJobOpeningController : recruitmentProcess
         deactivate RecruitmentProcessRepository
-        EditJobOpeningController --> EditJobOpeningUI : jobOpeningInterview
+        EditJobOpeningController --> EditJobOpeningUI : recruitmentProcess
     deactivate EditJobOpeningController
 end
 

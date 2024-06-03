@@ -78,6 +78,12 @@
 >
 > **Answer:** A intenção desta US é permitir a edição dos dados que caracterizam a job opening do ponto de vista de conceito de negócio. A alteração das fases tem uma US especifica.
 
+> **Date:** 2024-05-31
+>
+> **Question 234:** Gostava de saber se é pretendido que seja possível modificar uma Job Opening cujo Recruitment Process ainda não esteja definido.
+>
+> **Answer:** Este assunto já foi amplamente discutido. Nesse caso em particular parece-me até que não havendo fases não existe sequer a definição das datas para a fase de application (terão os candidatos conhecimento das datas de candidatura?), pelo que estaremos talvez mais “livres” para fazermos alterações?
+
 ### 1.3. Acceptance Criteria
 
 * **AC1:** The system must allow the edition of the job opening in the following phases:

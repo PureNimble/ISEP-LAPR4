@@ -8,7 +8,6 @@ import java.util.Optional;
 import eapli.framework.domain.repositories.TransactionalContext;
 import eapli.framework.infrastructure.authz.domain.model.Username;
 import eapli.framework.infrastructure.repositories.impl.jpa.JpaAutoTxRepository;
-import jakarta.persistence.Query;
 import jakarta.persistence.TemporalType;
 import lapr4.jobs4u.Application;
 import lapr4.jobs4u.customermanagement.domain.Customer;

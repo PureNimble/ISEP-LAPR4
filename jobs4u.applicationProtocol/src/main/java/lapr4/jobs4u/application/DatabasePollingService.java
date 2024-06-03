@@ -10,7 +10,6 @@ import org.apache.logging.log4j.Logger;
 
 import eapli.framework.infrastructure.authz.domain.model.SystemUser;
 import lapr4.jobs4u.EventListener;
-import lapr4.jobs4u.TcpServer;
 import lapr4.jobs4u.customermanagement.domain.Customer;
 import lapr4.jobs4u.customermanagement.domain.CustomerUser;
 import lapr4.jobs4u.customermanagement.repositories.CustomerUserRepository;
@@ -25,7 +24,7 @@ import lapr4.jobs4u.recruitmentprocessmanagement.repositories.RecruitmentProcess
  */
 public class DatabasePollingService implements Runnable {
 
-    private final Logger LOGGER = LogManager.getLogger(TcpServer.class);
+    private final Logger LOGGER = LogManager.getLogger(DatabasePollingService.class);
 
     private final RecruitmentProcessRepository recruitmentProcessRepository;
     private final CustomerUserRepository customerUserRepository;
@@ -43,6 +42,7 @@ public class DatabasePollingService implements Runnable {
 
     @Override
     public void run() {
+        loadPreviousRecruitmentProcess();
         while (true) {
             LOGGER.info("Database polling service running...");
             pollDatabase();
@@ -89,6 +89,17 @@ public class DatabasePollingService implements Runnable {
             final SystemUser user = customerUser.get().user();
             eventListener.addNotification(user, new ProtocolMessage((byte) 1, MessageCode.NOTIFICATION,
                     "Your job opening " + jobOpening.jobReference() + " is now in " + state.toString() + " state."));
+        }
+    }
+
+    private void loadPreviousRecruitmentProcess() {
+        final Iterable<RecruitmentProcess> currentRecruitmentProcess = recruitmentProcessRepository.findAll();
+        for (final RecruitmentProcess currentState : currentRecruitmentProcess) {
+            final JobOpening jobOpening = currentState.jobOpening();
+            final Optional<String> stateOpt = recruitmentProcessRepository.currentPhase(jobOpening);
+            final String state = stateOpt.orElse("No Phase");
+
+            previousRecruitmentProcess.put(currentState.identity(), state);
         }
     }
 }

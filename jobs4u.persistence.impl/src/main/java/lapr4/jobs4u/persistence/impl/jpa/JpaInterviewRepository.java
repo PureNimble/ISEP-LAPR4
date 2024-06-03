@@ -5,7 +5,6 @@ import lapr4.jobs4u.applicationmanagement.domain.Application;
 import lapr4.jobs4u.interviewmanagement.domain.Interview;
 import lapr4.jobs4u.interviewmanagement.repositories.InterviewRepository;
 import lapr4.jobs4u.jobopeningmanagement.domain.JobOpening;
-import lapr4.jobs4u.requirementmanagement.domain.Requirement;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -13,7 +12,6 @@ import java.util.Optional;
 
 import eapli.framework.domain.repositories.TransactionalContext;
 import eapli.framework.infrastructure.repositories.impl.jpa.JpaAutoTxRepository;
-import jakarta.persistence.Query;
 
 /**
  * @author 2DI2

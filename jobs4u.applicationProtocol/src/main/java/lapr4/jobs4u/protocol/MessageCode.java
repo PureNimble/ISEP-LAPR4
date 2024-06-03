@@ -18,7 +18,8 @@ public enum MessageCode {
     LISTAPPREQ((byte) 7),
     LISTAPPRES((byte) 8),
     LISTJOBREQ((byte) 9),
-    LISTJOBRES((byte) 10);
+    LISTJOBRES((byte) 10),
+    NOTIFICATION((byte) 11);
 
     private static final Map<Byte, MessageCode> CODES = new HashMap<>();
 

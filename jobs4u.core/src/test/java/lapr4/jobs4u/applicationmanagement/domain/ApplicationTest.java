@@ -1,5 +1,6 @@
 package lapr4.jobs4u.applicationmanagement.domain;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -29,13 +30,12 @@ public class ApplicationTest {
     public static Application dummyApplication(final String applicationNumber) {
         List<File> files = new ArrayList<File>();
         if (Files.currentDirectory().contains("jobs4u.core")) {
-            files.add(File.valueOf("../jobs4u.applicationsFileBot/resources/input/3-file-1.txt"));
-            files.add(File.valueOf("../jobs4u.applicationsFileBot/resources/input/1-candidate-data.txt"));
+            files.add(File.valueOf("../jobs4u.applicationsFileBot/sprintc/resources/input/3-file-1.txt"));
+            files.add(File.valueOf("../jobs4u.applicationsFileBot/sprintc/resources/input/1-candidate-data.txt"));
         } else {
-            files.add(File.valueOf("jobs4u.applicationsFileBot/resources/input/3-file-1.txt"));
-            files.add(File.valueOf("jobs4u.applicationsFileBot/resources/input/1-candidate-data.txt"));
+            files.add(File.valueOf("jobs4u.applicationsFileBot/sprintc/resources/input/3-file-1.txt"));
+            files.add(File.valueOf("jobs4u.applicationsFileBot/sprintc/resources/input/1-candidate-data.txt"));
         }
-
         // candidateBuilder
         final CandidateBuilder candidateBuilder = new CandidateBuilder();
         final SystemUserBuilder userBuilder = UserBuilderHelper.builder();
@@ -106,15 +106,42 @@ public class ApplicationTest {
         assertFalse(expected);
     }
 
-    /*     @Test
-    public void ensureApplicationEqualsFailsForNull() throws Exception {
+    @Test
+    public void testApplicationThreadAndPrint() throws Exception {
         final Application application = getNewDummyApplication(APPLICATION_NUMBER);
-    
+
         Thread t = new Thread(application);
+        t.start();
         t.join();
-    
-        System.out.println(application.toString());
-    
-    } */
+        String output = application.toString();
+        String expected = "Application: 1\n" +
+                "Position   Word                 | Count\n" +
+                "---------- --------------------+-------\n" +
+                "1          at                   | 11 | [3-file-1.txt]\n" +
+                "2          do                   | 11 | [3-file-1.txt]\n" +
+                "3          on                   | 10 | [3-file-1.txt]\n" +
+                "4          her                  | 8 | [3-file-1.txt]\n" +
+                "5          as                   | 7 | [3-file-1.txt]\n" +
+                "6          it                   | 7 | [3-file-1.txt]\n" +
+                "7          she                  | 6 | [3-file-1.txt]\n" +
+                "8          no                   | 6 | [3-file-1.txt]\n" +
+                "9          to                   | 6 | [3-file-1.txt]\n" +
+                "10         an                   | 5 | [3-file-1.txt]\n" +
+                "11         did                  | 5 | [3-file-1.txt]\n" +
+                "12         he                   | 5 | [3-file-1.txt]\n" +
+                "13         in                   | 5 | [3-file-1.txt]\n" +
+                "14         or                   | 5 | [3-file-1.txt]\n" +
+                "15         so                   | 5 | [3-file-1.txt]\n" +
+                "16         his                  | 5 | [3-file-1.txt]\n" +
+                "17         be                   | 4 | [3-file-1.txt]\n" +
+                "18         by                   | 4 | [3-file-1.txt]\n" +
+                "19         me                   | 4 | [3-file-1.txt]\n" +
+                "20         mr                   | 4 | [3-file-1.txt]";
+        assertFalse(output.isEmpty());
+        assertTrue(output.contains("a"));
+        assertEquals(output, expected);
+        assertEquals(1158, output.length());
+
+    }
 
 }

@@ -29,10 +29,13 @@ public class ApplicationTest {
     public static Application dummyApplication(final String applicationNumber) {
         List<File> files = new ArrayList<File>();
         if (Files.currentDirectory().contains("jobs4u.core")) {
+            files.add(File.valueOf("../jobs4u.applicationsFileBot/resources/input/3-file-1.txt"));
             files.add(File.valueOf("../jobs4u.applicationsFileBot/resources/input/1-candidate-data.txt"));
         } else {
+            files.add(File.valueOf("jobs4u.applicationsFileBot/resources/input/3-file-1.txt"));
             files.add(File.valueOf("jobs4u.applicationsFileBot/resources/input/1-candidate-data.txt"));
         }
+
         // candidateBuilder
         final CandidateBuilder candidateBuilder = new CandidateBuilder();
         final SystemUserBuilder userBuilder = UserBuilderHelper.builder();
@@ -47,17 +50,14 @@ public class ApplicationTest {
         final CustomerBuilder customerBuilder = new CustomerBuilder();
         final SystemUser aSu = userBuilder
                 .with("username@email.local", "Pass123", "firstName", "lastName", "email@email.local").build();
-        final Customer aCustomer = customerBuilder
-                .with("Fnac", "R. Sara Afonso 105, 4460-841 Sra. da Hora", "ABC123",
-                        "fnac@email.local", "910000000", aSu)
-                .build();
+        final Customer aCustomer = customerBuilder.with("Fnac", "R. Sara Afonso 105, 4460-841 Sra. da Hora", "ABC123",
+                "fnac@email.local", "910000000", aSu).build();
         ;
 
-        JobOpening jobOpening = jobOpeningBuilder.with("12", "titleOrFunction", "VOLUNTEER",
-                "HYBRID", "address", aCustomer, "jobDescription", CurrentTimeCalendars.now(), "24").build();
+        JobOpening jobOpening = jobOpeningBuilder.with("12", "titleOrFunction", "VOLUNTEER", "HYBRID", "address",
+                aCustomer, "jobDescription", CurrentTimeCalendars.now(), "24").build();
 
-        return new ApplicationBuilder()
-                .with(applicationNumber, Date.today(), files, jobOpening, candidate).build();
+        return new ApplicationBuilder().with(applicationNumber, Date.today(), files, jobOpening, candidate).build();
     }
 
     private Application getNewDummyApplication(final String applicationNumber) {
@@ -105,5 +105,16 @@ public class ApplicationTest {
 
         assertFalse(expected);
     }
+
+    /*     @Test
+    public void ensureApplicationEqualsFailsForNull() throws Exception {
+        final Application application = getNewDummyApplication(APPLICATION_NUMBER);
+    
+        Thread t = new Thread(application);
+        t.join();
+    
+        System.out.println(application.toString());
+    
+    } */
 
 }

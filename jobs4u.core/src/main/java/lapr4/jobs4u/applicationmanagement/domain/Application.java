@@ -6,6 +6,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
 import org.springframework.data.util.Pair;
@@ -181,10 +182,13 @@ public class Application implements AggregateRoot<ApplicationCode>, Runnable {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("Application Code: ").append(applicationCode).append("\n");
-        sb.append("Top 20 Words:\n");
+        sb.append(String.format("Application: %s\n", applicationCode));
+        AtomicInteger position = new AtomicInteger(1);
+        sb.append(String.format("%-10s %-20s | %s\n", "Position", "Word", "Count"));
+        sb.append("---------- --------------------+-------\n");
         topWords.entrySet().forEach(entry -> {
-            sb.append(entry.getKey()).append(": ").append(entry.getValue()).append("\n");
+            sb.append(String.format("%-10d %-20s | %d | %s\n", position.getAndIncrement(), entry.getKey(),
+                    entry.getValue().getFirst(), entry.getValue().getSecond()));
         });
         return sb.toString();
     }

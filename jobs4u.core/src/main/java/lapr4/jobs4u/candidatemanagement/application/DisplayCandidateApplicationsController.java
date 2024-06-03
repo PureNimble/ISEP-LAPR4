@@ -52,8 +52,6 @@ public class DisplayCandidateApplicationsController {
                 e.printStackTrace();
             }
         }
-
         return app;
-
     }
 }

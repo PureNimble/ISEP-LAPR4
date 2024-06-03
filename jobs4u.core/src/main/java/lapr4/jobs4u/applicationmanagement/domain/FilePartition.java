@@ -33,14 +33,14 @@ public class FilePartition implements Runnable {
     @Override
     public void run() {
         topWords = new HashMap<>();
-        final String[] texts = text.split("\\s+");
+        final String[] texts = text.split("(?<=\\p{L})(?=\\p{P})|(?<=\\p{P})(?=\\p{L})|\\s+");
         Integer value;
-        for (String t : texts) {
+        for (String word : texts) {
             value = 1;
-            // if word contains special characters, remove them
-            String word = t.replaceAll("[^a-zA-Z0-9']", "").toLowerCase();
-            if (word.isEmpty())
+            word = word.replaceAll("[^a-zA-Z0-9'@.]", "").toLowerCase();
+            if (word.isEmpty() || (word.length() == 1 && word.matches("\\P{Alnum}"))) {
                 continue;
+            }
             if (topWords.containsKey(word))
                 value = topWords.get(word) + 1;
 

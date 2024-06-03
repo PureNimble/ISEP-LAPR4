@@ -165,7 +165,7 @@ else phase == "InterviewPhase"
         ANP -> ANP : open()
         deactivate ANP
     else 
-        alt !hasInterviews(theJobOpening)
+        alt !hasEvaluatedInterviews(theJobOpening)
             C -> SP : open()
             activate SP
             SP -> SP : open()
@@ -185,7 +185,7 @@ else phase == "AnalysisPhase"
         REP -> REP : open()
         deactivate REP
     else
-        alt !hasAnalysisResults(theJobOpening)
+        alt !hasRanking(theJobOpening)
             alt recruitmentProcess.interviewPhase() != null
                 C -> IP : open()
                 activate IP

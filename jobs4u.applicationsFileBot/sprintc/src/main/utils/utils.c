@@ -14,7 +14,7 @@
 #include "circularBuffer.h"
 
 /**
- * Creates a semaphore with the given name and initial value.
+ * Creates a semaphore with the specified name and initial value.
  *
  * @param name The name of the semaphore.
  * @param value The initial value of the semaphore.
@@ -32,11 +32,12 @@ sem_t *createSemaphore(char *name, unsigned value)
 }
 
 /**
- * Creates a shared memory region and returns a pointer to it.
+ * Creates a shared memory segment and returns a pointer to it.
  *
- * @param name The name of the shared memory region.
- * @param fd A pointer to an integer that will hold the file descriptor of the shared memory region.
- * @return A pointer to the created shared memory region.
+ * @param name The name of the shared memory segment.
+ * @param fd A pointer to an integer that will hold the file descriptor of the shared memory segment.
+ * @param config A pointer to a Config struct containing configuration information.
+ * @return A pointer to the CircularBuffer struct representing the shared memory segment.
  */
 CircularBuffer *createSharedMemory(char *name, int *fd, Config *config)
 {
@@ -67,7 +68,7 @@ CircularBuffer *createSharedMemory(char *name, int *fd, Config *config)
 /**
  * Removes a named semaphore.
  *
- * @param name The name of the semaphore to remove.
+ * @param name The name of the semaphore to be removed.
  */
 void removeSemaphore(char *name)
 {
@@ -96,7 +97,7 @@ void removeSharedMemory(char *name)
  * Closes the shared memory and file descriptor.
  *
  * @param fd The file descriptor to close.
- * @param shm The shared memory to unmap.
+ * @param shm Pointer to the shared memory region.
  */
 void close_shared_memory(int fd, CircularBuffer *shm)
 {
@@ -115,7 +116,7 @@ void close_shared_memory(int fd, CircularBuffer *shm)
 /**
  * Creates a child process using the fork system call.
  *
- * @return The process ID of the child process.
+ * @return The process ID (PID) of the child process.
  */
 pid_t createChildProcess()
 {
@@ -133,7 +134,6 @@ pid_t createChildProcess()
  * Creates a pipe using the pipe system call.
  *
  * @param fd An integer array to store the file descriptors of the pipe.
- * @return None.
  */
 void createPipe(int *fd)
 {
@@ -145,9 +145,12 @@ void createPipe(int *fd)
 }
 
 /**
- * Allocates memory using the malloc function.
+ * Allocates memory for an array of a given size using malloc.
  *
- * @param array A pointer to the memory block to be allocated.
+ * @param array Pointer to the array pointer that will store the allocated memory.
+ * @param size  The size of the array to be allocated.
+ *
+ * @note This function will exit the program with failure if memory allocation fails.
  */
 void createMalloc(void **array, size_t size)
 {
@@ -160,11 +163,11 @@ void createMalloc(void **array, size_t size)
 }
 
 /**
- * Reallocates memory using the realloc function.
+ * Reallocates memory for an array with the specified size.
  *
- * @param array A pointer to the memory block to be reallocated.
- * @param size The new size of the memory block.
- * @return A pointer to the reallocated memory block.
+ * @param array The pointer to the array to be reallocated.
+ * @param size The new size of the array.
+ * @return The pointer to the newly reallocated array, or NULL if memory allocation failed.
  */
 void *createRealloc(void *array, size_t size)
 {
@@ -176,11 +179,16 @@ void *createRealloc(void *array, size_t size)
     }
     return newArray;
 }
+
 /**
- * @brief Create a malloc string.
+ * @brief Creates a dynamically allocated string and assigns it to the given pointer.
  *
- * @param str The string to be created.
- * @param value The value to be assigned to the string.
+ * This function allocates memory for a string with the same length as the given value,
+ * plus one additional byte for the null terminator. It then copies the value into the
+ * allocated memory and assigns the pointer to the newly created string.
+ *
+ * @param str Pointer to a pointer that will store the newly created string.
+ * @param value The string value to be copied.
  */
 void createMallocString(char **str, char *value)
 {
@@ -192,6 +200,7 @@ void createMallocString(char **str, char *value)
     }
     strcpy(*str, value);
 }
+
 /**
  * Checks if a given string represents an integer.
  *
@@ -228,10 +237,10 @@ void errorMessages(char *message)
 }
 
 /**
- * Checks if a given path is a file or a directory.
+ * Checks whether the given path is a file or a directory.
  *
- * @param path The path to be checked.
- * @return 1 if the path is a file, 2 if the path is a directory, 0 otherwise.
+ * @param path The path to check.
+ * @return 1 if the path is a file, 2 if it is a directory, 0 if it is neither.
  */
 int isFileOrDirectory(char *path)
 {
@@ -239,20 +248,21 @@ int isFileOrDirectory(char *path)
     stat(path, &path_stat);
     if (S_ISREG(path_stat.st_mode))
     {
-        return 1; // file
+        return 1;
     }
     else if (S_ISDIR(path_stat.st_mode))
     {
-        return 2; // directory
+        return 2;
     }
-    return 0; // not a file or directory
+    return 0;
 }
 
 /**
- * @brief Read the first line of a file.
+ * Reads the first line of a file and returns it as a dynamically allocated string.
  *
- * @param file_path The path to the file.
- * @return char* The first line of the file, or NULL if an error occurred.
+ * @param file_path The path of the file to read.
+ * @param candidateID The ID of the candidate.
+ * @return A pointer to the first line of the file, or NULL if the file cannot be opened or the first line is empty.
  */
 char *readFirstLine(char *file_path, int candidateID)
 {
@@ -293,9 +303,9 @@ void create_directory(const char *dir)
 }
 
 /**
- * Deletes a directory with the specified name.
+ * Deletes a directory and all its contents.
  *
- * @param dir The name of the directory to delete.
+ * @param dir The path of the directory to be deleted.
  */
 void delete_directory(const char *dir)
 {
@@ -307,13 +317,11 @@ void delete_directory(const char *dir)
         exit(EXIT_FAILURE);
     }
 }
+
 /**
- * Prints the details of a CandidateInfo object.
+ * Prints the information of a CandidateInfo struct.
  *
- * This function prints the candidate ID, job offer directory, and the list of files
- * associated with the CandidateInfo object.
- *
- * @param file The CandidateInfo object to be printed.
+ * @param file The CandidateInfo struct to print.
  */
 void printFiles(CandidateInfo file)
 {
@@ -321,6 +329,7 @@ void printFiles(CandidateInfo file)
     printf("Job Offer Directory: %s\n", file.jobOffer_dir);
     printf("Number of files: %d\n", file.numFiles);
     printf("Is Done: %d\n", file.isDone);
+    printf("Index: %d\n", file.index);
     for (int i = 0; i < file.numFiles; i++)
     {
         printf("File %d: %s\n", i + 1, file.files[i]);
@@ -328,10 +337,10 @@ void printFiles(CandidateInfo file)
 }
 
 /**
- * Creates a CandidateInfo struct with the given candidate ID and initializes its fields.
+ * Creates a CandidateInfo object with the given candidate ID.
  *
  * @param candidateID The ID of the candidate.
- * @return The created CandidateInfo struct.
+ * @return The created CandidateInfo object.
  */
 CandidateInfo createFiles(int candidateID)
 {
@@ -340,6 +349,13 @@ CandidateInfo createFiles(int candidateID)
     return file;
 }
 
+/**
+ * Replaces all occurrences of a substring in a given string with another substring.
+ *
+ * @param str The string in which the replacement will be performed.
+ * @param find The substring to be replaced.
+ * @param replace The substring to replace the occurrences of `find`.
+ */
 void replaceChar(char *str, char *find, char *replace)
 {
     char *pos = str;

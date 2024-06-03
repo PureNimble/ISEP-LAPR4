@@ -15,22 +15,28 @@
 #include <unistd.h>
 
 /**
- * @brief Generates a report file containing the names of all files in a given directory.
- * The report file is named with a timestamp and saved in the specified output path.
+ * Generates a report file for a candidate.
  *
- * @param config A pointer to the Config struct containing the configuration settings.
+ * This function generates a report file for a candidate based on the provided configuration,
+ * shared memory, and candidate information. The report file contains details such as the
+ * candidate ID, job offer directory, and a list of files associated with the candidate.
+ *
+ * @param config The configuration settings.
+ * @param shared_memory The shared memory buffer.
+ * @param sem_numberOfCandidates The semaphore for the number of candidates.
+ * @param sem_files The semaphore for accessing shared memory.
  */
-void reportFile(Config *config, CircularBuffer *shared_memory, sem_t *sem_sharedMemory_mutex)
+void reportFile(Config *config, CircularBuffer *shared_memory, sem_t *sem_numberOfCandidates, sem_t *sem_files)
 {
-    sem_wait(sem_sharedMemory_mutex); // acess shared memory
+    sem_wait(sem_files); // access shared memory
     CandidateInfo candidateInfo = checkFinishedFiles(shared_memory);
+    sem_post(sem_files); // release shared memory
+    sem_wait(sem_numberOfCandidates);
     shared_memory->numberOfCandidates--;
-    sem_post(sem_sharedMemory_mutex); // release shared memory
-
+    sem_post(sem_numberOfCandidates);
     if (candidateInfo.candidateID == -1)
-    {
         return;
-    }
+
     char buffer[3000];
     sprintf(buffer, "%sreport.txt", config->outputPath);
 
@@ -54,9 +60,16 @@ void reportFile(Config *config, CircularBuffer *shared_memory, sem_t *sem_shared
     fprintf(file, "\n");
 
     fclose(file);
-    printf("-> Report file has been generated for candidate:%d\n\n", candidateInfo.candidateID);
+    printf("-> Report file has been generated for candidate:%d\n", candidateInfo.candidateID);
 }
 
+/**
+ * Checks if a candidate file exists in the report file.
+ *
+ * @param candidate The candidate information.
+ * @param buffer The file path of the report file.
+ * @return Returns 1 if the candidate ID already exists in the report file, 0 otherwise.
+ */
 int checkIfCandidateFileExists(CandidateInfo candidate, char *buffer)
 {
     FILE *file = fopen(buffer, "r");
@@ -72,7 +85,7 @@ int checkIfCandidateFileExists(CandidateInfo candidate, char *buffer)
         {
             if (candidate.candidateID == id)
             {
-                printf("-> Candidate id:%d already exists in the report file.\n", id);
+                printf("-> Candidate ID: %d already exists in the report file.\n", id);
                 return 1;
             }
         }

@@ -18,28 +18,24 @@ void readConfigFile(Config *config)
         errorMessages("Error opening file!\n");
         exit(EXIT_FAILURE);
     }
-
     // Read and validate the INPUT_PATH
     if (fscanf(file, "INPUT_PATH=%s\n", config->inputPath) == -1 || isFileOrDirectory(config->inputPath) != 2)
     {
         errorMessages("Invalid format for INPUT_PATH (The Folder need to be created)\n");
         exit(EXIT_FAILURE);
     }
-
     // Read and validate the OUTPUT_PATH
     if (fscanf(file, "OUTPUT_PATH=%s\n", config->outputPath) == -1 || isFileOrDirectory(config->outputPath) != 2)
     {
         errorMessages("Invalid format for OUTPUT_PATH (The Folder need to be created)\n");
         exit(EXIT_FAILURE);
     }
-
     // Read and validate the NUMBER_OF_CHILDREN
     if (fscanf(file, "NUMBER_OF_CHILDREN=%d\n", &(config->numberOfChildren)) == -1 || config->numberOfChildren == 0)
     {
         errorMessages("Invalid format for NUMBER_OF_CHILDREN\n");
         exit(EXIT_FAILURE);
     }
-
     // Read and validate the VERIFY_NEW_FILES_FREQUENCY
     if (fscanf(file, "VERIFY_NEW_FILES_FREQUENCY=%d\n", &(config->verifyNewFilesFrequency)) == -1 || config->verifyNewFilesFrequency <= 0)
     {
@@ -47,13 +43,12 @@ void readConfigFile(Config *config)
         exit(EXIT_FAILURE);
     }
     // Read and validate the VERIFY_NEW_FILES_FREQUENCY
-    if (fscanf(file, "CIRCULAR_BUFFER_SIZE=%d\n", &(config->bufferSize)) == -1 || config->bufferSize > 20)
+    if (fscanf(file, "CIRCULAR_BUFFER_SIZE=%d\n", &(config->bufferSize)) == -1 || (config->bufferSize > 20 || config->bufferSize <= 0))
 
     {
         errorMessages("Invalid format for CIRCULAR_BUFFER_SIZE (MAX VALUE= 20)\n");
         exit(EXIT_FAILURE);
     }
-
     // Close the configuration file
     fclose(file);
 }
@@ -78,7 +73,6 @@ void printConfig(Config *config)
     printf("\033[1;36m--------------------------------\033[0m\n");
     config->bufferSize++;
     printf("\n\033[1;33mWarning:\033[0m \033[1;31mIf you want to change the program\n\t settings, you must change the config\n\t file located in the resources folder\033[0m\n");
-    // type any key to continue
     printf("\nPress enter to continue...\n");
     scanf("%*c");
 }

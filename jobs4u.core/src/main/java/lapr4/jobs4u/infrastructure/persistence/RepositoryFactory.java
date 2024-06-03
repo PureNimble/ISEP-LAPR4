@@ -13,6 +13,7 @@ import lapr4.jobs4u.jobopeningmanagement.repositories.JobOpeningRequirementRepos
 import lapr4.jobs4u.questionmanagement.repositories.InterviewQuestionRepository;
 import lapr4.jobs4u.questionmanagement.repositories.QuestionTypeRepository;
 import lapr4.jobs4u.questionmanagement.repositories.RequirementsQuestionRepository;
+import lapr4.jobs4u.rankmanagement.repositories.RankRepository;
 import lapr4.jobs4u.recruitmentprocessmanagement.repositories.RecruitmentProcessRepository;
 import eapli.framework.domain.repositories.TransactionalContext;
 import eapli.framework.infrastructure.authz.domain.repositories.UserRepository;
@@ -260,5 +261,20 @@ public interface RepositoryFactory {
      * @return
      */
     RequirementRepository requirements();
+
+    /**
+     *
+     * @param autoTx
+     *               the transactional context to enroll
+     * @return
+     */
+    RankRepository ranks(TransactionalContext autoTx);
+
+    /**
+     * repository will be created in auto transaction mode
+     *
+     * @return
+     */
+    RankRepository ranks();
 
 }

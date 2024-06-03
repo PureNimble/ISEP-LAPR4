@@ -2,22 +2,7 @@ package lapr4.jobs4u.app.backoffice.console.presentation;
 
 import eapli.framework.actions.Actions;
 import eapli.framework.actions.menu.Menu;
-import lapr4.jobs4u.app.backoffice.console.presentation.authz.action.EditJobOpeningAction;
-import lapr4.jobs4u.app.backoffice.console.presentation.authz.action.EvaluateInterviewAction;
-import lapr4.jobs4u.app.backoffice.console.presentation.authz.action.EvaluateRequirementAction;
-import lapr4.jobs4u.app.backoffice.console.presentation.authz.action.ExportInterviewAction;
-import lapr4.jobs4u.app.backoffice.console.presentation.authz.action.ListApplicationsAction;
-import lapr4.jobs4u.app.backoffice.console.presentation.authz.action.ListCandidatesByInterviewPointsAction;
-import lapr4.jobs4u.app.backoffice.console.presentation.authz.action.ListCandidatesDataAction;
-import lapr4.jobs4u.app.backoffice.console.presentation.authz.action.ListJobOpeningsAction;
-import lapr4.jobs4u.app.backoffice.console.presentation.authz.action.OpenOrClosePhaseAction;
-import lapr4.jobs4u.app.backoffice.console.presentation.authz.action.RecordInterviewAction;
-import lapr4.jobs4u.app.backoffice.console.presentation.authz.action.RegisterCustomerAction;
-import lapr4.jobs4u.app.backoffice.console.presentation.authz.action.RegisterJobOpeningAction;
-import lapr4.jobs4u.app.backoffice.console.presentation.authz.action.SelectInterviewAction;
-import lapr4.jobs4u.app.backoffice.console.presentation.authz.action.SelectRequirementAction;
-import lapr4.jobs4u.app.backoffice.console.presentation.authz.action.SetUpRecruitmentProcessAction;
-import lapr4.jobs4u.app.backoffice.console.presentation.authz.action.UploadInterviewAction;
+import lapr4.jobs4u.app.backoffice.console.presentation.authz.action.*;
 
 /**
  * @author 2DI2
@@ -40,6 +25,7 @@ public class CustomerManagerMenu extends Menu {
     private static final int EVALUATE_INTERVIEW = 14;
     private static final int EVALUATE_REQUIREMENT = 15;
     private static final int LIST_CANDIDATES_BY_INTERVIEW_POINTS = 16;
+    private static final int REGISTER_RANK = 17;
     private static final int EXIT_OPTION = 0;
     private static final String RETURN_LABEL = "Return ";
 
@@ -62,6 +48,7 @@ public class CustomerManagerMenu extends Menu {
         addItem(EVALUATE_INTERVIEW, "Evaluate Interview", new EvaluateInterviewAction());
         addItem(EVALUATE_REQUIREMENT, "Evaluate Requirement", new EvaluateRequirementAction());
         addItem(LIST_CANDIDATES_BY_INTERVIEW_POINTS, "List Candidates by Interview Points", new ListCandidatesByInterviewPointsAction());
+        addItem(REGISTER_RANK, "Rank Candidates", new RegisterRankAction());
         addItem(EXIT_OPTION, RETURN_LABEL, Actions.SUCCESS);
     }
 }

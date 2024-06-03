@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.StreamSupport;
 
 /**
@@ -22,7 +23,7 @@ import java.util.stream.StreamSupport;
 public class ListJobReqMessage extends Message {
 
     public ListJobReqMessage(final ProtocolMessage protocolMessage, final DataOutputStream output, final Socket socket,
-                             final EventListener eventListener) {
+            final EventListener eventListener) {
         super(protocolMessage, output, socket, eventListener);
     }
 
@@ -30,8 +31,16 @@ public class ListJobReqMessage extends Message {
     public void handle() throws IOException {
 
         final ListJobOpeningsService listJobOpeningsService = new ListJobOpeningsService(
-                PersistenceContext.repositories().jobOpenings(), PersistenceContext.repositories().customers(), PersistenceContext.repositories().applications());
-        final SystemUser user = eventListener.user(socket);
+                PersistenceContext.repositories().jobOpenings(), PersistenceContext.repositories().customers(),
+                PersistenceContext.repositories().applications());
+
+        final Optional<SystemUser> userOpt = eventListener.user(socket);
+        if (userOpt.isEmpty()) {
+            new ErrMessage(new ProtocolMessage((byte) 1, MessageCode.ERR, "Something went wrong"), output, socket,
+                    eventListener).handle();
+            return;
+        }
+        final SystemUser user = userOpt.get();
 
         if (!user.hasAny(BaseRoles.CUSTOMER)) {
             new ErrMessage(new ProtocolMessage((byte) 1, MessageCode.ERR, "Invalid Authentication"), output, socket,
@@ -40,7 +49,7 @@ public class ListJobReqMessage extends Message {
         }
 
         final Iterable<JobOpeningDTO> jobOpenings = listJobOpeningsService
-                        .findJobOpeningsFromCustomer(user.email());
+                .findJobOpeningsFromCustomer(user.email());
 
         final int size = (int) StreamSupport.stream(jobOpenings.spliterator(), false).count();
 

@@ -20,7 +20,7 @@ public class TcpClient {
     private DataInputStream input;
     private DataOutputStream output;
 
-    private final Logger logger = LogManager.getLogger(TcpClient.class);
+    private final Logger LOGGER = LogManager.getLogger(TcpClient.class);
 
     public TcpClient() {
     }
@@ -28,7 +28,7 @@ public class TcpClient {
     public void connect(final String hostname, final int port) throws UnknownHostException, IOException {
 
         socket = new Socket(hostname, port);
-        logger.info("Connected to the server!");
+        LOGGER.info("Connected to the server!");
 
         input = new DataInputStream(socket.getInputStream());
         output = new DataOutputStream(socket.getOutputStream());

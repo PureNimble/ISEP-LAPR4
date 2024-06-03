@@ -7,12 +7,15 @@ import java.net.Socket;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import lapr4.jobs4u.application.DatabasePollingService;
+import lapr4.jobs4u.infrastructure.persistence.PersistenceContext;
+
 /**
  * @author 2DI2
  */
 public class TcpServer {
 
-    private final Logger logger = LogManager.getLogger(TcpServer.class);
+    private final Logger LOGGER = LogManager.getLogger(TcpServer.class);
     private int port;
     private Class<? extends Runnable> handlerClass;
     private EventListener eventListener;
@@ -30,13 +33,23 @@ public class TcpServer {
 
         try {
             tcpSocket = new ServerSocket(port);
-        } catch (IOException e) {
-            logger.info("Error creating the tcp socket");
+            LOGGER.info(String.format("[TCP Server] Listening on port %d!\n", port));
+        } catch (final IOException e) {
+            LOGGER.info("Error creating the tcp socket");
             return;
         }
 
-        logger.info(String.format("[TCP Server] Listening on port %d!\n", port));
-        
+        try {
+            final Runnable pollService = new DatabasePollingService(
+                    PersistenceContext.repositories().recruitmentProcesses(),
+                    PersistenceContext.repositories().customerUsers(), this.eventListener);
+            final Thread databasePollingService = new Thread(pollService);
+            databasePollingService.start();
+
+        } catch (final Exception e) {
+            LOGGER.info("Error creating the database polling service: " + e.getMessage());
+        }
+
         while (!tcpSocket.isClosed()) {
             try {
 
@@ -49,14 +62,14 @@ public class TcpServer {
 
                 clientHandler.start();
             } catch (final Exception e) {
-                logger.info("Error creating the client handler thread");
+                LOGGER.info("Error creating the client handler thread");
             }
         }
 
         try {
             tcpSocket.close();
         } catch (final IOException e) {
-            logger.info("Error closing the tcp socket");
+            LOGGER.info("Error closing the tcp socket");
         }
     }
 }

@@ -4,6 +4,7 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
 import java.nio.charset.StandardCharsets;
+import java.util.Optional;
 
 import eapli.framework.domain.repositories.ConcurrencyException;
 import eapli.framework.domain.repositories.IntegrityViolationException;
@@ -33,17 +34,24 @@ public class ChangePassMessage extends Message {
         final AuthenticationService authenticationService = AuthzRegistry.authenticationService();
         final AuthorizationService authorizationService = AuthzRegistry.authorizationService();
 
-        byte[][] dataChunks = request.datachunks();
+        final byte[][] dataChunks = request.datachunks();
         if (dataChunks.length < 2) {
             new ErrMessage(new ProtocolMessage((byte) 1, MessageCode.ERR, "Bad Request"), output, socket,
                     eventListener).handle();
             return;
         }
-        final SystemUser user = eventListener.user(socket);
+        final Optional<SystemUser> userOpt = eventListener.user(socket);
+        if (userOpt.isEmpty()) {
+            new ErrMessage(new ProtocolMessage((byte) 1, MessageCode.ERR, "Something went wrong"), output, socket,
+                    eventListener).handle();
+            return;
+        }
+        final SystemUser user = userOpt.get();
         final String oldPassword = new String(dataChunks[0], StandardCharsets.US_ASCII);
         final String newPassword = new String(dataChunks[1], StandardCharsets.US_ASCII);
 
-        if (!credentialHandler.authenticated(user.username().toString(), oldPassword, user.roleTypes().stream().findFirst().get())) {
+        if (!credentialHandler.authenticated(user.username().toString(), oldPassword,
+                user.roleTypes().stream().findFirst().get())) {
             send(new ProtocolMessage((byte) 1, MessageCode.ERR, "Invalid authentication"));
             return;
         }

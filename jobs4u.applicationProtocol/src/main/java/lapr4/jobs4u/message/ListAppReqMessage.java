@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.StreamSupport;
 
 /**
@@ -31,7 +32,14 @@ public class ListAppReqMessage extends Message {
 
         final ListCandidateApplicationsService listCandidateApplicationsService = new ListCandidateApplicationsService(
                 PersistenceContext.repositories().applications(), PersistenceContext.repositories().candidates());
-        final SystemUser user = eventListener.user(socket);
+
+        final Optional<SystemUser> userOpt = eventListener.user(socket);
+        if (userOpt.isEmpty()) {
+            new ErrMessage(new ProtocolMessage((byte) 1, MessageCode.ERR, "Something went wrong"), output, socket,
+                    eventListener).handle();
+            return;
+        }
+        final SystemUser user = userOpt.get();
 
         if (!user.hasAny(BaseRoles.CANDIDATE)) {
             new ErrMessage(new ProtocolMessage((byte) 1, MessageCode.ERR, "Invalid Authentication"), output, socket,
@@ -40,8 +48,8 @@ public class ListAppReqMessage extends Message {
         }
 
         final Iterable<ApplicationDTO> applications = listCandidateApplicationsService
-                        .findApplicationsFromCandidate(user.email());
-        
+                .findApplicationsFromCandidate(user.email());
+
         final int size = (int) StreamSupport.stream(applications.spliterator(), false).count();
 
         List<String> data = new ArrayList<>();

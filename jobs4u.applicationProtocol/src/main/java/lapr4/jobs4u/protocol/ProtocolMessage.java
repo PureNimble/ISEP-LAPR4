@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -133,6 +134,34 @@ public class ProtocolMessage {
             sb.append("Data: ").append(new String(data)).append("\n");
         }
         return sb.toString();
+    }
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + protocolVersion;
+        result = prime * result + ((code == null) ? 0 : code.hashCode());
+        result = prime * result + Arrays.deepHashCode(dataChunks);
+        return result;
+    }
+
+    @Override
+    public boolean equals(final Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        final ProtocolMessage other = (ProtocolMessage) obj;
+        if (protocolVersion != other.protocolVersion)
+            return false;
+        if (code != other.code)
+            return false;
+        if (!Arrays.deepEquals(dataChunks, other.dataChunks))
+            return false;
+        return true;
     }
 
 }

@@ -33,7 +33,7 @@ public class ClientHandler implements Runnable {
         }
     };
 
-    private final Logger logger = LogManager.getLogger(ClientHandler.class);
+    private final Logger LOGGER = LogManager.getLogger(ClientHandler.class);
 
     private Socket socket;
     private EventListener eventListener;
@@ -46,11 +46,19 @@ public class ClientHandler implements Runnable {
     @Override
     public void run() {
         try {
-            logger.info("[Client Handler Thread] Connected to "
+            LOGGER.info("[Client Handler Thread] Connected to "
                     + socket.getInetAddress().getHostAddress() + " port " + socket.getPort() + "!");
 
             final DataInputStream input = new DataInputStream(socket.getInputStream());
             final DataOutputStream output = new DataOutputStream(socket.getOutputStream());
+
+            new Thread(() -> {
+                try {
+                    sendNotification(output);
+                } catch (final Exception e) {
+                    LOGGER.info("\n[Notication Thread] Error: ", e.getMessage());
+                }
+            }).start();
 
             while (!socket.isClosed()) {
                 try {
@@ -59,7 +67,7 @@ public class ClientHandler implements Runnable {
                     if (message == null)
                         break;
 
-                    logger.info("\n" + message.toString());
+                    LOGGER.info("\n" + message.toString());
 
                     processMessage(message, output);
                 } catch (final Exception e) {
@@ -68,12 +76,12 @@ public class ClientHandler implements Runnable {
                 }
             }
 
-            logger.info("Connection closed.");
+            LOGGER.info("Connection closed.");
 
             output.close();
             input.close();
         } catch (final IOException e) {
-            logger.error("\n[Client Handler Thread] Error", e.getMessage());
+            LOGGER.info("\n[Client Handler Thread] Error", e.getMessage());
         }
     }
 
@@ -93,11 +101,18 @@ public class ClientHandler implements Runnable {
                                 EventListener.class)
                         .newInstance(message, output, this.socket, this.eventListener);
             } catch (final Exception e) {
-                logger.error("\n[Client Handler Thread] Error", e);
+                LOGGER.info("\n[Client Handler Thread] Error", e);
                 return;
             }
         }
 
         handleMessage.handle();
+    }
+
+    private void sendNotification(final DataOutputStream output) throws IOException, InterruptedException {
+        while (true) {
+            new NotificationMessage(null, output, socket, eventListener).handle();
+            Thread.sleep(5000);
+        }
     }
 }

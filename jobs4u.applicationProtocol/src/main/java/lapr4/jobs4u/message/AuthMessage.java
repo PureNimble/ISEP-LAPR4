@@ -34,7 +34,7 @@ public class AuthMessage extends Message {
         final UserManagementService userSvc = AuthzRegistry.userService();
         final AuthorizationService authorizationService = AuthzRegistry.authorizationService();
 
-        byte[][] dataChunks = request.datachunks();
+        final byte[][] dataChunks = request.datachunks();
 
         if (dataChunks.length < 3) {
             new ErrMessage(new ProtocolMessage((byte) 1, MessageCode.ERR), output, socket, eventListener).handle();

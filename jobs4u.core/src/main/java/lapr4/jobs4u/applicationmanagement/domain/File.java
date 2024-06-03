@@ -116,14 +116,19 @@ public class File implements ValueObject, Comparable<File>, Runnable {
         int length = file.length();
         int n = length / LENGTH_PER_THREAD;
         int lengthPerThread;
-        if (n > 20) {
+
+        if (n > 20)
             n = 20;
-            lengthPerThread = length / n;
 
-        } else {
+        switch (n) {
+        case 0 -> {
+            n = 1;
             lengthPerThread = LENGTH_PER_THREAD;
-
         }
+        case 20 -> lengthPerThread = length / n;
+        default -> lengthPerThread = LENGTH_PER_THREAD;
+        }
+
         List<Thread> threads = new ArrayList<>();
         List<FilePartition> fileParts = new ArrayList<>();
         topWords = new HashMap<>();

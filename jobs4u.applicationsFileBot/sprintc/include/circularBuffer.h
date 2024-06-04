@@ -11,6 +11,7 @@ typedef struct
     unsigned int tail;
     unsigned int numberOfCandidates;
     unsigned int size;
+
 } CircularBuffer;
 
 void initBuffer(CircularBuffer *buf, Config *config);

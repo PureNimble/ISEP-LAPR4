@@ -122,6 +122,9 @@ pid_t createChildProcess()
 {
     pid_t pid;
     pid = fork();
+    if (pid == 0)
+        setpgid(0, 0);
+
     if (pid == -1)
     {
         errorMessages("Fork failed.");

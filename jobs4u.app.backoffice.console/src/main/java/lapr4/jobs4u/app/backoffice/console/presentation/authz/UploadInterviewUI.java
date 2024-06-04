@@ -67,7 +67,7 @@ public class UploadInterviewUI extends AbstractUI {
     }
 
     private Application selectApplication() {
-        final Iterable<JobOpeningDTO> jobOpenings = this.jobOpeningsController.filterWithAvailablePhaseForInterviews();
+        final Iterable<JobOpeningDTO> jobOpenings = this.jobOpeningsController.filterWithAvailablePhaseForInterviewEvaluation();
         final SelectWidget<JobOpeningDTO> selector = new SelectWidget<>("Job Openings:", jobOpenings,
                 new JobOpeningPrinter());
         selector.show();

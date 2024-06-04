@@ -42,14 +42,14 @@ class JpaInterviewRepository extends JpaAutoTxRepository<Interview, Long, Long> 
 
     @Override
     public Iterable<Interview> sortedInterviewsByJobOpening(final JobOpening jobOpening, final boolean ascending) {
-        String order = ascending ? "ASC" : "DESC";
+        final String order = ascending ? "ASC" : "DESC";
         final Map<String, Object> params = new HashMap<>();
         params.put("jobOpening", jobOpening);
         return match("e.application.jobOpening=:jobOpening ORDER BY e.grade " + order, params);
     }
 
     @Override
-    public Iterable<Interview> findEvaluatedInterviewsByJobOpening(JobOpening jobOpening) {
+    public Iterable<Interview> findEvaluatedInterviewsByJobOpening(final JobOpening jobOpening) {
         return createQuery(
                 "SELECT e FROM Interview e WHERE e.application.jobOpening=:jobOpening AND e.grade IS NOT NULL",
                 Interview.class).setParameter("jobOpening", jobOpening).getResultList();

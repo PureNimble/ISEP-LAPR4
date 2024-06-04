@@ -35,12 +35,12 @@ public class EnableOrDisableCandidateUserUI extends AbstractUI {
 
     private boolean showActiveUsers() {
         final Iterable<SystemUser> candidateUsers = this.theController.activeUsers();
-        final SelectWidget<SystemUser> selector = new SelectWidget<>("Candidate Users:", candidateUsers,
+        final SelectWidget<SystemUser> selector = new SelectWidget<>(header(), candidateUsers,
                 new SystemUserPrinter());
         selector.show();
         final SystemUser theCandidateUser = selector.selectedElement();
         if (theCandidateUser != null) {
-            if(Utils.confirm("Do you want to deactivate the user: " + theCandidateUser.name() + "?")) {
+            if (Utils.confirm("Do you want to deactivate the user: " + theCandidateUser.name() + "?")) {
                 try {
                     theController.enableOrDisableUser(theCandidateUser, "disable");
                 } catch (final ConcurrencyException ex) {
@@ -54,12 +54,12 @@ public class EnableOrDisableCandidateUserUI extends AbstractUI {
 
     private boolean showDeactivatedUsers() {
         final Iterable<SystemUser> candidateUsers = this.theController.deactivatedUsers();
-        final SelectWidget<SystemUser> selector = new SelectWidget<>("Backoffice Users:", candidateUsers,
+        final SelectWidget<SystemUser> selector = new SelectWidget<>(header(), candidateUsers,
                 new SystemUserPrinter());
         selector.show();
         final SystemUser theCandidateUser = selector.selectedElement();
         if (theCandidateUser != null) {
-            if(Utils.confirm("Do you want to activate the user: " + theCandidateUser.name() + "?")) {
+            if (Utils.confirm("Do you want to activate the user: " + theCandidateUser.name() + "?")) {
                 try {
                     theController.enableOrDisableUser(theCandidateUser, "enable");
                 } catch (final ConcurrencyException ex) {
@@ -69,6 +69,10 @@ public class EnableOrDisableCandidateUserUI extends AbstractUI {
             }
         }
         return false;
+    }
+
+    private String header() {
+        return String.format("#  %-30s%-15s%-15s%-5s", "EMAIL", "F. NAME", "L. NAME", "ACTIVE");
     }
 
     @Override

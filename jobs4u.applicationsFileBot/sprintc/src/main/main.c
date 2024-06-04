@@ -14,8 +14,11 @@
  * creates semaphores and shared memory, and spawns child processes and worker threads.
  * It then coordinates the execution of the program by calling various functions.
  */
+pid_t pids[21];
+int pidsCounter = 0;
 int main()
 {
+
     Config config;
     CircularBuffer *sharedMemory;
     sem_t *sem_newFile, *sem_startWorkers, *sem_reportFile,
@@ -25,11 +28,12 @@ int main()
 
     readConfigFile(&config);
     printConfig(&config);
+
     setUpSignal();
 
     sem_newFile = createSemaphore(SEM_NEW_FILE_CHECKER, 0);
 
-    if (createChildProcess() == 0)
+    if ((pids[pidsCounter] = createChildProcess()) == 0)
         newFileChecker(&config, sem_newFile);
 
     sharedMemory = createSharedMemory(SHARED_MEMORY, &fd, &config);
@@ -40,7 +44,7 @@ int main()
     sem_isDone_mutex = createSemaphore(SEM_IS_DONE, 1);
     sem_files_mutex = createSemaphore(SEM_FILES, 1);
 
-    createWorkers(&config, sharedMemory, sem_startWorkers, sem_reportFile, sem_isDone_mutex, sem_files_mutex);
+    createWorkers(&config, sharedMemory, sem_startWorkers, sem_reportFile, sem_isDone_mutex, sem_files_mutex, pids);
     parentWork(&config, sharedMemory, sem_startWorkers, sem_newFile, sem_reportFile, sem_addToBuffer_mutex, sem_isDone_mutex, sem_numberOfCandidates_mutex);
 
     return 0;
@@ -56,11 +60,12 @@ int main()
  * @param sem_isDone_mutex The mutex semaphore for synchronizing the isDone flag.
  * @param sem_files_mutex The mutex semaphore for synchronizing access to the files.
  */
-void createWorkers(Config *config, CircularBuffer *shared_data, sem_t *sem_startWorkers, sem_t *sem_reportFile, sem_t *sem_isDone_mutex, sem_t *sem_files_mutex)
+void createWorkers(Config *config, CircularBuffer *shared_data, sem_t *sem_startWorkers, sem_t *sem_reportFile, sem_t *sem_isDone_mutex, sem_t *sem_files_mutex, pid_t *pids)
 {
     for (unsigned int i = 0; i < config->numberOfChildren; i++)
     {
-        if (createChildProcess() == 0)
+        pidsCounter++;
+        if ((pids[pidsCounter] = createChildProcess()) == 0)
             copyFiles(config, shared_data, sem_startWorkers, sem_isDone_mutex, sem_files_mutex, sem_reportFile);
     }
 }

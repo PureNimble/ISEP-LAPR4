@@ -15,6 +15,7 @@
 
 #include "config.h"
 #include <semaphore.h>
+#include <stddef.h>
 #include "circularBuffer.h"
 #include "candidateInfo.h"
 #include "hashSet.h"
@@ -36,7 +37,7 @@ int checkIfCandidateFileExists(CandidateInfo candidate, char *buffer);
 void reportFile(Config *config, CircularBuffer *shared_memory, sem_t *sem_numberOfCandidates, sem_t *sem_files);
 void parentWork(Config *config, CircularBuffer *sharedMemory, sem_t *sem_startWorkers, sem_t *sem_newFile, sem_t *sem_reportFile, sem_t *sem_addToBuffer_mutex, sem_t *sem_isDone_mutex, sem_t *sem_numberOfCandidates);
 HashSet *listCandidatesID(Config *config, CircularBuffer *sharedMemory);
-void createWorkers(Config *config, CircularBuffer *shared_data, sem_t *sem_startWorkers, sem_t *sem_reportFile, sem_t *sem_isDone_mutex, sem_t *sem_files_mutex);
+void createWorkers(Config *config, CircularBuffer *shared_data, sem_t *sem_startWorkers, sem_t *sem_reportFile, sem_t *sem_isDone_mutex, sem_t *sem_files_mutex, pid_t *pids);
 int sendWork(HashSet *candidateList, CircularBuffer *sharedMemory, sem_t *sem_addToBuffer, sem_t *sem_isDone, sem_t *sem_startWorkers);
 // -----------------------------
 // Worker(s) function

@@ -44,4 +44,12 @@ public class ListApplicationsService {
         return applicationsDTO;
     }
 
+    public Iterable<ApplicationDTO> unrankedApplicationByJobOpening(JobOpening jobOpening) {
+        final Iterable<Application> applications = this.applicationRepository.unrankedApplicationByJobOpening(jobOpening);
+
+        List<ApplicationDTO> applicationsDTO = new ArrayList<>();
+        applications.forEach(application -> applicationsDTO.add(application.toDTO()));
+        return applicationsDTO;
+    }
+
 }

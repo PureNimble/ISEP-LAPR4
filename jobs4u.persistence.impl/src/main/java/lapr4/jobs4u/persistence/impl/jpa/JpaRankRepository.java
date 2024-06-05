@@ -5,6 +5,7 @@ import java.util.Optional;
 import eapli.framework.domain.repositories.TransactionalContext;
 import eapli.framework.infrastructure.repositories.impl.jpa.JpaAutoTxRepository;
 import lapr4.jobs4u.Application;
+import lapr4.jobs4u.jobopeningmanagement.domain.JobOpening;
 import lapr4.jobs4u.rankmanagement.domain.Rank;
 import lapr4.jobs4u.rankmanagement.repositories.RankRepository;
 
@@ -26,5 +27,16 @@ public class JpaRankRepository extends JpaAutoTxRepository<Rank, Long, Long>
         final long count = createQuery("SELECT COUNT(r) FROM Rank r",
                 Long.class).getSingleResult() + 1;
         return Optional.of(Long.toString(count));
+    }
+
+    @Override
+    public Iterable<Rank> findTopNApplicationsByJobOpening(final JobOpening jobOpening) {
+        return createQuery(
+                "SELECT e FROM Rank e, Application a WHERE e.application = a AND a.jobOpening = :jobOpening " +
+                        "ORDER BY e.rankPlacement ASC",
+                Rank.class)
+                .setParameter("jobOpening", jobOpening)
+                .setMaxResults(Integer.valueOf(jobOpening.numberOfVacancies().toString()))
+                .getResultList();
     }
 }

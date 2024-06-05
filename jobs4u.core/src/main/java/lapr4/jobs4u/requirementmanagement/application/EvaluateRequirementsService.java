@@ -213,7 +213,7 @@ public class EvaluateRequirementsService {
             final Pair<Outcome, List<Pair<String, Justification>>> result) {
         try {
             tc.beginTransaction();
-            Outcome outcome = result.getFirst();
+            final Outcome outcome = result.getFirst();
             if (outcome.equals(Outcome.valueOf("REJECTED"))) {
                 requirement.addResult(outcome, Justification.valueOf("Minimum requirements not met"));
                 Application application = requirement.application();

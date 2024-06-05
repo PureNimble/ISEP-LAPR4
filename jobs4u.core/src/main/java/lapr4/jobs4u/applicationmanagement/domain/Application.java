@@ -120,11 +120,11 @@ public class Application implements AggregateRoot<ApplicationCode>, Runnable {
         return new ApplicationDTO(applicationCode.toString(), candidate.toString(), result.outcome.toString());
     }
 
-    public void addResult(String outcome) {
+    public void addResult(final String outcome) {
         this.result.addOutcome(outcome);
     }
 
-    public void addResult(String outcome, String justification) {
+    public void addResult(final String outcome, final String justification) {
         this.result.addOutcome(outcome, justification);
     }
 

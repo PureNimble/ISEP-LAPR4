@@ -30,12 +30,12 @@ public class ListApplicationsService {
         return applicationsDTO;
     }
 
-    public Application selectedApplication(ApplicationDTO applicationDTO) {
+    public Application selectedApplication(final ApplicationDTO applicationDTO) {
         return applicationRepository.ofIdentity(ApplicationCode.valueOf(applicationDTO.getApplicationCode()))
                 .orElseThrow(IllegalArgumentException::new);
     }
 
-    public Iterable<ApplicationDTO> findApplicationWithInterviewRecord(JobOpening jobOpening) {
+    public Iterable<ApplicationDTO> findApplicationWithInterviewRecord(final JobOpening jobOpening) {
         final Iterable<Application> applications = this.applicationRepository
                 .findApplicationWithInterviewRecord(jobOpening);
 

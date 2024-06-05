@@ -32,7 +32,7 @@ public class SelectInterviewUI extends AbstractUI {
         @Override
         protected boolean doShow() {
 
-                Iterable<JobOpeningDTO> jobs = jobOpeningController
+                final Iterable<JobOpeningDTO> jobs = jobOpeningController
                                 .getIntersection(jobOpeningController.filterWithInterview());
 
                 final SelectWidget<JobOpeningDTO> selector = new SelectWidget<>("Job Openings:", jobs,
@@ -42,7 +42,7 @@ public class SelectInterviewUI extends AbstractUI {
                 if (jobDto == null) {
                         return false;
                 }
-                Iterable<QuestionImporterPlugin> questionImporterPlugins = interviewController
+                final Iterable<QuestionImporterPlugin> questionImporterPlugins = interviewController
                                 .filterByType(FileFormat.INTERVIEW.toString());
 
                 final QuestionImporterPlugin questionImporterPlugin = (QuestionImporterPlugin) Utils

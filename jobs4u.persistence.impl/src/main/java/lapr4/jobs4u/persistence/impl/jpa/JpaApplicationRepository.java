@@ -86,5 +86,5 @@ class JpaApplicationRepository extends JpaAutoTxRepository<Application, Applicat
                 "SELECT a FROM Application a, Rank r WHERE a.jobOpening = :theJobOpening AND a = r.application",
                 Application.class).setParameter("theJobOpening", theJobOpening).getResultList();
     }
-        
+
 }

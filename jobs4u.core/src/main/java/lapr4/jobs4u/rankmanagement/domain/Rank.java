@@ -65,6 +65,10 @@ public class Rank implements AggregateRoot<Long> {
         return this.pk;
     }
 
+    public Application application() {
+        return this.application;
+    }
+
     @Override
     public String toString() {
         return pk.toString();

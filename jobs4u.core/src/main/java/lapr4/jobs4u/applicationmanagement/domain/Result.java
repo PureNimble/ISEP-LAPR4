@@ -27,11 +27,11 @@ public class Result implements DomainEntity<Long> {
     @Column(nullable = true)
     Justification justification;
 
-    protected Result(String outcome) {
+    protected Result(final String outcome) {
         this.outcome = new Outcome(outcome);
     }
 
-    protected Result(String outcome, String justification) {
+    protected Result(final String outcome, final String justification) {
         this.outcome = new Outcome(outcome);
         this.justification = new Justification(justification);
     }
@@ -40,7 +40,7 @@ public class Result implements DomainEntity<Long> {
         // for ORM
     }
 
-    public static Result valueOf(String outcome) {
+    public static Result valueOf(final String outcome) {
         return new Result(outcome);
     }
 
@@ -71,13 +71,13 @@ public class Result implements DomainEntity<Long> {
         return this.justification;
     }
 
-    public void addOutcome(String outcome, String justification) {
+    public void addOutcome(final String outcome, String justification) {
         Preconditions.nonEmpty(outcome, justification);
         this.outcome = new Outcome(outcome);
         this.justification = new Justification(justification);
     }
 
-    public void addOutcome(String outcome) {
+    public void addOutcome(final String outcome) {
         Preconditions.nonEmpty(outcome);
         Preconditions.ensure(outcome.equals(OutcomeValue.APPROVED.toString()),
                 "Justification is only needed for rejected applications.");

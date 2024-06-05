@@ -15,16 +15,16 @@ public class NumberOfVacancies implements ValueObject, Comparable<NumberOfVacanc
 
     private static final long serialVersionUID = 1L;
     private static final Pattern VALID_NUMBER_REGEX = Pattern.compile("^\\d+$");
-    private final String numberOfVacancies;
+    private final Integer numberOfVacancies;
 
     protected NumberOfVacancies(final String numberOfVacancies) {
         Preconditions.nonEmpty(numberOfVacancies, "Number of Vacancies should neither be null nor empty");
         Preconditions.matches(VALID_NUMBER_REGEX, numberOfVacancies, "Invalid Number of Vacancies: " + numberOfVacancies);
-        this.numberOfVacancies = numberOfVacancies;
+        this.numberOfVacancies = Integer.parseInt(numberOfVacancies);
     }
 
     protected NumberOfVacancies() {
-        this.numberOfVacancies = "";
+        this.numberOfVacancies = 0;
     }
 
     public static NumberOfVacancies valueOf(final String numberOfVacancies) {
@@ -51,7 +51,7 @@ public class NumberOfVacancies implements ValueObject, Comparable<NumberOfVacanc
 
     @Override
     public String toString() {
-        return this.numberOfVacancies;
+        return this.numberOfVacancies.toString();
     }
 
     @Override

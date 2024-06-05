@@ -3,6 +3,7 @@ package lapr4.jobs4u.persistence.impl.inmemory;
 import java.util.Optional;
 
 import eapli.framework.infrastructure.repositories.impl.inmemory.InMemoryDomainRepository;
+import lapr4.jobs4u.jobopeningmanagement.domain.JobOpening;
 import lapr4.jobs4u.rankmanagement.domain.Rank;
 import lapr4.jobs4u.rankmanagement.repositories.RankRepository;
 
@@ -21,4 +22,8 @@ public class InMemoryRankRepository extends InMemoryDomainRepository<Rank, Long>
         return findHighestSequence();
     }
 
+    @Override
+    public Iterable<Rank> findTopNApplicationsByJobOpening(final JobOpening jobOpening) {
+        return findTopNApplicationsByJobOpening(jobOpening);
+    }
 }

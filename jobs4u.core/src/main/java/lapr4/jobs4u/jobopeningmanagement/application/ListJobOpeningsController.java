@@ -104,4 +104,10 @@ public class ListJobOpeningsController {
         return jobOpeningsService.filterWithAvailablePhaseForRanking();
     }
 
+    public Iterable<JobOpeningDTO> filterWithAvailableForResults() {
+        authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.CUSTOMER_MANAGER, BaseRoles.POWERUSER);
+
+        return jobOpeningsService.filterWithAvailableForResults();
+    }
+
 }

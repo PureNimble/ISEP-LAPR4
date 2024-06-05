@@ -1,5 +1,7 @@
 package lapr4.jobs4u.applicationmanagement.application;
 
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -59,7 +61,7 @@ public class PublishResultsController {
         final Iterable<Application> applications = applicationRepository.filterByJobOpening(jobOpening);
         final Iterable<Rank> topNRank = rankRepository.findTopNApplicationsByJobOpening(jobOpening);
         final List<Application> processedApplications = saveResults(applications, topNRank);
-        doPublishResults(processedApplications);
+        doPublishResults(processedApplications, jobOpening);
     }
 
     private List<Application> saveResults(final Iterable<Application> applications, final Iterable<Rank> topNRank) {
@@ -83,23 +85,25 @@ public class PublishResultsController {
             txCtx.commit();
         } catch (final Exception e) {
             txCtx.rollback();
-            throw new IllegalStateException("Error publishing results", e);
+            throw new IllegalStateException("Error publishing results" + e.getMessage());
         }
         return processedApplications;
     }
 
-    private void doPublishResults(final List<Application> applications) {
+    private void doPublishResults(final List<Application> applications, final JobOpening jobOpening) {
+
+        List<Application> approvedApplications = new ArrayList<>();
+        final String subBody = "your application for the position '" + jobOpening.titleOrFunction().toString()
+                + "' at '" + jobOpening.customer().companyName().toString() + "' has been";
         for (final Application application : applications) {
             final String result = application.result().toString();
             final String candidateName = application.candidate().name().toString();
-            final JobOpening jobOpening = application.jobOpening();
-            final String subBody = "your application for the position '" + jobOpening.titleOrFunction().toString()
-                    + "' at '" + jobOpening.customer().companyName().toString() + "' has been";
             final String body;
             if (result == "APPROVED") {
                 body = "Hello Mr/Mrs " + candidateName
                         + ", \n\nCongratulations! " + subBody
                         + " approved. Please check the attachments for further information and details. \n\nBest regards, \nJobs4U Team";
+                approvedApplications.add(application);
             } else {
                 body = "Hello Mr/Mrs " + candidateName
                         + ", \n\nWe regret to inform you that " + subBody
@@ -119,14 +123,42 @@ public class PublishResultsController {
                     attachments.add(interview.get().file().toString());
                 }
 
-                System.out.println("Sending email to " + application.candidate().emailAddress().toString()
-                        + " with result " + result + " and attachments " + attachments.toString());
-
                 emailService.sendEmailWithAttachment(application.candidate().emailAddress().toString(),
                         "Application Result", body, attachments.toArray(new String[0]));
             } catch (final MessagingException e) {
-                e.printStackTrace();
+                throw new IllegalStateException("Error sending emails" + e.getMessage());
             }
+        }
+
+        try {
+            final java.io.File tempFile = java.io.File.createTempFile(jobOpening.jobReference().toString(), ".txt");
+            final FileWriter writer = new FileWriter(tempFile);
+            writer.write(
+                    String.format("Approved applications for the job opening:\n#  %-30s%-30s%-20s", "Name", "Email",
+                            "Phone Number"));
+
+            int i = 1;
+            for (final Application application : approvedApplications) {
+                System.out.println(application.candidate().name().toString());
+                writer.write(String.format("%d  %-30s%-30s%-20s", i, application.candidate().name().toString(),
+                        application.candidate().emailAddress().toString(),
+                        application.candidate().phoneNumber().toString()));
+                i++;
+            }
+            writer.close();
+            emailService.sendEmailWithAttachment(jobOpening.customer().email().toString(), "Job Opening Results",
+                    "Hello Mr/Mrs " + jobOpening.customer().companyName().toString()
+                            + ",\n\n We are pleased to inform you that the positions for the job opening '"
+                            + jobOpening.jobReference().toString() + "' you listed with us "
+                            + "have been successfully filled. We appreciate the opportunity to assist you in finding the right "
+                            + "candidates for your needs.\n Attatched bellow is a list of the selected candidates,\n"
+                            + "Thank you for choosing our services. We look forward to serving you again "
+                            + "in the future.\n\nBest regards,\nJobs4U Team",
+                    tempFile.getAbsolutePath());
+
+            tempFile.delete();
+        } catch (final IOException | MessagingException e) {
+            throw new IllegalStateException("Error sending emails: " + e.getMessage());
         }
     }
 }

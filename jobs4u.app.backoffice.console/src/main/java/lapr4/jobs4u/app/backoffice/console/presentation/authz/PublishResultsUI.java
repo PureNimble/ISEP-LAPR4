@@ -1,7 +1,5 @@
 package lapr4.jobs4u.app.backoffice.console.presentation.authz;
 
-import eapli.framework.domain.repositories.ConcurrencyException;
-import eapli.framework.domain.repositories.IntegrityViolationException;
 import eapli.framework.domain.repositories.TransactionalContext;
 import eapli.framework.infrastructure.authz.application.AuthzRegistry;
 import eapli.framework.presentation.console.AbstractUI;
@@ -12,12 +10,14 @@ import lapr4.jobs4u.infrastructure.persistence.PersistenceContext;
 import lapr4.jobs4u.jobopeningmanagement.application.ListJobOpeningsController;
 import lapr4.jobs4u.jobopeningmanagement.domain.JobOpening;
 import lapr4.jobs4u.jobopeningmanagement.dto.JobOpeningDTO;
+import lapr4.jobs4u.recruitmentprocessmanagement.application.OpenOrClosePhaseController;
 
 /**
  * @author 2DI2
  */
 public class PublishResultsUI extends AbstractUI {
 
+    private static final String PHASE = "ResultPhase";
     private final TransactionalContext txCtx = PersistenceContext.repositories().newTransactionalContext();
     private final ListJobOpeningsController listJobOpeningsController = new ListJobOpeningsController(
             PersistenceContext.repositories().jobOpenings(), AuthzRegistry.authorizationService());
@@ -27,6 +27,13 @@ public class PublishResultsUI extends AbstractUI {
             PersistenceContext.repositories().requirements(),
             PersistenceContext.repositories().newTransactionalContext(),
             AuthzRegistry.authorizationService());
+    private final OpenOrClosePhaseController openOrClosePhaseController = new OpenOrClosePhaseController(
+            PersistenceContext.repositories().recruitmentProcesses(txCtx),
+            PersistenceContext.repositories().jobOpenings(txCtx),
+            PersistenceContext.repositories().jobOpeningRequirements(),
+            PersistenceContext.repositories().jobOpeningInterviews(), PersistenceContext.repositories().applications(),
+            PersistenceContext.repositories().requirements(), PersistenceContext.repositories().interviews(),
+            AuthzRegistry.authorizationService(), txCtx);
 
     @Override
     protected boolean doShow() {
@@ -45,8 +52,10 @@ public class PublishResultsUI extends AbstractUI {
 
         try {
             publishResultsController.publishResults(selectedJobOpening);
-        } catch (final IntegrityViolationException | ConcurrencyException e) {
-            txCtx.rollback();
+            System.out.println("Results published successfully and emails sent to the envolved parties.");
+            openOrClosePhaseController.changePhase(PHASE, selectedJobOpening, true);
+            System.out.println("Job Opening closed successfully.");
+        } catch (final Exception e) {
             System.out.println("Something went wrong: " + e.getMessage());
         }
 

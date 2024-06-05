@@ -35,7 +35,7 @@ public class EnableOrDisableBackofficeUserUI extends AbstractUI {
 
     private boolean showActiveUsers() {
         final Iterable<SystemUser> backofficeUsers = this.theController.activeUsers();
-        final SelectWidget<SystemUser> selector = new SelectWidget<>("Backoffice Users:", backofficeUsers,
+        final SelectWidget<SystemUser> selector = new SelectWidget<>(header(), backofficeUsers,
                 new SystemUserPrinter());
         selector.show();
         final SystemUser theBackofficeUser = selector.selectedElement();
@@ -54,7 +54,7 @@ public class EnableOrDisableBackofficeUserUI extends AbstractUI {
 
     private boolean showDeactivatedUsers() {
         final Iterable<SystemUser> backofficeUsers = this.theController.deactivatedUsers();
-        final SelectWidget<SystemUser> selector = new SelectWidget<>("Backoffice Users:", backofficeUsers,
+        final SelectWidget<SystemUser> selector = new SelectWidget<>(header(), backofficeUsers,
                 new SystemUserPrinter());
         selector.show();
         final SystemUser theBackofficeUser = selector.selectedElement();
@@ -71,8 +71,12 @@ public class EnableOrDisableBackofficeUserUI extends AbstractUI {
         return false;
     }
 
+    private String header() {
+        return String.format("#  %-30s%-15s%-15s%-5s", "EMAIL", "F. NAME", "L. NAME", "ACTIVE");
+    }
+
     @Override
     public String headline() {
-        return "Enable/Disable User";
+        return "Enable/Disable Backoffice User";
     }
 }

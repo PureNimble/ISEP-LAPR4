@@ -19,7 +19,7 @@ spring:
       enabled: true
 
   datasource:
-    url: jdbc:h2:mem:mail
+    url: jdbc:h2:file:/root/smtpData;DB_CLOSE_ON_EXIT=FALSE
     username: admin
     password: admin
     driver-class-name: org.h2.Driver

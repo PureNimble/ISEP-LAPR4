@@ -37,4 +37,9 @@ public class ListApplicationsController {
         authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.CUSTOMER_MANAGER, BaseRoles.POWERUSER);
         return applicationService.findApplicationWithInterviewRecord(jobOpening);
     }
+
+    public Iterable<ApplicationDTO> unrankedApplicationByJobOpening(final JobOpening jobOpening) {
+        authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.CUSTOMER_MANAGER, BaseRoles.POWERUSER);
+        return applicationService.unrankedApplicationByJobOpening(jobOpening);
+    }
 }

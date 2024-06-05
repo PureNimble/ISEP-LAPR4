@@ -18,7 +18,7 @@ public class InMemoryJobOpeningRequirementRepository extends InMemoryDomainRepos
     }
 
     @Override
-    public Optional<JobOpeningRequirement> findJobOpeningRequirementsByJobOpening(JobOpening jobOpening) {
+    public Optional<JobOpeningRequirement> findJobOpeningRequirementsByJobOpening(final JobOpening jobOpening) {
         return matchOne(e -> e.jobOpening().equals(jobOpening));
     }
 

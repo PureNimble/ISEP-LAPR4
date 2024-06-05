@@ -107,10 +107,8 @@ public class ImportApplicationsUI extends AbstractUI {
         final Set<Role> roleTypes = new HashSet<>();
         roleTypes.add(BaseRoles.CANDIDATE);
         final Candidate candidate = registerCandidateController.registerCandidate(firstName, lastName,
-                email,
-                phoneNumber);
-        final SystemUser user = addUserController.addUser(email, firstName,
-                lastName, roleTypes);
+                email, phoneNumber);
+        final SystemUser user = addUserController.addUser(email, firstName, lastName, roleTypes);
         registerCandidateController.registerCandidateUser(candidate, user);
 
         return candidate;

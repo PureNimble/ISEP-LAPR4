@@ -13,4 +13,8 @@ public interface RankRepository extends DomainRepository<Long, Rank> {
     Optional<String> findHighestSequence();
 
     Iterable<Rank> findTopNApplicationsByJobOpening(final JobOpening jobOpening);
+
+    Boolean hasRank(final JobOpening jobOpening);
+
+    Iterable<Rank> findByJobOpening(final JobOpening jobOpening);
 }

@@ -26,4 +26,15 @@ public class InMemoryRankRepository extends InMemoryDomainRepository<Rank, Long>
     public Iterable<Rank> findTopNApplicationsByJobOpening(final JobOpening jobOpening) {
         return findTopNApplicationsByJobOpening(jobOpening);
     }
+
+    @Override
+    public Boolean hasRank(final JobOpening jobOpening) {
+        return match(e -> e.application().jobOpening().equals(jobOpening)).iterator().hasNext();
+    }
+
+    @Override
+    public Iterable<Rank> findByJobOpening(final JobOpening jobOpening) {
+        return findByJobOpening(jobOpening);
+    }
+
 }

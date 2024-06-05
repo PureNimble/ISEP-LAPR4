@@ -30,4 +30,6 @@ public interface ApplicationRepository extends DomainRepository<ApplicationCode,
 
     Iterable<Application> findApplicationsWithRanking(final JobOpening theJobOpening);
 
+    Iterable<Application> unrankedApplicationByJobOpening(final JobOpening jobOpening);
+
 }

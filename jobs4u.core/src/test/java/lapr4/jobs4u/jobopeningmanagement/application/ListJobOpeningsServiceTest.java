@@ -19,6 +19,9 @@ import static org.mockito.Mockito.*;
 
 import java.util.Optional;
 
+/**
+ * @author 2DI2
+ */
 class ListJobOpeningsServiceTest {
 
     @Mock

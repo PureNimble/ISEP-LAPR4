@@ -16,6 +16,9 @@ import lapr4.jobs4u.usermanagement.domain.UserBuilderHelper;
 import lapr4.jobs4u.jobopeningmanagement.domain.JobOpening;
 import lapr4.jobs4u.jobopeningmanagement.domain.JobOpeningBuilder;
 
+/**
+ * @author 2DI2
+ */
 public class RecruitmentProcessTest {
 
     private final static Calendar calendar = CurrentTimeCalendars.now();
@@ -24,7 +27,7 @@ public class RecruitmentProcessTest {
             final String applicationFinalDate, final String screeningInitialDate, final String screeningFinalDate,
             final String interviewInitialDate, final String interviewFinalDate, final String analysisInitialDate,
             final String analysisFinalDate, final String resultInitialDate, final String resultFinalDate) {
-        // should we load from spring context?
+
         final RecruitmentProcessBuilder recruitmentProcessBuilder = new RecruitmentProcessBuilder();
         final JobOpeningBuilder jobOpeningBuilder = new JobOpeningBuilder();
         final CustomerBuilder customerBuilder = new CustomerBuilder();

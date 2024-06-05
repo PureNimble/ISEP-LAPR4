@@ -22,6 +22,9 @@ import lapr4.jobs4u.jobopeningmanagement.domain.JobOpeningBuilder;
 import lapr4.jobs4u.recruitmentprocessmanagement.domain.Date;
 import lapr4.jobs4u.usermanagement.domain.UserBuilderHelper;
 
+/**
+ * @author 2DI2
+ */
 public class ApplicationTest {
 
     static final String APPLICATION_NUMBER = "1";

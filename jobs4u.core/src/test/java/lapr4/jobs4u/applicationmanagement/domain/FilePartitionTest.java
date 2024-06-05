@@ -7,6 +7,9 @@ import java.util.Map;
 
 import org.junit.Test;
 
+/**
+ * @author 2DI2
+ */
 public class FilePartitionTest {
 
     @Test

@@ -16,6 +16,9 @@ import lapr4.jobs4u.interviewmanagement.dto.InterviewDTO;
 import lapr4.jobs4u.interviewmanagement.repositories.InterviewRepository;
 import lapr4.jobs4u.jobopeningmanagement.domain.JobOpening;
 
+/**
+ * @author 2DI2
+ */
 public class ListInterviewsServiceTest {
 
     @Mock

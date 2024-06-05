@@ -14,6 +14,9 @@ import eapli.framework.infrastructure.authz.domain.model.SystemUserBuilder;
 import lapr4.jobs4u.usermanagement.domain.BaseRoles;
 import lapr4.jobs4u.usermanagement.domain.UserBuilderHelper;
 
+/**
+ * @author 2DI2
+ */
 public class CandidateTest {
 
     private final String aEmail = "candidate@email.local";

@@ -14,6 +14,9 @@ import eapli.framework.infrastructure.authz.domain.model.SystemUserBuilder;
 import lapr4.jobs4u.usermanagement.domain.BaseRoles;
 import lapr4.jobs4u.usermanagement.domain.UserBuilderHelper;
 
+/**
+ * @author 2DI2
+ */
 public class CustomerTest {
     private final String aCustomerCode = "ABC123";
     private final String anotherCustomerCode = "ZYX123";

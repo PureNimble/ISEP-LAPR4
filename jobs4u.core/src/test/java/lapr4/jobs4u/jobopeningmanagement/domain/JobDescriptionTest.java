@@ -5,6 +5,9 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.Test;
 
+/**
+ * @author 2DI2
+ */
 public class JobDescriptionTest {
 
     @Test

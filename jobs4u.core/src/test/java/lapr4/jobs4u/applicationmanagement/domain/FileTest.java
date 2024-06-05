@@ -10,6 +10,9 @@ import org.junit.Test;
 
 import eapli.framework.io.util.Files;
 
+/**
+ * @author 2DI2
+ */
 public class FileTest {
     String valid_format = "jobs4u.applicationsFileBot/sprintc/resources/input/";
     String VALID_FILE = valid_format + "3-file-1.txt";

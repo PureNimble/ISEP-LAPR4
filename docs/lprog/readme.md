@@ -556,6 +556,29 @@ WS: [ \t\n\r]+ -> skip;
 ```json
 [
     {
+        "body": "Question Body",
+        "possibleAnswers": [
+            "A possible answer",
+            "Another possible answer if necessary"
+        ],
+        "minimumRequirement": "Justification Body"
+    },
+    {
+        "body": "Question Body",
+        "possibleAnswers": [
+            "A possible answer",
+            "Another possible answer if necessary"
+        ],
+        "minimumRequirement": "Justification Body"
+    }
+]
+```
+
+**Example:**
+
+```json
+[
+    {
         "body": "Which of the following languages are you proficient in? (Python | JavaScript | C#)",
         "possibleAnswers": [
             "Python",
@@ -573,31 +596,6 @@ WS: [ \t\n\r]+ -> skip;
         ],
         "minimumRequirement": "Experience with MySQL is a minimum requirement for the job position."
     }
-]
-```
-
-**Example:**
-
-```json
-[
-    {
-        "body": "Which of the following languages are you proficient in? (Python | JavaScript | C#)",
-        "possibleAnswers": [
-            "Python",
-            "JavaScript",
-            "C++"
-        ],
-        "minimumRequirement": "A minimum proficiency in Python is required for the job position."
-    },
-    {
-        "body": "Which of the following databases have you used in your projects? (MySQL | PostgreSQL | MongoDB)",
-        "possibleAnswers": [
-            "MySQL",
-            "PostgreSQL",
-            "MongoDB"
-        ],
-        "minimumRequirement": "Experience with MySQL is a minimum requirement for the job position."
-    }
 ]
 ```
 

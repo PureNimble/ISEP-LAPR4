@@ -2,6 +2,7 @@ package lapr4.jobs4u.applicationmanagement.application;
 
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -32,6 +33,7 @@ import lapr4.jobs4u.usermanagement.domain.BaseRoles;
 @UseCaseController
 public class PublishResultsController {
 
+    private static final String EVALUATED_TAG = "Evaluated";
     private final ApplicationRepository applicationRepository;
     private final TransactionalContext txCtx;
     private final RankRepository rankRepository;
@@ -117,10 +119,22 @@ public class PublishResultsController {
                 for (final File filePath : application.getFiles())
                     attachments.add(filePath.toString());
 
-                attachments.add(requirement.get().file().toString());
+                final Path requirementPath = new java.io.File(requirement.get().file().toString()).toPath();
+                final Path parentPath = requirementPath.getParent();
+                final String fileName = requirementPath.getFileName().toString();
+                final String newFileName = EVALUATED_TAG + fileName;
+                final Path newPath = parentPath.resolve(newFileName);
+                final String requirementFile = newPath.toString().replace("input", "output");
+                attachments.add(requirementFile);
 
-                if (interview.isPresent()) {
-                    attachments.add(interview.get().file().toString());
+                if (interview.isPresent() && interview.get().file() != null){
+                    final Path interviewPath = new java.io.File(interview.get().file().toString()).toPath();
+                    final Path interviewFileName = interviewPath.getParent();
+                    final String interviewFileNameStr = interviewPath.getFileName().toString();
+                    final String newInterviewFileName = EVALUATED_TAG + interviewFileNameStr;
+                    final Path newInterviewPath = interviewFileName.resolve(newInterviewFileName);
+                    final String interviewFilePath = newInterviewPath.toString().replace("input", "output");
+                    attachments.add(interviewFilePath);
                 }
 
                 emailService.sendEmailWithAttachment(application.candidate().emailAddress().toString(),

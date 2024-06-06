@@ -1,0 +1,43 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+title Sequence Diagram (SD) - Display all data of an application
+
+autonumber
+
+actor "Customer Manager" as Manager
+participant "DisplayAllDataOfAnApplicationUI" as UI
+participant "DisplayAllDataOfAnApplicationController" as Controller
+participant "Application" as Application
+participant "JobOpening" as JobOpening
+participant "JobOpeningRepository" as JobOpeningRepository
+participant "ApplicationRepository" as ApplicationRepository
+database "H2Database" as DB
+
+activate Manager
+
+    Manager -> UI : Asks to display all data of an application
+    activate UI
+
+     UI -> Manager : Displays a list of job openings and asks to choose one
+
+    deactivate UI
+
+    Manager -> UI : Selects one job opening
+    activate UI
+
+        UI -> Manager : Displays a list of applications for the selected job opening and asks to choose one
+
+deactivate UI
+
+     Manager -> UI : Selects an application
+
+      activate UI
+
+        UI -> Manager : Displays all data of the selected application
+
+    deactivate UI
+    
+@enduml

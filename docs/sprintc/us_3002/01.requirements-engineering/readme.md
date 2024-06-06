@@ -25,7 +25,12 @@ server and the Follow Up Server be deployed in nodes different from localhost, p
 
 **From the client clarifications:**
 
-N/A
+> **Date:** 23/03/2024
+>
+> **Question 34:** US3002, lista job openings, position o que é?
+>
+> **Answer:** Nessa US quando referimos “position” tem o mesmo significado que “title or function” na secção 2.2.2.
+
 
 ### 1.3. Acceptance Criteria
 

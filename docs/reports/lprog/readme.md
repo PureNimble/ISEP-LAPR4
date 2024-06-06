@@ -1,3 +1,5 @@
+<img width=100% src="https://capsule-render.vercel.app/api?type=waving&height=120&color=4E1764"/>
+
 # LPROG grammars, listeners, and visitors explained
 
 This document aims to briefly explain the grammars created and used by us in the LAPR4 integrative project. We will also present our reasons and thoughts to explain the use of Listeners or Visitors in different functionalities.
@@ -1372,3 +1374,5 @@ In summary, several grammars were defined for the Integrative Project of LAPR4 a
 
 - Not so Positive Aspects:
     1. The organization of rules across different grammars could be improved for better clarity and maintainability.
+
+<img width=100% src="https://capsule-render.vercel.app/api?type=waving&height=120&color=4E1764&section=footer"/>

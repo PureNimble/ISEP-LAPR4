@@ -56,8 +56,8 @@ Lastly, we have these grammars. These grammars solely aim to validate the struct
 
 - Therefore, we traversed the entire Parse Tree and obtained the necessary information through the Listeners to import the questions into the system.
 
-- These grammars were designed for the User Stories: [US-1008](../sprintb/us_1008/readme.md), [US-1009](../sprintb/us_1009/readme.md) (Requirements), and [US-1011](../sprintb/us_1011/readme.md) (Interviews).
-
+- These grammars were designed for the User Stories: [US-1008](../../sprintb/us_1008/readme.md), [US-1009](../../sprintb/us_1009/readme.md) (Requirements), and [US-1011](../../sprintb/us_1011/readme.md) (Interviews).
+S
 
 ### InterviewCSV.g4 Grammar
 
@@ -168,7 +168,7 @@ NEWLINE: ('\r'? '\n')+;
 WS: [ \t\n\r]+ -> skip;
 ```
 
-**The full file:** [```Go to the file```](../../jobs4u.ANTLR/src/main/java/lapr4/jobs4u/importer/interview/template/csv/InterviewCsv.g4)
+**The full file:** [```Go to the file```](../../../jobs4u.ANTLR/src/main/java/lapr4/jobs4u/importer/interview/template/csv/InterviewCsv.g4)
 
 ### InterviewJSON.g4 Grammar
 
@@ -321,7 +321,7 @@ TEXT: (LETTER | TWO_DIGIT_NUMBER | MEMBER)+;
 WS: [ \t\n\r]+ -> skip;
 ```
 
-**The full file:** [```Go to the File```](../../jobs4u.ANTLR/src/main/java/lapr4/jobs4u/importer/interview/template/json/InterviewJson.g4)
+**The full file:** [```Go to the File```](../../../jobs4u.ANTLR/src/main/java/lapr4/jobs4u/importer/interview/template/json/InterviewJson.g4)
 
 ### InterviewXML.g4 Grammar
 
@@ -480,7 +480,7 @@ TEXT: (LETTER | TWO_DIGIT_NUMBER | MEMBER)+;
 WS: [ \t\n\r]+ -> skip;
 ```
 
-**The full file:** [```Go to the File```](../../jobs4u.ANTLR/src/main/java/lapr4/jobs4u/importer/interview/template/xml/InterviewXml.g4)
+**The full file:** [```Go to the File```](../../../jobs4u.ANTLR/src/main/java/lapr4/jobs4u/importer/interview/template/xml/InterviewXml.g4)
 
 ### RequirementsCSV.g4 Grammar
 
@@ -549,7 +549,7 @@ NEWLINE: ('\r'? '\n')+;
 WS: [ \t\n\r]+ -> skip;
 ```
 
-**The full file:** [```Go to the File```](../../jobs4u.ANTLR/src/main/java/lapr4/jobs4u/importer/requirement/template/csv/RequirementsCsv.g4)
+**The full file:** [```Go to the File```](../../../jobs4u.ANTLR/src/main/java/lapr4/jobs4u/importer/requirement/template/csv/RequirementsCsv.g4)
 
 ### RequirementsJSON.g4 Grammar
 
@@ -643,7 +643,7 @@ TEXT: (LETTER | TWO_DIGIT_NUMBER | MEMBER)+;
 WS: [ \t\n\r]+ -> skip;
 ```
 
-**The full file:** [```Go to the File```](../../jobs4u.ANTLR/src/main/java/lapr4/jobs4u/importer/requirement/template/json/RequirementsJson.g4)
+**The full file:** [```Go to the File```](../../../jobs4u.ANTLR/src/main/java/lapr4/jobs4u/importer/requirement/template/json/RequirementsJson.g4)
 
 ### RequirementsXML.g4 Grammar
 
@@ -749,18 +749,18 @@ TEXT: (LETTER | TWO_DIGIT_NUMBER | MEMBER)+;
 WS: [ \t\n\r]+ -> skip;
 ```
 
-**The full file:** [```Go to the File```](../../jobs4u.ANTLR/src/main/java/lapr4/jobs4u/importer/requirement/template/xml/RequirementsXml.g4)
+**The full file:** [```Go to the File```](../../../jobs4u.ANTLR/src/main/java/lapr4/jobs4u/importer/requirement/template/xml/RequirementsXml.g4)
 
 ### Utilization of Listeners and Visitors
 
 | Functionality | File | Type | Description |
 | --- | --- | --- | --- |
-| Question Import | [```InterviewCsvListener```](../../jobs4u.integrations.plugins/src/main/java/lapr4/jobs4u/integrations/plugins/question/interview/InterviewCsvListener.java) | Listener | This listener is responsible for traversing the Parse Tree and obtaining the necessary information to import questions into the system. |
-| Question Import | [```InterviewJsonListener```](../../jobs4u.integrations.plugins/src/main/java/lapr4/jobs4u/integrations/plugins/question/interview/InterviewJsonListener.java) | Listener | This listener is responsible for traversing the Parse Tree and obtaining the necessary information to import questions into the system. |
-| Question Import | [```InterviewXmlListener```](../../jobs4u.integrations.plugins/src/main/java/lapr4/jobs4u/integrations/plugins/question/interview/InterviewXmlListener.java) | Listener | This listener is responsible for traversing the Parse Tree and obtaining the necessary information to import questions into the system. |
-| Question Import | [```RequirementsCsvListener```](../../jobs4u.integrations.plugins/src/main/java/lapr4/jobs4u/integrations/plugins/question/requirement/RequirementsCsvListener.java) | Listener | This listener is responsible for traversing the Parse Tree and obtaining the necessary information to import questions into the system. |
-| Question Import | [```RequirementsJsonListener```](../../jobs4u.integrations.plugins/src/main/java/lapr4/jobs4u/integrations/plugins/question/requirement/RequirementsJsonListener.java) | Listener | This listener is responsible for traversing the Parse Tree and obtaining the necessary information to import questions into the system. |
-| Question Import | [```RequirementsXmlListener```](../../jobs4u.integrations.plugins/src/main/java/lapr4/jobs4u/integrations/plugins/question/requirement/RequirementsXmlListener.java) | Listener | This listener is responsible for traversing the Parse Tree and obtaining the necessary information to import questions into the system. |
+| Question Import | [```InterviewCsvListener```](../../../jobs4u.integrations.plugins/src/main/java/lapr4/jobs4u/integrations/plugins/question/interview/InterviewCsvListener.java) | Listener | This listener is responsible for traversing the Parse Tree and obtaining the necessary information to import questions into the system. |
+| Question Import | [```InterviewJsonListener```](../../../jobs4u.integrations.plugins/src/main/java/lapr4/jobs4u/integrations/plugins/question/interview/InterviewJsonListener.java) | Listener | This listener is responsible for traversing the Parse Tree and obtaining the necessary information to import questions into the system. |
+| Question Import | [```InterviewXmlListener```](../../../jobs4u.integrations.plugins/src/main/java/lapr4/jobs4u/integrations/plugins/question/interview/InterviewXmlListener.java) | Listener | This listener is responsible for traversing the Parse Tree and obtaining the necessary information to import questions into the system. |
+| Question Import | [```RequirementsCsvListener```](../../../jobs4u.integrations.plugins/src/main/java/lapr4/jobs4u/integrations/plugins/question/requirement/RequirementsCsvListener.java) | Listener | This listener is responsible for traversing the Parse Tree and obtaining the necessary information to import questions into the system. |
+| Question Import | [```RequirementsJsonListener```](../../../jobs4u.integrations.plugins/src/main/java/lapr4/jobs4u/integrations/plugins/question/requirement/RequirementsJsonListener.java) | Listener | This listener is responsible for traversing the Parse Tree and obtaining the necessary information to import questions into the system. |
+| Question Import | [```RequirementsXmlListener```](../../../jobs4u.integrations.plugins/src/main/java/lapr4/jobs4u/integrations/plugins/question/requirement/RequirementsXmlListener.java) | Listener | This listener is responsible for traversing the Parse Tree and obtaining the necessary information to import questions into the system. |
 
 ## Template Export Grammars
 
@@ -772,7 +772,7 @@ WS: [ \t\n\r]+ -> skip;
 
 - For these functionalities, neither Listeners nor Visitors were used, and we simply traversed the Parse Trees to check for syntax errors.
 
-- These grammars were designed for the User Stories: [US-1012](../sprintb/us_1012/readme.md) (Interviews) and [US-2003](../sprintb/us_2003/readme.md) (Requirements).
+- These grammars were designed for the User Stories: [US-1012](../../sprintb/us_1012/readme.md) (Interviews) and [US-2003](../../sprintb/us_2003/readme.md) (Requirements).
 
 ### Interview.g4 Grammar
 
@@ -876,7 +876,7 @@ NEWLINE: ('\r'? '\n')+;
 WS: [ \t\n\r]+ -> skip;
 ```
 
-**The full file:** [```Go to the File```](../../jobs4u.ANTLR/src/main/java/lapr4/jobs4u/exporter/interview/template/Interview.g4)
+**The full file:** [```Go to the File```](../../../jobs4u.ANTLR/src/main/java/lapr4/jobs4u/exporter/interview/template/Interview.g4)
 
 ### Requirements.g4 Grammar
 
@@ -928,7 +928,7 @@ NEWLINE: ('\r'? '\n')+;
 WS: [ \t\r\n]+ -> skip;
 ```
 
-**The full file:** [```Go to the File```](../../jobs4u.ANTLR/src/main/java/lapr4/jobs4u/exporter/requirement/template/Requirements.g4)
+**The full file:** [```Go to the File```](../../../jobs4u.ANTLR/src/main/java/lapr4/jobs4u/exporter/requirement/template/Requirements.g4)
 
 ### Utilization of Listeners and Visitors
 
@@ -946,7 +946,7 @@ _N/A_
 
 - Visitors were also used to evaluate the candidates' answers by traversing the Parse Tree and collecting the answers, which will be used to calculate or determine a final result.
 
-- These grammars were designed for the User Stories: [US-1017](../sprintc/us_1017/readme.md) (Interviews), [US-2004](../sprintc/us_2004/readme.md) (Requirements), [US-1018](../sprintc/us_1018/readme.md) (Interviews), and [US-1015](../sprintc/us_1015/readme.md) (Requirements).
+- These grammars were designed for the User Stories: [US-1017](../../sprintc/us_1017/readme.md) (Interviews), [US-2004](../../sprintc/us_2004/readme.md) (Requirements), [US-1018](../../sprintc/us_1018/readme.md) (Interviews), and [US-1015](../../sprintc/us_1015/readme.md) (Requirements).
 
 ### InterviewAnswers.g4 Grammar
 
@@ -1099,7 +1099,7 @@ NEWLINE: ('\r'? '\n')+;
 WS: [ \t\n\r]+ -> skip;
 ```
 
-**The full file:** [```Go to the File```](../../jobs4u.ANTLR/src/main/java/lapr4/jobs4u/importer/interview/answer/InterviewAnswers.g4)
+**The full file:** [```Go to the File```](../../../jobs4u.ANTLR/src/main/java/lapr4/jobs4u/importer/interview/answer/InterviewAnswers.g4)
 
 ### RequirementsAnswers.g4 Grammar
 
@@ -1153,16 +1153,16 @@ NEWLINE: ('\r'? '\n')+;
 WS: [ \t\n\r]+ -> skip;
 ```
 
-**The full file:** [```Go to the File```](../../jobs4u.ANTLR/src/main/java/lapr4/jobs4u/importer/requirement/answer/RequirementsAnswers.g4)
+**The full file:** [```Go to the File```](../../../jobs4u.ANTLR/src/main/java/lapr4/jobs4u/importer/requirement/answer/RequirementsAnswers.g4)
 
 ### Utilization of Listeners and Visitors
 
 | Functionality | File | Type | Description |
 | --- | --- | --- | --- |
-| Email Validation | [```InterviewAnswersVisitor```](../../jobs4u.core/src/main/java/lapr4/jobs4u/interviewmanagement/application/InterviewAnswersVisitor.java) | Visitor | This visitor is responsible for traversing the Parse Tree and validating if the email in the file being loaded into the system matches the candidate's email. |
-| Answer Evaluation | [```EvaluateInterviewAnswersVisitor```](../../jobs4u.core/src/main/java/lapr4/jobs4u/interviewmanagement/application/EvaluateInterviewAnswersVisitor.java) | Visitor | This visitor is responsible for traversing the Parse Tree and collecting the answers, which will be used to calculate a final grade. |
-| Email Validation | [```RequirementsAnswersVisitor```](../../jobs4u.core/src/main/java/lapr4/jobs4u/requirementmanagement/application/RequirementsAnswersVisitor.java) | Visitor | This visitor is responsible for traversing the Parse Tree and validating if the email in the file being loaded into the system matches the candidate's email. |
-| Answer Evaluation | [```EvaluateRequirementsAnswersVisitor```](../../jobs4u.core/src/main/java/lapr4/jobs4u/requirementmanagement/application/EvaluateRequirementsAnswersVisitor.java) | Visitor | This visitor is responsible for traversing the Parse Tree and collecting the answers, which will be used to determine a final result. |
+| Email Validation | [```InterviewAnswersVisitor```](../../../jobs4u.core/src/main/java/lapr4/jobs4u/interviewmanagement/application/InterviewAnswersVisitor.java) | Visitor | This visitor is responsible for traversing the Parse Tree and validating if the email in the file being loaded into the system matches the candidate's email. |
+| Answer Evaluation | [```EvaluateInterviewAnswersVisitor```](../../../jobs4u.core/src/main/java/lapr4/jobs4u/interviewmanagement/application/EvaluateInterviewAnswersVisitor.java) | Visitor | This visitor is responsible for traversing the Parse Tree and collecting the answers, which will be used to calculate a final grade. |
+| Email Validation | [```RequirementsAnswersVisitor```](../../../jobs4u.core/src/main/java/lapr4/jobs4u/requirementmanagement/application/RequirementsAnswersVisitor.java) | Visitor | This visitor is responsible for traversing the Parse Tree and validating if the email in the file being loaded into the system matches the candidate's email. |
+| Answer Evaluation | [```EvaluateRequirementsAnswersVisitor```](../../../jobs4u.core/src/main/java/lapr4/jobs4u/requirementmanagement/application/EvaluateRequirementsAnswersVisitor.java) | Visitor | This visitor is responsible for traversing the Parse Tree and collecting the answers, which will be used to determine a final result. |
 
 
 ## Interview/Requirements Evaluation Validation Grammars
@@ -1175,7 +1175,7 @@ WS: [ \t\n\r]+ -> skip;
 
 - For these functionalities, neither Listeners nor Visitors were used, and we simply traversed the Parse Trees to check for syntax errors.
 
-- These grammars were designed for the User Stories: [US-1018](../sprintc/us_1018/readme.md) (Interviews) and [US-1015](../sprintc/us_1015/readme.md) (Requirements).
+- These grammars were designed for the User Stories: [US-1018](../../sprintc/us_1018/readme.md) (Interviews) and [US-1015](../../sprintc/us_1015/readme.md) (Requirements).
 
 ### EvaluateInterviewAnswers.g4 Grammar
 
@@ -1289,7 +1289,7 @@ NEWLINE: ('\r'? '\n')+;
 WS: [ \t\n\r]+ -> skip;
 ```
 
-**The full file:** [```Go to the File```](../../jobs4u.ANTLR/src/main/java/lapr4/jobs4u/exporter/interview/answer/EvaluateInterviewAnswers.g4)
+**The full file:** [```Go to the File```](../../../jobs4u.ANTLR/src/main/java/lapr4/jobs4u/exporter/interview/answer/EvaluateInterviewAnswers.g4)
 
 ### EvaluateRequirementsAnswers.g4 Grammar
 
@@ -1356,7 +1356,7 @@ NEWLINE: ('\r'? '\n')+;
 WS: [ \t\n\r]+ -> skip;
 ```
 
-**The full file:** [```Go to the File```](../../jobs4u.ANTLR/src/main/java/lapr4/jobs4u/exporter/requirement/answer/EvaluateRequirementsAnswers.g4)
+**The full file:** [```Go to the File```](../../../jobs4u.ANTLR/src/main/java/lapr4/jobs4u/exporter/requirement/answer/EvaluateRequirementsAnswers.g4)
 
 ### Utilization of Listeners and Visitors
 

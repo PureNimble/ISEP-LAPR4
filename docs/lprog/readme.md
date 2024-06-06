@@ -556,20 +556,22 @@ WS: [ \t\n\r]+ -> skip;
 ```json
 [
     {
-        "body": "Question Body",
+        "body": "Which of the following languages are you proficient in? (Python | JavaScript | C#)",
         "possibleAnswers": [
-            "A possible answer",
-            "Another possible answer if necessary"
+            "Python",
+            "JavaScript",
+            "C++"
         ],
-        "minimumRequirement": "Justification Body"
+        "minimumRequirement": "A minimum proficiency in Python is required for the job position."
     },
     {
-        "body": "Question Body",
+        "body": "Which of the following databases have you used in your projects? (MySQL | PostgreSQL | MongoDB)",
         "possibleAnswers": [
-            "A possible answer",
-            "Another possible answer if necessary"
+            "MySQL",
+            "PostgreSQL",
+            "MongoDB"
         ],
-        "minimumRequirement": "Justification Body"
+        "minimumRequirement": "Experience with MySQL is a minimum requirement for the job position."
     }
 ]
 ```
@@ -753,12 +755,12 @@ WS: [ \t\n\r]+ -> skip;
 
 | Functionality | File | Type | Description |
 | --- | --- | --- | --- |
-| Question Import | [InterviewCsvListener](../../jobs4u.integrations.plugins\src\main\java\lapr4\jobs4u\integrations\plugins\question\interview\InterviewCsvListener.java) | Listener | This listener is responsible for traversing the Parse Tree and obtaining the necessary information to import questions into the system. |
-| Question Import | [InterviewJsonListener](../../jobs4u.integrations.plugins\src\main\java\lapr4\jobs4u\integrations\plugins\question\interview\InterviewJsonListener.java) | Listener | This listener is responsible for traversing the Parse Tree and obtaining the necessary information to import questions into the system. |
-| Question Import | [InterviewXmlListener](../../jobs4u.integrations.plugins\src\main\java\lapr4\jobs4u\integrations\plugins\question\interview\InterviewXmlListener.java) | Listener | This listener is responsible for traversing the Parse Tree and obtaining the necessary information to import questions into the system. |
-| Question Import | [RequirementsCsvListener](../../jobs4u.integrations.plugins\src\main\java\lapr4\jobs4u\integrations\plugins\question\requirement\RequirementsCsvListener.java) | Listener | This listener is responsible for traversing the Parse Tree and obtaining the necessary information to import questions into the system. |
-| Question Import | [RequirementsJsonListener](../../jobs4u.integrations.plugins\src\main\java\lapr4\jobs4u\integrations\plugins\question\requirement\RequirementsJsonListener.java) | Listener | This listener is responsible for traversing the Parse Tree and obtaining the necessary information to import questions into the system. |
-| Question Import | [RequirementsXmlListener](../../jobs4u.integrations.plugins\src\main\java\lapr4\jobs4u\integrations\plugins\question\requirement\RequirementsXmlListener.java) | Listener | This listener is responsible for traversing the Parse Tree and obtaining the necessary information to import questions into the system. |
+| Question Import | [```InterviewCsvListener```](../../jobs4u.integrations.plugins\src\main\java\lapr4\jobs4u\integrations\plugins\question\interview\InterviewCsvListener.java) | Listener | This listener is responsible for traversing the Parse Tree and obtaining the necessary information to import questions into the system. |
+| Question Import | [```InterviewJsonListener```](../../jobs4u.integrations.plugins\src\main\java\lapr4\jobs4u\integrations\plugins\question\interview\InterviewJsonListener.java) | Listener | This listener is responsible for traversing the Parse Tree and obtaining the necessary information to import questions into the system. |
+| Question Import | [```InterviewXmlListener```](../../jobs4u.integrations.plugins\src\main\java\lapr4\jobs4u\integrations\plugins\question\interview\InterviewXmlListener.java) | Listener | This listener is responsible for traversing the Parse Tree and obtaining the necessary information to import questions into the system. |
+| Question Import | [```RequirementsCsvListener```](../../jobs4u.integrations.plugins\src\main\java\lapr4\jobs4u\integrations\plugins\question\requirement\RequirementsCsvListener.java) | Listener | This listener is responsible for traversing the Parse Tree and obtaining the necessary information to import questions into the system. |
+| Question Import | [```RequirementsJsonListener```](../../jobs4u.integrations.plugins\src\main\java\lapr4\jobs4u\integrations\plugins\question\requirement\RequirementsJsonListener.java) | Listener | This listener is responsible for traversing the Parse Tree and obtaining the necessary information to import questions into the system. |
+| Question Import | [```RequirementsXmlListener```](../../jobs4u.integrations.plugins\src\main\java\lapr4\jobs4u\integrations\plugins\question\requirement\RequirementsXmlListener.java) | Listener | This listener is responsible for traversing the Parse Tree and obtaining the necessary information to import questions into the system. |
 
 ## Template Export Grammars
 
@@ -1157,10 +1159,10 @@ WS: [ \t\n\r]+ -> skip;
 
 | Functionality | File | Type | Description |
 | --- | --- | --- | --- |
-| Email Validation | [InterviewAnswersVisitor](../../jobs4u.core\src\main\java\lapr4\jobs4u\interviewmanagement\application\InterviewAnswersVisitor.java) | Visitor | This visitor is responsible for traversing the Parse Tree and validating if the email in the file being loaded into the system matches the candidate's email. |
-| Answer Evaluation | [EvaluateInterviewAnswersVisitor](../../jobs4u.core\src\main\java\lapr4\jobs4u\interviewmanagement\application\EvaluateInterviewAnswersVisitor.java) | Visitor | This visitor is responsible for traversing the Parse Tree and collecting the answers, which will be used to calculate a final grade. |
-| Email Validation | [RequirementsAnswersVisitor](../../jobs4u.core\src\main\java\lapr4\jobs4u\requirementmanagement\application\RequirementsAnswersVisitor.java) | Visitor | This visitor is responsible for traversing the Parse Tree and validating if the email in the file being loaded into the system matches the candidate's email. |
-| Answer Evaluation | [EvaluateRequirementsAnswersVisitor](../../jobs4u.core\src\main\java\lapr4\jobs4u\requirementmanagement\application\EvaluateRequirementsAnswersVisitor.java) | Visitor | This visitor is responsible for traversing the Parse Tree and collecting the answers, which will be used to determine a final result. |
+| Email Validation | [```InterviewAnswersVisitor```](../../jobs4u.core\src\main\java\lapr4\jobs4u\interviewmanagement\application\InterviewAnswersVisitor.java) | Visitor | This visitor is responsible for traversing the Parse Tree and validating if the email in the file being loaded into the system matches the candidate's email. |
+| Answer Evaluation | [```EvaluateInterviewAnswersVisitor```](../../jobs4u.core\src\main\java\lapr4\jobs4u\interviewmanagement\application\EvaluateInterviewAnswersVisitor.java) | Visitor | This visitor is responsible for traversing the Parse Tree and collecting the answers, which will be used to calculate a final grade. |
+| Email Validation | [```RequirementsAnswersVisitor```](../../jobs4u.core\src\main\java\lapr4\jobs4u\requirementmanagement\application\RequirementsAnswersVisitor.java) | Visitor | This visitor is responsible for traversing the Parse Tree and validating if the email in the file being loaded into the system matches the candidate's email. |
+| Answer Evaluation | [```EvaluateRequirementsAnswersVisitor```](../../jobs4u.core\src\main\java\lapr4\jobs4u\requirementmanagement\application\EvaluateRequirementsAnswersVisitor.java) | Visitor | This visitor is responsible for traversing the Parse Tree and collecting the answers, which will be used to determine a final result. |
 
 
 ## Interview/Requirements Evaluation Validation Grammars
@@ -1317,7 +1319,7 @@ REQUIREMENT RESULT: MET
 
 - The same requirements inherited from the previous grammars;
 
-- The final result must be: "APPROVER" or "REJECTED";
+- The final result must be: "APPROVED" or "REJECTED";
 
 - The result of each requirement must be: "MET" or "NOT MET";
 
@@ -1365,6 +1367,7 @@ _N/A_
 In summary, several grammars were defined for the Integrative Project of LAPR4 and for the LPROG subject. These grammars were used to analyze the structure of the files and validate questions and answers. As a group, we decided to use Listeners for import functionalities and Visitors for answer evaluation and email validation functionalities in the files. We believe that the use of these tools was essential for the success of the project as they allowed us to develop different functionalities more efficiently and in an organized manner.
 
 ### Positive and Not so Positive Aspects
+
 - Positive Aspects:
     1. The wide variety of grammars
     2. Usage of both Listeners and Visitors

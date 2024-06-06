@@ -45,7 +45,7 @@ public class ListApplicationsUI extends AbstractListUI<ApplicationDTO> {
         if (theJobOpeningDTO == null) {
             return Collections.emptyList();
         }
-        JobOpening theJobOpening = listJobpeningsController.selectedJobOpening(theJobOpeningDTO);
+        final JobOpening theJobOpening = listJobpeningsController.selectedJobOpening(theJobOpeningDTO);
         return applicationsByJobOpening(theJobOpening);
     }
 

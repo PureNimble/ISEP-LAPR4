@@ -26,7 +26,8 @@ public class CustomerManagerMenu extends Menu {
     private static final int EVALUATE_REQUIREMENT = 15;
     private static final int LIST_CANDIDATES_BY_INTERVIEW_POINTS = 16;
     private static final int REGISTER_RANK = 17;
-    private static final int PUBLISH_RESULTS = 18;
+    private static final int DISPLAY_APPLICATION_DATA = 18;
+    private static final int PUBLISH_RESULTS = 19;
     private static final int EXIT_OPTION = 0;
     private static final String RETURN_LABEL = "Return ";
 
@@ -50,6 +51,7 @@ public class CustomerManagerMenu extends Menu {
         addItem(EVALUATE_REQUIREMENT, "Evaluate Requirement", new EvaluateRequirementAction());
         addItem(LIST_CANDIDATES_BY_INTERVIEW_POINTS, "List Candidates by Interview Points", new ListCandidatesByInterviewPointsAction());
         addItem(REGISTER_RANK, "Rank Candidates", new RegisterRankAction());
+        addItem(DISPLAY_APPLICATION_DATA, "Display Application Data", new DisplayApplicationDataAction());
         addItem(PUBLISH_RESULTS, "Launch Results", new PublishResultsAction());
         addItem(EXIT_OPTION, RETURN_LABEL, Actions.SUCCESS);
     }

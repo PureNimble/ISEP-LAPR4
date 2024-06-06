@@ -127,7 +127,7 @@ public class PublishResultsController {
                 final String requirementFile = newPath.toString().replace("input", "output");
                 attachments.add(requirementFile);
 
-                if (interview.isPresent() && interview.get().file() != null){
+                if (interview.isPresent() && interview.get().file() != null) {
                     final Path interviewPath = new java.io.File(interview.get().file().toString()).toPath();
                     final Path interviewFileName = interviewPath.getParent();
                     final String interviewFileNameStr = interviewPath.getFileName().toString();

@@ -1,0 +1,14 @@
+[Unit]
+Description=H2 database service
+After=syslog.target network.target
+
+[Service]
+SuccessExitStatus=143
+User=root
+Type=forking
+PIDFile=/root/h2.pid
+ExecStart=/root/run-h2.sh
+ExecStop=/bin/kill -INT $MAINPID
+
+[Install]
+WantedBy=multi-user.target

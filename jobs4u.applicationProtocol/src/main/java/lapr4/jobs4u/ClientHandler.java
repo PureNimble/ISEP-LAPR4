@@ -30,6 +30,7 @@ public class ClientHandler implements Runnable {
             put(MessageCode.CHANGEPASS, ChangePassMessage.class);
             put(MessageCode.LISTAPPREQ, ListAppReqMessage.class);
             put(MessageCode.LISTJOBREQ, ListJobReqMessage.class);
+            put(MessageCode.H2, H2Message.class);
         }
     };
 
@@ -51,14 +52,6 @@ public class ClientHandler implements Runnable {
 
             final DataInputStream input = new DataInputStream(socket.getInputStream());
             final DataOutputStream output = new DataOutputStream(socket.getOutputStream());
-
-            new Thread(() -> {
-                try {
-                    sendNotification(output);
-                } catch (final Exception e) {
-                    LOGGER.info("\n[Notication Thread] Error: ", e.getMessage());
-                }
-            }).start();
 
             while (!socket.isClosed()) {
                 try {
@@ -107,12 +100,5 @@ public class ClientHandler implements Runnable {
         }
 
         handleMessage.handle();
-    }
-
-    private void sendNotification(final DataOutputStream output) throws IOException, InterruptedException {
-        while (true) {
-            new NotificationMessage(null, output, socket, eventListener).handle();
-            Thread.sleep(5000);
-        }
     }
 }

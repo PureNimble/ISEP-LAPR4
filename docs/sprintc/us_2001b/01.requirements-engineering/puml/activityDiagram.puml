@@ -1,0 +1,57 @@
+@startuml
+
+title Applications File Bot - Activity Diagram
+
+start
+
+partition Initialization {
+  :Initialize system;
+  :setupSignals();
+  :getConfiguration();
+
+}
+
+partition NewFileCheckerProcess {
+  fork
+    :parent;
+  fork again
+    :newFileCheckerProcess;
+    repeat
+      :checkForNewFiles;
+      :sleep for n seconds;
+    repeat while(NewFileCheckerProcess is running)
+    end
+  end fork
+}
+
+partition WorkerProcess {
+  repeat
+    fork
+      :Parent;
+    fork again
+      :WorkerProcess;
+      repeat
+        :waitForWork;
+        :copyFiles;
+        :reportFile;
+      repeat while(WorkerProcess is running)
+      end
+    end fork
+  repeat while(for N processes)
+}
+
+partition ParentProcess {
+  repeat
+    :sem_wait(newFileCheckerProcess);
+    :listCandidatesIDs;
+    repeat
+      :sendWork;
+      :sem_wait(reportFile);
+      :reportFile;
+    repeat while(There are candidates to send)
+  repeat while(System is running)
+}
+
+end
+
+@enduml

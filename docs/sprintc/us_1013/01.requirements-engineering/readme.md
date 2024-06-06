@@ -106,6 +106,12 @@ _N/A_
 >
 > **Answer:** I see no need for that. This would be an extra functionality.
 
+> **Date:** 05/06/2024
+>
+> **Question 241:** US1013 - Na US1013 é suposto dar classificação aos candidatos, mas surgiu-nos uma questão que é após a conclusão desta US, a mesma deve avançar a fase do job opening, ou seja, passar da fase de analise (Analysis) para a fase de resultado (Result)?
+>
+> **Answer:** Em principio a mudança de fases deve ser feita apenas no âmbito da respetiva US.
+
 ### 1.3. Acceptance Criteria
 
 * **AC 1:** The ranking of the candidates must be manual.

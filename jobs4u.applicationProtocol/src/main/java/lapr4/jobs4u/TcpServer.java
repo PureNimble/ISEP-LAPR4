@@ -42,7 +42,11 @@ public class TcpServer {
         try {
             final Runnable pollService = new DatabasePollingService(
                     PersistenceContext.repositories().recruitmentProcesses(),
-                    PersistenceContext.repositories().customerUsers(), this.eventListener);
+                    PersistenceContext.repositories().customerUsers(),
+                    PersistenceContext.repositories().applications(),
+                    PersistenceContext.repositories().requirements(),
+                    PersistenceContext.repositories().candidateUsers(),
+                    this.eventListener);
             final Thread databasePollingService = new Thread(pollService);
             databasePollingService.start();
 

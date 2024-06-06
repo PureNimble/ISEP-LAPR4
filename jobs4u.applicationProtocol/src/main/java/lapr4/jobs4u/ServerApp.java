@@ -14,9 +14,14 @@ public class ServerApp {
                 new PlainTextEncoder());
 
         final AppSettings appSettings = new AppSettings();
-        final Integer port = appSettings.serverPort();
-        final TcpServer server = new TcpServer(port, ClientHandler.class);
-        final Thread serverThread = new Thread(server::run);
-        serverThread.start();
+        final Integer serverClientPort = appSettings.serverPort();
+        final TcpServer serverClient = new TcpServer(serverClientPort, ClientHandler.class);
+        final Thread serverClientThread = new Thread(serverClient::run);
+        serverClientThread.start();
+
+        final Integer serverH2Port = appSettings.h2ServerPort();
+        final TcpServer serverH2 = new TcpServer(serverH2Port, ClientHandler.class);
+        final Thread serverH2Thread = new Thread(serverH2::run);
+        serverH2Thread.start();
     }
 }

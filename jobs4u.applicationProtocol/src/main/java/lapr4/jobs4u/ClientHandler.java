@@ -53,14 +53,6 @@ public class ClientHandler implements Runnable {
             final DataInputStream input = new DataInputStream(socket.getInputStream());
             final DataOutputStream output = new DataOutputStream(socket.getOutputStream());
 
-            new Thread(() -> {
-                try {
-                    sendNotification(output);
-                } catch (final Exception e) {
-                    LOGGER.info("\n[Notication Thread] Error: ", e.getMessage());
-                }
-            }).start();
-
             while (!socket.isClosed()) {
                 try {
                     final ProtocolMessage message = ProtocolMessage.fromDataStream(input);
@@ -108,12 +100,5 @@ public class ClientHandler implements Runnable {
         }
 
         handleMessage.handle();
-    }
-
-    private void sendNotification(final DataOutputStream output) throws IOException, InterruptedException {
-        while (true) {
-            new NotificationMessage(null, output, socket, eventListener).handle();
-            Thread.sleep(5000);
-        }
     }
 }

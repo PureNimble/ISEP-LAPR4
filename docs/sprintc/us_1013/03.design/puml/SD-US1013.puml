@@ -6,13 +6,8 @@ skinparam sequenceParticipant underline
 
 actor "Customer Manager" as CM
 
-participant "RankCandidatesUI" as UI
-participant "RankCandidatesController" as C
-participant "RankCandidatesService" as S
-participant "ApplicationRepository" as R
-participant "JpaApplicationRepository" as RJPA
-participant "Candidate" as A
-participant "CandidateDTO" as ADTO
+participant "RegisterRankUI" as UI
+participant "RegisterRankController" as C
 participant "RankBuilder" as RB
 participant "RankRepository" as RR
 participant "JpaRankRepository" as JRR
@@ -29,55 +24,30 @@ activate CM
     deactivate UI
     CM -> UI : Selects a Job Opening
     activate UI
-        UI --> C : getCandidatesForJob(JobOpening jobOpening)
-        activate C
-            C -> S : getCandidatesForJob(JobOpening jobOpening)
-            activate S
-                S -> R : getCandidatesForJob(JobOpening jobOpening)
-                activate R
-                    R -> RJPA : getCandidatesForJob(JobOpening jobOpening)
-                    activate RJPA
-                        RJPA -> DB : createQuery(SELECT a.Candidate FROM Application a WHERE a.jobOpening = :jobOpening", candidate.class)
-                        activate DB
-                            RJPA -> DB : setParameter("jobOpening", jobOpening)
-                            DB --> RJPA : Iterable<Candidate>
-                        deactivate DB
-                        RJPA --> R : Iterable<Candidate>
-                    deactivate RJPA
-                    R --> S : Iterable<Candidate>
-                deactivate R
-
-                    loop for each Candidate
-                        S -> A: toDTO()
-                    activate A
-                        A --> ADTO: create
-                        activate ADTO
-                        A <-- ADTO: CandidateDTO
-                        deactivate ADTO
-                        S <-- A: CandidateDTO
-                    deactivate A
-                end
-                S --> C : Iterable<CandidateDTO>
-            deactivate S
-            C --> UI : Iterable<CandidateDTO>
-        deactivate C
-        UI --> CM : Displays Candidate List and asks to order it
+        ref over DB , CM: Get List of Applications for Job Opening\n(US 1005)
+        loop for every application (until CM asks to stop)
+        UI --> CM : Asks to select application for the rank nº[iteration of the loop]
     deactivate UI
-    loop for every candidate
         CM -> UI : Selects a candidate
         activate UI
-            UI --> UI : saveToList(CandidateDTO candidateDTO)
-            UI --> CM : Asks for the next candidate in the rank
-    end loop
-    UI --> C : addRank(Iterable<CandidateDTO> rankedList, JobOpening jobOpening)
+            UI --> UI : saveToList(Application application)
+        end loop
+
+    loop for every candidate ranked
+    UI --> C : setupRank(String rank Application application)
     activate C
-        C -> S : addRank(Iterable<CandidateDTO> rankedList, JobOpening jobOpening)
-        activate S
-            S -> RB : createRank(Iterable<CandidateDTO> rankedList, JobOpening jobOpening)
-            activate RB
-                RB --> S : rank
-            deactivate RB
-            S -> RR : save(rank)
+        C -> C : registerRank(String rank, Application application)
+        activate C
+            C -> C : doSetupRank(String rank, Application application)
+            activate C
+                C -> RB : createRank(String rank, Application application)
+                activate RB
+                    RB --> C : rank
+                deactivate RB
+                C --> C : rank
+            deactivate C
+            C -> RR : registerRank(Rank rank)
+
             activate RR
                 RR -> JRR : save(Rank)
                 activate JRR
@@ -87,12 +57,13 @@ activate CM
                     deactivate DB
                     JRR --> RR : rank
                 deactivate JRR
-                RR --> S : rank
+                RR --> C : rank
             deactivate RR
-            S --> C : rank
-        deactivate S
+            C --> C : rank
+            deactivate C
         C --> UI : rank
     deactivate C
+    end loop
     UI --> CM : Show operation success
 deactivate CM
 

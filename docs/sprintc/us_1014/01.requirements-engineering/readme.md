@@ -34,15 +34,24 @@
 >
 > **Answer:** The system should display the day of the week for the selected date. But the system should accept any valid date.
 
+> **Date:** 2024-05-17
+>
+> **Question 239:** Should we type an interviewer because of the possible parallers interviews or should we only set the date and time of the interview for this US and use this info only for future settings of data about the interview?
+>
+> **Answer:** Please see other questions regarding this US. For the moment there is no requirement to register the name of the interviewer. However, the system should warn the user if he/she is scheduling an interview for a time already taken by other interview (for the same Customer Manager).
+
+
 ### 1.3. Acceptance Criteria
 
 * **AC1:** The interview date and time must be recorded inside the interview phase of the recruitment process.
 
-* **AC2:** The date and time must follow this format: `YYYY-MM-DD HH:MM`.
+* **AC2:** The date /time must follow this format: `YYYY-MM-DD / HH:MM`.
 
 ### 1.4. Found out Dependencies
 
-_N/A_
+* **US 1010:** *As Customer Manager, I want to open or close phases of the process for a job opening (Candidate need to be aproved in the "Screening").
+* **US 1015:** *As Customer Manager, I want to execute the process of verification of requirements of applications for a job opening (Application need to be in the phase of "Interview"/"Requirement" to be able to record the date and time of the interview).
+
 
 ### 1.5 Input and Output Data
 

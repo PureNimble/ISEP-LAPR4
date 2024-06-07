@@ -2,7 +2,6 @@ package lapr4.jobs4u.infrastructure.bootstrapers;
 
 import java.util.List;
 
-import org.h2.jdbc.JdbcSQLSyntaxErrorException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

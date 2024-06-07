@@ -54,6 +54,10 @@ public class NumberOfVacancies implements ValueObject, Comparable<NumberOfVacanc
         return this.numberOfVacancies.toString();
     }
 
+    public Integer toInt() {
+        return this.numberOfVacancies;
+    }
+
     @Override
     public int compareTo(final NumberOfVacancies arg0) {
         return numberOfVacancies.compareTo(arg0.numberOfVacancies);

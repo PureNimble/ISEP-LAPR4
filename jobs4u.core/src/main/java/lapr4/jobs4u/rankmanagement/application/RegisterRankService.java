@@ -2,6 +2,7 @@ package lapr4.jobs4u.rankmanagement.application;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import lapr4.jobs4u.jobopeningmanagement.domain.JobOpening;
 import lapr4.jobs4u.rankmanagement.domain.Rank;
@@ -33,5 +34,9 @@ public class RegisterRankService {
         Rank selectedRank = rankRepository.ofIdentity(Long.valueOf(rankDTO.getId()))
                 .orElseThrow(IllegalArgumentException::new);
         return selectedRank;
+    }
+
+    public Optional<Long> lastPlacement() {
+        return rankRepository.findHighestSequence();
     }
 }

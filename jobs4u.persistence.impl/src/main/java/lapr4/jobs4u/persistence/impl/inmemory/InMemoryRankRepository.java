@@ -18,7 +18,7 @@ public class InMemoryRankRepository extends InMemoryDomainRepository<Rank, Long>
     }
 
     @Override
-    public Optional<String> findHighestSequence() {
+    public Optional<Long> findHighestSequence() {
         return findHighestSequence();
     }
 

@@ -1,5 +1,7 @@
 package lapr4.jobs4u.rankmanagement.application;
 
+import java.util.Optional;
+
 import eapli.framework.application.UseCaseController;
 import eapli.framework.infrastructure.authz.application.AuthorizationService;
 import lapr4.jobs4u.applicationmanagement.domain.Application;
@@ -56,5 +58,9 @@ public class RegisterRankController {
     public Rank editRank(final Rank rank, final String rankPlacement) {
         rank.replace(RankPlacement.valueOf(rankPlacement));
         return repository.save(rank);
+    }
+
+    public Optional<Long> lastPlacement() {
+        return service.lastPlacement();
     }
 }

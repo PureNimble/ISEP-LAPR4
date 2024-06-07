@@ -10,7 +10,8 @@ import lapr4.jobs4u.rankmanagement.domain.Rank;
  * @author 2DI2
  */
 public interface RankRepository extends DomainRepository<Long, Rank> {
-    Optional<String> findHighestSequence();
+    
+    Optional<Long> findHighestSequence();
 
     Iterable<Rank> findTopNApplicationsByJobOpening(final JobOpening jobOpening);
 

@@ -25,17 +25,17 @@ public class JpaRankRepository extends JpaAutoTxRepository<Rank, Long, Long>
     }
 
     @Override
-    public Optional<String> findHighestSequence() {
-        final long count = createQuery("SELECT COUNT(r) FROM Rank r",
+    public Optional<Long> findHighestSequence() {
+        final Long count = createQuery("SELECT COUNT(r) FROM Rank r",
                 Long.class).getSingleResult() + 1;
-        return Optional.of(Long.toString(count));
+        return Optional.of(count);
     }
 
     @Override
     public Boolean hasRank(final JobOpening jobOpening) {
         final Map<String, Object> params = new HashMap<>();
         params.put("jobOpening", jobOpening);
-        return matchOne("e.application.jobOpening=:jobOpening", params).isPresent();
+        return !match("e.application.jobOpening=:jobOpening", params).isEmpty();
     }
 
     @Override

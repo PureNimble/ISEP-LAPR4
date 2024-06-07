@@ -43,6 +43,7 @@ int main()
     sem_numberOfCandidates_mutex = createSemaphore(SEM_NUMBER_OF_CANDIDATES, 1);
     sem_isDone_mutex = createSemaphore(SEM_IS_DONE, 1);
     sem_files_mutex = createSemaphore(SEM_FILES, 1);
+    sem_addToBuffer = createSemaphore("/sem_temp", config.bufferSize - 1);
 
     createWorkers(&config, sharedMemory, sem_startWorkers, sem_reportFile, sem_isDone_mutex, sem_files_mutex, pids);
     parentWork(&config, sharedMemory, sem_startWorkers, sem_newFile, sem_reportFile, sem_addToBuffer_mutex, sem_isDone_mutex, sem_numberOfCandidates_mutex);

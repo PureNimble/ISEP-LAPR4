@@ -45,7 +45,17 @@ public class ListApplicationsService {
     }
 
     public Iterable<ApplicationDTO> unrankedApplicationByJobOpening(JobOpening jobOpening) {
-        final Iterable<Application> applications = this.applicationRepository.unrankedApplicationByJobOpening(jobOpening);
+        final Iterable<Application> applications = this.applicationRepository
+                .unrankedApplicationByJobOpening(jobOpening);
+
+        List<ApplicationDTO> applicationsDTO = new ArrayList<>();
+        applications.forEach(application -> applicationsDTO.add(application.toDTO()));
+        return applicationsDTO;
+    }
+
+    public Iterable<ApplicationDTO> findApplicationThatPassInRequirements(JobOpening jobOpening) {
+        final Iterable<Application> applications = this.applicationRepository
+                .findApplicationThatPassInRequirements(jobOpening);
 
         List<ApplicationDTO> applicationsDTO = new ArrayList<>();
         applications.forEach(application -> applicationsDTO.add(application.toDTO()));

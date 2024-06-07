@@ -6,6 +6,7 @@ import java.util.Optional;
 
 import lapr4.jobs4u.applicationmanagement.domain.Application;
 import lapr4.jobs4u.applicationmanagement.domain.ApplicationCode;
+import lapr4.jobs4u.applicationmanagement.domain.OutcomeValue;
 import lapr4.jobs4u.applicationmanagement.repositories.ApplicationRepository;
 import lapr4.jobs4u.candidatemanagement.domain.Candidate;
 import lapr4.jobs4u.jobopeningmanagement.domain.JobOpening;
@@ -39,7 +40,7 @@ class JpaApplicationRepository extends JpaAutoTxRepository<Application, Applicat
 
         final Long count = createQuery(
                 "SELECT COUNT(a) FROM Application a WHERE a.jobOpening.jobReference = :jobReference", Long.class)
-                .setParameter("jobReference", jobReference).getSingleResult()
+                        .setParameter("jobReference", jobReference).getSingleResult()
                 + 1;
         return count.toString();
 
@@ -75,9 +76,8 @@ class JpaApplicationRepository extends JpaAutoTxRepository<Application, Applicat
 
     @Override
     public Long numApplicationsForJobOpening(final JobOpening jobOpening) {
-        return createQuery(
-                "SELECT COUNT (a) FROM Application a WHERE a.jobOpening = :jobOpening",
-                Long.class).setParameter("jobOpening", jobOpening).getSingleResult();
+        return createQuery("SELECT COUNT (a) FROM Application a WHERE a.jobOpening = :jobOpening", Long.class)
+                .setParameter("jobOpening", jobOpening).getSingleResult();
     }
 
     @Override
@@ -92,6 +92,15 @@ class JpaApplicationRepository extends JpaAutoTxRepository<Application, Applicat
         return createQuery(
                 "SELECT a FROM Application a WHERE a.jobOpening = :jobOpening AND a NOT IN (SELECT r.application FROM Rank r)",
                 Application.class).setParameter("jobOpening", jobOpening).getResultList();
+    }
+
+    @Override
+    public Iterable<Application> findApplicationThatPassInRequirements(JobOpening jobOpening) {
+        return createQuery(
+                "SELECT a FROM Application a, Requirement r WHERE a.jobOpening = :jobOpening AND r.application = a AND r.outcome.outComeValue = :passed",
+                Application.class).setParameter("jobOpening", jobOpening)
+                        .setParameter("passed", OutcomeValue.APPROVED.toString()).getResultList();
+
     }
 
 }

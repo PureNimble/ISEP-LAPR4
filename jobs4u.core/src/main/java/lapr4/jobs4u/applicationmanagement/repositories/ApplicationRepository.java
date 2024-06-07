@@ -32,4 +32,6 @@ public interface ApplicationRepository extends DomainRepository<ApplicationCode,
 
     Iterable<Application> unrankedApplicationByJobOpening(final JobOpening jobOpening);
 
+    Iterable<Application> findApplicationThatPassInRequirements(final JobOpening jobOpening);
+
 }

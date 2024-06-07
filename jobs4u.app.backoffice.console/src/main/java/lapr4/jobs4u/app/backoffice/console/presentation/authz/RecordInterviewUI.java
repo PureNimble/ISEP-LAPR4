@@ -60,9 +60,9 @@ public class RecordInterviewUI extends AbstractUI {
         if (theJobOpeningDTO == null) {
             return null;
         }
-        // TODO: accept only applications that have passed the screening phase
         JobOpening theJobOpening = jobOpeningsController.selectedJobOpening(theJobOpeningDTO);
-        final Iterable<ApplicationDTO> applications = this.applicationController.filterByJobOpening(theJobOpening);
+        final Iterable<ApplicationDTO> applications = this.applicationController
+                .findApplicationThatPassInRequirements(theJobOpening);
         final SelectWidget<ApplicationDTO> selector1 = new SelectWidget<>("Applications:", applications,
                 new ApplicationPrinter());
         selector1.show();
@@ -80,11 +80,11 @@ public class RecordInterviewUI extends AbstractUI {
     }
 
     private Interview createInterview(Application app) {
-        System.out.println("Interview Date:");
-        final String date = Console.readLine("Date:");
-        final String time = Console.readLine("Time:");
-
         try {
+            System.out.println("Interview Date:");
+            final String date = Console.readLine("Date:");
+            final String time = Console.readLine("Time:");
+
             return Interview.valueOf(date, time, app);
 
         } catch (final ConcurrencyException | IntegrityViolationException e) {

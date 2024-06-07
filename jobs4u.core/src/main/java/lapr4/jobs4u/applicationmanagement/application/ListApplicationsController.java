@@ -18,7 +18,8 @@ public class ListApplicationsController {
     private final ListApplicationsService applicationService;
     private final AuthorizationService authz;
 
-    public ListApplicationsController(final ApplicationRepository applicationRepository, final AuthorizationService authz) {
+    public ListApplicationsController(final ApplicationRepository applicationRepository,
+            final AuthorizationService authz) {
         this.applicationService = new ListApplicationsService(applicationRepository);
         this.authz = authz;
     }
@@ -42,4 +43,10 @@ public class ListApplicationsController {
         authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.CUSTOMER_MANAGER, BaseRoles.POWERUSER);
         return applicationService.unrankedApplicationByJobOpening(jobOpening);
     }
+
+    public Iterable<ApplicationDTO> findApplicationThatPassInRequirements(final JobOpening jobOpening) {
+        authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.CUSTOMER_MANAGER, BaseRoles.POWERUSER);
+        return applicationService.findApplicationThatPassInRequirements(jobOpening);
+    }
+
 }

@@ -64,4 +64,9 @@ public class InMemoryApplicationRepository extends InMemoryDomainRepository<Appl
     public Iterable<Application> unrankedApplicationByJobOpening(final JobOpening jobOpening) {
         return unrankedApplicationByJobOpening(jobOpening);
     }
+
+    @Override
+    public Iterable<Application> findApplicationThatPassInRequirements(JobOpening jobOpening) {
+        return findApplicationThatPassInRequirements(jobOpening);
+    }
 }

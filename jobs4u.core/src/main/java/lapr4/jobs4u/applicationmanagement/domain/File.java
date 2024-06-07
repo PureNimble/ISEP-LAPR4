@@ -23,7 +23,8 @@ public class File implements ValueObject, Comparable<File>, Runnable {
 
     private static final long serialVersionUID = 1L;
     private static final String EXTENSION = ".txt";
-    private static final Integer LENGTH_PER_THREAD = 500;
+    private static final Integer LENGTH_PER_THREAD = 1000;
+    private static final Integer MAX_THREADS = 10;
 
     private final String path;
     @Transient
@@ -31,7 +32,7 @@ public class File implements ValueObject, Comparable<File>, Runnable {
 
     protected File(final String file) {
         Preconditions.nonEmpty(file, "File should neither be null nor empty");
-        //Preconditions.ensure(isFileValid(file), "File does not exist");
+        // Preconditions.ensure(isFileValid(file), "File does not exist");
         this.path = Files.ensureExtension(file, EXTENSION);
     }
 
@@ -71,9 +72,11 @@ public class File implements ValueObject, Comparable<File>, Runnable {
         return path.compareTo(arg0.path);
     }
 
-    /* private static boolean isFileValid(final String file) {
-        return java.nio.file.Files.exists(java.nio.file.Paths.get(file));
-    } */
+    /*
+     * private static boolean isFileValid(final String file) {
+     * return java.nio.file.Files.exists(java.nio.file.Paths.get(file));
+     * }
+     */
 
     public String fileName() {
         return this.path.substring(this.path.lastIndexOf('/') + 1);
@@ -117,16 +120,16 @@ public class File implements ValueObject, Comparable<File>, Runnable {
         int n = length / LENGTH_PER_THREAD;
         int lengthPerThread;
 
-        if (n > 20)
-            n = 20;
+        if (n > MAX_THREADS)
+            n = MAX_THREADS;
 
-        switch (n) {
-        case 0 -> {
+        if (n == 0) {
             n = 1;
             lengthPerThread = LENGTH_PER_THREAD;
-        }
-        case 20 -> lengthPerThread = length / n;
-        default -> lengthPerThread = LENGTH_PER_THREAD;
+        } else if (n == MAX_THREADS) {
+            lengthPerThread = length / n;
+        } else {
+            lengthPerThread = LENGTH_PER_THREAD;
         }
 
         List<Thread> threads = new ArrayList<>();

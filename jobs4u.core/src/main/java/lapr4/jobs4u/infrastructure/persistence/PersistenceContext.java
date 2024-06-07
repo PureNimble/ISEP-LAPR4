@@ -7,6 +7,8 @@ import org.slf4j.LoggerFactory;
 
 import lapr4.jobs4u.Application;
 import eapli.framework.util.Utility;
+import jakarta.persistence.EntityManagerFactory;
+import jakarta.persistence.Persistence;
 
 /**
  * provides easy access to the persistence layer. works as a factory of
@@ -20,10 +22,12 @@ public final class PersistenceContext {
     private static final Logger LOGGER = LoggerFactory.getLogger(PersistenceContext.class);
 
     private static RepositoryFactory theFactory;
+    private static EntityManagerFactory entityManagerFactory;
 
     private PersistenceContext() {
         // ensure utility
     }
+
     public static RepositoryFactory repositories() {
         if (theFactory == null) {
             final String factoryClassName = Application.settings().getRepositoryFactory();
@@ -37,5 +41,13 @@ public final class PersistenceContext {
             }
         }
         return theFactory;
+    }
+
+    public static EntityManagerFactory entityManagerFactory() {
+        if (entityManagerFactory == null) {
+            final String persistenceUnitName = Application.settings().getPersistenceUnitName();
+            entityManagerFactory = Persistence.createEntityManagerFactory(persistenceUnitName);
+        }
+        return entityManagerFactory;
     }
 }

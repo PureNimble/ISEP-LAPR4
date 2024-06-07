@@ -98,16 +98,10 @@ public class TriggerDataSender implements Trigger {
 
         final String query = "SELECT CANDIDATE FROM T_APPLICATION WHERE NUMBER = ?;";
 
-        String email = query(conn, newResult, query, "CANDIDATE");
+        String email = query(conn, applicationCode, query, "CANDIDATE");
 
-        if (email == null) {
-            System.out.println("Email is null");
-        }
-        if (oldResult.equals(newResult)) {
-            System.out.println("Old result is equal to new result");
-        }
-        /*         if (email == null || oldResult.equals(newResult))
-            return data; */
+        if (email == null || oldResult.equals(newResult))
+            return data;
 
         String output = "Application[" + applicationCode + "] Requirement changed from " + oldResult + " to "
                 + newResult;

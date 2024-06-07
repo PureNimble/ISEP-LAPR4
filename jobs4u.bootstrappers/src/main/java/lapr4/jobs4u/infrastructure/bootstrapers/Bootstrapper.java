@@ -26,8 +26,7 @@ import eapli.framework.validations.Invariants;
  */
 @SuppressWarnings("squid:S106")
 public class Bootstrapper implements Action {
-    private static final Logger LOGGER = LoggerFactory.getLogger(
-            Bootstrapper.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(Bootstrapper.class);
 
     private static final String POWERUSER_PWD = "poweruserA1";
     private static final String POWERUSER = "poweruser@email.local";
@@ -39,7 +38,7 @@ public class Bootstrapper implements Action {
     @Override
     public boolean execute() {
         // declare bootstrap actions
-        final Action[] actions = { new MasterUsersBootstrapper() };
+        final Action[] actions = { new MasterUsersBootstrapper(), new TriggerBootstrapper() };
 
         registerPowerUser();
         authenticateForBootstrapping();
@@ -59,8 +58,8 @@ public class Bootstrapper implements Action {
      */
     private boolean registerPowerUser() {
         final SystemUserBuilder userBuilder = UserBuilderHelper.builder();
-        userBuilder.withUsername(POWERUSER).withPassword(POWERUSER_PWD).withName("joe", "power")
-                .withEmail(POWERUSER).withRoles(BaseRoles.POWERUSER);
+        userBuilder.withUsername(POWERUSER).withPassword(POWERUSER_PWD).withName("joe", "power").withEmail(POWERUSER)
+                .withRoles(BaseRoles.POWERUSER);
         final SystemUser newUser = userBuilder.build();
 
         SystemUser poweruser;

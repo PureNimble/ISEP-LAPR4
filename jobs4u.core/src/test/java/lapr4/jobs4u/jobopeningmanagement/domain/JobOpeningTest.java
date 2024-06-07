@@ -19,6 +19,9 @@ import lapr4.jobs4u.customermanagement.domain.CustomerBuilder;
 import lapr4.jobs4u.usermanagement.domain.BaseRoles;
 import lapr4.jobs4u.usermanagement.domain.UserBuilderHelper;
 
+/**
+ * @author 2DI2
+ */
 public class JobOpeningTest {
     private final String aJobReference = "abcdefghij";
     private final String anotherJobReference = "qrstuvwxyz";

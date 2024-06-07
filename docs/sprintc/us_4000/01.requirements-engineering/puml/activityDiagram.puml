@@ -1,0 +1,31 @@
+@startuml
+
+title Top 20 Words US - Activity Diagram
+
+start
+  :DisplayCandidateApplicationsController;
+  repeat
+    :GetNextApplication;
+    fork
+      :Application.start;
+      repeat
+      :GetFile;
+      fork
+        :File.start;
+
+      end fork
+      repeat while(for each file)
+    end fork
+    : Application.join;
+  
+  repeat while(for each application)
+
+
+
+
+
+
+
+end
+
+@enduml

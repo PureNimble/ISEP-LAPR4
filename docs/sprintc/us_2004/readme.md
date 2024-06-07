@@ -9,6 +9,7 @@
 - `Sprint:` This US makes part of the final stage of development of the integrative project of this semester, Sprint C.
 
 - `Objectives:` The team must make sure that the system supports the upload of a text file with the data fields (requirements ) of a candidate for its verification.
+
 ## 2. Requirements
 
 [_`Requirements Engineering`_](01.requirements-engineering/readme.md)

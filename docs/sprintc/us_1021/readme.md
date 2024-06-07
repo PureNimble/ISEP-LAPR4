@@ -6,7 +6,7 @@
 
 - `Description:` As Customer Manager, I want to display all the data of an application.
 
-- `Sprint:` This US makes part of the intermediary stage of development of the integrative project of this semester, Sprint C.
+- `Sprint:` This US makes part of the final stage of development of the integrative project of this semester, Sprint C.
 
 - `Objectives:` The team must make sure that the system can display all the data of an application.
 

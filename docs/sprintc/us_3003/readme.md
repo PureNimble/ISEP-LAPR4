@@ -6,7 +6,7 @@
 
 - `Description:` As Customer, I want to be notified in my application when the state (phase) of my job openings changes.
 
-- `Sprint:` This US makes part of the intermediary stage of development of the integrative project of this semester, Sprint C.
+- `Sprint:` This US makes part of the final stage of development of the integrative project of this semester, Sprint C.
 
 - `Objectives:` The team must make sure that the system notifies the customer in the application when the state of one of the job openings changes.
 

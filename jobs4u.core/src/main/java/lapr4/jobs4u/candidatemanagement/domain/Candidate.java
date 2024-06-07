@@ -79,6 +79,10 @@ public class Candidate implements AggregateRoot<EmailAddress> {
         return this.name;
     }
 
+    public PhoneNumber phoneNumber() {
+        return this.phoneNumber;
+    }
+
     public CandidateDTO toDTO() {
         return new CandidateDTO(this.email.toString(), this.name.toString(), this.phoneNumber.toString());
     }

@@ -29,7 +29,7 @@ public class InMemoryRequirementRepository extends InMemoryDomainRepository<Requ
     }
 
     @Override
-    public Iterable<Requirement> findEvaluatedRequirementsByJobOpening(JobOpening jobOpening) {
+    public Iterable<Requirement> findEvaluatedRequirementsByJobOpening(final JobOpening jobOpening) {
         return match(e -> e.application().jobOpening().equals(jobOpening) && !e.outcome().toString().equals("PENDING"));
     }
 

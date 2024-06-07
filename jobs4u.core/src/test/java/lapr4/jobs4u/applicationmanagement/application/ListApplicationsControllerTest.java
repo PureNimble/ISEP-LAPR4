@@ -19,6 +19,9 @@ import static org.mockito.Mockito.when;
 
 import java.util.Optional;
 
+/**
+ * @author 2DI2
+ */
 class ListApplicationsControllerTest {
 
     @Mock

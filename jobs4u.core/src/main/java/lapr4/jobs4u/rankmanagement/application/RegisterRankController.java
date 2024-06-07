@@ -1,12 +1,13 @@
 package lapr4.jobs4u.rankmanagement.application;
 
-import java.util.Optional;
-
 import eapli.framework.application.UseCaseController;
 import eapli.framework.infrastructure.authz.application.AuthorizationService;
 import lapr4.jobs4u.applicationmanagement.domain.Application;
+import lapr4.jobs4u.jobopeningmanagement.domain.JobOpening;
 import lapr4.jobs4u.rankmanagement.domain.Rank;
 import lapr4.jobs4u.rankmanagement.domain.RankBuilder;
+import lapr4.jobs4u.rankmanagement.domain.RankPlacement;
+import lapr4.jobs4u.rankmanagement.dto.RankDTO;
 import lapr4.jobs4u.rankmanagement.repositories.RankRepository;
 import lapr4.jobs4u.usermanagement.domain.BaseRoles;
 
@@ -28,9 +29,6 @@ public class RegisterRankController {
 
     public Rank setupRank(final String rankPlacement, final Application application) {
         authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.CUSTOMER_MANAGER, BaseRoles.POWERUSER);
-        final Optional<String> rankReferenceOpt = service.nextRankReference();
-        if (!rankReferenceOpt.isPresent())
-            throw new IllegalStateException("Unable to generate a new rank reference");
         return registerRank(rankPlacement, application);
     }
 
@@ -41,5 +39,22 @@ public class RegisterRankController {
 
     private Rank doSetupRank(final String rankPlacement, final Application application) {
         return new RankBuilder().with(rankPlacement, application).build();
+    }
+
+    public Boolean hasRank(final JobOpening jobOpening) {
+        return service.hasRank(jobOpening);
+    }
+
+    public Iterable<RankDTO> findByJobOpening(final JobOpening jobOpening) {
+        return service.findByJobOpening(jobOpening);
+    }
+
+    public Rank selectedRank(final RankDTO rankDTO) {
+        return service.selectedRank(rankDTO);
+    }
+
+    public Rank editRank(final Rank rank, final String rankPlacement) {
+        rank.replace(RankPlacement.valueOf(rankPlacement));
+        return repository.save(rank);
     }
 }

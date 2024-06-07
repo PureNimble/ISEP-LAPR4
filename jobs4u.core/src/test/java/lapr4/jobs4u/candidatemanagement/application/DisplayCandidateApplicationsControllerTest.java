@@ -24,6 +24,9 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+/**
+ * @author 2DI2
+ */
 class DisplayCandidateApplicationsControllerTest {
 
     @Mock

@@ -25,7 +25,11 @@ server and the Follow Up Server be deployed in nodes different from localhost, p
 
 **From the client clarifications:**
 
-N/A
+> **Date:** 16/05/2024
+>
+> **Question 176:** US3000 - Na US3000 pede que, para alem de listar as aplicações e o estado das mesmas de um candidato, que liste o numero de candidatos. Este numero de candidatos é um somatório da quantidade de candidatos que fizeram uma aplicação para as mesmas Job Openings deste primeiro candidato (que esta a executar o caso de uso)?
+>
+> **Answer:** Devem ser listadas todas as “applications” (candidaturas) do candidato, o estado delas, assim como o número de candidaturas que cada job opening teve (assim o candidato tem uma noção da “concorrência” que teve para cada uma das suas candidaturas).
 
 ### 1.3. Acceptance Criteria
 

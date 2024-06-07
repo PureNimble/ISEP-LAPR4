@@ -14,6 +14,9 @@ import lapr4.jobs4u.applicationmanagement.repositories.ApplicationRepository;
 import lapr4.jobs4u.jobopeningmanagement.domain.JobReference;
 import lapr4.jobs4u.jobopeningmanagement.repositories.JobOpeningRepository;
 
+/**
+ * @author 2DI2
+ */
 public class ImportApplicationsControllerTest {
 
     @Mock

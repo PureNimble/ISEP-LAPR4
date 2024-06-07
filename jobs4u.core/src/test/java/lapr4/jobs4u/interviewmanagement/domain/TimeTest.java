@@ -5,6 +5,9 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.Test;
 
+/**
+ * @author 2DI2
+ */
 public class TimeTest {
     private final String VALID_TIME = "09:00";
     private final String INVALID_TIME = "10:00:00";

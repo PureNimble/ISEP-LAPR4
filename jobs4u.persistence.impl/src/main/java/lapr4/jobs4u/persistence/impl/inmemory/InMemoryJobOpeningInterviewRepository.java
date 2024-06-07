@@ -18,7 +18,7 @@ public class InMemoryJobOpeningInterviewRepository extends InMemoryDomainReposit
     }
 
     @Override
-    public Optional<JobOpeningInterview> findJobOpeningInterviewsByJobOpening(JobOpening jobOpening) {
+    public Optional<JobOpeningInterview> findJobOpeningInterviewsByJobOpening(final JobOpening jobOpening) {
         return matchOne(e -> e.jobOpening().equals(jobOpening));
     }
 

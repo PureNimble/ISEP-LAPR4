@@ -1,4 +1,4 @@
-package lapr4.jobs4u;
+package lapr4.jobs4u.handler;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -7,6 +7,7 @@ import java.net.Socket;
 import java.util.HashMap;
 import java.util.Map;
 
+import lapr4.jobs4u.EventListener;
 import lapr4.jobs4u.message.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -46,8 +47,8 @@ public class ClientHandler implements Runnable {
     @Override
     public void run() {
         try {
-            LOGGER.info("[Client Handler Thread] Connected to "
-                    + socket.getInetAddress().getHostAddress() + " port " + socket.getPort() + "!");
+            LOGGER.info("[Client Handler Thread] Connected to " + socket.getInetAddress().getHostAddress() + " port "
+                    + socket.getPort() + "!");
 
             final DataInputStream input = new DataInputStream(socket.getInputStream());
             final DataOutputStream output = new DataOutputStream(socket.getOutputStream());
@@ -96,12 +97,11 @@ public class ClientHandler implements Runnable {
 
         } else {
             try {
-                handleMessage = clazz
-                        .getDeclaredConstructor(ProtocolMessage.class, DataOutputStream.class, Socket.class,
-                                EventListener.class)
+                handleMessage = clazz.getDeclaredConstructor(ProtocolMessage.class, DataOutputStream.class,
+                        Socket.class, EventListener.class)
                         .newInstance(message, output, this.socket, this.eventListener);
             } catch (final Exception e) {
-                LOGGER.info("\n[Client Handler Thread] Error", e);
+                LOGGER.info("\n[Client Handler Thread] Error", e.getMessage());
                 return;
             }
         }

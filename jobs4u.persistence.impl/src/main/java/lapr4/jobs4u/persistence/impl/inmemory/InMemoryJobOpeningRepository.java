@@ -85,4 +85,9 @@ public class InMemoryJobOpeningRepository extends InMemoryDomainRepository<JobOp
     public Iterable<JobOpening> filterWithAvailablePhaseForRanking(final Username username) {
         return filterWithAvailablePhaseForRanking(username);
     }
+
+    @Override
+    public Iterable<JobOpening> filterWithAvailableForResults(final Username username) {
+        return filterWithAvailableForResults(username);
+    }
 }

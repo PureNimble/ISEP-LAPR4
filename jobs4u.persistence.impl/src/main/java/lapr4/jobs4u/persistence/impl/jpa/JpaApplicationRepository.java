@@ -81,10 +81,17 @@ class JpaApplicationRepository extends JpaAutoTxRepository<Application, Applicat
     }
 
     @Override
-    public Iterable<Application> findApplicationsWithRanking(JobOpening theJobOpening) {
+    public Iterable<Application> findApplicationsWithRanking(final JobOpening theJobOpening) {
         return createQuery(
                 "SELECT a FROM Application a, Rank r WHERE a.jobOpening = :theJobOpening AND a = r.application",
                 Application.class).setParameter("theJobOpening", theJobOpening).getResultList();
     }
-        
+
+    @Override
+    public Iterable<Application> unrankedApplicationByJobOpening(final JobOpening jobOpening) {
+        return createQuery(
+                "SELECT a FROM Application a WHERE a.jobOpening = :jobOpening AND a NOT IN (SELECT r.application FROM Rank r)",
+                Application.class).setParameter("jobOpening", jobOpening).getResultList();
+    }
+
 }

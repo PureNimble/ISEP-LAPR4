@@ -49,43 +49,43 @@ public class ImportApplicationsController {
         this.jobOpeningRepository = jobOpeningRepository;
     }
 
-    public Map<String, Set<String>> getCandidates(String folder) {
-        String reportFilePath = folder + REPORT_FILE_NAME;
+    public Map<String, Set<String>> getCandidates(final String folder) {
+        final String reportFilePath = folder + REPORT_FILE_NAME;
         try (InputStream inputStream = new FileInputStream(reportFilePath)) {
             return extractCandidatesFromReport(inputStream);
-        } catch (IOException e) {
+        } catch (final IOException e) {
             e.printStackTrace();
             return null;
         }
     }
 
-    private Map<String, Set<String>> extractCandidatesFromReport(InputStream inputStream) throws IOException {
-        String output = eapli.framework.io.util.Files.textFrom(inputStream);
+    private Map<String, Set<String>> extractCandidatesFromReport(final InputStream inputStream) throws IOException {
+        final String output = eapli.framework.io.util.Files.textFrom(inputStream);
         Map<String, Set<String>> candidateJobMap = new HashMap<>();
-        Pattern pattern = Pattern.compile(CANDIDATE_ID_REGEX);
-        Matcher matcher = pattern.matcher(output);
+        final Pattern pattern = Pattern.compile(CANDIDATE_ID_REGEX);
+        final Matcher matcher = pattern.matcher(output);
 
         while (matcher.find()) {
-            String candidateId = matcher.group(1);
-            String jobOffer = matcher.group(2);
+            final String candidateId = matcher.group(1);
+            final String jobOffer = matcher.group(2);
             candidateJobMap.computeIfAbsent(jobOffer, k -> new HashSet<>()).add(candidateId);
         }
 
         return candidateJobMap;
     }
 
-    public List<String> getCandidateInfo(String folder, String candidateId, String jobId) {
-        String candidateDataFilePath = constructCandidateDataFilePath(folder, candidateId, jobId);
+    public List<String> getCandidateInfo(final String folder, final String candidateId, final String jobId) {
+        final String candidateDataFilePath = constructCandidateDataFilePath(folder, candidateId, jobId);
         try (InputStream inputStream = new FileInputStream(candidateDataFilePath)) {
             return extractCandidateInfo(inputStream);
-        } catch (IOException e) {
+        } catch (final IOException e) {
             e.printStackTrace();
             return null;
         }
     }
 
-    private String constructCandidateDataFilePath(String folder, String candidateId, String jobId) {
-        String candidateFolder = folder + "/" + jobId + "/" + candidateId;
+    private String constructCandidateDataFilePath(final String folder, final String candidateId, final String jobId) {
+        final String candidateFolder = folder + "/" + jobId + "/" + candidateId;
 
         return candidateFolder + "/" + candidateId + CANDIDATE_DATA_FILE_SUFFIX;
     }
@@ -119,21 +119,21 @@ public class ImportApplicationsController {
         return new ApplicationBuilder().with(applicationNumber, Date.today(), file, jobOpening, candidate).build();
     }
 
-    public JobOpening getJobOpening(JobReference x) {
+    public JobOpening getJobOpening(final JobReference x) {
         return jobOpeningRepository.findJobOpeningByReference(x).orElse(null);
     }
 
-    public List<File> getFiles(String folder, String candidateId, String jobOffer) {
-        String candidateFolder = folder + "/" + jobOffer + "/" + candidateId;
+    public List<File> getFiles(final String folder, final String candidateId, final String jobOffer) {
+        final String candidateFolder = folder + "/" + jobOffer + "/" + candidateId;
         try {
             return extractFiles(candidateFolder);
-        } catch (IOException e) {
+        } catch (final IOException e) {
             e.printStackTrace();
             return Collections.emptyList();
         }
     }
 
-    private List<File> extractFiles(String candidateFolder) throws IOException {
+    private List<File> extractFiles(final String candidateFolder) throws IOException {
         List<File> files = new ArrayList<>();
         List<String> filesString = Files.list(Paths.get(candidateFolder)).map(Path::getFileName).map(Path::toString)
                 .collect(Collectors.toList());
@@ -145,7 +145,7 @@ public class ImportApplicationsController {
         return files;
     }
 
-    public boolean isPathValid(String folder) {
+    public boolean isPathValid(final String folder) {
         return Files.exists(Paths.get(folder + REPORT_FILE_NAME));
     }
 }

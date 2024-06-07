@@ -69,22 +69,22 @@ public class ImportApplicationsUI extends AbstractUI {
         return false;
     }
 
-    private void processCandidates(Map<String, Set<String>> candidateJobMap, String folder) {
+    private void processCandidates(final Map<String, Set<String>> candidateJobMap, final String folder) {
         candidateJobMap.forEach((jobOffer, candidateSet) -> {
             candidateSet.forEach(candidateId -> {
-                JobOpening job = theController.getJobOpening(JobReference.valueOf(jobOffer));
+                final JobOpening job = theController.getJobOpening(JobReference.valueOf(jobOffer));
                 if (job == null) {
                     System.out.println(JOB_OPENING_DOES_NOT_EXIST);
                     return;
                 }
-                List<File> files = theController.getFiles(folder, candidateId, jobOffer);
+                final List<File> files = theController.getFiles(folder, candidateId, jobOffer);
                 if (files.isEmpty()) {
                     System.out.println("No files found for candidate " + candidateId + " in job offer " + jobOffer);
                     return;
                 }
                 try {
                     txCtx.beginTransaction();
-                    Candidate candidate = registerCandidates(folder, candidateId, jobOffer);
+                    final Candidate candidate = registerCandidates(folder, candidateId, jobOffer);
                     registerApplication(files, job, candidate);
                     txCtx.commit();
                 } catch (final IntegrityViolationException | ConcurrencyException e) {
@@ -107,10 +107,8 @@ public class ImportApplicationsUI extends AbstractUI {
         final Set<Role> roleTypes = new HashSet<>();
         roleTypes.add(BaseRoles.CANDIDATE);
         final Candidate candidate = registerCandidateController.registerCandidate(firstName, lastName,
-                email,
-                phoneNumber);
-        final SystemUser user = addUserController.addUser(email, firstName,
-                lastName, roleTypes);
+                email, phoneNumber);
+        final SystemUser user = addUserController.addUser(email, firstName, lastName, roleTypes);
         registerCandidateController.registerCandidateUser(candidate, user);
 
         return candidate;

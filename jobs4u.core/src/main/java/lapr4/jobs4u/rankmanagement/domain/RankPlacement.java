@@ -13,13 +13,13 @@ import jakarta.persistence.Embeddable;
 public class RankPlacement implements ValueObject, Comparable<RankPlacement> {
 
     private static final long serialVersionUID = 1L;
-    private static final Pattern NUMBER_PATTERN = Pattern.compile("\\d+");
+    private static final Pattern NUMBER_PATTERN = Pattern.compile("^[1-9][0-9]*$");
 
     private final Integer rankPlacement;
 
     protected RankPlacement(final String rankPlacement) {
         Preconditions.nonEmpty(rankPlacement, "Rank Placement should neither be null nor empty");
-        Preconditions.matches(NUMBER_PATTERN, rankPlacement, "Rank Placement must be a number");
+        Preconditions.matches(NUMBER_PATTERN, rankPlacement, "Rank Placement must be a positive number");
         this.rankPlacement = Integer.parseInt(rankPlacement);
     }
 

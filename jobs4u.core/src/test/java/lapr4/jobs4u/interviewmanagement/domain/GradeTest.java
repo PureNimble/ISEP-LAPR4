@@ -5,6 +5,9 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.Test;
 
+/**
+ * @author 2DI2
+ */
 public class GradeTest {
 
     private final String VALID_GRADE = "75.0";
@@ -29,7 +32,7 @@ public class GradeTest {
     }
 
     @Test
-    public void testAddressCreationWithNullValue() {
+    public void testGradeCreationWithNullValue() {
         assertThrows(IllegalArgumentException.class, () -> {
             Grade.valueOf(null);
         });

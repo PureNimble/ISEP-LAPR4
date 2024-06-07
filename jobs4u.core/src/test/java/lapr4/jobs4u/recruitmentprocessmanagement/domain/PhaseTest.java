@@ -4,12 +4,14 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import org.junit.Test;
 
+/**
+ * @author 2DI2
+ */
 public class PhaseTest {
 
     private final String aInitialDate = "21-03-2021";
     private final String aFinalDate = "24-03-2021";
 
-    // Concrete subclass of Phase for testing
     private class TestPhase extends Phase {
         public TestPhase(String initialDate, String finalDate) {
             super(initialDate, finalDate);
@@ -22,7 +24,7 @@ public class PhaseTest {
 
     @Test
     public void testPhaseCreationWithInvalidDatesOrder() throws Exception {
-    
+
         assertThrows(IllegalArgumentException.class, () -> {
             getNewPhase(aFinalDate, aInitialDate);
         });

@@ -12,6 +12,7 @@ import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.Version;
 import lapr4.jobs4u.applicationmanagement.domain.Application;
+import lapr4.jobs4u.rankmanagement.dto.RankDTO;
 
 /**
  * @author 2DI2
@@ -19,7 +20,7 @@ import lapr4.jobs4u.applicationmanagement.domain.Application;
 @Entity
 @Table(name = "T_RANK")
 public class Rank implements AggregateRoot<Long> {
-    
+
     private static final long serialVersionUID = 1L;
 
     @Version
@@ -63,6 +64,24 @@ public class Rank implements AggregateRoot<Long> {
     @Override
     public Long identity() {
         return this.pk;
+    }
+
+    public RankPlacement rankPlacement() {
+        return this.rankPlacement;
+    }
+
+    public Application application() {
+        return this.application;
+    }
+
+    public RankDTO toDTO() {
+        return new RankDTO(this.pk.toString(), this.rankPlacement.toString(),
+                this.application.candidate().emailAddress().toString(),
+                this.application.candidate().name().toString());
+    }
+
+    public void replace(final RankPlacement placement){
+        this.rankPlacement = placement;
     }
 
     @Override

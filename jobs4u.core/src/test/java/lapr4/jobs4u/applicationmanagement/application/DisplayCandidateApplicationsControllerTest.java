@@ -31,6 +31,9 @@ import eapli.framework.io.util.Files;
 import eapli.framework.time.util.CurrentTimeCalendars;
 import lapr4.jobs4u.candidatemanagement.application.DisplayCandidateApplicationsController;
 
+/**
+ * @author 2DI2
+ */
 public class DisplayCandidateApplicationsControllerTest {
 
     @Mock

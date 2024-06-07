@@ -16,10 +16,11 @@ import lapr4.jobs4u.protocol.ProtocolMessage;
  */
 public class EventListener {
 
+    private static EventListener instance;
     private Map<SystemUser, List<Socket>> clientSockets;
     private Map<SystemUser, List<ProtocolMessage>> notifications;
 
-    public EventListener() {
+    private EventListener() {
         this.clientSockets = new HashMap<>();
         this.notifications = new HashMap<>();
     }
@@ -77,5 +78,12 @@ public class EventListener {
     public synchronized Optional<List<ProtocolMessage>> notifications(final SystemUser id) {
         final List<ProtocolMessage> list = notifications.get(id);
         return list == null ? Optional.empty() : Optional.of(new ArrayList<>(list));
+    }
+
+    public static synchronized EventListener getInstance() {
+        if (instance == null) {
+            instance = new EventListener();
+        }
+        return instance;
     }
 }

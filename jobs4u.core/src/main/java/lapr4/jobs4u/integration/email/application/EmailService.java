@@ -37,7 +37,7 @@ public class EmailService {
     }
 
     public void sendEmailWithAttachment(final String to, final String subject, final String body,
-            final String pathToAttachment) throws MessagingException {
+            final String... pathToAttachment) throws MessagingException {
 
         final MimeMessage message = emailSender.createMimeMessage();
         final MimeMessageHelper helper = new MimeMessageHelper(message, true);
@@ -47,10 +47,11 @@ public class EmailService {
         helper.setSubject(subject);
         helper.setText(body);
 
-        final File file = new File(pathToAttachment);
-
-        final FileSystemResource filetoSend = new FileSystemResource(file);
-        helper.addAttachment(file.getName(), filetoSend);
+        for (final String path : pathToAttachment) {
+            final File file = new File(path);
+            final FileSystemResource filetoSend = new FileSystemResource(file);
+            helper.addAttachment(file.getName(), filetoSend);
+        }
 
         emailSender.send(message);
     }

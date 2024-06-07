@@ -11,7 +11,6 @@ import java.util.Optional;
 
 import eapli.framework.domain.repositories.TransactionalContext;
 import eapli.framework.infrastructure.repositories.impl.jpa.JpaAutoTxRepository;
-import jakarta.persistence.Query;
 
 /**
  * @author 2DI2

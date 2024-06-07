@@ -1,6 +1,6 @@
 @startuml domain-model
 
-title Domain Model - US1000
+title Domain Model - US1021
 
 hide empty members
 'skinparam Linetype ortho
@@ -12,6 +12,9 @@ skinparam class {
     BackgroundColor #FEF9E7
     ArrowColor Black
 }
+
+class CompanyName <<valueObject>> <<(V, #FF8B40)>> {}
+
 ' Job Opening Aggregate
 package "<<aggregate>> Job Opening" {
     entity JobOpening <<entity>> <<root>> {}
@@ -25,6 +28,11 @@ package "<<aggregate>> Job Opening" {
     entity RequirementSpecification <<entity>> {}
 }
 
+class Address <<valueObject>> <<(V, #FF8B40)>> {}
+
+
+class PhoneNumber <<valueObject>> <<(V, #FF8B40)>> {}
+class Email <<valueObject>> <<(V, #FF8B40)>> {}
 
 ' Application Aggregate
 package "<<aggregate>> Application" {
@@ -39,6 +47,23 @@ package "<<aggregate>> Application" {
     note right of Outcome: Outcome can be Approved or Rejected
     note left of Justification: Rejected outcomes must have a justification
 }
+
+' Candidate Aggregate
+package "<<aggregate>> Candidate" {
+    entity Candidate <<entity>> <<root>> {}
+
+    class FirstName <<valueObject>> <<(V, #FF8B40)>> {}
+    class LastName <<valueObject>> <<(V, #FF8B40)>> {}
+}
+
+' Interview Aggregate
+package "<<aggregate>> Interview" {
+    entity Interview <<entity>> <<root>> {}
+
+    class InterviewDate <<valueObject>> <<(V, #FF8B40)>> {}
+    class InterviewTime <<valueObject>> <<(V, #FF8B40)>> {}
+}
+
 ' Job Opening relationships
 JobOpening "1" --> "1" JobReference : has
 JobOpening "1" --> "1" TitleOrFunction : has
@@ -58,6 +83,11 @@ Application "1" --> "0..1" Result : has
 Application "1" --> "1" JobOpening : for
 Application "1" --> "1" Candidate : from
 
+' Candidate relationships
+Candidate "1" --> "1" FirstName : has
+Candidate "1" --> "1" LastName : has
+Candidate "1" --> "1" PhoneNumber : has
+Candidate "1" --> "1" Email : has
 
 skinparam package {
     BackgroundColor #EBF5FB

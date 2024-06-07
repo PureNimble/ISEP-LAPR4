@@ -45,4 +45,6 @@ These classes are responsible for the user interface, controlling the use case, 
 
 ![CD -> Enable/Disable Candidates](svg/EnableOrDisableCandidateUserAction.png)
 
+**IMPORTANT NOTE: The _'UserManagementService'_ and _'SystemUser'_ classes are part of the EAPLI framework. They are used to manage and create users in the system.**
+
 <img width=100% src="https://capsule-render.vercel.app/api?type=waving&height=120&color=4E1764&section=footer"/>

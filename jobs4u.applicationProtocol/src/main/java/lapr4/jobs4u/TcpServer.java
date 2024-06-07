@@ -7,9 +7,6 @@ import java.net.Socket;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import lapr4.jobs4u.application.DatabasePollingService;
-import lapr4.jobs4u.infrastructure.persistence.PersistenceContext;
-
 /**
  * @author 2DI2
  */
@@ -23,7 +20,7 @@ public class TcpServer {
     public TcpServer(final int port, final Class<? extends Runnable> handler) {
         this.port = port;
         this.handlerClass = handler;
-        this.eventListener = new EventListener();
+        this.eventListener = EventListener.getInstance();
     }
 
     public void run() {
@@ -39,24 +36,13 @@ public class TcpServer {
             return;
         }
 
-        try {
-            final Runnable pollService = new DatabasePollingService(
-                    PersistenceContext.repositories().recruitmentProcesses(),
-                    PersistenceContext.repositories().customerUsers(), this.eventListener);
-            final Thread databasePollingService = new Thread(pollService);
-            databasePollingService.start();
-
-        } catch (final Exception e) {
-            LOGGER.info("Error creating the database polling service: " + e.getMessage());
-        }
-
         while (!tcpSocket.isClosed()) {
             try {
 
                 socket = tcpSocket.accept();
 
-                final Runnable handler = handlerClass.getConstructor(Socket.class, EventListener.class).newInstance(
-                        socket, this.eventListener);
+                final Runnable handler = handlerClass.getConstructor(Socket.class, EventListener.class)
+                        .newInstance(socket, this.eventListener);
 
                 final Thread clientHandler = new Thread(handler);
 

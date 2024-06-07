@@ -20,8 +20,11 @@ public class InterviewXmlParser extends Parser {
 		T__0=1, T__1=2, T__2=3, T__3=4, T__4=5, T__5=6, T__6=7, T__7=8, T__8=9, 
 		T__9=10, T__10=11, T__11=12, T__12=13, T__13=14, T__14=15, T__15=16, T__16=17, 
 		T__17=18, T__18=19, T__19=20, T__20=21, T__21=22, T__22=23, T__23=24, 
-		T__24=25, T__25=26, TWO_DIGIT_NUMBER=27, NUMBER=28, LETTER=29, MEMBER=30, 
-		FRACTIONAL_NUMBER=31, TEXT=32, WS=33;
+		T__24=25, T__25=26, TRUE_FALSE_QUESTION=27, SHORT_TEXT_ANSWER_QUESTION=28, 
+		SINGLE_ANSWER_CHOICE_QUESTION=29, MULTIPLE_ANSWER_CHOICE_QUESTION=30, 
+		INTEGER_NUMBER_QUESTION=31, DECIMAL_NUMBER_QUESTION=32, DATE_QUESTION=33, 
+		TIME_QUESTION=34, NUMERIC_SCALE_QUESTION=35, TWO_DIGIT_NUMBER=36, NUMBER=37, 
+		LETTER=38, MEMBER=39, FRACTIONAL_NUMBER=40, TEXT=41, WS=42;
 	public static final int
 		RULE_questions = 0, RULE_text = 1, RULE_question = 2, RULE_cotation = 3, 
 		RULE_cotationType = 4, RULE_type = 5, RULE_body = 6, RULE_questionCotation = 7, 
@@ -40,10 +43,12 @@ public class InterviewXmlParser extends Parser {
 		return new String[] {
 			null, "'<Questions>'", "'</Questions>'", "'<Question>'", "'</Question>'", 
 			"'<Cotation>'", "'100'", "'</Cotation>'", "'<CotationType>'", "'%'", 
-			"'POINTS'", "'VALUES'", "'</CotationType>'", "'<Type>'", "'<'", "'/'", 
-			"'>'", "'</'", "'</Type>'", "'<Body>'", "'</Body>'", "'<PossibleAnswersList>'", 
+			"'POINTS'", "'VALUES'", "'</CotationType>'", "'<Type>'", "'</Type>'", 
+			"'<Body>'", "'<'", "'/'", "'>'", "'</'", "'</Body>'", "'<PossibleAnswersList>'", 
 			"'</PossibleAnswersList>'", "'<PossibleAnswers>'", "'</PossibleAnswers>'", 
-			"'<Answer>'", "'</Answer>'"
+			"'<Answer>'", "'</Answer>'", "'True/False'", "'Short text answer'", "'Choice, with single answer'", 
+			"'Choice, with multiple answers'", "'Integer Number'", "'Decimal Number'", 
+			"'Date'", "'Time'", "'Numeric Scale'"
 		};
 	}
 	private static final String[] _LITERAL_NAMES = makeLiteralNames();
@@ -51,7 +56,10 @@ public class InterviewXmlParser extends Parser {
 		return new String[] {
 			null, null, null, null, null, null, null, null, null, null, null, null, 
 			null, null, null, null, null, null, null, null, null, null, null, null, 
-			null, null, null, "TWO_DIGIT_NUMBER", "NUMBER", "LETTER", "MEMBER", "FRACTIONAL_NUMBER", 
+			null, null, null, "TRUE_FALSE_QUESTION", "SHORT_TEXT_ANSWER_QUESTION", 
+			"SINGLE_ANSWER_CHOICE_QUESTION", "MULTIPLE_ANSWER_CHOICE_QUESTION", "INTEGER_NUMBER_QUESTION", 
+			"DECIMAL_NUMBER_QUESTION", "DATE_QUESTION", "TIME_QUESTION", "NUMERIC_SCALE_QUESTION", 
+			"TWO_DIGIT_NUMBER", "NUMBER", "LETTER", "MEMBER", "FRACTIONAL_NUMBER", 
 			"TEXT", "WS"
 		};
 	}
@@ -226,7 +234,7 @@ public class InterviewXmlParser extends Parser {
 				{
 				setState(33);
 				_la = _input.LA(1);
-				if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & 6039797760L) != 0)) ) {
+				if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & 3092376453120L) != 0)) ) {
 				_errHandler.recoverInline(this);
 				}
 				else {
@@ -239,7 +247,7 @@ public class InterviewXmlParser extends Parser {
 				setState(36); 
 				_errHandler.sync(this);
 				_la = _input.LA(1);
-			} while ( (((_la) & ~0x3f) == 0 && ((1L << _la) & 6039797760L) != 0) );
+			} while ( (((_la) & ~0x3f) == 0 && ((1L << _la) & 3092376453120L) != 0) );
 			}
 		}
 		catch (RecognitionException re) {
@@ -356,7 +364,7 @@ public class InterviewXmlParser extends Parser {
 			match(T__4);
 			setState(47);
 			_la = _input.LA(1);
-			if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & 2281701440L) != 0)) ) {
+			if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & 1168231104576L) != 0)) ) {
 			_errHandler.recoverInline(this);
 			}
 			else {
@@ -436,12 +444,15 @@ public class InterviewXmlParser extends Parser {
 
 	@SuppressWarnings("CheckReturnValue")
 	public static class TypeContext extends ParserRuleContext {
-		public List<TextContext> text() {
-			return getRuleContexts(TextContext.class);
-		}
-		public TextContext text(int i) {
-			return getRuleContext(TextContext.class,i);
-		}
+		public TerminalNode TRUE_FALSE_QUESTION() { return getToken(InterviewXmlParser.TRUE_FALSE_QUESTION, 0); }
+		public TerminalNode SHORT_TEXT_ANSWER_QUESTION() { return getToken(InterviewXmlParser.SHORT_TEXT_ANSWER_QUESTION, 0); }
+		public TerminalNode SINGLE_ANSWER_CHOICE_QUESTION() { return getToken(InterviewXmlParser.SINGLE_ANSWER_CHOICE_QUESTION, 0); }
+		public TerminalNode MULTIPLE_ANSWER_CHOICE_QUESTION() { return getToken(InterviewXmlParser.MULTIPLE_ANSWER_CHOICE_QUESTION, 0); }
+		public TerminalNode INTEGER_NUMBER_QUESTION() { return getToken(InterviewXmlParser.INTEGER_NUMBER_QUESTION, 0); }
+		public TerminalNode DECIMAL_NUMBER_QUESTION() { return getToken(InterviewXmlParser.DECIMAL_NUMBER_QUESTION, 0); }
+		public TerminalNode DATE_QUESTION() { return getToken(InterviewXmlParser.DATE_QUESTION, 0); }
+		public TerminalNode TIME_QUESTION() { return getToken(InterviewXmlParser.TIME_QUESTION, 0); }
+		public TerminalNode NUMERIC_SCALE_QUESTION() { return getToken(InterviewXmlParser.NUMERIC_SCALE_QUESTION, 0); }
 		public TypeContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
@@ -471,49 +482,17 @@ public class InterviewXmlParser extends Parser {
 			setState(54);
 			match(T__12);
 			setState(55);
-			text();
-			setState(62);
-			_errHandler.sync(this);
 			_la = _input.LA(1);
-			if ((((_la) & ~0x3f) == 0 && ((1L << _la) & 245760L) != 0)) {
-				{
-				setState(56);
-				_la = _input.LA(1);
-				if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & 245760L) != 0)) ) {
-				_errHandler.recoverInline(this);
-				}
-				else {
-					if ( _input.LA(1)==Token.EOF ) matchedEOF = true;
-					_errHandler.reportMatch(this);
-					consume();
-				}
-				setState(57);
-				text();
-				setState(60);
-				_errHandler.sync(this);
-				_la = _input.LA(1);
-				if ((((_la) & ~0x3f) == 0 && ((1L << _la) & 245760L) != 0)) {
-					{
-					setState(58);
-					_la = _input.LA(1);
-					if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & 245760L) != 0)) ) {
-					_errHandler.recoverInline(this);
-					}
-					else {
-						if ( _input.LA(1)==Token.EOF ) matchedEOF = true;
-						_errHandler.reportMatch(this);
-						consume();
-					}
-					setState(59);
-					text();
-					}
-				}
-
-				}
+			if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & 68585259008L) != 0)) ) {
+			_errHandler.recoverInline(this);
 			}
-
-			setState(64);
-			match(T__17);
+			else {
+				if ( _input.LA(1)==Token.EOF ) matchedEOF = true;
+				_errHandler.reportMatch(this);
+				consume();
+			}
+			setState(56);
+			match(T__13);
 			}
 		}
 		catch (RecognitionException re) {
@@ -561,18 +540,18 @@ public class InterviewXmlParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(66);
-			match(T__18);
-			setState(67);
+			setState(58);
+			match(T__14);
+			setState(59);
 			text();
-			setState(74);
+			setState(66);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
-			if ((((_la) & ~0x3f) == 0 && ((1L << _la) & 245760L) != 0)) {
+			if ((((_la) & ~0x3f) == 0 && ((1L << _la) & 983040L) != 0)) {
 				{
-				setState(68);
+				setState(60);
 				_la = _input.LA(1);
-				if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & 245760L) != 0)) ) {
+				if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & 983040L) != 0)) ) {
 				_errHandler.recoverInline(this);
 				}
 				else {
@@ -580,16 +559,16 @@ public class InterviewXmlParser extends Parser {
 					_errHandler.reportMatch(this);
 					consume();
 				}
-				setState(69);
+				setState(61);
 				text();
-				setState(72);
+				setState(64);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
-				if ((((_la) & ~0x3f) == 0 && ((1L << _la) & 245760L) != 0)) {
+				if ((((_la) & ~0x3f) == 0 && ((1L << _la) & 983040L) != 0)) {
 					{
-					setState(70);
+					setState(62);
 					_la = _input.LA(1);
-					if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & 245760L) != 0)) ) {
+					if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & 983040L) != 0)) ) {
 					_errHandler.recoverInline(this);
 					}
 					else {
@@ -597,7 +576,7 @@ public class InterviewXmlParser extends Parser {
 						_errHandler.reportMatch(this);
 						consume();
 					}
-					setState(71);
+					setState(63);
 					text();
 					}
 				}
@@ -605,7 +584,7 @@ public class InterviewXmlParser extends Parser {
 				}
 			}
 
-			setState(76);
+			setState(68);
 			match(T__19);
 			}
 		}
@@ -650,7 +629,7 @@ public class InterviewXmlParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(78);
+			setState(70);
 			cotation();
 			}
 		}
@@ -695,7 +674,7 @@ public class InterviewXmlParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(80);
+			setState(72);
 			cotation();
 			}
 		}
@@ -744,23 +723,23 @@ public class InterviewXmlParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(82);
+			setState(74);
 			match(T__20);
-			setState(86);
+			setState(78);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
 			while (_la==T__22) {
 				{
 				{
-				setState(83);
+				setState(75);
 				possibleAnswers();
 				}
 				}
-				setState(88);
+				setState(80);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 			}
-			setState(89);
+			setState(81);
 			match(T__21);
 			}
 		}
@@ -808,13 +787,13 @@ public class InterviewXmlParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(91);
+			setState(83);
 			match(T__22);
-			setState(92);
+			setState(84);
 			answer();
-			setState(93);
+			setState(85);
 			answerCotation();
-			setState(94);
+			setState(86);
 			match(T__23);
 			}
 		}
@@ -859,11 +838,11 @@ public class InterviewXmlParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(96);
+			setState(88);
 			match(T__24);
-			setState(97);
+			setState(89);
 			text();
-			setState(98);
+			setState(90);
 			match(T__25);
 			}
 		}
@@ -879,7 +858,7 @@ public class InterviewXmlParser extends Parser {
 	}
 
 	public static final String _serializedATN =
-		"\u0004\u0001!e\u0002\u0000\u0007\u0000\u0002\u0001\u0007\u0001\u0002\u0002"+
+		"\u0004\u0001*]\u0002\u0000\u0007\u0000\u0002\u0001\u0007\u0001\u0002\u0002"+
 		"\u0007\u0002\u0002\u0003\u0007\u0003\u0002\u0004\u0007\u0004\u0002\u0005"+
 		"\u0007\u0005\u0002\u0006\u0007\u0006\u0002\u0007\u0007\u0007\u0002\b\u0007"+
 		"\b\u0002\t\u0007\t\u0002\n\u0007\n\u0002\u000b\u0007\u000b\u0001\u0000"+
@@ -888,53 +867,48 @@ public class InterviewXmlParser extends Parser {
 		"\u0001\f\u0001$\u0001\u0002\u0001\u0002\u0001\u0002\u0001\u0002\u0001"+
 		"\u0002\u0001\u0002\u0001\u0002\u0001\u0002\u0001\u0003\u0001\u0003\u0001"+
 		"\u0003\u0001\u0003\u0001\u0004\u0001\u0004\u0001\u0004\u0001\u0004\u0001"+
-		"\u0005\u0001\u0005\u0001\u0005\u0001\u0005\u0001\u0005\u0001\u0005\u0003"+
-		"\u0005=\b\u0005\u0003\u0005?\b\u0005\u0001\u0005\u0001\u0005\u0001\u0006"+
-		"\u0001\u0006\u0001\u0006\u0001\u0006\u0001\u0006\u0001\u0006\u0003\u0006"+
-		"I\b\u0006\u0003\u0006K\b\u0006\u0001\u0006\u0001\u0006\u0001\u0007\u0001"+
-		"\u0007\u0001\b\u0001\b\u0001\t\u0001\t\u0005\tU\b\t\n\t\f\tX\t\t\u0001"+
-		"\t\u0001\t\u0001\n\u0001\n\u0001\n\u0001\n\u0001\n\u0001\u000b\u0001\u000b"+
-		"\u0001\u000b\u0001\u000b\u0001\u000b\u0000\u0000\f\u0000\u0002\u0004\u0006"+
-		"\b\n\f\u000e\u0010\u0012\u0014\u0016\u0000\u0004\u0003\u0000\u001b\u001b"+
-		"\u001d\u001e  \u0003\u0000\u0006\u0006\u001b\u001b\u001f\u001f\u0001\u0000"+
-		"\t\u000b\u0001\u0000\u000e\u0011_\u0000\u0018\u0001\u0000\u0000\u0000"+
-		"\u0002\"\u0001\u0000\u0000\u0000\u0004&\u0001\u0000\u0000\u0000\u0006"+
-		".\u0001\u0000\u0000\u0000\b2\u0001\u0000\u0000\u0000\n6\u0001\u0000\u0000"+
-		"\u0000\fB\u0001\u0000\u0000\u0000\u000eN\u0001\u0000\u0000\u0000\u0010"+
-		"P\u0001\u0000\u0000\u0000\u0012R\u0001\u0000\u0000\u0000\u0014[\u0001"+
-		"\u0000\u0000\u0000\u0016`\u0001\u0000\u0000\u0000\u0018\u001a\u0005\u0001"+
-		"\u0000\u0000\u0019\u001b\u0003\u0004\u0002\u0000\u001a\u0019\u0001\u0000"+
-		"\u0000\u0000\u001b\u001c\u0001\u0000\u0000\u0000\u001c\u001a\u0001\u0000"+
-		"\u0000\u0000\u001c\u001d\u0001\u0000\u0000\u0000\u001d\u001e\u0001\u0000"+
-		"\u0000\u0000\u001e\u001f\u0005\u0002\u0000\u0000\u001f \u0005\u0000\u0000"+
-		"\u0001 \u0001\u0001\u0000\u0000\u0000!#\u0007\u0000\u0000\u0000\"!\u0001"+
-		"\u0000\u0000\u0000#$\u0001\u0000\u0000\u0000$\"\u0001\u0000\u0000\u0000"+
-		"$%\u0001\u0000\u0000\u0000%\u0003\u0001\u0000\u0000\u0000&\'\u0005\u0003"+
-		"\u0000\u0000\'(\u0003\u000e\u0007\u0000()\u0003\b\u0004\u0000)*\u0003"+
-		"\n\u0005\u0000*+\u0003\f\u0006\u0000+,\u0003\u0012\t\u0000,-\u0005\u0004"+
-		"\u0000\u0000-\u0005\u0001\u0000\u0000\u0000./\u0005\u0005\u0000\u0000"+
-		"/0\u0007\u0001\u0000\u000001\u0005\u0007\u0000\u00001\u0007\u0001\u0000"+
-		"\u0000\u000023\u0005\b\u0000\u000034\u0007\u0002\u0000\u000045\u0005\f"+
-		"\u0000\u00005\t\u0001\u0000\u0000\u000067\u0005\r\u0000\u00007>\u0003"+
-		"\u0002\u0001\u000089\u0007\u0003\u0000\u00009<\u0003\u0002\u0001\u0000"+
-		":;\u0007\u0003\u0000\u0000;=\u0003\u0002\u0001\u0000<:\u0001\u0000\u0000"+
-		"\u0000<=\u0001\u0000\u0000\u0000=?\u0001\u0000\u0000\u0000>8\u0001\u0000"+
-		"\u0000\u0000>?\u0001\u0000\u0000\u0000?@\u0001\u0000\u0000\u0000@A\u0005"+
-		"\u0012\u0000\u0000A\u000b\u0001\u0000\u0000\u0000BC\u0005\u0013\u0000"+
-		"\u0000CJ\u0003\u0002\u0001\u0000DE\u0007\u0003\u0000\u0000EH\u0003\u0002"+
-		"\u0001\u0000FG\u0007\u0003\u0000\u0000GI\u0003\u0002\u0001\u0000HF\u0001"+
-		"\u0000\u0000\u0000HI\u0001\u0000\u0000\u0000IK\u0001\u0000\u0000\u0000"+
-		"JD\u0001\u0000\u0000\u0000JK\u0001\u0000\u0000\u0000KL\u0001\u0000\u0000"+
-		"\u0000LM\u0005\u0014\u0000\u0000M\r\u0001\u0000\u0000\u0000NO\u0003\u0006"+
-		"\u0003\u0000O\u000f\u0001\u0000\u0000\u0000PQ\u0003\u0006\u0003\u0000"+
-		"Q\u0011\u0001\u0000\u0000\u0000RV\u0005\u0015\u0000\u0000SU\u0003\u0014"+
-		"\n\u0000TS\u0001\u0000\u0000\u0000UX\u0001\u0000\u0000\u0000VT\u0001\u0000"+
-		"\u0000\u0000VW\u0001\u0000\u0000\u0000WY\u0001\u0000\u0000\u0000XV\u0001"+
-		"\u0000\u0000\u0000YZ\u0005\u0016\u0000\u0000Z\u0013\u0001\u0000\u0000"+
-		"\u0000[\\\u0005\u0017\u0000\u0000\\]\u0003\u0016\u000b\u0000]^\u0003\u0010"+
-		"\b\u0000^_\u0005\u0018\u0000\u0000_\u0015\u0001\u0000\u0000\u0000`a\u0005"+
-		"\u0019\u0000\u0000ab\u0003\u0002\u0001\u0000bc\u0005\u001a\u0000\u0000"+
-		"c\u0017\u0001\u0000\u0000\u0000\u0007\u001c$<>HJV";
+		"\u0005\u0001\u0005\u0001\u0005\u0001\u0005\u0001\u0006\u0001\u0006\u0001"+
+		"\u0006\u0001\u0006\u0001\u0006\u0001\u0006\u0003\u0006A\b\u0006\u0003"+
+		"\u0006C\b\u0006\u0001\u0006\u0001\u0006\u0001\u0007\u0001\u0007\u0001"+
+		"\b\u0001\b\u0001\t\u0001\t\u0005\tM\b\t\n\t\f\tP\t\t\u0001\t\u0001\t\u0001"+
+		"\n\u0001\n\u0001\n\u0001\n\u0001\n\u0001\u000b\u0001\u000b\u0001\u000b"+
+		"\u0001\u000b\u0001\u000b\u0000\u0000\f\u0000\u0002\u0004\u0006\b\n\f\u000e"+
+		"\u0010\u0012\u0014\u0016\u0000\u0005\u0003\u0000$$&\'))\u0003\u0000\u0006"+
+		"\u0006$$((\u0001\u0000\t\u000b\u0001\u0000\u001b#\u0001\u0000\u0010\u0013"+
+		"U\u0000\u0018\u0001\u0000\u0000\u0000\u0002\"\u0001\u0000\u0000\u0000"+
+		"\u0004&\u0001\u0000\u0000\u0000\u0006.\u0001\u0000\u0000\u0000\b2\u0001"+
+		"\u0000\u0000\u0000\n6\u0001\u0000\u0000\u0000\f:\u0001\u0000\u0000\u0000"+
+		"\u000eF\u0001\u0000\u0000\u0000\u0010H\u0001\u0000\u0000\u0000\u0012J"+
+		"\u0001\u0000\u0000\u0000\u0014S\u0001\u0000\u0000\u0000\u0016X\u0001\u0000"+
+		"\u0000\u0000\u0018\u001a\u0005\u0001\u0000\u0000\u0019\u001b\u0003\u0004"+
+		"\u0002\u0000\u001a\u0019\u0001\u0000\u0000\u0000\u001b\u001c\u0001\u0000"+
+		"\u0000\u0000\u001c\u001a\u0001\u0000\u0000\u0000\u001c\u001d\u0001\u0000"+
+		"\u0000\u0000\u001d\u001e\u0001\u0000\u0000\u0000\u001e\u001f\u0005\u0002"+
+		"\u0000\u0000\u001f \u0005\u0000\u0000\u0001 \u0001\u0001\u0000\u0000\u0000"+
+		"!#\u0007\u0000\u0000\u0000\"!\u0001\u0000\u0000\u0000#$\u0001\u0000\u0000"+
+		"\u0000$\"\u0001\u0000\u0000\u0000$%\u0001\u0000\u0000\u0000%\u0003\u0001"+
+		"\u0000\u0000\u0000&\'\u0005\u0003\u0000\u0000\'(\u0003\u000e\u0007\u0000"+
+		"()\u0003\b\u0004\u0000)*\u0003\n\u0005\u0000*+\u0003\f\u0006\u0000+,\u0003"+
+		"\u0012\t\u0000,-\u0005\u0004\u0000\u0000-\u0005\u0001\u0000\u0000\u0000"+
+		"./\u0005\u0005\u0000\u0000/0\u0007\u0001\u0000\u000001\u0005\u0007\u0000"+
+		"\u00001\u0007\u0001\u0000\u0000\u000023\u0005\b\u0000\u000034\u0007\u0002"+
+		"\u0000\u000045\u0005\f\u0000\u00005\t\u0001\u0000\u0000\u000067\u0005"+
+		"\r\u0000\u000078\u0007\u0003\u0000\u000089\u0005\u000e\u0000\u00009\u000b"+
+		"\u0001\u0000\u0000\u0000:;\u0005\u000f\u0000\u0000;B\u0003\u0002\u0001"+
+		"\u0000<=\u0007\u0004\u0000\u0000=@\u0003\u0002\u0001\u0000>?\u0007\u0004"+
+		"\u0000\u0000?A\u0003\u0002\u0001\u0000@>\u0001\u0000\u0000\u0000@A\u0001"+
+		"\u0000\u0000\u0000AC\u0001\u0000\u0000\u0000B<\u0001\u0000\u0000\u0000"+
+		"BC\u0001\u0000\u0000\u0000CD\u0001\u0000\u0000\u0000DE\u0005\u0014\u0000"+
+		"\u0000E\r\u0001\u0000\u0000\u0000FG\u0003\u0006\u0003\u0000G\u000f\u0001"+
+		"\u0000\u0000\u0000HI\u0003\u0006\u0003\u0000I\u0011\u0001\u0000\u0000"+
+		"\u0000JN\u0005\u0015\u0000\u0000KM\u0003\u0014\n\u0000LK\u0001\u0000\u0000"+
+		"\u0000MP\u0001\u0000\u0000\u0000NL\u0001\u0000\u0000\u0000NO\u0001\u0000"+
+		"\u0000\u0000OQ\u0001\u0000\u0000\u0000PN\u0001\u0000\u0000\u0000QR\u0005"+
+		"\u0016\u0000\u0000R\u0013\u0001\u0000\u0000\u0000ST\u0005\u0017\u0000"+
+		"\u0000TU\u0003\u0016\u000b\u0000UV\u0003\u0010\b\u0000VW\u0005\u0018\u0000"+
+		"\u0000W\u0015\u0001\u0000\u0000\u0000XY\u0005\u0019\u0000\u0000YZ\u0003"+
+		"\u0002\u0001\u0000Z[\u0005\u001a\u0000\u0000[\u0017\u0001\u0000\u0000"+
+		"\u0000\u0005\u001c$@BN";
 	public static final ATN _ATN =
 		new ATNDeserializer().deserialize(_serializedATN.toCharArray());
 	static {

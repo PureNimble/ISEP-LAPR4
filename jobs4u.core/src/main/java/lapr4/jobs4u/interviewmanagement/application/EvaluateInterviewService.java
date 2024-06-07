@@ -79,6 +79,10 @@ public class EvaluateInterviewService {
         }
 
         for (final Interview theInterview : interview) {
+            if (theInterview.file() == null) {
+                saveGrade(theInterview, 0.0);
+                continue;
+            }
             final Pair<Double, List<Double>> resultPair = calculateGrade(interviewAnswersForQuestion,
                     theInterview.file().toString());
             saveGrade(theInterview, resultPair.getFirst());

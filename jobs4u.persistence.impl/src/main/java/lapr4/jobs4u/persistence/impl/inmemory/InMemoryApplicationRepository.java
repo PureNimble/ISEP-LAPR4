@@ -42,7 +42,7 @@ public class InMemoryApplicationRepository extends InMemoryDomainRepository<Appl
 
     @Override
     public Iterable<Application> findApplicationWithInterviewRecord(final JobOpening jobOpening) {
-        return match(e -> e.jobOpening().equals(jobOpening));
+        return findApplicationWithInterviewRecord(jobOpening);
     }
 
     @Override
@@ -56,7 +56,12 @@ public class InMemoryApplicationRepository extends InMemoryDomainRepository<Appl
     }
 
     @Override
-    public Iterable<Application> findApplicationsWithRanking(JobOpening theJobOpening) {
+    public Iterable<Application> findApplicationsWithRanking(final JobOpening theJobOpening) {
         return findApplicationsWithRanking(theJobOpening);
+    }
+
+    @Override
+    public Iterable<Application> unrankedApplicationByJobOpening(final JobOpening jobOpening) {
+        return unrankedApplicationByJobOpening(jobOpening);
     }
 }

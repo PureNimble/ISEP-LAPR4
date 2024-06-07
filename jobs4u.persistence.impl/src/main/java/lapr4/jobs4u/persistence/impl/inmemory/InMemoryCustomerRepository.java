@@ -31,7 +31,7 @@ public class InMemoryCustomerRepository
     }
 
     @Override
-    public Optional<Customer> findByEmail(EmailAddress email) {
+    public Optional<Customer> findByEmail(final EmailAddress email) {
         return matchOne(e -> e.email().equals(email));
     }
 }

@@ -8,6 +8,9 @@ import eapli.framework.infrastructure.authz.domain.model.SystemUser;
 import eapli.framework.infrastructure.authz.domain.model.SystemUserBuilder;
 import lapr4.jobs4u.usermanagement.domain.UserBuilderHelper;
 
+/**
+ * @author 2DI2
+ */
 public class CustomerUserTest {
 
     private final String aCustomerCode = "ABC123";

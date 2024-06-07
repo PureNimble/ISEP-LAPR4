@@ -1,0 +1,103 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+title Sequence Diagram (SD) - Display all data of an application
+
+autonumber
+
+actor "Customer Manager" as Manager
+participant "DisplayApplicationDataUI" as UI
+participant "DisplayApplicationDataController" as Controller
+participant "DisplayApplicationDataService" as service
+participant "Application" as Application
+participant "ApplicationRepository" as ApplicationRepository
+participant "JpaApplicationRepository" as JpaApplicationRepository
+participant "RequirementRepository" as RequirementRepository
+participant "JpaRequirementRepository" as JpaRequirementRepository
+participant "InterviewRepository" as InterviewRepository
+participant "JpaInterviewRepository" as JpaInterviewRepository
+database "Database" as DB
+
+activate Manager
+
+    Manager -> UI : Asks to display all data of an application
+    activate UI
+    
+        ref over DB , Manager: List Job Openings\n(US 1003)
+
+        UI --> Manager : Shows list of Job Openings and asks to select one
+
+        Manager -> UI : Selects one job opening
+
+        ref over DB , Manager: List all Applications for a Job Opening\n(US 1005)
+
+        UI --> Manager : Shows list of Applications and asks to select one
+
+        Manager -> UI : Selects an application
+
+        UI --> Controller : getApplicationRequirementFile(application);
+        activate Controller
+
+        Controller -> service : getApplicationRequirementFile(application);
+        activate service
+
+        service -> RequirementRepository : findRequirement(application);
+        activate RequirementRepository
+
+        RequirementRepository -> JpaRequirementRepository : findRequirement(application);
+        activate JpaRequirementRepository
+
+        JpaRequirementRepository -> DB : SELECT r FROM Requirement r WHERE r.application = application;
+        activate DB
+
+        DB --> JpaRequirementRepository : Requirement
+        deactivate DB
+
+        JpaRequirementRepository --> RequirementRepository : Requirement
+        deactivate JpaRequirementRepository
+
+        RequirementRepository --> service : Requirement
+        deactivate RequirementRepository
+
+        service --> Controller : Requirement
+        deactivate service
+
+        Controller --> UI : Requirement
+        deactivate Controller
+
+        UI -> Controller : getApplicationInterviewFile(application);
+        activate Controller
+
+        Controller -> service : getApplicationInterviewFile(application);
+        activate service
+
+        service -> InterviewRepository : findInterviewByApplication(application);
+        activate InterviewRepository
+
+        InterviewRepository -> JpaInterviewRepository : findInterviewByApplication(application);
+        activate JpaInterviewRepository
+
+        JpaInterviewRepository -> DB : SELECT i FROM Interview i WHERE i.application = application;
+        activate DB
+
+        DB --> JpaInterviewRepository : Interview
+        deactivate DB
+
+        JpaInterviewRepository --> InterviewRepository : Interview
+        deactivate JpaInterviewRepository
+
+        InterviewRepository --> service : Interview
+        deactivate InterviewRepository
+
+        service --> Controller : Interview
+        deactivate service
+
+        Controller --> UI : Interview
+        deactivate Controller
+
+    UI -> Manager : Displays all data of the selected application
+    deactivate UI
+    
+@enduml

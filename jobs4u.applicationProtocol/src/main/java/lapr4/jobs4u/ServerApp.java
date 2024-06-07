@@ -15,6 +15,15 @@ public class ServerApp {
         AuthzRegistry.configure(PersistenceContext.repositories().users(), new BasePasswordPolicy(),
                 new PlainTextEncoder());
 
+        final EventListener eventListener = EventListener.getInstance();
+        eventListener.deserializeNotifications();
+
+        // Add shutdown hooks
+        Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+            System.out.println("SIGINT received. Shutting down...");
+            eventListener.serializeNotifications();
+        }));
+
         final AppSettings appSettings = new AppSettings();
 
         final Integer serverClientPort = appSettings.serverPort();

@@ -1,5 +1,10 @@
 package lapr4.jobs4u;
 
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -85,5 +90,24 @@ public class EventListener {
             instance = new EventListener();
         }
         return instance;
+    }
+
+    public void serializeNotifications() {
+        try (FileOutputStream fos = new FileOutputStream("notifications.ser");
+                ObjectOutputStream oos = new ObjectOutputStream(fos)) {
+            oos.writeObject(notifications);
+        } catch (final IOException ioe) {
+            ioe.printStackTrace();
+        }
+    }
+
+    @SuppressWarnings("unchecked")
+    public void deserializeNotifications() {
+        try (FileInputStream fis = new FileInputStream("notifications.ser");
+                ObjectInputStream ois = new ObjectInputStream(fis)) {
+            notifications = (Map<SystemUser, List<ProtocolMessage>>) ois.readObject();
+        } catch (final IOException | ClassNotFoundException e) {
+            System.out.println("Error: " + e.getMessage());
+        }
     }
 }

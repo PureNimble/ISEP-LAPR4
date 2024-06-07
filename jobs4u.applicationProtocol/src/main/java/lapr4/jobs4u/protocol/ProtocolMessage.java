@@ -6,6 +6,7 @@ import java.io.DataInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -13,7 +14,7 @@ import java.util.List;
 /**
  * @author 2DI2
  */
-public class ProtocolMessage {
+public class ProtocolMessage implements Serializable {
 
     private final byte protocolVersion;
     private final MessageCode code;

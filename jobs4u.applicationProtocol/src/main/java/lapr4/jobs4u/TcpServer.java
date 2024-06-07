@@ -20,7 +20,7 @@ public class TcpServer {
     public TcpServer(final int port, final Class<? extends Runnable> handler) {
         this.port = port;
         this.handlerClass = handler;
-        this.eventListener = new EventListener();
+        this.eventListener = EventListener.getInstance();
     }
 
     public void run() {

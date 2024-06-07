@@ -23,16 +23,6 @@ public class ClientBackend {
     private final CredentialAuth credentialAuth;
     private Thread listenerThread;
 
-    public static ClientBackend getInstance() {
-        synchronized (ClientBackend.class) {
-            if (instance == null) {
-                instance = new ClientBackend();
-            }
-        }
-
-        return instance;
-    }
-
     private ClientBackend() {
         this.tcpClient = new TcpClient();
         this.credentialAuth = new CredentialAuth();
@@ -80,5 +70,13 @@ public class ClientBackend {
             listenerThread.interrupt();
             tcpClient.disconnect();
         }
+    }
+
+    public static synchronized ClientBackend getInstance() {
+        if (instance == null) {
+            instance = new ClientBackend();
+        }
+
+        return instance;
     }
 }

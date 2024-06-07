@@ -36,10 +36,9 @@
 
 > **Date:** 2024-05-27
 >
-> **Question 190:** Esta US pede que seja publicado os resultados das candidaturas, a minha pergunta seria se este processo só pode acontecer quando a job opening estiver encerrada ou se executar esta operação terminaria a job opening.
+> **Question 224:** Esta US pede que seja publicado os resultados das candidaturas, a minha pergunta seria se este processo só pode acontecer quando a job opening estiver encerrada ou se executar esta operação terminaria a job opening.
 >
 > **Answer:** Esta US é relativa à última fase do processo. Se as notificações executarem todas com sucesso em princípio já não existe mais nada a fazer neste processo.
-
 
 ### 1.3. Acceptance Criteria
 

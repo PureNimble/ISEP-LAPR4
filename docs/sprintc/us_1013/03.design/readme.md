@@ -36,5 +36,6 @@ These classes are responsible for the user interface, controlling the use case, 
 
 ## 3.3. Class Diagram (CD)
 
-N/A
+![Class Diagram -> Rank the candidates for a job opening](svg/US1013.png)
+
 <img width=100% src="https://capsule-render.vercel.app/api?type=waving&height=120&color=4E1764&section=footer"/>

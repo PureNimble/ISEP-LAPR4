@@ -148,14 +148,14 @@ public class TriggerDataSender implements Trigger {
     private void sendToServer(final List<String> data) {
         if (data.isEmpty())
             return;
-        for (String s : data) {
+        for (final String s : data) {
             System.out.println(s);
         }
         ProtocolMessage message;
         try {
-            TcpH2 tcpH2 = new TcpH2();
+            final TcpH2 tcpH2 = new TcpH2();
             message = new ProtocolMessage((byte) 1, MessageCode.H2, data.toArray(new String[0]));
-            ProtocolMessage response = tcpH2.sendRecv(message);
+            final ProtocolMessage response = tcpH2.sendRecv(message);
             if (response != null) {
                 System.out.println(response.toString());
             }

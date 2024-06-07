@@ -1,4 +1,4 @@
-@startuml SD-US1005
+@startuml
 
 title Sequence Diagram - US1005
 
@@ -12,7 +12,6 @@ participant "RecordInterviewUI" as UI
 participant "RecordInterviewController" as Controller
 participant "Interview" as Interview
 
-participant "RecordInterviewService" as Service
 participant "InterviewRepository" as Repository
 participant "JpaInterviewRepository" as JpaRepository
 database "Database" as DB

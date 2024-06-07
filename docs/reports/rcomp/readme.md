@@ -15,7 +15,8 @@
     - [CHANGEPASS](#315-changepass)
     - [LISTAPPREQ](#316-listappreq)
     - [LISTJOBREQ](#317-listjobreq)
-    - [NOTIFICATION](#318-notification)
+    - [H2](#318-h2)
+    - [NOTIFICATION](#319-notification)
 
 ## 1. Introduction
 
@@ -137,7 +138,8 @@ The protocol defines specific codes for different types of requests and response
 | **8**   | **Response**  | **LISTAPPRES** – List applications response. This response carries the list of applications available to the user, their state and the number of applicants. The response is a list of strings of ASICII codes, each string is not required to be null terminated. |
 | **9**   | **Request**  | **LISTJOBREQ** – List jobs openings request. This request has no data. The server application response is a list of job openings associated to that user, including job reference, position, active since, number of applicants. The response is a list of strings of ASICII codes, each string is not required to be null terminated. _[**See Section 3.1.7.**](#317-listjobreq)_ |
 | **10**  | **Response**  | **LISTJOBRES** – List jobs openings response. This response carries the list of job openings associated to that user, including job reference, position, active since, number of applicants. The response is a list of strings of ASICII codes, each string is not required to be null terminated. |
-| **11**  | **Notification**  | **NOTIFICATION** – Server sends this notification each time it detects a change of interest to the user. The notification carries information about the changes. _[**See Section 3.1.8.**](#318-notification)_ |
+| **11**  | **Notification**  | **H2** – This is a change detection notification that the server receives from the H2 database. The notification is triggered when changes are detected in certain tables. The notification contains the user’s email and the type of change. _[**See Section 3.1.8.**](#318-h2)_ |
+| **12**  | **Notification**  | **NOTIFICATION** – Server sends this notification each time it detects a change of interest to the user. The notification carries information about the changes. _[**See Section 3.1.9.**](#319-notification)_ |
 
 
 ### 3.1. Message Handlers
@@ -441,7 +443,44 @@ public class ListJobReqMessage extends Message {
 }
 ```
 
-#### 3.1.8. NOTIFICATION
+#### 3.1.8. H2
+
+Handles H2 notifications by adding notifications to a queue for the user.
+
+```java
+public class H2Message extends Message {
+
+    public H2Message(final ProtocolMessage protocolMessage, final DataOutputStream output, final Socket socket,
+            final EventListener eventListener) {
+        super(protocolMessage, output, socket, eventListener);
+    }
+
+    @Override
+    public void handle() throws IOException {
+
+        final ListUsersController listUsersController = new ListUsersController(
+                PersistenceContext.repositories().users());
+
+        final byte[][] dataChunks = request.datachunks();
+
+        final String username = new String(dataChunks[0], StandardCharsets.UTF_8);
+
+        final Optional<SystemUser> user = listUsersController.find(Username.valueOf(username));
+
+        if (!user.isPresent())
+            send(new ProtocolMessage((byte) 1, MessageCode.ERR, "User not found"));
+
+        byte[][] message = Arrays.copyOfRange(dataChunks, 1, dataChunks.length);
+        final SystemUser systemUser = user.get();
+
+        eventListener.addNotification(systemUser, new ProtocolMessage((byte) 1, MessageCode.NOTIFICATION, message));
+
+        send(new ProtocolMessage((byte) 1, MessageCode.ACK));
+    }
+}
+```
+
+#### 3.1.9. NOTIFICATION
 
 Handles notification messages by sending notifications to the user.
 

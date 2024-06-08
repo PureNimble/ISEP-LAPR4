@@ -55,15 +55,15 @@ public class ListCandidatesByInterviewPointsUI extends AbstractUI {
 
         if (showList(elems)) {
             while (Utils.confirm("\nDo you want to reorder the list?")) {
-                final List<String> options = Arrays.asList("Order by Asc", "Order by Desc");
+                final List<String> options = Arrays.asList("Order by Ascending", "Order by Descending");
                 final int option = Utils.showAndSelectIndex(options, "\nWhich order do you wish to apply?");
 
                 switch (option) {
                     case 0:
-                        elems = this.sortedCandidatesByInterviewPointsForJobOpening(theJobOpening, false);
+                        elems = this.sortedCandidatesByInterviewPointsForJobOpening(theJobOpening, true);
                         break;
                     case 1:
-                        elems = this.sortedCandidatesByInterviewPointsForJobOpening(theJobOpening, true);
+                        elems = this.sortedCandidatesByInterviewPointsForJobOpening(theJobOpening, false);
                         break;
                     default:
                         System.out.println("Invalid ordering option.");

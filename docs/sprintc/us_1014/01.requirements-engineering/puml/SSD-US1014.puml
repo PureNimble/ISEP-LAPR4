@@ -1,4 +1,4 @@
-@startuml SSD-US1004
+@startuml
 
 skinparam monochrome true
 skinparam packageStyle rectangle
@@ -14,24 +14,25 @@ participant ":System" as System
 activate CustomerManager
 
 CustomerManager -> System : Asks to record the time and date for an interview.
-
+note left of System : Show only the job\n openings that are\n in a valid state
 activate System
 
 System --> CustomerManager : Shows list of job openings.
 deactivate System
 
 CustomerManager -> System : Chooses a job opening.
+note left of System : Show only the applications\n  that have passed the\n requirement state
 activate System
 
-System --> CustomerManager : Shows list of candidates for the chosen job opening
+System --> CustomerManager : Shows list of applications for the chosen job opening
 deactivate System
     
-CustomerManager -> System : Chooses an candidate
+CustomerManager -> System : Chooses an application.
 activate System
 
 System --> CustomerManager : Asks to record the time and date for an interview
 deactivate System
-CustomerManager -> System : Provides new time and date for the interview
+CustomerManager -> System : Provides data
 activate System
 
 System --> CustomerManager : Asks to confirm changes

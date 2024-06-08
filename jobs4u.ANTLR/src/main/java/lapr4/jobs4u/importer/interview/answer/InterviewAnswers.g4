@@ -65,7 +65,7 @@ numeric_scale_answer: 'ANSWER:'  NUMERIC_SCALE;
 
 single_answer_choice_answer: 'ANSWER:' (TWO_DIGIT_NUMBER | LETTER);
 
-multiple_answer_choice_answer: 'ANSWER:' (TWO_DIGIT_NUMBER | LETTER) (TWO_DIGIT_NUMBER | LETTER)+;
+multiple_answer_choice_answer: 'ANSWER:' (TWO_DIGIT_NUMBER | LETTER)+;
 
 TRUE_FALSE_QUESTION: 'True/False';
 SHORT_TEXT_ANSWER_QUESTION: 'Short text answer';

@@ -73,7 +73,7 @@ public class Utils {
         String input;
         Integer value;
         do {
-            input = Console.readNonEmptyLine("Insert an option: ", "Pleas insert a valid option");
+            input = Console.readNonEmptyLine("Insert an option: ", "Please insert a valid option");
             try {
                 value = Integer.valueOf(input);
             } catch (NumberFormatException ex) {
@@ -94,7 +94,7 @@ public class Utils {
         String input;
         Integer value;
         do {
-            input = Console.readNonEmptyLine("Insert an option: ", "Pleas insert a valid option");
+            input = Console.readNonEmptyLine("Insert an option: ", "Please insert a valid option");
             try {
                 value = Integer.valueOf(input);
             } catch (NumberFormatException e) {

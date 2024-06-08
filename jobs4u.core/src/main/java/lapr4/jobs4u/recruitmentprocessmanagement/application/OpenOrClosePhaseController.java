@@ -65,7 +65,8 @@ public class OpenOrClosePhaseController {
     public boolean changePhase(final String currentPhase, final JobOpening theJobOpening, final Boolean moveUp)
             throws Exception {
         authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.CUSTOMER_MANAGER, BaseRoles.POWERUSER);
-        final RecruitmentProcess recruitmentProcess = recruitmentProcessRepository.findByJobOpening(theJobOpening).get();
+        final RecruitmentProcess recruitmentProcess = recruitmentProcessRepository.findByJobOpening(theJobOpening)
+                .get();
 
         txCtx.beginTransaction();
         switch (currentPhase) {
@@ -117,16 +118,15 @@ public class OpenOrClosePhaseController {
             case "ScreeningPhase" -> {
                 recruitmentProcess.screeningPhase().close();
                 if (moveUp) {
+                    if (!hasEvaluatedRequirements(theJobOpening))
+                        throw new Exception("You cannot move to the next phase without evaluating the requirements");
                     if (recruitmentProcess.interviewPhase() != null) {
                         if (!hasInterviewModel(theJobOpening)) {
                             throw new Exception("No interview model associated with the job opening: "
                                     + theJobOpening.jobReference());
                         }
                         recruitmentProcess.interviewPhase().open();
-                    } else if (!hasEvaluatedRequirements(theJobOpening)) {
-                        throw new Exception("You cannot move to the next phase without evaluating the requirements");
-                    }
-                    else {
+                    } else {
                         recruitmentProcess.analysisPhase().open();
                     }
                 } else {
@@ -162,7 +162,7 @@ public class OpenOrClosePhaseController {
                     }
                     recruitmentProcess.resultPhase().open();
                 } else {
-                    if (!hasRanking(theJobOpening)){
+                    if (!hasRanking(theJobOpening)) {
                         if (recruitmentProcess.interviewPhase() != null) {
                             recruitmentProcess.interviewPhase().open();
                         } else {

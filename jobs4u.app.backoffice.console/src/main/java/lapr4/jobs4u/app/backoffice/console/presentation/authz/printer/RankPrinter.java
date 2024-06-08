@@ -10,7 +10,7 @@ public class RankPrinter implements Visitor<RankDTO> {
 
     @Override
     public void visit(final RankDTO visitee) {
-        System.out.printf("%-20s%-20s", visitee.getCandidateEmail(),
+        System.out.printf("%-20s%-20s%-20s", visitee.getApplicationCode(), visitee.getCandidateEmail(),
                 visitee.getCandidateName());
     }
 }

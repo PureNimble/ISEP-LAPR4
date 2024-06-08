@@ -25,6 +25,7 @@ import lapr4.jobs4u.jobopeningmanagement.domain.JobOpeningInterview;
 import lapr4.jobs4u.jobopeningmanagement.domain.JobOpeningRequirement;
 import lapr4.jobs4u.jobopeningmanagement.domain.ModeTypes;
 import lapr4.jobs4u.jobopeningmanagement.domain.TypesOfContract;
+import lapr4.jobs4u.jobopeningmanagement.domain.TypesOfJobOpeningStates;
 import lapr4.jobs4u.jobopeningmanagement.dto.JobOpeningDTO;
 import lapr4.jobs4u.recruitmentprocessmanagement.domain.RecruitmentProcess;
 
@@ -90,6 +91,10 @@ public class EditJobOpeningUI extends AbstractUI {
             }
 
             selectedJobOpening = listJobOpeningsController.selectedJobOpening(selectedJobOpeningDTO);
+            if (selectedJobOpening.jobOpeningState().toString().equals(TypesOfJobOpeningStates.CLOSED.toString())) {
+                System.out.println("\nThe selected Job Opening is closed and cannot be edited.");
+                return false;
+            }
             displayJobOpeningDetails(selectedJobOpening);
             currentPhase = editJobOpeningController.currentPhase(selectedJobOpening);
 
@@ -100,7 +105,8 @@ public class EditJobOpeningUI extends AbstractUI {
         } while (!Utils.confirm("\nDo you wish to edit this Job Opening?"));
 
         loadJobOpeningFields();
-        loadJobOpeningRecruitmentProcessFields();
+        if (selectedJobOpeningRecruitmentProcess != null)
+            loadJobOpeningRecruitmentProcessFields();
         if (!updateFields(currentPhase)) {
             System.out.println("\nNo changes were made.");
             return false;
@@ -174,6 +180,8 @@ public class EditJobOpeningUI extends AbstractUI {
         final Map<String, Runnable> options = new LinkedHashMap<>();
         final List<String> keys = new ArrayList<>();
 
+        if (currentPhase == null)
+            addNullPhaseOptions(options, keys);
         addGeneralEditOptions(options, keys);
         addPhaseSpecificOptions(options, keys, currentPhase);
 
@@ -188,7 +196,7 @@ public class EditJobOpeningUI extends AbstractUI {
         return changed;
     }
 
-    private void addGeneralEditOptions(final Map<String, Runnable> options, final List<String> keys) {
+    private void addNullPhaseOptions(final Map<String, Runnable> options, final List<String> keys) {
         keys.add("Edit title or function");
         options.put(keys.get(keys.size() - 1), () -> titleOrFunction = Console.readNonEmptyLine(
                 "Current Title or Function: " + selectedJobOpening.titleOrFunction()
@@ -223,6 +231,9 @@ public class EditJobOpeningUI extends AbstractUI {
                 () -> numberOfVacancies = Console.readNonEmptyLine("Current Number of Vacancies: "
                         + selectedJobOpening.numberOfVacancies() + "\nNew Number of Vacancies:",
                         "Number of Vacancies cannot be empty."));
+    }
+
+    private void addGeneralEditOptions(final Map<String, Runnable> options, final List<String> keys) {
         if (selectedJobOpeningRecruitmentProcess != null) {
             keys.add("Edit Recruitment Process");
             options.put(keys.get(keys.size() - 1), () -> {

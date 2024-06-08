@@ -33,7 +33,7 @@ public class TriggerBootstrapper implements Action {
 
 		try {
 			// Drop all triggers
-			for (String triggerName : triggersNames) {
+			/* for (String triggerName : triggersNames) {
 				sql = dropTrigger(triggerName);
 				transaction = entityManager.getTransaction();
 				try {
@@ -44,7 +44,7 @@ public class TriggerBootstrapper implements Action {
 				} catch (RuntimeException e) {
 					transaction.commit();
 				}
-			}
+			} */
 
 			// Create all triggers
 			for (int i = 0; i < triggersNames.size(); i++) {
@@ -60,7 +60,7 @@ public class TriggerBootstrapper implements Action {
 					entityManager.createNativeQuery(sql).executeUpdate();
 					transaction.commit();
 					LOGGER.debug(triggersNames.get(i) + " trigger created");
-				} catch (RuntimeException e) {
+				} catch (final RuntimeException e) {
 					if (transaction != null && transaction.isActive()) {
 						transaction.rollback();
 					}
@@ -69,7 +69,7 @@ public class TriggerBootstrapper implements Action {
 				}
 			}
 
-		} catch (RuntimeException e) {
+		} catch (final RuntimeException e) {
 			LOGGER.error("Error reading SQL trigger file or executing SQL trigger", e);
 			if (transaction != null && transaction.isActive()) {
 				transaction.rollback();
@@ -86,15 +86,14 @@ public class TriggerBootstrapper implements Action {
 
 	}
 
-	private String createTrigger(String triggerName, String table, String type) {
+	private String createTrigger(final String triggerName, final String table, final String type) {
 
-		return "CREATE TRIGGER " + triggerName + " AFTER " + type + " ON " + table + " FOR EACH ROW "
+		return "CREATE OR REPLACE TRIGGER " + triggerName + " AFTER " + type + " ON " + table + " FOR EACH ROW "
 				+ "CALL \"lapr4.jobs4u.TriggerDataSender\"; ";
 	}
 
-	private String dropTrigger(String triggerName) {
-
+	/* private String dropTrigger(String triggerName) {
 		return "DROP TRIGGER " + triggerName + ";";
-	}
+	} */
 
 }

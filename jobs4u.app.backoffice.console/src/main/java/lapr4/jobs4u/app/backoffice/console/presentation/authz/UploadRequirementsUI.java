@@ -58,12 +58,15 @@ public class UploadRequirementsUI extends AbstractUI {
         if (!Utils.copyFile(file, finalPath))
             return false;
         try {
-            if (!uploadController.isCorrectRequirement(requirement, finalPath))
+            if (!uploadController.isCorrectRequirement(requirement, finalPath)) {
+                System.out.println("Requirement not uploaded");
                 return false;
+            }
         } catch (final IOException e) {
             System.out.println("Error reading file: " + e.getMessage());
         }
         uploadController.registerRequirement(requirement, finalPath);
+        System.out.println("Requirement uploaded successfully");
         return false;
 
     }

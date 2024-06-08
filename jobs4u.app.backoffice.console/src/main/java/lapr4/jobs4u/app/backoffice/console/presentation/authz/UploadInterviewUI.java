@@ -56,12 +56,15 @@ public class UploadInterviewUI extends AbstractUI {
         if (!Utils.copyFile(file, finalPath))
             return false;
         try {
-            if (!controller.isCorrectInterview(interview, finalPath))
+            if (!controller.isCorrectInterview(interview, finalPath)) {
+                System.out.println("Interview not uploaded");
                 return false;
+            }
         } catch (final IOException e) {
             System.out.println("Error reading file: " + e.getMessage());
         }
         controller.registerInterview(interview, finalPath);
+        System.out.println("Interview uploaded successfully");
         return false;
 
     }

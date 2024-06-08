@@ -14,6 +14,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class RankDTO {
     private String id;
+    private String applicationCode;
     private String placement;
     private String candidateEmail;
     private String candidateName;

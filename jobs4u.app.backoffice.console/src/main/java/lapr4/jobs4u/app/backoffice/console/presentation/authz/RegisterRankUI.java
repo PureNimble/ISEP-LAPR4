@@ -66,8 +66,8 @@ public class RegisterRankUI extends AbstractUI {
 
         final List<RankDTO> ranks = (List<RankDTO>) registerRankController.findByJobOpening(jobOpening);
         System.out.println(header());
-        ranks.forEach(rank -> System.out.printf("%-3s%-20s%-20s%n", rank.getPlacement(), rank.getCandidateEmail(),
-                rank.getCandidateName()));
+        ranks.forEach(rank -> System.out.printf("%-3s%-20s%-20s%-20s\n", rank.getPlacement(), rank.getApplicationCode(),
+                rank.getCandidateEmail(), rank.getCandidateName()));
 
         if (!Utils.confirm("\nDo you wish to edit this rank?")) {
             System.out.println("No changes were made.");
@@ -103,7 +103,8 @@ public class RegisterRankUI extends AbstractUI {
         System.out.println(header());
         for (int i = 0; i < ranks.size(); i++) {
             final RankDTO rank = ranks.get(i);
-            System.out.printf("%-3d%-20s%-20s%n", i + 1, rank.getCandidateEmail(), rank.getCandidateName());
+            System.out.printf("%-3d%-20s%-20s%-20s\n", i + 1, rank.getApplicationCode(), rank.getCandidateEmail(),
+                    rank.getCandidateName());
         }
 
         if (Utils.confirm("Do you wish to save these changes?"))
@@ -170,7 +171,7 @@ public class RegisterRankUI extends AbstractUI {
         final int size = applications.size();
 
         for (int i = 0; i < size; i++) {
-            System.out.printf("Placement nº %d\n", lastPlacementValue);
+            System.out.printf("Placement number %d\n", lastPlacementValue);
             final SelectWidget<ApplicationDTO> applicationSelector = new SelectWidget<>("Candidates: ", applications,
                     new ApplicationPrinter());
             applicationSelector.show();
@@ -206,14 +207,15 @@ public class RegisterRankUI extends AbstractUI {
         System.out.println("Result:");
         System.out.println(header());
         for (final Application application : applications) {
-            System.out.printf("%-3d%-20s%-20s%n", lastPlacementValue, application.candidate().emailAddress(),
+            System.out.printf("%-3d%-20s%-20s%-20s\n", lastPlacementValue, application.applicationCode(),
+                    application.candidate().emailAddress(),
                     application.candidate().name());
             lastPlacementValue++;
         }
     }
 
     private String header() {
-        return String.format("%-10s%-20s%-20s", "#", "C. EMAIL", "C. NAME");
+        return String.format("#  %-20s%-20s%-20s", "APP. CODE", "C. EMAIL", "C. NAME");
     }
 
     @Override

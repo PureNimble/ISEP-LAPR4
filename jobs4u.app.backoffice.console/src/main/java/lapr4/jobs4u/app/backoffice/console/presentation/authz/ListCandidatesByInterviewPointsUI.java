@@ -93,7 +93,7 @@ public class ListCandidatesByInterviewPointsUI extends AbstractUI {
         for (final InterviewDTO elem : elems) {
             System.out
                     .println(String.format("%d  %-30s%-30s%-5s", i, elem.getApplicationCode(), elem.getCandidateEmail(),
-                            elem.getGrade()));
+                            elem.getGrade() == null ? "N/A" : elem.getGrade()));
             i++;
         }
         return true;

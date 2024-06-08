@@ -75,12 +75,12 @@ public class Rank implements AggregateRoot<Long> {
     }
 
     public RankDTO toDTO() {
-        return new RankDTO(this.pk.toString(), this.rankPlacement.toString(),
-                this.application.candidate().emailAddress().toString(),
+        return new RankDTO(this.pk.toString(), this.application.applicationCode().toString(),
+                this.rankPlacement.toString(), this.application.candidate().emailAddress().toString(),
                 this.application.candidate().name().toString());
     }
 
-    public void replace(final RankPlacement placement){
+    public void replace(final RankPlacement placement) {
         this.rankPlacement = placement;
     }
 

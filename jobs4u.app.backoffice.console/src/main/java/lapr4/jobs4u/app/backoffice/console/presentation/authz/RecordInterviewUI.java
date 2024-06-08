@@ -60,7 +60,7 @@ public class RecordInterviewUI extends AbstractUI {
         if (theJobOpeningDTO == null) {
             return null;
         }
-        JobOpening theJobOpening = jobOpeningsController.selectedJobOpening(theJobOpeningDTO);
+        final JobOpening theJobOpening = jobOpeningsController.selectedJobOpening(theJobOpeningDTO);
         final Iterable<ApplicationDTO> applications = this.applicationController
                 .findApplicationThatPassInRequirements(theJobOpening);
         final SelectWidget<ApplicationDTO> selector1 = new SelectWidget<>("Applications:", applications,
@@ -76,7 +76,7 @@ public class RecordInterviewUI extends AbstractUI {
 
     @Override
     public String headline() {
-        return "Import Applications";
+        return "Record Interview";
     }
 
     private Interview createInterview(Application app) {

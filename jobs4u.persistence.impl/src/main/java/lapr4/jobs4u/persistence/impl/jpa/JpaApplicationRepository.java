@@ -40,7 +40,7 @@ class JpaApplicationRepository extends JpaAutoTxRepository<Application, Applicat
 
         final Long count = createQuery(
                 "SELECT COUNT(a) FROM Application a WHERE a.jobOpening.jobReference = :jobReference", Long.class)
-                        .setParameter("jobReference", jobReference).getSingleResult()
+                .setParameter("jobReference", jobReference).getSingleResult()
                 + 1;
         return count.toString();
 
@@ -90,16 +90,18 @@ class JpaApplicationRepository extends JpaAutoTxRepository<Application, Applicat
     @Override
     public Iterable<Application> unrankedApplicationByJobOpening(final JobOpening jobOpening) {
         return createQuery(
-                "SELECT a FROM Application a WHERE a.jobOpening = :jobOpening AND a NOT IN (SELECT r.application FROM Rank r)",
-                Application.class).setParameter("jobOpening", jobOpening).getResultList();
+                "SELECT a FROM Application a, Requirement r WHERE a.jobOpening = :jobOpening AND r.application = a"
+                        + " AND r.outcome.outComeValue = :passed AND a NOT IN (SELECT r.application FROM Rank r)",
+                Application.class).setParameter("jobOpening", jobOpening)
+                .setParameter("passed", OutcomeValue.APPROVED.toString()).getResultList();
     }
 
     @Override
-    public Iterable<Application> findApplicationThatPassInRequirements(JobOpening jobOpening) {
+    public Iterable<Application> findApplicationThatPassInRequirements(final JobOpening jobOpening) {
         return createQuery(
                 "SELECT a FROM Application a, Requirement r WHERE a.jobOpening = :jobOpening AND r.application = a AND r.outcome.outComeValue = :passed",
                 Application.class).setParameter("jobOpening", jobOpening)
-                        .setParameter("passed", OutcomeValue.APPROVED.toString()).getResultList();
+                .setParameter("passed", OutcomeValue.APPROVED.toString()).getResultList();
 
     }
 

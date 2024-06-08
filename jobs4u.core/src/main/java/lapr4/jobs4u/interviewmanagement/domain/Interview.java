@@ -107,7 +107,7 @@ public class Interview implements AggregateRoot<Long> {
     public InterviewDTO toDTO() {
         return new InterviewDTO(this.application.applicationCode().toString(),
                 this.application.candidate().emailAddress().toString(),
-                this.grade.toString());
+                this.grade == null ? null : this.grade.toString());
     }
 
     public String toString() {

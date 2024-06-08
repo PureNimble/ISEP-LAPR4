@@ -98,10 +98,10 @@ public class PublishResultsController {
         final String subBody = "your application for the position '" + jobOpening.titleOrFunction().toString()
                 + "' at '" + jobOpening.customer().companyName().toString() + "' has been";
         for (final Application application : applications) {
-            final String result = application.result().toString();
+            final String result = application.result().outcome().toString();
             final String candidateName = application.candidate().name().toString();
             final String body;
-            if (result == "APPROVED") {
+            if (result == OutcomeValue.APPROVED.toString()) {
                 body = "Hello Mr/Mrs " + candidateName
                         + ", \n\nCongratulations! " + subBody
                         + " approved. Please check the attachments for further information and details. \n\nBest regards, \nJobs4U Team";
@@ -153,8 +153,7 @@ public class PublishResultsController {
 
             int i = 1;
             for (final Application application : approvedApplications) {
-                System.out.println(application.candidate().name().toString());
-                writer.write(String.format("%d  %-30s%-30s%-20s", i, application.candidate().name().toString(),
+                writer.write(String.format("\n%d  %-30s%-30s%-20s", i, application.candidate().name().toString(),
                         application.candidate().emailAddress().toString(),
                         application.candidate().phoneNumber().toString()));
                 i++;

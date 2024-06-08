@@ -100,7 +100,7 @@ public class OpenOrClosePhaseController {
                         throw new Exception("No requirements specifications associated with the job opening: "
                                 + theJobOpening.jobReference());
                     } else if (!hasApplications(theJobOpening)) {
-                        throw new Exception("You cannot move to the screening phase without applications");
+                        throw new Exception("You cannot move to the next phase without applications");
                     } else {
                         recruitmentProcess.screeningPhase().open();
                     }
@@ -123,7 +123,10 @@ public class OpenOrClosePhaseController {
                                     + theJobOpening.jobReference());
                         }
                         recruitmentProcess.interviewPhase().open();
-                    } else {
+                    } else if (!hasEvaluatedRequirements(theJobOpening)) {
+                        throw new Exception("You cannot move to the next phase without evaluating the requirements");
+                    }
+                    else {
                         recruitmentProcess.analysisPhase().open();
                     }
                 } else {
@@ -138,6 +141,9 @@ public class OpenOrClosePhaseController {
             case "InterviewPhase" -> {
                 recruitmentProcess.interviewPhase().close();
                 if (moveUp) {
+                    if (!hasEvaluatedInterviews(theJobOpening)) {
+                        throw new Exception("You cannot move to the next phase without evaluating the interviews");
+                    }
                     recruitmentProcess.analysisPhase().open();
                 } else {
                     if (!hasEvaluatedInterviews(theJobOpening)) {
@@ -151,6 +157,9 @@ public class OpenOrClosePhaseController {
             case "AnalysisPhase" -> {
                 recruitmentProcess.analysisPhase().close();
                 if (moveUp) {
+                    if (!hasRanking(theJobOpening)) {
+                        throw new Exception("You cannot move to the next phase without ranking the applications");
+                    }
                     recruitmentProcess.resultPhase().open();
                 } else {
                     if (!hasRanking(theJobOpening)){
@@ -168,6 +177,9 @@ public class OpenOrClosePhaseController {
             case "ResultPhase" -> {
                 recruitmentProcess.resultPhase().close();
                 if (moveUp) {
+                    if (!hasResults(theJobOpening)) {
+                        throw new Exception("You cannot conclude the process without results");
+                    }
                     theJobOpening.deactivate(currentPhase);
                 } else {
                     if (!hasResults(theJobOpening)) {

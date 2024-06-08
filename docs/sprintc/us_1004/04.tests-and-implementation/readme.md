@@ -1,29 +1,71 @@
-package lapr4.jobs4u.jobopeningmanagement.application;
+<img width=100% src="https://capsule-render.vercel.app/api?type=waving&height=120&color=4E1764"/>
 
-import java.util.Optional;
+# US 1004 - Edit a Job Opening
 
-import eapli.framework.application.UseCaseController;
-import eapli.framework.infrastructure.authz.application.AuthorizationService;
-import lapr4.jobs4u.customermanagement.domain.Address;
-import lapr4.jobs4u.integration.questions.importer.domain.QuestionImporterPlugin;
-import lapr4.jobs4u.jobopeningmanagement.domain.ContractType;
-import lapr4.jobs4u.jobopeningmanagement.domain.JobDescription;
-import lapr4.jobs4u.jobopeningmanagement.domain.JobOpening;
-import lapr4.jobs4u.jobopeningmanagement.domain.JobOpeningInterview;
-import lapr4.jobs4u.jobopeningmanagement.domain.JobOpeningRequirement;
-import lapr4.jobs4u.jobopeningmanagement.domain.Mode;
-import lapr4.jobs4u.jobopeningmanagement.domain.NumberOfVacancies;
-import lapr4.jobs4u.jobopeningmanagement.domain.TitleOrFunction;
-import lapr4.jobs4u.jobopeningmanagement.repositories.JobOpeningInterviewRepository;
-import lapr4.jobs4u.jobopeningmanagement.repositories.JobOpeningRepository;
-import lapr4.jobs4u.jobopeningmanagement.repositories.JobOpeningRequirementRepository;
-import lapr4.jobs4u.recruitmentprocessmanagement.domain.RecruitmentProcess;
-import lapr4.jobs4u.recruitmentprocessmanagement.repositories.RecruitmentProcessRepository;
-import lapr4.jobs4u.usermanagement.domain.BaseRoles;
+# 4. Tests
 
-/**
- * @author 2DI2
- */
+**Some tests of the EditJobOpeningController**
+```java
+@BeforeEach
+void setUp() {
+    MockitoAnnotations.openMocks(this);
+    when(mockJobOpening.titleOrFunction()).thenReturn(TitleOrFunction.valueOf("someTitleOrFunction"));
+    when(mockJobOpening.contractType()).thenReturn(ContractType.valueOf(TypesOfContract.FULL_TIME.toString()));
+    when(mockJobOpening.mode()).thenReturn(Mode.valueOf(ModeTypes.PRESENTIAL.toString()));
+    when(mockJobOpening.address()).thenReturn(Address.valueOf("someAddress"));
+    when(mockJobOpening.jobDescription()).thenReturn(JobDescription.valueOf("someJobDescription"));
+    when(mockJobOpening.numberOfVacancies()).thenReturn(NumberOfVacancies.valueOf("123"));
+    controller = new EditJobOpeningController(mockJobOpeningRepo, mockJobOpeningInterviewRepo,
+            mockJobOpeningRequirementRepo, mockRecruitmentProcessRepository, mockAuthz);
+}
+
+@Test
+void testEditJobOpening() {
+    when(mockJobOpeningRepo.save(any(JobOpening.class))).thenReturn(mockJobOpening);
+    JobOpening result = controller.editJobOpening("newTitleOrFunction", TypesOfContract.FREELANCE.toString(),
+            ModeTypes.HYBRID.toString(), "newAddress", "newJobDescription", "321", mockJobOpening);
+    assertEquals(mockJobOpening, result);
+    verify(mockJobOpeningRepo).save(any(JobOpening.class));
+}
+
+@Test
+void testEditJobOpeningInterview() {
+    when(mockJobOpeningInterviewRepo.save(any(JobOpeningInterview.class))).thenReturn(mockJobOpeningInterview);
+    JobOpeningInterview result = controller.editJobOpeningInterview(mockJobOpeningInterview, null);
+    assertEquals(mockJobOpeningInterview, result);
+    verify(mockJobOpeningInterviewRepo).save(any(JobOpeningInterview.class));
+}
+
+@Test
+void testEditJobOpeningRequirement() {
+    when(mockJobOpeningRequirementRepo.save(any(JobOpeningRequirement.class)))
+            .thenReturn(mockJobOpeningRequirement);
+    JobOpeningRequirement result = controller.editJobOpeningRequirement(mockJobOpeningRequirement, null);
+    assertEquals(mockJobOpeningRequirement, result);
+    verify(mockJobOpeningRequirementRepo).save(any(JobOpeningRequirement.class));
+}
+
+@Test
+void testInterviewModel() {
+    when(mockJobOpeningInterviewRepo.findJobOpeningInterviewsByJobOpening(any(JobOpening.class)))
+            .thenReturn(Optional.of(mockJobOpeningInterview));
+    Optional<JobOpeningInterview> result = controller.interviewModel(mockJobOpening);
+    assertEquals(Optional.of(mockJobOpeningInterview), result);
+}
+
+@Test
+void testRequirementModel() {
+    when(mockJobOpeningRequirementRepo.findJobOpeningRequirementsByJobOpening(any(JobOpening.class)))
+            .thenReturn(Optional.of(mockJobOpeningRequirement));
+    Optional<JobOpeningRequirement> result = controller.requirementModel(mockJobOpening);
+    assertEquals(Optional.of(mockJobOpeningRequirement), result);
+}
+```
+
+# 5. Construction (Implementation)
+
+**EditJobOpeningController**
+```java
 @UseCaseController
 public class EditJobOpeningController {
 
@@ -165,3 +207,38 @@ public class EditJobOpeningController {
     }
 
 }
+```
+
+# 6. Integration and Demo 
+
+In the following image, we can see a demonstration of the editing of a job opening. The user can edit the job opening by changing the job opening's information, as shown in the images below.
+
+<p align="center">Edit Job Opening</p>
+
+![Edit Job Opening](resources/editJobOpening.png)
+
+To ensure the user selects the correct job opening to edit, the system will display key information such as the title or function, contract type, mode, address, job description, number of vacancies, plugin, and recruitment process dates. This information will help the user accurately identify and select the job opening they wish to edit.
+
+<p align="center">Job Opening Fields</p>
+
+![Job Opening Fields](resources/jobOpeningFields.png)
+
+The user can choose the field they wish to edit by selecting it. The listed fields may vary depending on the current phase of the recruitment process.
+
+<p align="center">Edit Field</p>
+
+![Edit Field](resources/editField.png)
+
+After selecting the field to edit, The system will display the field's current information, allowing the user to edit the field.
+
+<p align="center">Result</p>
+
+![Result](resources/result.png)
+
+The system will display a preview of the edited fields. The user can then confirm the changes.
+
+# 7. Observations
+
+The implementation of the editing of a job opening was successful. The user can edit the job opening by changing the job opening's information.
+
+<img width=100% src="https://capsule-render.vercel.app/api?type=waving&height=120&color=4E1764&section=footer"/>

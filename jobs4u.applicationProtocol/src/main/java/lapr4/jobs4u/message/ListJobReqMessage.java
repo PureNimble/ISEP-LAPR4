@@ -36,15 +36,13 @@ public class ListJobReqMessage extends Message {
 
         final Optional<SystemUser> userOpt = eventListener.user(socket);
         if (userOpt.isEmpty()) {
-            new ErrMessage(new ProtocolMessage((byte) 1, MessageCode.ERR, "Something went wrong"), output, socket,
-                    eventListener).handle();
+            send(new ProtocolMessage((byte) 1, MessageCode.ERR, "Something went wrong"));
             return;
         }
         final SystemUser user = userOpt.get();
 
         if (!user.hasAny(BaseRoles.CUSTOMER)) {
-            new ErrMessage(new ProtocolMessage((byte) 1, MessageCode.ERR, "Invalid Authentication"), output, socket,
-                    eventListener).handle();
+            send(new ProtocolMessage((byte) 1, MessageCode.ERR, "Invalid authentication"));
             return;
         }
 

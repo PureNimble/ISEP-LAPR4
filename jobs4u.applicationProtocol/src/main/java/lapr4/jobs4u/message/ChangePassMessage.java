@@ -36,14 +36,12 @@ public class ChangePassMessage extends Message {
 
         final byte[][] dataChunks = request.datachunks();
         if (dataChunks.length < 2) {
-            new ErrMessage(new ProtocolMessage((byte) 1, MessageCode.ERR, "Bad Request"), output, socket,
-                    eventListener).handle();
+            send(new ProtocolMessage((byte) 1, MessageCode.ERR, "Bad Request"));
             return;
         }
         final Optional<SystemUser> userOpt = eventListener.user(socket);
         if (userOpt.isEmpty()) {
-            new ErrMessage(new ProtocolMessage((byte) 1, MessageCode.ERR, "Something went wrong"), output, socket,
-                    eventListener).handle();
+            send(new ProtocolMessage((byte) 1, MessageCode.ERR, "Something went wrong"));
             return;
         }
         final SystemUser user = userOpt.get();

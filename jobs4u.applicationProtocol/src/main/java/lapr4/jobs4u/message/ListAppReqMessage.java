@@ -35,15 +35,13 @@ public class ListAppReqMessage extends Message {
 
         final Optional<SystemUser> userOpt = eventListener.user(socket);
         if (userOpt.isEmpty()) {
-            new ErrMessage(new ProtocolMessage((byte) 1, MessageCode.ERR, "Something went wrong"), output, socket,
-                    eventListener).handle();
+            send(new ProtocolMessage((byte) 1, MessageCode.ERR, "Bad Request"));
             return;
         }
         final SystemUser user = userOpt.get();
 
         if (!user.hasAny(BaseRoles.CANDIDATE)) {
-            new ErrMessage(new ProtocolMessage((byte) 1, MessageCode.ERR, "Invalid Authentication"), output, socket,
-                    eventListener).handle();
+            send(new ProtocolMessage((byte) 1, MessageCode.ERR, "Invalid authentication"));
             return;
         }
 

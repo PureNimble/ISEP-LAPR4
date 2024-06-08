@@ -8,9 +8,12 @@ actor "Customer Manager" as CM
 
 participant "RegisterRankUI" as UI
 participant "RegisterRankController" as C
+participant "RegisterRankService" as S
 participant "RankBuilder" as RB
 participant "RankRepository" as RR
 participant "JpaRankRepository" as JRR
+participant "Rank" as A
+participant "RankDTO" as ADTO
 database "Database" as DB
 
 
@@ -23,8 +26,93 @@ activate CM
             UI -> CM : Shows list of Job Openings and asks to select one
     deactivate UI
     CM -> UI : Selects a Job Opening
+
     activate UI
+        UI --> C : hasRank(JobOpening jobOpening)
+        activate C
+            C -> S : hasRank(JobOpening jobOpening)
+            activate S
+                S -> RR : hasRank(JobOpening jobOpening)
+                    activate RR
+                        RR -> JRR : hasRank(JobOpening jobOpening)
+                        activate JRR
+                            JRR -> DB : match(e.application.jobOpening=:jobOpening)
+                            activate DB
+                                DB --> JRR : hasRank
+                            deactivate DB
+                            JRR --> RR : hasRank
+                        deactivate JRR
+                        RR --> S : hasRank
+                    deactivate RR
+                S --> C : hasRank
+            deactivate S
+            C --> UI : hasRank
+        deactivate C
+
+        alt if already has existing Rank and wants to edit
+        UI -> C : findByJobOpening(JobOpening jobOpening)
+                activate C
+                    C -> S : findByJobOpening(JobOpening jobOpening)
+                    activate S
+                        S -> RR : findByJobOpening(JobOpening jobOpening)
+                            activate RR
+                            RR -> JRR : findByJobOpening(JobOpening jobOpening)
+                            activate JRR
+                                JRR -> JRR : findByJobOpening(JobOpening jobOpening)
+                                JRR -> DB : createQuery(SELECT e FROM Rank e WHERE e.application.jobOpening = :jobOpening ORDER BY e.rankPlacement ASC)
+                                activate DB
+                                    JRR -> DB : setParameter("jobOpening", jobOpening)
+                                    DB --> JRR : Iterable<Rank>
+                                deactivate DB
+                                JRR --> RR : Iterable<Rank>
+                            deactivate JRR
+                            RR --> S : Iterable<Rank>
+                            deactivate RR
+                            loop for each Rank
+                                S -> A: toDTO()
+                            activate A
+                                A --> ADTO: create
+                                activate ADTO
+                                A <-- ADTO: RankDTO
+                                deactivate ADTO
+                                S <-- A: RankDTO
+                            deactivate A
+                        end
+                        S --> C : List<RankDTO>
+                    deactivate S
+                    C --> UI : List<RankDTO>
+                deactivate C
+
+        alt if theres an existing ranking and CM wants to edit the positions of said rankings
+        loop until CM asks to leave menu
+        UI --> CM : shows list of Ranks and asks to select one
+        deactivate UI
+        CM -> UI : selects Rank
+        activate UI
+        UI --> CM : asks for new placement
+        deactivate UI
+        CM -> UI : provides new placement
+        activate UI
+            UI --> C : editRank(Rank rank, String placement)
+            activate C
+                C -> RR : save(Rank rank)
+                activate RR
+                    RR -> JRR : save(Rank)
+                    activate JRR
+                        JRR -> DB : persist(rank)
+                        activate DB
+                            DB --> JRR : rank
+                        deactivate DB
+                        JRR --> RR : rank
+                    deactivate JRR
+                    RR --> C : rank
+                deactivate RR
+                C --> UI : rank
+            deactivate C
+                 end loop
+                 else if there isnt an existing rank
         ref over DB , CM: Get List of Applications for Job Opening\n(US 1005)
+
         loop for every application (until CM asks to stop)
         UI --> CM : Asks to select application for the rank nº[iteration of the loop]
     deactivate UI
@@ -64,6 +152,7 @@ activate CM
         C --> UI : rank
     deactivate C
     end loop
+    end alt
     UI --> CM : Show operation success
 deactivate CM
 

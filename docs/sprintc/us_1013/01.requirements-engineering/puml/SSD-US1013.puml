@@ -22,15 +22,17 @@ activate Manager
     Manager -> System : Selects a job opening
     activate System
     alt if there's already a ranking in the system
-        System --> Manager : Displays the current ranking and asks if the CM wants to edit it
+        System --> Manager : Asks if the CM wants to edit it
     deactivate System
     Manager -> System : asks to redo the ranking
     activate System
     end alt
+    loop until CM asks to stop
         System --> Manager : displays a list of candidates
     deactivate System
-    Manager -> System : selects candidates in order
+    Manager -> System : selects a candidate for rank number [iteration loop]
     activate System
+    end loop
         System --> Manager : show operation success
     deactivate System
 

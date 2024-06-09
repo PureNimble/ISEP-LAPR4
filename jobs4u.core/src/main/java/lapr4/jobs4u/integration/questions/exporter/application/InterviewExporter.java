@@ -8,6 +8,8 @@ import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CodePointCharStream;
 import org.antlr.v4.runtime.CommonTokenStream;
 
+import lapr4.jobs4u.errors.CustomErrorListener;
+import lapr4.jobs4u.errors.CustomErrorStrategy;
 import lapr4.jobs4u.exporter.interview.template.generated.InterviewLexer;
 import lapr4.jobs4u.exporter.interview.template.generated.InterviewParser;
 import lapr4.jobs4u.integration.questions.importer.domain.QuestionImporterPlugin;
@@ -83,6 +85,10 @@ public class InterviewExporter implements QuestionExporter {
         final InterviewLexer lexer = new InterviewLexer(charStream);
         final CommonTokenStream tokens = new CommonTokenStream(lexer);
         final InterviewParser parser = new InterviewParser(tokens);
+
+        parser.setErrorHandler(new CustomErrorStrategy());
+        parser.removeErrorListeners();
+        parser.addErrorListener(CustomErrorListener.INSTANCE);
 
         try {
             parser.start();

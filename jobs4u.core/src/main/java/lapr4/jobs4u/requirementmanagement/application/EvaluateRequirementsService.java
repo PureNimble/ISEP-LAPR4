@@ -28,6 +28,8 @@ import lapr4.jobs4u.applicationmanagement.domain.Outcome;
 import lapr4.jobs4u.applicationmanagement.domain.OutcomeValue;
 import lapr4.jobs4u.applicationmanagement.repositories.ApplicationRepository;
 import lapr4.jobs4u.candidatemanagement.domain.Candidate;
+import lapr4.jobs4u.errors.CustomErrorListener;
+import lapr4.jobs4u.errors.CustomErrorStrategy;
 import lapr4.jobs4u.exporter.requirement.answer.generated.EvaluateRequirementsAnswersLexer;
 import lapr4.jobs4u.exporter.requirement.answer.generated.EvaluateRequirementsAnswersParser;
 import lapr4.jobs4u.importer.requirement.answer.generated.RequirementsAnswersLexer;
@@ -114,6 +116,9 @@ public class EvaluateRequirementsService {
         final RequirementsAnswersLexer lexer = new RequirementsAnswersLexer(charStream);
         final CommonTokenStream tokens = new CommonTokenStream(lexer);
         final RequirementsAnswersParser parser = new RequirementsAnswersParser(tokens);
+        parser.setErrorHandler(new CustomErrorStrategy());
+        parser.removeErrorListeners();
+        parser.addErrorListener(CustomErrorListener.INSTANCE);
         final ParseTree tree = parser.start();
         int correctAnswers = 0;
         int totalAnswers = 0;

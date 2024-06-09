@@ -8,6 +8,8 @@ import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CodePointCharStream;
 import org.antlr.v4.runtime.CommonTokenStream;
 
+import lapr4.jobs4u.errors.CustomErrorListener;
+import lapr4.jobs4u.errors.CustomErrorStrategy;
 import lapr4.jobs4u.exporter.requirement.template.generated.RequirementsLexer;
 import lapr4.jobs4u.exporter.requirement.template.generated.RequirementsParser;
 import lapr4.jobs4u.integration.questions.importer.domain.QuestionImporterPlugin;
@@ -66,6 +68,9 @@ public class RequirementsExporter implements QuestionExporter {
         final RequirementsLexer lexer = new RequirementsLexer(charStream);
         final CommonTokenStream tokens = new CommonTokenStream(lexer);
         final RequirementsParser parser = new RequirementsParser(tokens);
+
+        parser.setErrorHandler(new CustomErrorStrategy());
+        parser.addErrorListener(new CustomErrorListener());
 
         try {
             parser.start();

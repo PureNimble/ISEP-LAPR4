@@ -12,6 +12,8 @@ import org.antlr.v4.runtime.tree.ParseTree;
 
 import lapr4.jobs4u.applicationmanagement.domain.Application;
 import lapr4.jobs4u.applicationmanagement.domain.File;
+import lapr4.jobs4u.errors.CustomErrorListener;
+import lapr4.jobs4u.errors.CustomErrorStrategy;
 import lapr4.jobs4u.importer.interview.answer.generated.InterviewAnswersLexer;
 import lapr4.jobs4u.importer.interview.answer.generated.InterviewAnswersParser;
 import lapr4.jobs4u.interviewmanagement.domain.Interview;
@@ -40,6 +42,9 @@ public class UploadInterviewService {
 		final InterviewAnswersLexer lexer = new InterviewAnswersLexer(charStream);
 		final CommonTokenStream tokens = new CommonTokenStream(lexer);
 		final InterviewAnswersParser parser = new InterviewAnswersParser(tokens);
+        parser.setErrorHandler(new CustomErrorStrategy());
+        parser.removeErrorListeners();
+        parser.addErrorListener(CustomErrorListener.INSTANCE);
 		final ParseTree tree = parser.start();
         
         if (parser.getNumberOfSyntaxErrors() > 0) {

@@ -9,6 +9,8 @@ import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.tree.ParseTree;
 import org.antlr.v4.runtime.tree.ParseTreeWalker;
 
+import lapr4.jobs4u.errors.CustomErrorListener;
+import lapr4.jobs4u.errors.CustomErrorStrategy;
 import lapr4.jobs4u.importer.interview.template.csv.generated.InterviewCsvLexer;
 import lapr4.jobs4u.importer.interview.template.csv.generated.InterviewCsvParser;
 import lapr4.jobs4u.importer.interview.template.json.generated.InterviewJsonLexer;
@@ -26,7 +28,8 @@ public class InterviewImporter implements QuestionImporter {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public Iterable<InterviewQuestionDTO> importQuestionsFrom(final InputStream filename, final QuestionImporterPlugin plugin)
+	public Iterable<InterviewQuestionDTO> importQuestionsFrom(final InputStream filename,
+			final QuestionImporterPlugin plugin)
 			throws IOException {
 
 		if (plugin.fileExtension().toString().equals("csv")) {
@@ -46,7 +49,8 @@ public class InterviewImporter implements QuestionImporter {
 		}
 	}
 
-	private Iterable<InterviewQuestionDTO> importFromCSV(final InputStream filename, final QuestionImporterPlugin plugin)
+	private Iterable<InterviewQuestionDTO> importFromCSV(final InputStream filename,
+			final QuestionImporterPlugin plugin)
 			throws IOException {
 
 		// parse
@@ -54,6 +58,9 @@ public class InterviewImporter implements QuestionImporter {
 		final InterviewCsvLexer lexer = new InterviewCsvLexer(charStream);
 		final CommonTokenStream tokens = new CommonTokenStream(lexer);
 		final InterviewCsvParser parser = new InterviewCsvParser(tokens);
+		parser.setErrorHandler(new CustomErrorStrategy());
+        parser.removeErrorListeners();
+        parser.addErrorListener(CustomErrorListener.INSTANCE);
 		final ParseTree tree = parser.questions();
 		final InterviewCsvListener listener = new InterviewCsvListener();
 
@@ -72,13 +79,15 @@ public class InterviewImporter implements QuestionImporter {
 		return questions;
 	}
 
-	private Iterable<InterviewQuestionDTO> importFromJSON(final InputStream filename, final QuestionImporterPlugin plugin)
+	private Iterable<InterviewQuestionDTO> importFromJSON(final InputStream filename,
+			final QuestionImporterPlugin plugin)
 			throws IOException {
 		// parse
 		final CharStream charStream = CharStreams.fromStream(filename);
 		final InterviewJsonLexer lexer = new InterviewJsonLexer(charStream);
 		final CommonTokenStream tokens = new CommonTokenStream(lexer);
 		final InterviewJsonParser parser = new InterviewJsonParser(tokens);
+		parser.setErrorHandler(new CustomErrorStrategy());
 		final ParseTree tree = parser.questions();
 		final InterviewJsonListener listener = new InterviewJsonListener();
 
@@ -89,7 +98,6 @@ public class InterviewImporter implements QuestionImporter {
 		ParseTreeWalker.DEFAULT.walk(listener, tree);
 
 		Iterable<InterviewQuestionDTO> questions = listener.questions();
-
 		for (final InterviewQuestionDTO question : questions) {
 			question.setQuestionImporterPlugin(plugin);
 		}
@@ -97,13 +105,15 @@ public class InterviewImporter implements QuestionImporter {
 		return questions;
 	}
 
-	private Iterable<InterviewQuestionDTO> importFromXML(final InputStream filename, final QuestionImporterPlugin plugin)
+	private Iterable<InterviewQuestionDTO> importFromXML(final InputStream filename,
+			final QuestionImporterPlugin plugin)
 			throws IOException {
 		// parse
 		final CharStream charStream = CharStreams.fromStream(filename);
 		final InterviewXmlLexer lexer = new InterviewXmlLexer(charStream);
 		final CommonTokenStream tokens = new CommonTokenStream(lexer);
 		final InterviewXmlParser parser = new InterviewXmlParser(tokens);
+		parser.setErrorHandler(new CustomErrorStrategy());
 		final ParseTree tree = parser.questions();
 		final InterviewXmlListener listener = new InterviewXmlListener();
 

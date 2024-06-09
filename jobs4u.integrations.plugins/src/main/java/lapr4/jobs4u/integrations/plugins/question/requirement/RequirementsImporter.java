@@ -9,6 +9,8 @@ import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.tree.ParseTree;
 import org.antlr.v4.runtime.tree.ParseTreeWalker;
 
+import lapr4.jobs4u.errors.CustomErrorListener;
+import lapr4.jobs4u.errors.CustomErrorStrategy;
 import lapr4.jobs4u.importer.requirement.template.csv.generated.RequirementsCsvLexer;
 import lapr4.jobs4u.importer.requirement.template.csv.generated.RequirementsCsvParser;
 import lapr4.jobs4u.importer.requirement.template.json.generated.RequirementsJsonLexer;
@@ -54,6 +56,9 @@ public class RequirementsImporter implements QuestionImporter {
 		final RequirementsCsvLexer lexer = new RequirementsCsvLexer(charStream);
 		final CommonTokenStream tokens = new CommonTokenStream(lexer);
 		final RequirementsCsvParser parser = new RequirementsCsvParser(tokens);
+		parser.setErrorHandler(new CustomErrorStrategy());
+        parser.removeErrorListeners();
+        parser.addErrorListener(CustomErrorListener.INSTANCE);		
 		final ParseTree tree = parser.questions();
 		final RequirementsCsvListener listener = new RequirementsCsvListener();
 
@@ -79,6 +84,7 @@ public class RequirementsImporter implements QuestionImporter {
 		final RequirementsJsonLexer lexer = new RequirementsJsonLexer(charStream);
 		final CommonTokenStream tokens = new CommonTokenStream(lexer);
 		final RequirementsJsonParser parser = new RequirementsJsonParser(tokens);
+		parser.setErrorHandler(new CustomErrorStrategy());
 		final ParseTree tree = parser.questions();
 		final RequirementsJsonListener listener = new RequirementsJsonListener();
 
@@ -104,6 +110,7 @@ public class RequirementsImporter implements QuestionImporter {
 		final RequirementsXmlLexer lexer = new RequirementsXmlLexer(charStream);
 		final CommonTokenStream tokens = new CommonTokenStream(lexer);
 		final RequirementsXmlParser parser = new RequirementsXmlParser(tokens);
+		parser.setErrorHandler(new CustomErrorStrategy());
 		final ParseTree tree = parser.questions();
 		final RequirementsXmlListener listener = new RequirementsXmlListener();
 

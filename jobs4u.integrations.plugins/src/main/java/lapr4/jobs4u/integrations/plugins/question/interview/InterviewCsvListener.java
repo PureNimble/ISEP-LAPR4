@@ -24,7 +24,6 @@ public class InterviewCsvListener extends InterviewCsvBaseListener {
     private List<InterviewAnswer> answers;
     private Answer answer;
 
-
     @Override
     public void enterQuestion(final InterviewCsvParser.QuestionContext ctx) {
         answers = new ArrayList<>();

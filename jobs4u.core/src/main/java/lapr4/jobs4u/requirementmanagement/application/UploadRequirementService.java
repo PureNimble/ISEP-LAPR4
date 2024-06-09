@@ -14,6 +14,8 @@ import org.antlr.v4.runtime.tree.ParseTree;
 
 import lapr4.jobs4u.applicationmanagement.domain.Application;
 import lapr4.jobs4u.applicationmanagement.domain.File;
+import lapr4.jobs4u.errors.CustomErrorListener;
+import lapr4.jobs4u.errors.CustomErrorStrategy;
 import lapr4.jobs4u.importer.requirement.answer.generated.RequirementsAnswersLexer;
 import lapr4.jobs4u.importer.requirement.answer.generated.RequirementsAnswersParser;
 /**
@@ -39,6 +41,9 @@ public class UploadRequirementService {
 		final RequirementsAnswersLexer lexer = new RequirementsAnswersLexer(charStream);
 		final CommonTokenStream tokens = new CommonTokenStream(lexer);
 		final RequirementsAnswersParser parser = new RequirementsAnswersParser(tokens);
+        parser.setErrorHandler(new CustomErrorStrategy());
+        parser.removeErrorListeners();
+        parser.addErrorListener(CustomErrorListener.INSTANCE);
 		final ParseTree tree = parser.start();
         
         if (parser.getNumberOfSyntaxErrors() > 0) {

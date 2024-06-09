@@ -62,6 +62,7 @@ public class UploadInterviewUI extends AbstractUI {
             }
         } catch (final IOException e) {
             System.out.println("Error reading file: " + e.getMessage());
+            return false;
         }
         controller.registerInterview(interview, finalPath);
         System.out.println("Interview uploaded successfully");

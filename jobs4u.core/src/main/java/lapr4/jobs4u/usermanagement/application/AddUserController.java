@@ -41,7 +41,7 @@ public class AddUserController {
 
     public SystemUser addUser(final String email, final String firstName, final String lastName,
             final Set<Role> roles) {
-        return addUser(email, new RandomRawPassword().toString(), firstName, lastName, roles,
+        return addUser(email, new RandomRawPassword().toString().replaceAll("€", ""), firstName, lastName, roles,
                 CurrentTimeCalendars.now());
     }
 }

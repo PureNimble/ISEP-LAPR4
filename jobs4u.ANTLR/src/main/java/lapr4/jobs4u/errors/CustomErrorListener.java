@@ -10,13 +10,13 @@ import org.antlr.v4.runtime.dfa.DFA;
 
 public class CustomErrorListener extends BaseErrorListener {
 
-    private static final boolean REPORT_SYNTAX_ERRORS = true;
+    private static final boolean REPORT_ERRORS = true;
     public static final CustomErrorListener INSTANCE = new CustomErrorListener();
 
     @Override
     public void syntaxError(final Recognizer<?, ?> recognizer, final Object offendingSymbol,
             final int line, final int charPositionInLine, final String msg, final RecognitionException e) {
-        if (!REPORT_SYNTAX_ERRORS) {
+        if (!REPORT_ERRORS) {
             return;
         }
 
@@ -30,7 +30,7 @@ public class CustomErrorListener extends BaseErrorListener {
     @Override
     public void reportAmbiguity(final Parser recognizer, final DFA dfa, final int startIndex, final int stopIndex,
             final boolean exact, final BitSet ambigAlts, final ATNConfigSet configs) {
-        if (!REPORT_SYNTAX_ERRORS) {
+        if (!REPORT_ERRORS) {
             return;
         }
 
@@ -44,7 +44,7 @@ public class CustomErrorListener extends BaseErrorListener {
     @Override
     public void reportAttemptingFullContext(final Parser recognizer, final DFA dfa, final int startIndex,
             final int stopIndex, final BitSet conflictingAlts, final ATNConfigSet configs) {
-        if (!REPORT_SYNTAX_ERRORS) {
+        if (!REPORT_ERRORS) {
             return;
         }
 
@@ -59,7 +59,7 @@ public class CustomErrorListener extends BaseErrorListener {
     @Override
     public void reportContextSensitivity(final Parser recognizer, final DFA dfa, final int startIndex,
             final int stopIndex, final int prediction, final ATNConfigSet configs) {
-        if (!REPORT_SYNTAX_ERRORS) {
+        if (!REPORT_ERRORS) {
             return;
         }
 

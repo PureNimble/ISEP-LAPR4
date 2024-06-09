@@ -2,7 +2,7 @@
 
 # LPROG grammars, listeners, and visitors explained
 
-This document aims to briefly explain the grammars created and used by us in the LAPR4 integrative project. We will also present our reasons and thoughts to explain the use of Listeners or Visitors in different functionalities.
+This document aims to briefly explain the grammars created and used by us in the LAPR4 integrative project. We will also discuss the use of Listeners and Visitors in different functionalities, as well as error recovery and reporting. 
 
 ## Table of Contents
 
@@ -27,6 +27,7 @@ This document aims to briefly explain the grammars created and used by us in the
     - [EvaluateInterviewAnswer.g4 Grammar](#evaluateinterviewanswersg4-grammar)
     - [EvaluateRequirementsAnswer.g4 Grammar](#evaluaterequirementsanswersg4-grammar)
     - [Utilization of Listeners and Visitors](#utilization-of-listeners-and-visitors-3)
+- [Error Recovery and Reporting](#error-recovery-and-reporting)
 - [Overview](#overview)
 
 
@@ -1067,7 +1068,7 @@ numeric_scale_answer: 'ANSWER:'  NUMERIC_SCALE;
 
 single_answer_choice_answer: 'ANSWER:' (TWO_DIGIT_NUMBER | LETTER);
 
-multiple_answer_choice_answer: 'ANSWER:' (TWO_DIGIT_NUMBER | LETTER) (TWO_DIGIT_NUMBER | LETTER)+;
+multiple_answer_choice_answer: 'ANSWER:' (TWO_DIGIT_NUMBER | LETTER)+;
 
 ```
 
@@ -1362,17 +1363,120 @@ WS: [ \t\n\r]+ -> skip;
 
 _N/A_
 
+## Error Recovery and Reporting
+
+In this aspect, as asked by the client, we implemented error recovery and reporting functionalities in the system. These functionalities were implemented with the use of a Java class that extends the DefaultErrorStrategy class from the ANTLR library. This class is responsible for recovering errors in the files that are being loaded into the system. The error messages being reported are displayed in the console and the fabrication of these messages is done by an implemented Listener that extends the BaseErrorListener class.
+
+For the error recovery part we overrode the recover method from the DefaultErrorStrategy class and implemented the following error recovery strategies:
+
+```java
+public class CustomErrorStrategy extends DefaultErrorStrategy {
+
+    @Override
+    public void recover(final Parser recognizer, final RecognitionException e) {
+
+        if (e instanceof InputMismatchException) {
+            final TokenStream tokens = recognizer.getInputStream();
+            tokens.consume();
+        } else if (e instanceof NoViableAltException) {
+            final TokenStream tokens = recognizer.getInputStream();
+            tokens.consume();
+        } else if (e instanceof FailedPredicateException) {
+            final TokenStream tokens = recognizer.getInputStream();
+            tokens.consume();
+        } else if (e instanceof LexerNoViableAltException) {
+            final TokenStream tokens = recognizer.getInputStream();
+            tokens.consume();
+        } else {
+            super.recover(recognizer, e);
+        }
+    }
+}
+```
+For the error reporting we implemented a Listener that extends the BaseErrorListener class and overrides the following methods:
+
+```java
+public class CustomErrorListener extends BaseErrorListener {
+
+    private static final boolean REPORT_SYNTAX_ERRORS = true;
+    public static final CustomErrorListener INSTANCE = new CustomErrorListener();
+
+    @Override
+    public void syntaxError(final Recognizer<?, ?> recognizer, final Object offendingSymbol,
+            final int line, final int charPositionInLine, final String msg, final RecognitionException e) {
+        if (!REPORT_ERRORS) {
+            return;
+        }
+
+        final String sourceName = recognizer.getInputStream().getSourceName();
+        final String fileName = Paths.get(sourceName).getFileName().toString();
+
+        System.out.println("\nSyntax Error in File -> " + fileName + "\nError in Line -> " + line
+                + "\nError in Line Char -> " + charPositionInLine + "\nType of Error -> " + msg);
+    }
+
+    @Override
+    public void reportAmbiguity(final Parser recognizer, final DFA dfa, final int startIndex, final int stopIndex,
+            final boolean exact, final BitSet ambigAlts, final ATNConfigSet configs) {
+        if (!REPORT_ERRORS) {
+            return;
+        }
+
+        final String sourceName = recognizer.getInputStream().getSourceName();
+        final String fileName = Paths.get(sourceName).getFileName().toString();
+
+        System.out.println("\nAmbiguity in File -> " + fileName + "\nStart Index -> " + startIndex + "\nStop Index -> "
+                + stopIndex + "\nAmbiguity Alts -> " + ambigAlts + "\nATN Configs -> " + configs);
+    }
+
+    @Override
+    public void reportAttemptingFullContext(final Parser recognizer, final DFA dfa, final int startIndex,
+            final int stopIndex, final BitSet conflictingAlts, final ATNConfigSet configs) {
+        if (!REPORT_ERRORS) {
+            return;
+        }
+
+        final String sourceName = recognizer.getInputStream().getSourceName();
+        final String fileName = Paths.get(sourceName).getFileName().toString();
+
+        System.out.println("\nAttempting Full Context in File -> " + fileName + "\nStart Index -> " + startIndex
+                + "\nStop Index -> " + stopIndex + "\nConflicting Alts -> " + conflictingAlts + "\nATN Configs -> "
+                + configs);
+    }
+
+    @Override
+    public void reportContextSensitivity(final Parser recognizer, final DFA dfa, final int startIndex,
+            final int stopIndex, final int prediction, final ATNConfigSet configs) {
+        if (!REPORT_ERRORS) {
+            return;
+        }
+
+        final String sourceName = recognizer.getInputStream().getSourceName();
+        final String fileName = Paths.get(sourceName).getFileName().toString();
+
+        System.out.println("\nContext Sensitivity in File -> " + fileName + "\nStart Index -> " + startIndex
+                + "\nStop Index -> " + stopIndex + "\nPrediction -> " + prediction + "\nATN Configs -> " + configs);
+    }
+}
+```
+
+See the full implementation of the error recovery and reporting functionalities in the following files:
+
+- [```Full Strategy File```](../../../jobs4u.ANTLR/src/main/java/lapr4/jobs4u/errors/CustomErrorStrategy.java)
+
+- [```Full Listener File```](../../../jobs4u.ANTLR/src/main/java/lapr4/jobs4u/errors/CustomErrorListener.java)
+
 ## Overview
 
 In summary, several grammars were defined for the Integrative Project of LAPR4 and for the LPROG subject. These grammars were used to analyze the structure of the files and validate questions and answers. As a group, we decided to use Listeners for import functionalities and Visitors for answer evaluation and email validation functionalities in the files. We believe that the use of these tools was essential for the success of the project as they allowed us to develop different functionalities more efficiently and in an organized manner.
 
-### Positive and Not so Positive Aspects
+### Positive and Not-so-Positive Aspects
 
 - Positive Aspects:
     1. The wide variety of grammars
     2. Usage of both Listeners and Visitors
 
-- Not so Positive Aspects:
+- Not-so-Positive Aspects:
     1. The organization of rules across different grammars could be improved for better clarity and maintainability.
 
 <img width=100% src="https://capsule-render.vercel.app/api?type=waving&height=120&color=4E1764&section=footer"/>

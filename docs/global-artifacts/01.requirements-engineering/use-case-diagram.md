@@ -51,5 +51,6 @@
 | **3001** | [_`As Candidate, I want to be notified in my application when the state of one of my applications changes`_](../../sprintc/us_3001/readme.md) |
 | **3002** | [_`As Customer, I want to list all my job openings, including job reference, position, active since, number of applicants`_](../../sprintc/us_3002/readme.md) |
 | **3003** | [_`As Customer, I want to be notified in my application when the state (phase) of my job openings changes`_](../../sprintc/us_3003/readme.md) |
+| **4000** | [_`As a Customer Manager, when displaying the candidate data, I expect the system to present a top 20 list of the most frequently referenced words from files uploaded by a candidate. Additionally, I require a comprehensive list of the files in which these words appear`_](../../sprintc/us_4000/readme.md) |
 
 <img width=100% src="https://capsule-render.vercel.app/api?type=waving&height=120&color=4E1764&section=footer"/>

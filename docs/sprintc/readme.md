@@ -42,4 +42,6 @@ This folder contains all the functional requirements for your project, split by 
 
 [_`US 3003 - Notification of application when the state of my job openings changes`_](us_3003/readme.md)
 
+[_`US 4000 - Present a top 20 list of the most frequently referenced words from files uploaded by a candidate`_](us_4000/readme.md)
+
 <img width=100% src="https://capsule-render.vercel.app/api?type=waving&height=120&color=4E1764&section=footer"/>

@@ -237,7 +237,7 @@ public class AuthMessage extends Message {
         final byte[][] dataChunks = request.datachunks();
 
         if (dataChunks.length < 3) {
-            new ErrMessage(new ProtocolMessage((byte) 1, MessageCode.ERR), output, socket, eventListener).handle();
+            send(new ProtocolMessage((byte) 1, MessageCode.ERR, "Bad Request"));
             return;
         }
 
@@ -306,14 +306,12 @@ public class ChangePassMessage extends Message {
 
         final byte[][] dataChunks = request.datachunks();
         if (dataChunks.length < 2) {
-            new ErrMessage(new ProtocolMessage((byte) 1, MessageCode.ERR, "Bad Request"), output, socket,
-                    eventListener).handle();
+            send(new ProtocolMessage((byte) 1, MessageCode.ERR, "Bad Request"));
             return;
         }
         final Optional<SystemUser> userOpt = eventListener.user(socket);
         if (userOpt.isEmpty()) {
-            new ErrMessage(new ProtocolMessage((byte) 1, MessageCode.ERR, "Something went wrong"), output, socket,
-                    eventListener).handle();
+            send(new ProtocolMessage((byte) 1, MessageCode.ERR, "Something went wrong"));
             return;
         }
         final SystemUser user = userOpt.get();
@@ -361,15 +359,13 @@ public class ListAppReqMessage extends Message {
 
         final Optional<SystemUser> userOpt = eventListener.user(socket);
         if (userOpt.isEmpty()) {
-            new ErrMessage(new ProtocolMessage((byte) 1, MessageCode.ERR, "Something went wrong"), output, socket,
-                    eventListener).handle();
+            send(new ProtocolMessage((byte) 1, MessageCode.ERR, "Bad Request"));
             return;
         }
         final SystemUser user = userOpt.get();
 
         if (!user.hasAny(BaseRoles.CANDIDATE)) {
-            new ErrMessage(new ProtocolMessage((byte) 1, MessageCode.ERR, "Invalid Authentication"), output, socket,
-                    eventListener).handle();
+            send(new ProtocolMessage((byte) 1, MessageCode.ERR, "Invalid authentication"));
             return;
         }
 
@@ -412,15 +408,13 @@ public class ListJobReqMessage extends Message {
 
         final Optional<SystemUser> userOpt = eventListener.user(socket);
         if (userOpt.isEmpty()) {
-            new ErrMessage(new ProtocolMessage((byte) 1, MessageCode.ERR, "Something went wrong"), output, socket,
-                    eventListener).handle();
+            send(new ProtocolMessage((byte) 1, MessageCode.ERR, "Something went wrong"));
             return;
         }
         final SystemUser user = userOpt.get();
 
         if (!user.hasAny(BaseRoles.CUSTOMER)) {
-            new ErrMessage(new ProtocolMessage((byte) 1, MessageCode.ERR, "Invalid Authentication"), output, socket,
-                    eventListener).handle();
+            send(new ProtocolMessage((byte) 1, MessageCode.ERR, "Invalid authentication"));
             return;
         }
 

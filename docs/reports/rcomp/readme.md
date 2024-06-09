@@ -17,6 +17,7 @@
     - [LISTJOBREQ](#317-listjobreq)
     - [H2](#318-h2)
     - [NOTIFICATION](#319-notification)
+- [Cloud Deployment](#4-cloud-deployment)
 
 ## 1. Introduction
 
@@ -505,5 +506,11 @@ public class NotificationMessage extends Message {
     }
 }
 ```
+
+## 4. Cloud Deployment
+
+ISEP offers its students a cloud platform for deploying Virtual Servers using pre-made templates. Using this platform, we deployed the database, the SMTP server, and the Jobs4U TCP server efficiently.
+
+Go to the [_ISEP's DEI Virtual Servers Private Cloud_](https://vs-ctl.dei.isep.ipp.pt).
 
 <img width=100% src="https://capsule-render.vercel.app/api?type=waving&height=120&color=4E1764&section=footer"/>

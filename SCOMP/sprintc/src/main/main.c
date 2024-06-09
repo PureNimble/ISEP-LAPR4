@@ -96,10 +96,9 @@ void parentWork(Config *config, CircularBuffer *sharedMemory, sem_t *sem_newFile
 
         while (1)
         {
-            if (!isSetEmpty(candidateList))
+            while (sem_trywait(sem_bufferSize) == 0 && !isSetEmpty(candidateList))
             {
-                while (sem_trywait(sem_bufferSize) == 0)
-                    sendWork(candidateList, sharedMemory, sem_sharedmemory_mutex, sem_startWorkers);
+                sendWork(candidateList, sharedMemory, sem_sharedmemory_mutex, sem_startWorkers);
             }
 
             sem_wait(sem_startReport);

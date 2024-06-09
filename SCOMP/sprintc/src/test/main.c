@@ -11,9 +11,8 @@
 #include <signal.h>
 #include <sys/types.h>
 #include <errno.h>
-
-int sendWork(HashSet *candidateList, CircularBuffer *sharedMemory, sem_t *sem_addToBuffer, sem_t *sem_isDone, sem_t *sem_startWorkers);
-
+pid_t pids[2];
+int pidsCounter = 0;
 int main()
 {
     create_directory(SHARED_FOLDER);
@@ -31,16 +30,17 @@ int main()
     newFileChecker_test(config);
 
     int fd;
-    CircularBuffer *shared_data = createSharedMemory(SHARED_MEMORY, &fd, &config);
-    sem_t *sem_startWorkers = createSemaphore(SEM_START_WORKERS, 0);
-    sem_t *sem_reportFile = createSemaphore(SEM_REPORT_FILE, 0);
-    sem_t *sem_addToBuffer_mutex = createSemaphore(SEM_ADD_TO_BUFFER, 1);
-    sem_t *sem_numberOfCandidates_mutex = createSemaphore(SEM_NUMBER_OF_CANDIDATES, 1);
-    sem_t *sem_isDone_mutex = createSemaphore(SEM_IS_DONE, 1);
-    sem_t *sem_files_mutex = createSemaphore(SEM_FILES, 1);
+    CircularBuffer *sharedMemory = createSharedMemory(SHARED_MEMORY, &fd, &config);
+    sem_t *sem_startWorkers = createSemaphore(SEM_START_WORKERS, 0);             // send work to workers
+    sem_t *sem_startReport = createSemaphore(SEM_REPORT_FILE, 0);                // send data to report file
+    sem_t *sem_bufferSize = createSemaphore(SEM_BUFFER_SIZE, config.bufferSize); // buffer size
+    sem_t *sem_sharedmemory_mutex = createSemaphore(SEM_SHARED_MEMORY_MUTEX, 1); // mutex for shared memory
+    sem_t *sem_numberOfCandidates = createSemaphore(SEM_NUMBER_OF_CANDIDATES, 0);
 
-    copyFiles_test(config, shared_data, sem_startWorkers, sem_reportFile, sem_isDone_mutex, sem_files_mutex, sem_addToBuffer_mutex);
-    reportFile_test(config, shared_data, sem_addToBuffer_mutex, sem_numberOfCandidates_mutex);
+    sem_post(sem_numberOfCandidates);
+
+    copyFiles_test(config, sharedMemory, sem_startWorkers, sem_startReport, sem_sharedmemory_mutex);
+    reportFile_test(config, sharedMemory, sem_startReport, sem_sharedmemory_mutex, sem_bufferSize);
 
     printf("-> Deleting test folders in 5 seconds\n");
     sleep(DELETE_FOLDER_TIME);
@@ -50,10 +50,9 @@ int main()
     removeSemaphore(SEM_NEW_FILE_CHECKER);
     removeSemaphore(SEM_START_WORKERS);
     removeSemaphore(SEM_REPORT_FILE);
-    removeSemaphore(SEM_ADD_TO_BUFFER);
+    removeSemaphore(SEM_BUFFER_SIZE);
     removeSemaphore(SEM_NUMBER_OF_CANDIDATES);
-    removeSemaphore(SEM_IS_DONE);
-    removeSemaphore(SEM_FILES);
+    removeSemaphore(SEM_SHARED_MEMORY_MUTEX);
 
     removeSharedMemory(SHARED_MEMORY);
 
@@ -93,44 +92,33 @@ void newFileChecker_test(Config config)
     free(file_path);
 }
 
-void copyFiles_test(Config config, CircularBuffer *shared_data, sem_t *sem_startWorkers, sem_t *sem_reportFile, sem_t *sem_isDone_mutex, sem_t *sem_files_mutex, sem_t *sem_addToBuffer_mutex)
+void copyFiles_test(Config config, CircularBuffer *sharedMemory, sem_t *sem_startWorkers, sem_t *sem_startReport, sem_t *sem_sharedmemory_mutex)
 {
     printf("-> Testing copyFiles\n");
     pid_t pid;
 
     if ((pid = createChildProcess()) == 0)
-        copyFiles(&config, shared_data, sem_startWorkers, sem_isDone_mutex, sem_files_mutex, sem_reportFile);
+        copyFiles(&config, sharedMemory, sem_startWorkers, sem_startReport, sem_sharedmemory_mutex);
 
-    HashSet *candidates = listCandidatesID(&config, shared_data);
-    sendWork(candidates, shared_data, sem_addToBuffer_mutex, sem_isDone_mutex, sem_startWorkers);
-    sem_wait(sem_reportFile);
+    HashSet *candidateList = listCandidatesID(&config, sharedMemory);
+    sendWork(candidateList, sharedMemory, sem_sharedmemory_mutex, sem_startWorkers);
+    sem_wait(sem_startReport);
+    kill(pid, SIGTERM);
 
     printf("-> copyFiles test passed\n\n\n");
 }
 
-void reportFile_test(Config config, CircularBuffer *shared_data, sem_t *sem_addToBuffer_mutex, sem_t *sem_numberOfCandidates)
+void reportFile_test(Config config, CircularBuffer *sharedMemory, sem_t *sem_startReport, sem_t *sem_sharedmemory_mutex, sem_t *sem_bufferSize)
 {
     printf("-> Testing reportFile\n");
-    reportFile(&config, shared_data, sem_addToBuffer_mutex, sem_numberOfCandidates);
+    reportFile(&config, sharedMemory, sem_sharedmemory_mutex, sem_bufferSize);
     printf("-> reportFile test passed\n");
 }
 
-int sendWork(HashSet *candidateList, CircularBuffer *sharedMemory, sem_t *sem_addToBuffer, sem_t *sem_isDone, sem_t *sem_startWorkers)
+void sendWork(HashSet *candidateList, CircularBuffer *sharedMemory, sem_t *sem_sharedmemory_mutex, sem_t *sem_startWorkers)
 {
-    int isBufferFull = 0;
-    int candidateID;
-
-    while (!isBufferFull)
-    {
-        if ((candidateID = getValue(candidateList)) == -1)
-            break;
-
-        isBufferFull = addToBuffer(sharedMemory, candidateID, sem_isDone, sem_addToBuffer);
-        if (isBufferFull)
-            add(candidateList, candidateID);
-    }
-
+    sem_wait(sem_sharedmemory_mutex);
+    addToBuffer(sharedMemory, getValue(candidateList));
+    sem_post(sem_sharedmemory_mutex);
     sem_post(sem_startWorkers);
-    printf("-> Sent data to the Workers\n");
-    return isBufferFull;
 }

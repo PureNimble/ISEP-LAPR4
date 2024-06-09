@@ -35,9 +35,6 @@ void initBuffer(CircularBuffer *buf, Config *config)
  */
 int addToBuffer(CircularBuffer *buf, int candidateID)
 {
-    // if (buf->buffer[buf->head].isDone != 2)
-    // return 0;
-
     buf->buffer[buf->head].candidateID = candidateID;
     buf->head = (buf->head + 1) % buf->size;
     return 1;

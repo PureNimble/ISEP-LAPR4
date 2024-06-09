@@ -42,7 +42,8 @@ package "<<aggregate>> Application" {
     entity Result <<entity>> {}
 
     class ApplicationDate <<valueObject>> <<(V, #FF8B40)>> {}
-    class ApplicationNumber <<valueObject>> <<(V, #FF8B40)>> {}
+    class ApplicationCode <<valueObject>> <<(V, #FF8B40)>> {}
+    class Files <<valueObject>> <<(V, #FF8B40)>> {}
     class Outcome <<valueObject>> <<(V, #FF8B40)>> {}
     class Justification <<valueObject>> <<(V, #FF8B40)>> {}
 
@@ -53,6 +54,7 @@ package "<<aggregate>> Application" {
 ' Rank Aggregate
 package "<<aggregate>> Rank" {
     entity Rank <<entity>> <<root>> {}
+    class RankPlacement <<valueObject>> <<(V, #FF8B40)>> {}
 }
 
 
@@ -181,10 +183,12 @@ Result "1" --> "1" Justification : can have
 
 ' Application relationships
 Application "1" --> "1" ApplicationDate : has
-Application "1" --> "1" ApplicationNumber : has
+Application "1" --> "1" ApplicationCode : has
 Application "1" --> "0..1" Result : has
 Application "1" --> "1" JobOpening : for
 Application "1" --> "1" Candidate : from
+Application "1" --> "1" Files : has
+Application "1" --> "1" Rank :has
 
 ' Customer relationships
 Customer "1" --> "1" CustomerCode : has
@@ -219,7 +223,7 @@ Candidate "1" --> "1" Email : has
 Candidate "1" ---|> "1" User : has
 
 ' Rank relationships
-Rank "1" --> "1" JobOpening : for
+Rank "1" --> "1" RankPlacement : has
 
 ' Candidate Answer relationships
 CandidateAnswer "1" --> "1" Interview : for

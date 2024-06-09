@@ -23,6 +23,7 @@ class Email <<valueObject>> <<(V, #FF8B40)>> {}
 ' Rank Aggregate
 package "<<aggregate>> Rank" {
     entity Rank <<entity>> <<root>> {}
+    class RankPlacement <<valueObject>> <<(V, #FF8B40)>> {}
 }
 
 ' Candidate Aggregate
@@ -91,7 +92,9 @@ Candidate "1" --> "1" PhoneNumber : has
 Candidate "1" --> "1" Email : has
 
 ' Rank relationships
-Rank "1" --> "1" JobOpening : for
+Rank "1" --> "1" Application : for
+Rank "1" --> "1" RankPlacement : has
+
 
 ' Application relationships
 Application "1" --> "1" ApplicationDate : has

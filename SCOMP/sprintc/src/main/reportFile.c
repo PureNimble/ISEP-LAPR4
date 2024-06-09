@@ -15,7 +15,12 @@
 #include <unistd.h>
 
 /**
- * Generates a report file for a candidate.
+ * @file reportFile.c
+ * @brief This file contains the functions to generate a report file for a candidate and to check if a candidate file exists in the report file.
+ */
+
+/**
+ * @brief Generates a report file for a candidate.
  *
  * This function generates a report file for a candidate based on the provided configuration,
  * shared memory, and candidate information. The report file contains details such as the
@@ -23,8 +28,8 @@
  *
  * @param config The configuration settings.
  * @param shared_memory The shared memory buffer.
- * @param sem_numberOfCandidates The semaphore for the number of candidates.
- * @param sem_files The semaphore for accessing shared memory.
+ * @param sem_sharedmemory_mutex The semaphore for synchronizing access to the shared memory.
+ * @param buffer_size The semaphore for controlling the buffer size.
  */
 void reportFile(Config *config, CircularBuffer *shared_memory, sem_t *sem_sharedmemory_mutex, sem_t *buffer_size)
 {
@@ -65,7 +70,12 @@ void reportFile(Config *config, CircularBuffer *shared_memory, sem_t *sem_shared
 }
 
 /**
- * Checks if a candidate file exists in the report file.
+ * @brief Checks if a candidate file exists in the report file.
+ *
+ * This function opens the report file and reads each line,
+ * looking for a line that starts with "Candidate ID: " followed by the candidate's ID.
+ * If it finds such a line, it returns 1. If it reaches the end of the file without
+ * finding such a line, it returns 0.
  *
  * @param candidate The candidate information.
  * @param buffer The file path of the report file.

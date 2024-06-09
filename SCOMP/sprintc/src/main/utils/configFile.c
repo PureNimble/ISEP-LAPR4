@@ -5,7 +5,16 @@
 #include "utils.h"
 
 /**
- * Reads the configuration file and populates the Config structure.
+ * @file configFile.c
+ * @brief This file contains the functions to read and print the application configuration.
+ */
+
+/**
+ * @brief Reads the configuration file and populates the Config structure.
+ *
+ * This function opens the configuration file for reading and reads each configuration parameter.
+ * It validates each parameter and stores it in the Config structure.
+ * If a parameter is invalid or missing, it prints an error message and exits the program.
  *
  * @param config A pointer to the Config structure to be populated.
  */
@@ -25,10 +34,14 @@ void readConfigFile(Config *config)
         exit(EXIT_FAILURE);
     }
     // Read and validate the OUTPUT_PATH
-    if (fscanf(file, "OUTPUT_PATH=%s\n", config->outputPath) == -1 || isFileOrDirectory(config->outputPath) != 2)
+    if (fscanf(file, "OUTPUT_PATH=%s\n", config->outputPath) == -1)
     {
         errorMessages("Invalid format for OUTPUT_PATH (The Folder need to be created)\n");
         exit(EXIT_FAILURE);
+    }
+    if (isFileOrDirectory(config->outputPath) != 2)
+    {
+        create_directory(config->outputPath);
     }
     // Read and validate the NUMBER_OF_CHILDREN
     if (fscanf(file, "NUMBER_OF_CHILDREN=%d\n", &(config->numberOfChildren)) == -1 || (config->numberOfChildren == 0 || config->numberOfChildren > 20))
@@ -54,7 +67,10 @@ void readConfigFile(Config *config)
 }
 
 /**
- * Prints the configuration details of the application.
+ * @brief Prints the configuration details of the application.
+ *
+ * This function prints the configuration details of the application, including the input path, output path, number of children, verify new files frequency, and circular buffer size.
+ * It also prints a warning message instructing the user to change the configuration file in the resources folder if they want to change the program settings.
  *
  * @param config A pointer to the Config struct containing the configuration details.
  */

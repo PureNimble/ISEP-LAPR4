@@ -15,10 +15,20 @@
 #include <sys/types.h>
 
 /**
- * Monitors the creation of new files in a specified directory.
+ * @file newFileChecker.c
+ * @brief This file contains the function to monitor the creation of new files in a specified directory.
+ **/
+
+/**
+ * @brief Monitors the creation of new files in a specified directory.
  *
- * @param config A pointer to the configuration struct.
- * @param sem A pointer to the semaphore used for synchronization.
+ * This function creates a child process that runs a shell command to get the modification times of all files in the directory.
+ * It then reads the output of the command, tokenizes it, and stores the times in an array.
+ * If the latest modification time is later than the last recorded time, it prints a message and signals the semaphore.
+ * The function then sleeps for a specified interval before repeating the process.
+ *
+ * @param config A pointer to the configuration struct, which includes the directory path and the sleep interval.
+ * @param sem A pointer to the semaphore used for synchronization. The function signals this semaphore when it detects a new file.
  */
 void newFileChecker(Config *config, sem_t *sem)
 {

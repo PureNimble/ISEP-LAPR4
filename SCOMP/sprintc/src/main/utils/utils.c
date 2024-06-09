@@ -18,7 +18,7 @@
  *
  * @param name The name of the semaphore.
  * @param value The initial value of the semaphore.
- * @return A pointer to the created semaphore.
+ * @return A pointer to the created semaphore, or exits the program with a status of 4 if semaphore creation fails.
  */
 sem_t *createSemaphore(char *name, unsigned value)
 {
@@ -32,12 +32,26 @@ sem_t *createSemaphore(char *name, unsigned value)
 }
 
 /**
+ * Removes a named semaphore.
+ *
+ * @param name The name of the semaphore to be removed.
+ */
+void removeSemaphore(char *name)
+{
+    if (sem_unlink(name) == -1)
+    {
+        perror("sem_unlink");
+        exit(5);
+    }
+}
+
+/**
  * Creates a shared memory segment and returns a pointer to it.
  *
  * @param name The name of the shared memory segment.
  * @param fd A pointer to an integer that will hold the file descriptor of the shared memory segment.
  * @param config A pointer to a Config struct containing configuration information.
- * @return A pointer to the CircularBuffer struct representing the shared memory segment.
+ * @return A pointer to the CircularBuffer struct representing the shared memory segment, or exits the program with a status of 1, 2, or 3 if shared memory creation fails.
  */
 CircularBuffer *createSharedMemory(char *name, int *fd, Config *config)
 {
@@ -63,20 +77,6 @@ CircularBuffer *createSharedMemory(char *name, int *fd, Config *config)
     }
     initBuffer(shm, config);
     return shm;
-}
-
-/**
- * Removes a named semaphore.
- *
- * @param name The name of the semaphore to be removed.
- */
-void removeSemaphore(char *name)
-{
-    if (sem_unlink(name) == -1)
-    {
-        perror("sem_unlink");
-        exit(5);
-    }
 }
 
 /**

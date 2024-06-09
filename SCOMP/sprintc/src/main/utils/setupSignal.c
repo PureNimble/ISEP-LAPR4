@@ -37,13 +37,12 @@ void setUpSignal()
 }
 
 /**
- * @brief Handle the signals.
+ * @brief Handles the signals.
  *
- * This function is the signal handler for SIGUSR1, SIGUSR2, SIGINT, and SIGRTMIN.
+ * This function is the signal handler for SIGINT and SIGCHLD.
  * It performs different actions based on the received signal.
- * - For SIGUSR1, it writes a message indicating that new files were found.
  * - For SIGINT, it writes a message indicating that SIGINT was received and terminates all child processes.
- * - For any other signal, it increments the received_signals counter.
+ * - For SIGCHLD, it checks if any child process has died without waiting for it to finish. If a child process was killed, it terminates all child processes.
  *
  * @param signal The signal number.
  */
@@ -95,9 +94,6 @@ void handle_signal(int signal)
  * The shared memory file and semaphores are identified by their respective names.
  *
  * @note This function assumes that the shared memory file and semaphores have already been created.
- *
- * @param None
- * @return None
  */
 void removeShmFiles()
 {

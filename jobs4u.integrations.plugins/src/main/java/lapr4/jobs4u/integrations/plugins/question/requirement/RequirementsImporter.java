@@ -68,7 +68,7 @@ public class RequirementsImporter implements QuestionImporter {
 
 		ParseTreeWalker.DEFAULT.walk(listener, tree);
 
-		Iterable<RequirementsQuestionDTO> questions = listener.questions();
+		final Iterable<RequirementsQuestionDTO> questions = listener.questions();
 
 		for (final RequirementsQuestionDTO question : questions) {
 			question.setQuestionImporterPlugin(plugin);
@@ -94,7 +94,7 @@ public class RequirementsImporter implements QuestionImporter {
 
 		ParseTreeWalker.DEFAULT.walk(listener, tree);
 
-		Iterable<RequirementsQuestionDTO> questions = listener.questions();
+		final Iterable<RequirementsQuestionDTO> questions = listener.questions();
 
 		for (final RequirementsQuestionDTO question : questions) {
 			question.setQuestionImporterPlugin(plugin);
@@ -120,7 +120,7 @@ public class RequirementsImporter implements QuestionImporter {
 
 		ParseTreeWalker.DEFAULT.walk(listener, tree);
 
-		Iterable<RequirementsQuestionDTO> questions = listener.questions();
+		final Iterable<RequirementsQuestionDTO> questions = listener.questions();
 
 		for (final RequirementsQuestionDTO question : questions) {
 			question.setQuestionImporterPlugin(plugin);

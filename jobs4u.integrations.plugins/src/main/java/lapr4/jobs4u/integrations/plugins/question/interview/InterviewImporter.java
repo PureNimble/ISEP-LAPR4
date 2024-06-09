@@ -70,10 +70,16 @@ public class InterviewImporter implements QuestionImporter {
 
 		ParseTreeWalker.DEFAULT.walk(listener, tree);
 
-		Iterable<InterviewQuestionDTO> questions = listener.questions();
+		final Iterable<InterviewQuestionDTO> questions = listener.questions();
 
+		Double maxScore = 100.0;
 		for (final InterviewQuestionDTO question : questions) {
+			maxScore -= Double.parseDouble(question.getCotation());
 			question.setQuestionImporterPlugin(plugin);
+		}
+
+		if (maxScore != 0) {
+			throw new IOException("The sum of the scores of the questions is different from 100");
 		}
 
 		return questions;
@@ -97,9 +103,16 @@ public class InterviewImporter implements QuestionImporter {
 
 		ParseTreeWalker.DEFAULT.walk(listener, tree);
 
-		Iterable<InterviewQuestionDTO> questions = listener.questions();
+		final Iterable<InterviewQuestionDTO> questions = listener.questions();
+
+		Double maxScore = 100.0;
 		for (final InterviewQuestionDTO question : questions) {
+			maxScore -= Double.parseDouble(question.getCotation());
 			question.setQuestionImporterPlugin(plugin);
+		}
+
+		if (maxScore != 0) {
+			throw new IOException("The sum of the scores of the questions is different from 100");
 		}
 
 		return questions;
@@ -123,10 +136,16 @@ public class InterviewImporter implements QuestionImporter {
 
 		ParseTreeWalker.DEFAULT.walk(listener, tree);
 
-		Iterable<InterviewQuestionDTO> questions = listener.questions();
+		final Iterable<InterviewQuestionDTO> questions = listener.questions();
 
+		Double maxScore = 100.0;
 		for (final InterviewQuestionDTO question : questions) {
+			maxScore -= Double.parseDouble(question.getCotation());
 			question.setQuestionImporterPlugin(plugin);
+		}
+
+		if (maxScore != 0) {
+			throw new IOException("The sum of the scores of the questions is different from 100");
 		}
 
 		return questions;

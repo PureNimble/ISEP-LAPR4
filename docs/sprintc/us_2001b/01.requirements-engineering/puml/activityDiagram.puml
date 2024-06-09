@@ -18,6 +18,9 @@ partition NewFileCheckerProcess {
     :newFileCheckerProcess;
     repeat
       :checkForNewFiles;
+      if(newFilesDetected) then (yes)
+        :sem_post(sem_newFiles);
+      endif
       :sleep for n seconds;
     repeat while(NewFileCheckerProcess is running)
     end
@@ -31,9 +34,9 @@ partition WorkerProcess {
     fork again
       :WorkerProcess;
       repeat
-        :waitForWork;
+        :sem_wait(sem_startWorkers);
         :copyFiles;
-        :reportFile;
+        :sem_post(sem_startReport);
       repeat while(WorkerProcess is running)
       end
     end fork
@@ -42,12 +45,20 @@ partition WorkerProcess {
 
 partition ParentProcess {
   repeat
-    :sem_wait(newFileCheckerProcess);
+    :sem_wait(sem_newFiles);
     :listCandidatesIDs;
+    while (There are candidates to send)
+    :sem_post(sem_numberOfCandidates);
+    endwhile
     repeat
-      :sendWork;
+      while(sem_trywait(sem_bufferSize) == 0)
+      :sendWork();
+      endwhile
       :sem_wait(reportFile);
-      :reportFile;
+      :reportFile();
+      if(sem_trywait(sem_numberOfCandidates) == 1) then (yes)
+        :break;
+      endif
     repeat while(There are candidates to send)
   repeat while(System is running)
 }

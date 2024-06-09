@@ -1,0 +1,35 @@
+@startuml
+
+title Applications File Bot - Activity Diagram
+
+start
+
+partition Initialization {
+  :Initialize system;
+  :setupSignals();
+  :getConfiguration();
+
+}
+
+partition ParentProcess {
+  repeat
+    :sem_wait(sem_newFiles);
+    :listCandidatesIDs;
+    while (For each candidate) is (Candidate)
+    :sem_post(sem_numberOfCandidates);
+    endwhile
+    repeat
+      while(sem_trywait(sem_bufferSize) == 0) is (yes)
+      :sendWork();
+      endwhile
+      :sem_wait(reportFile);
+      :reportFile();
+      if(sem_trywait(sem_numberOfCandidates) == 1) then (yes)
+        :break;
+      endif
+    repeat while(There are candidates to send)
+  repeat while(System is running)
+}
+end
+
+@enduml

@@ -23,8 +23,8 @@ public class File implements ValueObject, Comparable<File>, Runnable {
 
     private static final long serialVersionUID = 1L;
     private static final String EXTENSION = ".txt";
-    private static final Integer LENGTH_PER_THREAD = 1000;
-    private static final Integer MAX_THREADS = 10;
+    private static final Integer LENGTH_PER_THREAD = 700;
+    private static final Integer MAX_THREADS = 20;
 
     private final String path;
     @Transient
@@ -32,7 +32,6 @@ public class File implements ValueObject, Comparable<File>, Runnable {
 
     protected File(final String file) {
         Preconditions.nonEmpty(file, "File should neither be null nor empty");
-        // Preconditions.ensure(isFileValid(file), "File does not exist");
         this.path = Files.ensureExtension(file, EXTENSION);
     }
 
@@ -117,30 +116,22 @@ public class File implements ValueObject, Comparable<File>, Runnable {
     public void run() {
         String file = textFrom();
         int length = file.length();
-        int n = length / LENGTH_PER_THREAD;
+        int numberOfThreads = length / LENGTH_PER_THREAD;
         int lengthPerThread;
+        numberOfThreads = Math.min(numberOfThreads, MAX_THREADS);
+        numberOfThreads = Math.max(numberOfThreads, 1);
 
-        if (n > MAX_THREADS)
-            n = MAX_THREADS;
-
-        if (n == 0) {
-            n = 1;
-            lengthPerThread = LENGTH_PER_THREAD;
-        } else if (n == MAX_THREADS) {
-            lengthPerThread = length / n;
-        } else {
-            lengthPerThread = LENGTH_PER_THREAD;
-        }
+        lengthPerThread = numberOfThreads == MAX_THREADS ? length / numberOfThreads : LENGTH_PER_THREAD;
 
         List<Thread> threads = new ArrayList<>();
         List<FilePartition> fileParts = new ArrayList<>();
         topWords = new HashMap<>();
 
         // Divide the file into n parts and create a thread for each part
-        for (int i = 0; i < n; i++) {
+        for (int i = 0; i < numberOfThreads; i++) {
             int start = i * lengthPerThread;
             int end = (i + 1) * lengthPerThread;
-            if (i == n - 1) // for the last part
+            if (i == numberOfThreads - 1) // for the last part
                 end = length;
             FilePartition filePart = new FilePartition(file.substring(start, end));
             fileParts.add(filePart);

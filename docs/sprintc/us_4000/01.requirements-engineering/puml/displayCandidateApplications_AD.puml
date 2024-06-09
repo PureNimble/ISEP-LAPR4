@@ -1,0 +1,19 @@
+@startuml
+
+title Top 20 Words US - Activity Diagram - Display Candidate Applications
+
+start
+  :DisplayCandidateApplicationsController;
+  while(Is there Applications) is (Yes)
+
+  :new Thread(Application);
+  :Application.start();
+  endwhile
+
+  while(Is there Threads) is (Yes)
+  :Thread.join();
+  endwhile
+
+:Print the Top 20 Words;
+
+@enduml

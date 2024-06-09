@@ -1,0 +1,41 @@
+@startuml
+
+title Top 20 Words US - Activity Diagram - File Domain
+
+start
+    :getTextFromFile(file)
+    :getLengthFromText(text)
+    :numberOfThreads = length / LENGTH_PER_THREAD
+    :numberOfThreads = Math.min(numberOfThreads, MAX_THREADS)
+    :numberOfThreads = Math.max(numberOfThreads, 1);
+
+    if (numberOfThreads == MAX_THREADS) then (yes)
+        :lengthPerThread = length / numberOfThreads;
+    else (no)
+        :lengthPerThread = LENGTH_PER_THREAD;
+    endif 
+    
+    while(numberOfThreads > 0) is (yes)
+        :divideTheText(text, lengthPerThread);
+        :FilePartition filePart = new FilePartition(textPart);
+        :Thread thread = new Thread(filePart);
+        :thread.start();
+        :numberOfThreads--;
+    endwhile
+
+    while(Foreach Thread) is (Thread)
+        :thread.join();
+        endwhile
+    while(Foreach FilePartition) is (FilePartition)
+        while(Foreach Word) is (Word)
+        :synchronized addToMap(Word,number);
+        endwhile
+        endwhile
+    :Return Map;
+
+
+
+  
+end
+
+@enduml

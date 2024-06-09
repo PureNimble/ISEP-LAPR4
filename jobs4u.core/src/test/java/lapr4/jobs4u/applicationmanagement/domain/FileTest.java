@@ -89,4 +89,19 @@ public class FileTest {
         assertEquals(378, output.size());
     }
 
+    @Test
+    public void ensureBigFileTakesLessThan3seconds() throws Exception {
+        long startTime = System.nanoTime();
+
+        final File file = dummyFile("1-big-file-1.txt");
+        Thread t = new Thread(file);
+        t.start();
+        t.join();
+
+        long endTime = System.nanoTime();
+        long duration = (endTime - startTime);
+        assertTrue(duration / 1000000000 < 2);
+
+    }
+
 }

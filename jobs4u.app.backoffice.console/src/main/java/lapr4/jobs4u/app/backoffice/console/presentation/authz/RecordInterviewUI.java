@@ -63,6 +63,10 @@ public class RecordInterviewUI extends AbstractUI {
         final JobOpening theJobOpening = jobOpeningsController.selectedJobOpening(theJobOpeningDTO);
         final Iterable<ApplicationDTO> applications = this.applicationController
                 .findApplicationThatPassInRequirements(theJobOpening);
+        if (applications.iterator().hasNext() == false) {
+            System.out.println("No applications that pass in requirements.");
+            return null;
+        }
         final SelectWidget<ApplicationDTO> selector1 = new SelectWidget<>("Applications:", applications,
                 new ApplicationPrinter());
         selector1.show();

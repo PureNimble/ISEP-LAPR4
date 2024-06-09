@@ -105,8 +105,7 @@ void removeShmFiles()
     removeSemaphore(SEM_NEW_FILE_CHECKER);
     removeSemaphore(SEM_START_WORKERS);
     removeSemaphore(SEM_REPORT_FILE);
-    removeSemaphore(SEM_ADD_TO_BUFFER);
+    removeSemaphore(SEM_BUFFER_SIZE);
     removeSemaphore(SEM_NUMBER_OF_CANDIDATES);
-    removeSemaphore(SEM_IS_DONE);
-    removeSemaphore(SEM_FILES);
+    removeSemaphore(SEM_SHARED_MEMORY_MUTEX);
 }

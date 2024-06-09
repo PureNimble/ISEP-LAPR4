@@ -33,22 +33,14 @@ void initBuffer(CircularBuffer *buf, Config *config)
  * @param sem_addToBuffer_mutex The mutex for the buffer.
  * @return 0 if the candidate ID was successfully added, 1 if the buffer is full or the previous candidate is not done.
  */
-int addToBuffer(CircularBuffer *buf, int candidateID, sem_t *sem_isDone_mutex, sem_t *sem_addToBuffer_mutex)
+int addToBuffer(CircularBuffer *buf, int candidateID)
 {
-    if (isFull(buf) || buf->buffer[buf->head].isDone != 2)
-    {
-        printf("Buffer is full.\n");
-        fflush(stdout);
-        return 1;
-    }
-    sem_wait(sem_isDone_mutex); // Lock the isDone mutex
-    buf->buffer[buf->head].isDone = 0;
-    sem_post(sem_isDone_mutex);      // Unlock the isDone mutex
-    sem_wait(sem_addToBuffer_mutex); // Lock the buffer mutex
+    // if (buf->buffer[buf->head].isDone != 2)
+    // return 0;
+
     buf->buffer[buf->head].candidateID = candidateID;
     buf->head = (buf->head + 1) % buf->size;
-    sem_post(sem_addToBuffer_mutex); // Unlock the buffer mutex
-    return 0;
+    return 1;
 }
 
 /**
@@ -59,38 +51,9 @@ int addToBuffer(CircularBuffer *buf, int candidateID, sem_t *sem_isDone_mutex, s
  */
 CandidateInfo readFromBuffer(CircularBuffer *buf)
 {
-    if (isEmpty(buf))
-    {
-        printf("Buffer is empty.\n");
-        CandidateInfo empty;
-        empty.candidateID = -1;
-        return empty;
-    }
     CandidateInfo item = buf->buffer[buf->tail];
     buf->tail = (buf->tail + 1) % buf->size;
     return item;
-}
-
-/**
- * Checks if the circular buffer is full.
- *
- * @param buf The circular buffer to check.
- * @return 1 if the buffer is full, 0 otherwise.
- */
-int isFull(CircularBuffer *buf)
-{
-    return (buf->head + 1) % buf->size == buf->tail;
-}
-
-/**
- * Checks if the circular buffer is empty.
- *
- * @param buf The circular buffer to check.
- * @return 1 if the buffer is empty, 0 otherwise.
- */
-int isEmpty(CircularBuffer *buf)
-{
-    return buf->head == buf->tail;
 }
 
 /**

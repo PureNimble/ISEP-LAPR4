@@ -71,7 +71,7 @@ void printConfig(Config *config)
     printf("\033[1;32mVerify New Files Frequency:\033[0m %d\n", config->verifyNewFilesFrequency);
     printf("\033[1;32mCircular Buffer Size(Max=20):\033[0m %d\n", config->bufferSize);
     printf("\033[1;36m--------------------------------\033[0m\n");
-    config->bufferSize++;
+
     printf("\n\033[1;33mWarning:\033[0m \033[1;31mIf you want to change the program\n\t settings, you must change the config\n\t file located in the resources folder\033[0m\n");
     printf("\nPress enter to continue...\n");
     scanf("%*c");

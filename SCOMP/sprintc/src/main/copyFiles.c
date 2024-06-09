@@ -20,7 +20,7 @@
  * @param sem_files The semaphore for accessing the shared memory.
  * @param sem_reportFile The semaphore for indicating completion of file reporting.
  */
-void copyFiles(Config *config, CircularBuffer *sharedMemory, sem_t *sem_startWorkers, sem_t *sem_isDone, sem_t *sem_files, sem_t *sem_reportFile)
+void copyFiles(Config *config, CircularBuffer *sharedMemory, sem_t *sem_startWorkers, sem_t *sem_startReport, sem_t *sem_sharedmemory_mutex)
 {
     int candidateID, status;
     char buffer[300];
@@ -29,12 +29,10 @@ void copyFiles(Config *config, CircularBuffer *sharedMemory, sem_t *sem_startWor
 
     while (1)
     {
-        sem_wait(sem_startWorkers);
+        sem_wait(sem_startWorkers);       // Start Working
+        sem_wait(sem_sharedmemory_mutex); // shared memory mutex
         files = readFromBuffer(sharedMemory);
-
-        if (files.candidateID == -1)
-            continue;
-        sem_post(sem_startWorkers);
+        sem_post(sem_sharedmemory_mutex);
 
         candidateID = files.candidateID;
         printf("-> Candidate ID: %d PID:%d\n", candidateID, getpid()); // Working with the candidateID
@@ -91,14 +89,11 @@ void copyFiles(Config *config, CircularBuffer *sharedMemory, sem_t *sem_startWor
                 }
             }
         }
-        sem_wait(sem_isDone);
+        sem_wait(sem_sharedmemory_mutex);
         files.isDone = 1;
-        sem_post(sem_isDone);
-
-        sem_wait(sem_files);
         addInfo(sharedMemory, files);
-        sem_post(sem_files);
+        sem_post(sem_sharedmemory_mutex);
 
-        sem_post(sem_reportFile);
+        sem_post(sem_startReport);
     }
 }

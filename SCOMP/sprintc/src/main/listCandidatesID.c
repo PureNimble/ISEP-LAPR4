@@ -38,7 +38,6 @@ HashSet *listCandidatesID(Config *config, CircularBuffer *sharedMemory)
         {
             add(set, atoi(token));
         }
-        sharedMemory->numberOfCandidates = size(set);
     }
     return set;
 }

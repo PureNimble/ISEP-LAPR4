@@ -1,0 +1,27 @@
+@startuml
+
+title Top 20 Words US - Activity Diagram - Application Domain
+
+start
+  while(Foreach File) is (File)
+
+  :new Thread(File);
+  :File.start();
+  endwhile
+
+  while(Foreach Thread) is (Thread)
+  :Thread.join();
+  endwhile
+
+  while(Foreach File) is (File)
+    :File.getWords();
+    :synchronized addWordsToMap();
+  endwhile
+
+  while(Foreach entry in Map) is (entry)
+    :order();
+    :getTop20();
+    endwhile
+    :Return Top 20 Words;
+
+@enduml

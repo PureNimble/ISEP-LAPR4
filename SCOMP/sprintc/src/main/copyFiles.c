@@ -11,16 +11,27 @@
 #include <unistd.h>
 
 /**
- * Copies files for a given candidate based on their candidate ID.
+ * @file copyFiles.c
+ * @brief This file contains the function to copy files for a given candidate based on their candidate ID.
+ */
+
+/**
+ * @brief Copies files for a given candidate based on their candidate ID.
  *
- * @param config The configuration settings.
+ * This function waits for the sem_startWorkers semaphore, then reads the candidate ID from the shared memory.
+ * It then constructs the path to the candidate's data file and reads the first line to get the job offer ID.
+ * If the job offer ID is valid, it creates a new directory for the job offer (if it doesn't already exist)
+ * and copies the candidate's files into it. It then lists all the files in the new directory and adds
+ * their names to the shared memory. Finally, send a post in the sem_startReport
+ * semaphore to indicate that it's done.
+ *
+ * @param config The configuration settings, which include the input and output directory paths.
  * @param sharedMemory The shared circular buffer for inter-process communication.
  * @param sem_startWorkers The semaphore for synchronizing worker processes.
- * @param sem_isDone The semaphore for indicating completion of file copying.
- * @param sem_files The semaphore for accessing the shared memory.
- * @param sem_reportFile The semaphore for indicating completion of file reporting.
+ * @param sem_startReport The semaphore for indicating completion of file reporting.
+ * @param sem_sharedmemory_mutex The semaphore for synchronizing access to the shared memory.
  */
-void copyFiles(Config *config, CircularBuffer *sharedMemory, sem_t *sem_startWorkers, sem_t *sem_isDone, sem_t *sem_files, sem_t *sem_reportFile)
+void copyFiles(Config *config, CircularBuffer *sharedMemory, sem_t *sem_startWorkers, sem_t *sem_startReport, sem_t *sem_sharedmemory_mutex)
 {
     int candidateID, status;
     char buffer[300];
@@ -29,12 +40,10 @@ void copyFiles(Config *config, CircularBuffer *sharedMemory, sem_t *sem_startWor
 
     while (1)
     {
-        sem_wait(sem_startWorkers);
+        sem_wait(sem_startWorkers);       // Start Working
+        sem_wait(sem_sharedmemory_mutex); // shared memory mutex
         files = readFromBuffer(sharedMemory);
-
-        if (files.candidateID == -1)
-            continue;
-        sem_post(sem_startWorkers);
+        sem_post(sem_sharedmemory_mutex);
 
         candidateID = files.candidateID;
         printf("-> Candidate ID: %d PID:%d\n", candidateID, getpid()); // Working with the candidateID
@@ -91,14 +100,11 @@ void copyFiles(Config *config, CircularBuffer *sharedMemory, sem_t *sem_startWor
                 }
             }
         }
-        sem_wait(sem_isDone);
+        sem_wait(sem_sharedmemory_mutex);
         files.isDone = 1;
-        sem_post(sem_isDone);
-
-        sem_wait(sem_files);
         addInfo(sharedMemory, files);
-        sem_post(sem_files);
+        sem_post(sem_sharedmemory_mutex);
 
-        sem_post(sem_reportFile);
+        sem_post(sem_startReport);
     }
 }

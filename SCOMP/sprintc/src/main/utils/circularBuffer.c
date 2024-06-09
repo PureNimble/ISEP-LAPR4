@@ -3,7 +3,15 @@
 #include <string.h>
 
 /**
- * Initializes the circular buffer with the given configuration.
+ * @file circularBuffer.c
+ * @brief This file contains the functions to manage a circular buffer of CandidateInfo.
+ */
+
+/**
+ * @brief Initializes the circular buffer with the given configuration.
+ *
+ * This function initializes the circular buffer with the size specified in the configuration.
+ * It sets the head and tail of the buffer to 0 and initializes each element of the buffer with default values.
  *
  * @param buf The circular buffer to initialize.
  * @param config The configuration containing the buffer size.
@@ -25,76 +33,45 @@ void initBuffer(CircularBuffer *buf, Config *config)
     }
 }
 /**
- * Adds a candidate ID to the circular buffer.
+ * @brief Adds a candidate ID to the circular buffer.
+ *
+ * This function adds a candidate ID to the circular buffer at the current
+ * head position and advances the head.The head wraps around to the start
+ * of the buffer when it reaches the end.
  *
  * @param buf The circular buffer to add the candidate ID to.
  * @param candidateID The ID of the candidate to add.
- * @param sem_isDone_mutex The mutex for the isDone variable.
- * @param sem_addToBuffer_mutex The mutex for the buffer.
- * @return 0 if the candidate ID was successfully added, 1 if the buffer is full or the previous candidate is not done.
+ * @return 0 if the candidate ID was successfully added,
+ * 1 if the buffer is full or the previous candidate is not done.
  */
-int addToBuffer(CircularBuffer *buf, int candidateID, sem_t *sem_isDone_mutex, sem_t *sem_addToBuffer_mutex)
+int addToBuffer(CircularBuffer *buf, int candidateID)
 {
-    if (isFull(buf) || buf->buffer[buf->head].isDone != 2)
-    {
-        printf("Buffer is full.\n");
-        fflush(stdout);
-        return 1;
-    }
-    sem_wait(sem_isDone_mutex); // Lock the isDone mutex
-    buf->buffer[buf->head].isDone = 0;
-    sem_post(sem_isDone_mutex);      // Unlock the isDone mutex
-    sem_wait(sem_addToBuffer_mutex); // Lock the buffer mutex
     buf->buffer[buf->head].candidateID = candidateID;
     buf->head = (buf->head + 1) % buf->size;
-    sem_post(sem_addToBuffer_mutex); // Unlock the buffer mutex
-    return 0;
+    return 1;
 }
 
 /**
- * Reads an item from the circular buffer.
+ * @brief Reads an item from the circular buffer.
+ *
+ * This function reads an item from the circular buffer at the current tail position and advances the tail.
+ * The tail wraps around to the start of the buffer when it reaches the end.
  *
  * @param buf The circular buffer to read from.
  * @return The item read from the buffer.
  */
 CandidateInfo readFromBuffer(CircularBuffer *buf)
 {
-    if (isEmpty(buf))
-    {
-        printf("Buffer is empty.\n");
-        CandidateInfo empty;
-        empty.candidateID = -1;
-        return empty;
-    }
     CandidateInfo item = buf->buffer[buf->tail];
     buf->tail = (buf->tail + 1) % buf->size;
     return item;
 }
 
 /**
- * Checks if the circular buffer is full.
+ * @brief Prints the contents of a CircularBuffer.
  *
- * @param buf The circular buffer to check.
- * @return 1 if the buffer is full, 0 otherwise.
- */
-int isFull(CircularBuffer *buf)
-{
-    return (buf->head + 1) % buf->size == buf->tail;
-}
-
-/**
- * Checks if the circular buffer is empty.
- *
- * @param buf The circular buffer to check.
- * @return 1 if the buffer is empty, 0 otherwise.
- */
-int isEmpty(CircularBuffer *buf)
-{
-    return buf->head == buf->tail;
-}
-
-/**
- * Prints the contents of a CircularBuffer.
+ * This function prints the contents of the circular buffer,
+ * including the head and tail positions and the values of all elements.
  *
  * @param buf The CircularBuffer to be printed.
  */
@@ -113,8 +90,14 @@ void printBuffer(CircularBuffer *buf)
 }
 
 /**
- * Checks for finished files in the circular buffer and returns the information of the first finished file.
- * If a finished file is found, its status is updated and its file information is cleared.
+ * @brief Checks for finished files in the circular buffer and returns
+ * the information of the first finished file.
+ *
+ * This function checks each element of the circular buffer for a finished file
+ * (indicated by isDone == 1). If it finds a finished file, it updates the
+ * status of the file to 2, clears the file information, and returns the
+ * file information. If it doesn't find a finished file, it returns a CandidateInfo
+ * with a candidate ID of -1.
  *
  * @param buf The circular buffer to check for finished files.
  * @return The information of the first finished file, or a candidate ID of -1 if no finished files are found.
@@ -137,7 +120,10 @@ CandidateInfo checkFinishedFiles(CircularBuffer *buf)
     return temp;
 }
 /**
- * Adds the given CandidateInfo data to the CircularBuffer.
+ * @brief Adds the given CandidateInfo data to the CircularBuffer.
+ *
+ * This function adds the given CandidateInfo data to the circular buffer
+ * at the index specified in the data.
  *
  * @param candidates The CircularBuffer to add the data to.
  * @param data The CandidateInfo data to be added.

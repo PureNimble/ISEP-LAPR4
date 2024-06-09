@@ -8,10 +8,9 @@
 #define SEM_START_WORKERS "/sem_start_workers"
 #define SEM_REPORT_FILE "/sem_report_file"
 // semaphores for the shared memory
-#define SEM_ADD_TO_BUFFER "/sem_add_to_buffer"
+#define SEM_BUFFER_SIZE "/sem_buffer_size"
 #define SEM_NUMBER_OF_CANDIDATES "/sem_number_of_candidates"
-#define SEM_IS_DONE "/sem_is_done"
-#define SEM_FILES "/sem_files"
+#define SEM_SHARED_MEMORY_MUTEX "/sem_sharedmemory_mutex"
 
 #include "config.h"
 #include <semaphore.h>
@@ -33,15 +32,15 @@ void newFileChecker(Config *config, sem_t *sem);
 // -----------------------------
 // Parent process functions
 // -----------------------------
-int checkIfCandidateFileExists(CandidateInfo candidate, char *buffer);
-void reportFile(Config *config, CircularBuffer *shared_memory, sem_t *sem_numberOfCandidates, sem_t *sem_files);
-void parentWork(Config *config, CircularBuffer *sharedMemory, sem_t *sem_startWorkers, sem_t *sem_newFile, sem_t *sem_reportFile, sem_t *sem_addToBuffer_mutex, sem_t *sem_isDone_mutex, sem_t *sem_numberOfCandidates);
+void createWorkers(Config *config, CircularBuffer *shared_data, sem_t *sem_startWorkers, sem_t *sem_reportFile, sem_t *sem_sharedmemory_mutex, pid_t *pids);
+void parentWork(Config *config, CircularBuffer *sharedMemory, sem_t *sem_newFile, sem_t *sem_bufferSize, sem_t *sem_numberOfCandidates, sem_t *sem_startWorkers, sem_t *sem_startReport, sem_t *sem_sharedmemory_mutex);
 HashSet *listCandidatesID(Config *config, CircularBuffer *sharedMemory);
-void createWorkers(Config *config, CircularBuffer *shared_data, sem_t *sem_startWorkers, sem_t *sem_reportFile, sem_t *sem_isDone_mutex, sem_t *sem_files_mutex, pid_t *pids);
-int sendWork(HashSet *candidateList, CircularBuffer *sharedMemory, sem_t *sem_addToBuffer, sem_t *sem_isDone, sem_t *sem_startWorkers);
+void sendWork(HashSet *candidateList, CircularBuffer *sharedMemory, sem_t *sem_addToBuffer, sem_t *sem_startWorkers);
+void reportFile(Config *config, CircularBuffer *shared_memory, sem_t *sem_numberOfCandidates, sem_t *buffer_size);
+int checkIfCandidateFileExists(CandidateInfo candidate, char *buffer);
 // -----------------------------
 // Worker(s) function
 // -----------------------------
-void copyFiles(Config *config, CircularBuffer *sharedMemory, sem_t *sem_startWorkers, sem_t *sem_isDone, sem_t *sem_files, sem_t *sem_reportFile);
+void copyFiles(Config *config, CircularBuffer *sharedMemory, sem_t *sem_startWorkers, sem_t *sem_startReport, sem_t *sem_sharedmemory_mutex);
 
 #endif // INFO_H

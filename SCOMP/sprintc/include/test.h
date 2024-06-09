@@ -15,8 +15,8 @@
 // Test functions for new file checker
 void newFileChecker_test(Config config);
 // Test functions for copying files
-void copyFiles_test(Config config, CircularBuffer *shared_data, sem_t *sem_startWorkers, sem_t *sem_reportFile, sem_t *sem_isDone_mutex, sem_t *sem_files_mutex, sem_t *sem_addToBuffer_mutex);
+void copyFiles_test(Config config, CircularBuffer *sharedMemory, sem_t *sem_startWorkers, sem_t *sem_startReport, sem_t *sem_sharedmemory_mutex);
 // Test functions for reporting files
-void reportFile_test(Config config, CircularBuffer *shared_data, sem_t *sem_addToBuffer_mutex, sem_t *sem_numberOfCandidates);
-
+void reportFile_test(Config config, CircularBuffer *sharedMemory, sem_t *sem_startReport, sem_t *sem_sharedmemory_mutex, sem_t *sem_bufferSize);
+void sendWork(HashSet *candidateList, CircularBuffer *sharedMemory, sem_t *sem_sharedmemory_mutex, sem_t *sem_startWorkers);
 #endif // TEST_H

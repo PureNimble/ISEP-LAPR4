@@ -1,0 +1,25 @@
+@startuml
+
+title Applications File Bot - Activity Diagram
+
+start
+
+partition WorkerProcess {
+  repeat
+    fork
+      :Parent;
+    fork again
+      :WorkerProcess;
+      repeat
+        :sem_wait(sem_startWorkers);
+        :copyFiles;
+        :sem_post(sem_startReport);
+      repeat while(WorkerProcess is running)
+      end
+    end fork
+  repeat while(for N processes)
+}
+
+
+
+@enduml

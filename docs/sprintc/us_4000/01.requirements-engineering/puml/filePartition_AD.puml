@@ -1,0 +1,13 @@
+@startuml
+
+title Top 20 Words US - Activity Diagram - FilePartition Domain
+
+start
+    while(Foreach word) is (Word)
+    if(checkIfWordIsValid(word)) then (yes)
+    :synchronized addToMap(word);
+    endif
+    endwhile
+    :Return Map;
+
+@enduml

@@ -1,0 +1,30 @@
+@startuml
+
+title Applications File Bot - Activity Diagram
+
+start
+
+partition Initialization {
+  :Initialize system;
+  :setupSignals();
+  :getConfiguration();
+
+}
+
+partition NewFileCheckerProcess {
+  fork
+    :parent;
+  fork again
+    :newFileCheckerProcess;
+    repeat
+      :checkForNewFiles;
+      if(newFilesDetected) then (yes)
+        :sem_post(sem_newFiles);
+      endif
+      :sleep for n seconds;
+    repeat while(NewFileCheckerProcess is running)
+    end
+  end fork
+}
+
+@enduml

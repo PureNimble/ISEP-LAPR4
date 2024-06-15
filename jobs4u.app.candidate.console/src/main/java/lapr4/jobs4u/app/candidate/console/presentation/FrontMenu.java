@@ -1,7 +1,6 @@
 package lapr4.jobs4u.app.candidate.console.presentation;
 
 import lapr4.jobs4u.app.common.ClientBackend;
-import lapr4.jobs4u.app.common.DisconnectAction;
 import lapr4.jobs4u.app.common.console.presentation.authz.LoginUI;
 import lapr4.jobs4u.usermanagement.domain.BaseRoles;
 import eapli.framework.actions.ChainedAction;
@@ -39,8 +38,7 @@ public class FrontMenu extends AbstractUI {
                     new MainMenu().mainLoop();
                     return false;
                 }));
-        menu.addItem(EXIT_OPTION, "Exit",
-                new ChainedAction(new DisconnectAction(), new ExitWithMessageAction("Goodbye!")));
+        menu.addItem(EXIT_OPTION, "Exit", new ExitWithMessageAction("Goodbye!"));
 
         boolean loginSuccessful;
         do {

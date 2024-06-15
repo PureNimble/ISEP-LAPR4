@@ -45,3 +45,7 @@ jobs4u.ANTLR/src/main/resources/*
 obj/
 jobs4u.applicationsFileBot/*/bin/*
 jobs4u.applicationsFileBot/*/resources/output/*
+
+# Node.js
+node_modules
+dist

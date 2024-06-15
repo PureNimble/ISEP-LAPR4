@@ -3,6 +3,7 @@ package lapr4.jobs4u.app.candidate.console;
 import lapr4.jobs4u.AppSettings;
 import lapr4.jobs4u.app.candidate.console.presentation.FrontMenu;
 import lapr4.jobs4u.app.common.ClientBackend;
+import lapr4.jobs4u.app.common.DisconnectAction;
 import lapr4.jobs4u.infrastructure.persistence.PersistenceContext;
 import lapr4.jobs4u.usermanagement.domain.BasePasswordPolicy;
 
@@ -38,6 +39,13 @@ public final class CandidateApp {
         final ClientBackend client = ClientBackend.getInstance();
         try {
             client.connect(host, port);
+            Runtime.getRuntime().addShutdownHook(new Thread() {
+                public void run() {
+                    System.out.println("Disconnecting from server...");
+                    DisconnectAction disconnectAction = new DisconnectAction();
+                    disconnectAction.execute();
+                }
+            });
             new FrontMenu().show();
         } catch (final IOException e) {
             System.out.println("Error connecting to host: " + host + " on port " + port);

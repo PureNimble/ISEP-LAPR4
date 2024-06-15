@@ -1,0 +1,36 @@
+body {
+    font-family: Arial, sans-serif;
+}
+
+.container {
+    width: 300px;
+    margin: 0 auto;
+    padding-top: 100px;
+}
+
+.form-control {
+    margin-bottom: 10px;
+}
+
+.form-control label {
+    display: block;
+}
+
+.form-control input {
+    width: 100%;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+.form-control button {
+    width: 100%;
+    padding: 10px;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+.form-control button:hover {
+    background-color: #0056b3;
+}

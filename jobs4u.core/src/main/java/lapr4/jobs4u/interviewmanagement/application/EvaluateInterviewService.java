@@ -146,7 +146,7 @@ public class EvaluateInterviewService {
         for (final String line : lines) {
             content.append(line).append("\n");
             if (line.contains("ANSWER:")) {
-                double grade = resultPair.getSecond().get(index);
+                final double grade = resultPair.getSecond().get(index);
                 if (grade == Math.floor(grade)) {
                     content.append(String.format("GRADE: %.0f%%", grade)).append("\n");
                 } else {
@@ -157,7 +157,7 @@ public class EvaluateInterviewService {
             }
 
             if (line.contains("EMAIL:")) {
-                double grade = resultPair.getSecond().get(index);
+                final double grade = resultPair.getFirst();
                 if (grade == Math.floor(grade)) {
                     content.append(String.format("FINAL GRADE: %.0f%%", grade)).append("\n");
                 } else {

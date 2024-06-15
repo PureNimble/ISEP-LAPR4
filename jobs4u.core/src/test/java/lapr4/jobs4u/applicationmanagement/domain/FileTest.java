@@ -16,7 +16,7 @@ import eapli.framework.io.util.Files;
  */
 
 public class FileTest {
-    String valid_format = "SCOMP/sprintc/resources/input/";
+    String valid_format = "jobs4u.applicationsFileBot/sprintc/resources/input/";
     String VALID_FILE = valid_format + "3-file-1.txt";
     String VALID_FILE2 = valid_format + "/1-candidate-data.txt";
     static final String INVALID_FILE = "temo/sharedfolder";

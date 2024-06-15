@@ -33,11 +33,11 @@ public class ApplicationTest {
     public static Application dummyApplication(final String applicationNumber) {
         List<File> files = new ArrayList<File>();
         if (Files.currentDirectory().contains("jobs4u.core")) {
-            files.add(File.valueOf("../SCOMP/sprintc/resources/input/3-file-1.txt"));
-            files.add(File.valueOf("../SCOMP/sprintc/resources/input/1-candidate-data.txt"));
+            files.add(File.valueOf("../jobs4u.applicationsFileBot/sprintc/resources/input/3-file-1.txt"));
+            files.add(File.valueOf("../jobs4u.applicationsFileBot/sprintc/resources/input/1-candidate-data.txt"));
         } else {
-            files.add(File.valueOf("SCOMP/sprintc/resources/input/3-file-1.txt"));
-            files.add(File.valueOf("SCOMP/sprintc/resources/input/1-candidate-data.txt"));
+            files.add(File.valueOf("jobs4u.applicationsFileBot/sprintc/resources/input/3-file-1.txt"));
+            files.add(File.valueOf("jobs4u.applicationsFileBot/sprintc/resources/input/1-candidate-data.txt"));
         }
         // candidateBuilder
         final CandidateBuilder candidateBuilder = new CandidateBuilder();

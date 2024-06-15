@@ -45,5 +45,3 @@ jobs4u.ANTLR/src/main/resources/*
 obj/
 jobs4u.applicationsFileBot/*/bin/*
 jobs4u.applicationsFileBot/*/resources/output/*
-SCOMP/*/bin/*
-SCOMP/*/resources/output/*

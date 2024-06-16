@@ -1,12 +1,10 @@
 import { spawn } from 'child_process';
-import * as readline from 'readline';
-
 
 // Path to the Java app
-export function runJavaApp() {
+export function runJavaApp(args: string[]) {
 
-    const jar = '../jobs4u.app.backoffice.console/target/jobs4u.app.backoffice.console-0.1.0.jar;../jobs4u.app.backoffice.console/target/dependency/*;';
-    const javaClass = 'lapr4.jobs4u.app.backoffice.console.BackOfficeApp';
+    const jar = args[0];
+    const javaClass = args[1];
 
     // Create a child process for the Java app
     const javaApp = spawn('java', ['-cp', jar, javaClass]);
@@ -20,7 +18,6 @@ export function runJavaApp() {
     javaApp.stderr.on('data', (data) => {
         console.error(`Java app error: ${data}`);
     });
-
 
     // Handle the Java app closing
     javaApp.on('close', (code) => {

@@ -18,6 +18,10 @@ function createWindow() {
 
 }
 
+// Connect to the Java app
+const args = process.argv.slice(2); // Get command-line arguments
+const javaApp = runJavaApp(args);
+
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
@@ -56,10 +60,3 @@ ipcMain.on('login', (event, ...args) => {
   javaApp.stdin.write(`${password}\n`);
 
 });
-
-// Connect to the Java app
-const javaApp = runJavaApp();
-
-
-
-

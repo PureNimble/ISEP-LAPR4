@@ -68,7 +68,7 @@ void copyFiles(Config *config, CircularBuffer *sharedMemory, sem_t *sem_startWor
             if (createChildProcess() == 0)
             {
                 char command[1024];
-                snprintf(command, sizeof(command), "mkdir -p %s && /bin/cp -u %s%d-* %s", buffer, config->inputPath, candidateID, buffer);
+                snprintf(command, sizeof(command), "mkdir -p %s && /bin/mv -u %s%d-* %s", buffer, config->inputPath, candidateID, buffer);
                 execlp("/bin/sh", "sh", "-c", command, NULL);
                 exit(EXIT_FAILURE);
             }
